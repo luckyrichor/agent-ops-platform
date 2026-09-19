@@ -74,7 +74,7 @@ Python（暂定，与 `agent-memory` 一致以便共用 SDK 和部署方式）�
 
 确有必要在本地跑时，**必须先征得用户同意**，不要自行决定。
 
-tx 上 `ubuntu` 用户不在 `docker` 组，所有 docker 命令要带 `sudo`（免密 sudo 可用）。该机内存只有 7.5G，多个服务同时跑之前先看 `free -h`。
+tx 上 `ubuntu` **已加入 `docker` 组**（2026-09-19），docker 命令不需要 `sudo`，Testcontainers 也可直接用。该机内存只有 7.5G，多个服务同时跑之前先看 `free -h`。
 
 ### 在 tx 上跑 Docker／测试前，必须先同步代码
 
