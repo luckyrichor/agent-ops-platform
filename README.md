@@ -1,28 +1,22 @@
 # agent-ops-platform
 
-Agent 应用与可观测评测平台。电商场景的多 Agent 任务拆解、工具调用、高并发流式处理，配套追踪与评测体系。
+最后更新：2026-10-01；Codex；agent-ops-platform@216d302 + 未提交修改。
 
-**状态：未开工**（2026-09-19）
+W4 M1 骨架与电商多 Agent 编排最小闭环已实现。Python 3.12 + FastAPI；确定性规划器将请求分为 catalog、pricing、shipping、recommendation 四个角色任务，依赖校验后分派，pricing/shipping 并发，最终汇总预算内推荐。不同角色是代码中的独立 handler；未请求外部 bot 或线上模型。
 
-## 对应岗位
+```bash
+bash scripts/bootstrap.sh
+uv run python -m agent_ops
+uv run uvicorn agent_ops.api:create_app --factory --host 127.0.0.1 --port 8087
+uv run pytest -q
+uv run ruff check src tests
+uv run mypy --strict src
+```
 
-05 字节 Agent 应用开发、07 字节 LLM Agent（TRAE）、10 米哈游 Agent（数据方向）、11 米哈游 后端（AI 游戏方向）、14 拼多多 电商 Agent 后端。岗位原文见 [workplan-docs](https://github.com/luckyrichor/workplan-docs)。
+HTTP：POST /v1/commerce/runs，JSON 输入 `request`、`category`、`budget_cent`、`region`；输出 request_id、tasks（角色/依赖/状态/结果）、dispatch_order、recommendation。例子：`{"request":"预算50元选上海的水壶","category":"kettle","budget_cent":5000,"region":"上海"}`。CLI 同一请求会选择 3990 分的基础水壶。
 
-这是**目标关联**，不代表单个电商演示自动覆盖上述岗位的全部要求。要对应 10 的数据 Agent 能力，仍需数据资产或语义层实践；要对应 07 的研发工具要求，仍需开发者产品方向的证据。
+任务失败以错误码报告，下游 blocked，其他独立角色保留结果；角色 5 秒超时，调用者取消向正在执行的 handler 传播。没有符合预算商品时成功返回 selected=null 与明确 reason_code。
 
-## 重点
+覆盖边界：本地固定商品/运费工具与确定性任务规划，不声称真实 LLM 自由规划、生产目录/订单能力。request 文本作为用户意图上下文，类目/预算/地域是显式结构化参数，不自动从自然语言抽取。M2 的工具/记忆服务集成，M3 流式/背压，M4 trace 调用树，M5 评测与客服子方向均未完成。无持久 run 存储、认证、写幂等和分布式 worker；只作本地闭环。
 
-不做 Agent 入门演示，直接压 JD 真正区分人的地方：
-
-- **可观测**：多 Agent 任务拆解后一条请求散成调用树，trace 如何串联、出错时如何定位到具体某一跳的工具调用
-- **高并发流式**：SSE/WebSocket 的背压、慢消费者隔离、取消传播
-- **评测**：可复现的评测集与判定口径，而不是看几条输出下结论
-- **集成 `agent-memory`**：作为记忆服务的第一个真实调用方，打通接口时序、失败降级与幂等
-
-## 依赖
-
-通过 HTTP API 调用 [`agent-memory`](https://github.com/luckyrichor/agent-memory)。两者保持独立边界：`agent-memory` 提供记忆能力，本项目负责业务任务与平台能力。
-
-## 技术栈
-
-Python（暂定，与 `agent-memory` 一致以便共用 SDK 和部署方式）。具体选型待技术方案确定后写入本节。
+对应岗位 05/07/10/11/14，另含 08 客服子方向；这些是目标关联，不代表单次演示覆盖完整岗位要求。memory 仍通过独立 HTTP API 集成，M1 未调用/导入其应用实现。

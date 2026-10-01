@@ -1,5 +1,7 @@
 # AGENTS.md
 
+最后更新：2026-10-01（北京时间）
+
 本文件为在本仓库工作的编码 agent 提供指引（Claude Code 读 `CLAUDE.md`、Codex 读 `AGENTS.md`，两者都指向这里）。
 
 ## 这是什么
@@ -8,7 +10,7 @@ Agent 应用与可观测评测平台。电商场景的多 Agent 任务拆解、�
 
 三个月求职计划六项目之一（原编号 ③），对应岗位 **05、07、10、11、14**，另含 **08** 作为子方向。总计划见 [workplan-docs](https://github.com/luckyrichor/workplan-docs)，岗位原文以那里的 `岗位要求原文.md` 为唯一依据。
 
-**当前状态：未开工。**
+**当前状态：M1 本地自动验收通过（2026-10-01）；实际证据与边界见 docs/progress.md。**
 
 ## 分工模式：偏产出
 
@@ -41,7 +43,7 @@ Claude 主写实现，用户做设计决策（在给出的 2–3 个方案里选
 
 ## 技术栈
 
-Python（暂定，与 `agent-memory` 一致以便共用 SDK 和部署方式）。选型确定后写入本节。
+Python 3.12 + FastAPI + uv 锁文件；`bash scripts/bootstrap.sh` 重建，pytest/ruff/mypy strict 验证。确定性 planner 和本地角色工具先验收编排，M2 通过 HTTP SDK 集成 memory。
 
 ## 所有项目共同的约束
 
