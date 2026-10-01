@@ -17,7 +17,7 @@ def request() -> CommerceRequest:
 async def test_asgi_e2e_decomposes_dispatches_and_recommends() -> None:
     async with httpx.AsyncClient(transport=httpx.ASGITransport(app=create_app()),
                                  base_url="http://test") as client:
-        response = await client.post("/v1/commerce/runs", json=request().model_dump())
+        response = await client.post("/v1/commerce/runs", json=request().model_dump(mode="json"))
         assert response.status_code == 200
         result = response.json()
         assert result["outcome"] == "succeeded"
@@ -27,7 +27,7 @@ async def test_asgi_e2e_decomposes_dispatches_and_recommends() -> None:
         assert result["dispatch_order"][-1] == "recommendation"
         assert result["recommendation"]["selected"]["id"] == "kettle-basic"
         assert result["recommendation"]["selected"]["total_cent"] <= 5000
-        invalid = await client.post("/v1/commerce/runs", json={**request().model_dump(), "budget_cent": -1})
+        invalid = await client.post("/v1/commerce/runs", json={**request().model_dump(mode="json"), "budget_cent": -1})
         assert invalid.status_code == 422
 
 

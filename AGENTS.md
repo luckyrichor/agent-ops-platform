@@ -1,6 +1,6 @@
 # AGENTS.md
 
-最后更新：2026-10-01（北京时间）
+最后更新：2026-10-02（北京时间）
 
 本文件为在本仓库工作的编码 agent 提供指引（Claude Code 读 `CLAUDE.md`、Codex 读 `AGENTS.md`，两者都指向这里）。
 
@@ -10,7 +10,7 @@ Agent 应用与可观测评测平台。电商场景的多 Agent 任务拆解、�
 
 三个月求职计划六项目之一（原编号 ③），对应岗位 **05、07、10、11、14**，另含 **08** 作为子方向。总计划见 [workplan-docs](https://github.com/luckyrichor/workplan-docs)，岗位原文以那里的 `岗位要求原文.md` 为唯一依据。
 
-**当前状态：M1 本地自动验收通过（2026-10-01）；实际证据与边界见 docs/progress.md。**
+**当前状态：M1/M2/M3 本地自动验收通过；W6 检索 SDK 维持项完成。实际证据与边界见 docs/progress.md、docs/memory-streaming.md。**
 
 ## 分工模式：偏产出
 

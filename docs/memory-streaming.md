@@ -1,0 +1,31 @@
+# W5–W7 记忆工具与 SSE
+
+最后更新：2026-10-02（北京时间）；Codex；来源 agent-ops-platform@ed6f887 + 本轮工作树修改，依赖本轮 agent-memory SDK 工作树。
+
+## W5 / M2
+
+通过官方 `agent_memory.sdk.MemoryClient` 调 HTTP API。WorkPlan 七仓库布局下，uv 从 `../agent-memory` 安装 SDK，服务数据库仍独立，平台不 import memory 应用服务或仓储。
+
+配置 `AGENT_MEMORY_URL` 后，HTTP 请求必须携带调用者 Bearer token；转发同一身份给 memory，不能使用公共机器人凭据。调用者需有 commerce 工作区权限。未配置服务可独立运行，结果 `memory_status=not_configured`。
+
+时序：可选 memory_id 精确读历史偏好 → 编排商品/价格/运费/推荐工具 → 成功后写 episodic 结果。偏好 JSON 的 budget_cent 只能收紧当前显式预算。写入 key 为 `commerce:<run_id>`，客户端重试必须复用 run_id，同键不同内容返回 409。幂等限定为记忆写入，尚无持久 run 存储，不承诺所有业务工具 exactly-once。
+
+读失败降级到无记忆推荐，写失败保留业务结果但返回 write_degraded；不给伪造 memory_id。CancelledError 向 SDK HTTP 调用和角色任务传播。memory 是历史上下文，不能覆盖工具权限或执行任意历史文本。
+
+## W6 维持
+
+未提供 memory_id 时调用新 `MemoryClient.search`，最多 3 条 commerce semantic 记忆，响应 memory_hit_count。检索结果不直接改变显式业务参数。检索失败与无命中区分，向量 provider 降级有 search_degraded 标记。
+
+## W7 / M3
+
+`POST /v1/commerce/stream` 接受同样请求；SSE 事件 started → heartbeat → result 或 error。当前流的是运行状态与最终推荐，未实现 LLM token 流或逐角色 trace（M4 后续里程碑）。
+
+每请求独立容量 2 的队列，入队等待上限 2 秒；堵塞只取消该请求。正常流 heartbeat 每 0.1 秒。客户端断开/关闭迭代器时 finally 取消 producer 和所有正在执行的工具，无全局共享出队锁。错误事件只含 RUN_FAILED，不输出内部异常正文。
+
+## 证据与边界
+
+18 pytest passed：包括真实 SDK→memory API→迁移后 PostgreSQL 的读写/重放/冲突/archive 回退；真实 TCP HTTP 服务断开后的取消、16 个并发正常 HTTP 请求；一个未消费迭代器与 32 个正常流的隔离。ruff、strict mypy 8 文件通过。
+
+`uv run python scripts/measure-streams.py` 生成 docs/measurements/2026-10-02-streams.json，包含机器、工作树/源码哈希、每请求耗时。只测单机确定性工具和队列隔离，不是线上模型吞吐、网络慢连接饱和或生产容量。临时服务测试完成后退出。
+
+运行：`bash scripts/bootstrap.sh`；`uv run uvicorn agent_ops.api:create_app --factory --host 127.0.0.1 --port 8087`。全量验收需 tx Docker：`sg docker -c 'uv run pytest -q'`，另跑 ruff 与 mypy。

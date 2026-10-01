@@ -1,6 +1,6 @@
 # agent-ops-platform
 
-最后更新：2026-10-01；Codex；agent-ops-platform@216d302 + 未提交修改。
+最后更新：2026-10-02；Codex；agent-ops-platform@ed6f887 + 本轮工作树修改。
 
 W4 M1 骨架与电商多 Agent 编排最小闭环已实现。Python 3.12 + FastAPI；确定性规划器将请求分为 catalog、pricing、shipping、recommendation 四个角色任务，依赖校验后分派，pricing/shipping 并发，最终汇总预算内推荐。不同角色是代码中的独立 handler；未请求外部 bot 或线上模型。
 
@@ -17,6 +17,8 @@ HTTP：POST /v1/commerce/runs，JSON 输入 `request`、`category`、`budget_cen
 
 任务失败以错误码报告，下游 blocked，其他独立角色保留结果；角色 5 秒超时，调用者取消向正在执行的 handler 传播。没有符合预算商品时成功返回 selected=null 与明确 reason_code。
 
-覆盖边界：本地固定商品/运费工具与确定性任务规划，不声称真实 LLM 自由规划、生产目录/订单能力。request 文本作为用户意图上下文，类目/预算/地域是显式结构化参数，不自动从自然语言抽取。M2 的工具/记忆服务集成，M3 流式/背压，M4 trace 调用树，M5 评测与客服子方向均未完成。无持久 run 存储、认证、写幂等和分布式 worker；只作本地闭环。
+M2 官方 memory SDK 集成与 M3 SSE/背压/取消已通过本地自动验收；W6 维护接入检索 SDK。配置 AGENT_MEMORY_URL 后转发调用者 Bearer 身份；客户端重试复用 run_id，写记忆使用稳定幂等键。SSE 入口 POST /v1/commerce/stream。完整协议、运行与验证见 [docs/memory-streaming.md](docs/memory-streaming.md)。
 
-对应岗位 05/07/10/11/14，另含 08 客服子方向；这些是目标关联，不代表单次演示覆盖完整岗位要求。memory 仍通过独立 HTTP API 集成，M1 未调用/导入其应用实现。
+覆盖边界：本地固定商品/运费工具与确定性任务规划，不声称真实 LLM 自由规划、生产目录/订单能力。没有持久 run 存储、生产身份服务或分布式 worker；M4 trace 调用树与 M5 评测/客服子方向尚未完成。写幂等仅覆盖 memory 写入，不保证所有工具 exactly-once。
+
+对应岗位 05/07/10/11/14，另含 08 客服子方向；这些是目标关联，不代表单次演示覆盖完整岗位要求。memory 通过独立 HTTP API 集成，仅安装/导入其 SDK、契约与领域类型。
