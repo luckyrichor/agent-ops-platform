@@ -2,7 +2,10 @@ import asyncio
 from collections.abc import Awaitable, Callable
 from uuid import uuid4
 
+from opentelemetry.trace import Status, StatusCode, Tracer
+
 from agent_ops.models import CommerceRequest, RunResult, Task, TaskRecord, TaskStatus
+from agent_ops.telemetry import configured_tracer, hop
 
 AgentHandler = Callable[[CommerceRequest, dict[str, dict[str, object]]],
                         Awaitable[dict[str, object]]]
@@ -36,15 +39,16 @@ def validate_plan(tasks: list[Task]) -> None:
 
 
 class Dispatcher:
-    def __init__(self, handlers: dict[str, AgentHandler]) -> None:
+    def __init__(self, handlers: dict[str, AgentHandler], tracer: Tracer | None = None) -> None:
         self.handlers = handlers
+        self.tracer = tracer or configured_tracer()
 
     async def run(self, request: CommerceRequest, tasks: list[Task]) -> RunResult:
         validate_plan(tasks)
         records = {t.task_id: TaskRecord(task=t) for t in tasks}
         order: list[str] = []
 
-        async def execute(record: TaskRecord) -> None:
+        async def execute_role(record: TaskRecord) -> None:
             record.status = TaskStatus.RUNNING
             order.append(record.task.task_id)
             handler = self.handlers.get(record.task.agent)
@@ -54,12 +58,21 @@ class Dispatcher:
             inputs = {name: dict(records[name].result or {}) for name in record.task.depends_on}
             try:
                 # Bound each role; CancelledError propagates to the whole run.
-                record.result = await asyncio.wait_for(handler(request, inputs), timeout=5)
+                with hop(self.tracer, "tool." + record.task.agent):
+                    record.result = await asyncio.wait_for(handler(request, inputs), timeout=5)
                 record.status = TaskStatus.SUCCEEDED
             except TimeoutError:
                 record.status, record.error_code = TaskStatus.FAILED, "AGENT_TIMEOUT"
             except Exception:  # noqa: BLE001 - role isolation, redact tool exception content
                 record.status, record.error_code = TaskStatus.FAILED, "AGENT_EXECUTION_FAILED"
+
+        async def execute(record: TaskRecord) -> None:
+            with hop(self.tracer, "agent." + record.task.agent) as current:
+                await execute_role(record)
+                current.set_attribute("outcome", record.status.value)
+                if record.error_code:
+                    current.set_status(Status(StatusCode.ERROR))
+                    current.set_attribute("reason_code", record.error_code)
 
         while any(r.status is TaskStatus.PENDING for r in records.values()):
             for record in records.values():
@@ -70,7 +83,10 @@ class Dispatcher:
             ready = [r for r in records.values() if r.status is TaskStatus.PENDING and all(
                 records[d].status is TaskStatus.SUCCEEDED for d in r.task.depends_on)]
             if ready:
-                await asyncio.gather(*(execute(r) for r in ready))
+                # W8 maintenance: structured lifetime joins every sibling on cancellation.
+                async with asyncio.TaskGroup() as group:
+                    for record in ready:
+                        group.create_task(execute(record))
         final = records.get("recommendation")
         ok = all(r.status is TaskStatus.SUCCEEDED for r in records.values())
         return RunResult(request_id=str(uuid4()), outcome="succeeded" if ok else "failed",

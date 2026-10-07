@@ -6,9 +6,11 @@ from agent_memory.api.schemas import SearchRequest
 from agent_memory.domain.enums import MemoryType, ScopeKind
 from agent_memory.domain.models import MemoryScope
 from agent_memory.sdk import MemoryAPIError, MemoryClient
+from opentelemetry.trace import Status, StatusCode
 
 from agent_ops.models import CommerceRequest, RunResult
 from agent_ops.orchestrator import CommercePlanner, Dispatcher
+from agent_ops.telemetry import hop
 
 
 class MemoryCommerce:
@@ -17,12 +19,24 @@ class MemoryCommerce:
         self.client = client
 
     async def run(self, request: CommerceRequest) -> RunResult:
+        with hop(self.dispatcher.tracer, "commerce.request") as current:
+            result = await self._run(request)
+            context = current.get_span_context()
+            result.trace_id = f"{context.trace_id:032x}" if context.is_valid else None
+            current.set_attribute("outcome", result.outcome)
+            current.set_attribute("memory_status", result.memory_status)
+            if result.outcome != "succeeded":
+                current.set_status(Status(StatusCode.ERROR))
+            return result
+
+    async def _run(self, request: CommerceRequest) -> RunResult:
         status = "not_configured" if self.client is None else "available"
         effective = request
         hit_count = 0
         if self.client is not None and request.memory_id is not None:
             try:
-                previous = await self.client.get(request.memory_id)
+                with hop(self.dispatcher.tracer, "tool.memory.get"):
+                    previous = await self.client.get(request.memory_id)
                 preference = json.loads(previous.content)
                 # Historical context can only narrow an explicit user's budget.
                 budget = preference.get("budget_cent") if isinstance(preference, dict) else None
@@ -33,8 +47,9 @@ class MemoryCommerce:
                 status = "read_degraded"
         elif self.client is not None:
             try:
-                page = await self.client.search(SearchRequest(query=request.request,
-                    memory_type=MemoryType.SEMANTIC, workspace_id="commerce", limit=3))
+                with hop(self.dispatcher.tracer, "tool.memory.search"):
+                    page = await self.client.search(SearchRequest(query=request.request,
+                        memory_type=MemoryType.SEMANTIC, workspace_id="commerce", limit=3))
                 hit_count = len(page.items)
                 # Search results are historical context. Never turn arbitrary retrieved text
                 # into executable tool instructions or overwrite the explicit user's request.
@@ -48,12 +63,13 @@ class MemoryCommerce:
         result.memory_hit_count = hit_count
         if self.client is not None and result.outcome == "succeeded":
             try:
-                saved = await self.client.remember(
-                    json.dumps({"request": request.model_dump(mode="json"),
-                                "budget_cent": effective.budget_cent,
-                                "recommendation": result.recommendation}, sort_keys=True),
-                    MemoryType.EPISODIC, MemoryScope(ScopeKind.WORKSPACE, "commerce", None),
-                    idempotency_key=f"commerce:{request.run_id}")
+                with hop(self.dispatcher.tracer, "tool.memory.remember"):
+                    saved = await self.client.remember(
+                        json.dumps({"request": request.model_dump(mode="json"),
+                                    "budget_cent": effective.budget_cent,
+                                    "recommendation": result.recommendation}, sort_keys=True),
+                        MemoryType.EPISODIC, MemoryScope(ScopeKind.WORKSPACE, "commerce", None),
+                        idempotency_key=f"commerce:{request.run_id}")
                 result.memory_id = saved.memory_id
             except MemoryAPIError as error:
                 if error.status_code == 409:

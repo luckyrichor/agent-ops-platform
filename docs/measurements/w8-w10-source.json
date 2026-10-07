@@ -1,0 +1,31 @@
+{
+  "assistant": "Codex",
+  "generated_at_beijing": "2026-10-07T21:06:44.710872+08:00",
+  "baseline_commit": "8c041beca9bd2bd928657d2edb269538da611d4d",
+  "source_state": "baseline plus uncommitted W8-W10 changes at measurement time",
+  "source_sha256": {
+    "pyproject.toml": "2f06a93c1203ea54c107cb564d464ade1ef5785fad8b418e348c14af4a229d4c",
+    "scripts/bootstrap.sh": "c4739fa218f85d30998eb59f3bb07c735bfe5d64831bfb169f583d2efacc6d5b",
+    "scripts/call-tree-demo.py": "0907ab63470300dc2ed73e32ad08cf9bfa679d45551a7eb41c8dd1ff7b2ac2da",
+    "scripts/measure-streams.py": "6bebdf886e8498b0d444a8a74b2460eb558f6bf4882dd29cbc4e3be20903e1f7",
+    "src/agent_ops/__init__.py": "790a09b52d965efce6fdde2575c4ba2a7d009cd5a210181548e98fab8f45cdcd",
+    "src/agent_ops/__main__.py": "ff73535b64e839036ba90b2b5fb56f01033eb0a38ea9702d8b11f021e5d964fd",
+    "src/agent_ops/agents.py": "dc30a08884dc2d99415989460a9ffa82f72d2a9c93ca561e9b397d88e793ffa8",
+    "src/agent_ops/api.py": "0432b45ba82890e0140825e14a2aa582752f1d95015b12a427c163ff00dcf38c",
+    "src/agent_ops/memory.py": "0aabdaa90f4be45a34e19ae11aab49f6ab25b5cdb968501171e23a31bec434f0",
+    "src/agent_ops/models.py": "9942f87250643e9d5701cfeaeb1608f8e6691c88635761f8dd5c536ad12b88a8",
+    "src/agent_ops/orchestrator.py": "d6ca6bf7b47f2c170aebdbd880ac7377b0f0c4ad96fd5b90e482861433dfeff4",
+    "src/agent_ops/streaming.py": "04824c2bb13396ff37a4e1102aa1aec448afc74cde6f6a31b7b1ebab32c9eec3",
+    "src/agent_ops/telemetry.py": "11cf1b68cb0da9fb42a86457e9e250c512ceee8db41eeb00e83e3394788e4891",
+    "tests/test_call_tree.py": "5838b4439be8aa4f8f601dc7d87d38cccef2cfa02516738df0c1e8fff7656472",
+    "tests/test_commerce.py": "e4dd76606e3ae655b0658c12aea30edde1cb9ba0b7dd5202990dbd9fe0984607",
+    "tests/test_memory_integration.py": "134731b6d31f1873b1f38c0f5a50b9629a9ccb4d6afa40aaa70f43fa48320298",
+    "tests/test_memory_stream.py": "0107b3b75394cf764b3bbbee6b862751d8c57c35f434f7e227ba82ca6d545184",
+    "tests/test_stream_http.py": "210c3a47efcabc389ea1feb4000939905eecc509bde9d1d83d58b333e795f611",
+    "uv.lock": "50599405300b3b0a7f4f29514f2cfd3177c72f617179d8970b4ec8afa59d54a1"
+  },
+  "environment": "TX Ubuntu 24.04, AMD EPYC 7K62 virtual 4CPU, 7.5GiB, gcc13.3, CMake3.28, Go1.27.1, uv Python3.12",
+  "artifact_sha256": {
+    "docs/measurements/w10-call-tree.json": "153ac5804955122b131c78aa28b168c0e6e490238dfd3a586c12384b57e1719c"
+  }
+}

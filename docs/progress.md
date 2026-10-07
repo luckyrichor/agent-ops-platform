@@ -26,3 +26,10 @@ _尚无记录。_
 来源 agent-ops-platform@ed6f887 + 本轮工作树修改，依赖本轮 agent-memory SDK。W5 M2：官方 SDK 的读→工具编排→写时序、读写失败回退、稳定 run_id 写入幂等和冲突传播。W6 独立维护：接入 search SDK 与检索命中/降级状态。W7 M3：每请求有界 SSE 队列、慢消费者取消隔离、断开后取消正在执行的 HTTP/角色工具。
 
 末次本地 pytest 18 passed（含实际记忆 API/PostgreSQL、实际 HTTP 断开、16 并发 HTTP、32 正常流与1慢流），ruff 与 strict mypy 8 文件通过。可复现并发测量在 docs/measurements/2026-10-02-streams.json，具体耗时和源码 SHA256 以该文件为准，不视为生产性能。M2/M3 自动验收通过；M4/M5 不在本轮执行范围。docs/memory-streaming.md 记录接口和边界。无实际工时声明，此前章节为历史记录。
+
+
+## 2026-10-07 Codex：W8–W10实际执行
+
+W8独立维护：TaskGroup管理ready角色批次，取消时收完pricing/shipping两个并行finally。W10 M4：OpenTelemetry请求根span→Agent→实际工具调用树，memory HTTP读写工具也在同一请求上下文；API返回trace_id，失败标ERROR+原因码，不记录正文/凭证/异常事件。成功与pricing失败两条实测调用树已导出，memory HTTP503降级仍可定位具体hop。当前为本地/控制台导出，不声称部署追踪后端或跨服务traceparent。
+
+22 pytest passed in 7.60s，ruff/strict mypy9文件通过。包含真实memory API/数据库原回归、并行取消、失败工具及memory降级追踪。来源agent-ops-platform@8c041be + 本轮工作树；精确SHA256见测量元数据。说明见docs/call-tree.md。

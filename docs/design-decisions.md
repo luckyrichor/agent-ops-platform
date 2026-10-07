@@ -10,3 +10,8 @@ DAG 执行按 ready wave 并发：catalog 后 pricing/shipping 独立，recommen
 ## 2026-10-02 记忆工具与流式取舍
 
 用官方HTTP SDK而非直接访问memory数据库，转发调用者身份而非共享租户凭据。稳定run_id只保证记忆写幂等；409冲突显式传播，不静默制造新key。历史偏好只能收紧当前预算。每请求容量2队列和入队超时让慢消费者局部取消；关闭生成器必须join producer与工具任务，实际HTTP断开测试验证取消链。流的是运行状态，不声称LLM token或完整trace。见memory-streaming.md。此前章节为历史记录。
+
+
+## 2026-10-07 Codex：W8–W10
+
+为每个dispatcher注入Tracer而不替换全局provider，便于隔离测试和独立运行；请求root在MemoryCommerce执行周期内关闭，适用于SSE任务。工具异常仅ERROR与稳定code，不使用默认异常事件。TaskGroup保证取消后所有并行角色收尾完成。跨服务传播和部署追踪后端后续验证。

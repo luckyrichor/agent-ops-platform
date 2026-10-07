@@ -44,3 +44,4 @@ class RunResult(BaseModel):
     memory_status: str = "not_configured"
     memory_id: UUID | None = None
     memory_hit_count: int = 0
+    trace_id: str | None = None
