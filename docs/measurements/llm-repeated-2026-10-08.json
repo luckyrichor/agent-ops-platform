@@ -1,0 +1,259 @@
+{
+  "generated_at": "2026-10-08T07:17:54.956954+00:00",
+  "model": "doubao-seed-2-1-lite-260915",
+  "repetitions_per_case": 10,
+  "total": 30,
+  "max_attempts": 1,
+  "concurrency": 1,
+  "outcomes": {
+    "OK": 30
+  },
+  "valid_plan_fraction": 1.0,
+  "invalid_plan_fraction": 0.0,
+  "observed_http_status_counts": {
+    "200": 30
+  },
+  "observed_429_fraction": 0.0,
+  "latency_all_ms": {
+    "p50": 1913.643,
+    "p95": 2703.883,
+    "p99": 3553.229
+  },
+  "latency_valid_ms": {
+    "p50": 1913.643,
+    "p95": 2703.883,
+    "p99": 3553.229
+  },
+  "latency_deterministic_ms": {
+    "p50": 0.012,
+    "p95": 0.021,
+    "p99": 0.021
+  },
+  "samples": [
+    {
+      "case": "in-budget",
+      "repeat": 0,
+      "reason_code": "OK",
+      "duration_ms": 1664.255,
+      "deterministic_ms": 0.020869
+    },
+    {
+      "case": "shipping-over-budget",
+      "repeat": 0,
+      "reason_code": "OK",
+      "duration_ms": 1818.864,
+      "deterministic_ms": 0.011902
+    },
+    {
+      "case": "empty-catalog",
+      "repeat": 0,
+      "reason_code": "OK",
+      "duration_ms": 2332.613,
+      "deterministic_ms": 0.01585
+    },
+    {
+      "case": "in-budget",
+      "repeat": 1,
+      "reason_code": "OK",
+      "duration_ms": 2500.825,
+      "deterministic_ms": 0.011261
+    },
+    {
+      "case": "shipping-over-budget",
+      "repeat": 1,
+      "reason_code": "OK",
+      "duration_ms": 2610.712,
+      "deterministic_ms": 0.0105
+    },
+    {
+      "case": "empty-catalog",
+      "repeat": 1,
+      "reason_code": "OK",
+      "duration_ms": 2693.386,
+      "deterministic_ms": 0.013626
+    },
+    {
+      "case": "in-budget",
+      "repeat": 2,
+      "reason_code": "OK",
+      "duration_ms": 2062.39,
+      "deterministic_ms": 0.016641
+    },
+    {
+      "case": "shipping-over-budget",
+      "repeat": 2,
+      "reason_code": "OK",
+      "duration_ms": 1891.604,
+      "deterministic_ms": 0.01097
+    },
+    {
+      "case": "empty-catalog",
+      "repeat": 2,
+      "reason_code": "OK",
+      "duration_ms": 2275.545,
+      "deterministic_ms": 0.011542
+    },
+    {
+      "case": "in-budget",
+      "repeat": 3,
+      "reason_code": "OK",
+      "duration_ms": 1916.606,
+      "deterministic_ms": 0.015058
+    },
+    {
+      "case": "shipping-over-budget",
+      "repeat": 3,
+      "reason_code": "OK",
+      "duration_ms": 3553.229,
+      "deterministic_ms": 0.011581
+    },
+    {
+      "case": "empty-catalog",
+      "repeat": 3,
+      "reason_code": "OK",
+      "duration_ms": 2146.006,
+      "deterministic_ms": 0.014988
+    },
+    {
+      "case": "in-budget",
+      "repeat": 4,
+      "reason_code": "OK",
+      "duration_ms": 1913.643,
+      "deterministic_ms": 0.014608
+    },
+    {
+      "case": "shipping-over-budget",
+      "repeat": 4,
+      "reason_code": "OK",
+      "duration_ms": 1684.108,
+      "deterministic_ms": 0.014537
+    },
+    {
+      "case": "empty-catalog",
+      "repeat": 4,
+      "reason_code": "OK",
+      "duration_ms": 1526.101,
+      "deterministic_ms": 0.01091
+    },
+    {
+      "case": "in-budget",
+      "repeat": 5,
+      "reason_code": "OK",
+      "duration_ms": 2352.808,
+      "deterministic_ms": 0.013686
+    },
+    {
+      "case": "shipping-over-budget",
+      "repeat": 5,
+      "reason_code": "OK",
+      "duration_ms": 2136.243,
+      "deterministic_ms": 0.011692
+    },
+    {
+      "case": "empty-catalog",
+      "repeat": 5,
+      "reason_code": "OK",
+      "duration_ms": 1955.499,
+      "deterministic_ms": 0.01088
+    },
+    {
+      "case": "in-budget",
+      "repeat": 6,
+      "reason_code": "OK",
+      "duration_ms": 1857.48,
+      "deterministic_ms": 0.012864
+    },
+    {
+      "case": "shipping-over-budget",
+      "repeat": 6,
+      "reason_code": "OK",
+      "duration_ms": 1884.257,
+      "deterministic_ms": 0.01052
+    },
+    {
+      "case": "empty-catalog",
+      "repeat": 6,
+      "reason_code": "OK",
+      "duration_ms": 1446.984,
+      "deterministic_ms": 0.011191
+    },
+    {
+      "case": "in-budget",
+      "repeat": 7,
+      "reason_code": "OK",
+      "duration_ms": 1403.893,
+      "deterministic_ms": 0.02148
+    },
+    {
+      "case": "shipping-over-budget",
+      "repeat": 7,
+      "reason_code": "OK",
+      "duration_ms": 1957.489,
+      "deterministic_ms": 0.015108
+    },
+    {
+      "case": "empty-catalog",
+      "repeat": 7,
+      "reason_code": "OK",
+      "duration_ms": 1829.391,
+      "deterministic_ms": 0.019647
+    },
+    {
+      "case": "in-budget",
+      "repeat": 8,
+      "reason_code": "OK",
+      "duration_ms": 1702.848,
+      "deterministic_ms": 0.011331
+    },
+    {
+      "case": "shipping-over-budget",
+      "repeat": 8,
+      "reason_code": "OK",
+      "duration_ms": 1979.693,
+      "deterministic_ms": 0.013987
+    },
+    {
+      "case": "empty-catalog",
+      "repeat": 8,
+      "reason_code": "OK",
+      "duration_ms": 1868.655,
+      "deterministic_ms": 0.01056
+    },
+    {
+      "case": "in-budget",
+      "repeat": 9,
+      "reason_code": "OK",
+      "duration_ms": 1652.386,
+      "deterministic_ms": 0.009918
+    },
+    {
+      "case": "shipping-over-budget",
+      "repeat": 9,
+      "reason_code": "OK",
+      "duration_ms": 1500.49,
+      "deterministic_ms": 0.010289
+    },
+    {
+      "case": "empty-catalog",
+      "repeat": 9,
+      "reason_code": "OK",
+      "duration_ms": 2703.883,
+      "deterministic_ms": 0.010619
+    }
+  ],
+  "base_commit": "6e1e7bccd3eb19d0498c2dede08dcbfd495829af",
+  "source_dirty": true,
+  "source_sha256": {
+    "src/agent_ops/__init__.py": "790a09b52d965efce6fdde2575c4ba2a7d009cd5a210181548e98fab8f45cdcd",
+    "src/agent_ops/__main__.py": "d569e10e101e680b51f7d9bbddcf778074e80bc97068e07dfffd82276f341da0",
+    "src/agent_ops/agents.py": "dc30a08884dc2d99415989460a9ffa82f72d2a9c93ca561e9b397d88e793ffa8",
+    "src/agent_ops/api.py": "80a4cd8c09370f57b77bc438f8ce736cd3bece518e6e3499529dd1c074362c27",
+    "src/agent_ops/memory.py": "f200315d15abab076dcfaccfa40a58d7455e73c01014de06e64a6368de0e4b2c",
+    "src/agent_ops/models.py": "694c4b597aa30c66b2ed4b4478a0024736a7fc3e8da1db5c5bf8c042c63a7c9e",
+    "src/agent_ops/orchestrator.py": "e229f4b35b14a1aeed24fb557e50c3267463d19af6d873a11ac37d08fb1a8733",
+    "src/agent_ops/planner.py": "e220eb4e82dd1eb82e868a60d2ed7df9602ee748131abcd2bbbf7566ea44b7c4",
+    "src/agent_ops/streaming.py": "bc463218f37a2d1fbea25c45c6bea501b45a0dcf36337a6f5defb535691a681d",
+    "src/agent_ops/telemetry.py": "3e890a2cba1a6d859c27db2485811d70bf13a80f3920a6b952ebd6e0f0c9915b"
+  },
+  "limits": "30 sequential synthetic plans, 3 cases x10; no retry, no tools/memory; nearest-rank percentiles, p99 effectively max; not free planning quality or long-term availability/quota estimate; no prompt or raw response stored"
+}

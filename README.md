@@ -2,7 +2,7 @@
 
 最后更新：2026-10-08；Codex；当前能力以本仓库提交及下列验收记录为准。
 
-W4 M1 骨架与电商多 Agent 编排最小闭环已实现。Python 3.12 + FastAPI；确定性规划器将请求分为 catalog、pricing、shipping、recommendation 四个角色任务，依赖校验后分派，pricing/shipping 并发，最终汇总预算内推荐。不同角色是代码中的独立 handler。现已增加可选真实 LLM 规划器，已使用用户开通的 Doubao-Seed-2.1-lite 完成 3 项真实调用初验，详见 [接入与验收](docs/llm-planner.md)。
+W4 M1 骨架与电商多 Agent 编排最小闭环已实现。Python 3.12 + FastAPI；确定性规划器将请求分为 catalog、pricing、shipping、recommendation 四个角色任务，依赖校验后分派，pricing/shipping 并发，最终汇总预算内推荐。不同角色是代码中的独立 handler。现已增加可选真实 LLM 规划器，已使用用户开通的 Doubao-Seed-2.1-lite 完成初验及30次重复规划工程评测，详见 [接入与验收](docs/llm-planner.md)。
 
 ```bash
 bash scripts/bootstrap.sh
@@ -25,7 +25,7 @@ M2 官方 memory SDK 集成与 M3 SSE/背压/取消已通过本地自动验收�
 
 ## 可选大模型调用
 
-服务器凭据保存于 gitignored `.local/ark.env`。`source .local/ark.env` 后运行上述 CLI / API 启用 llm 模式；正常结果返回 planner_mode/planner_model，模型失败不会默默降级为固定计划。模型名、预算、重试与配置详见 [docs/llm-planner.md](docs/llm-planner.md)。默认不加载本地凭据，离线测试固定使用 mock。
+服务器凭据保存于 gitignored `.local/ark.env`。`source .local/ark.env` 后运行上述 CLI / API 启用 llm 模式；正常结果返回 planner_mode/planner_model，模型失败不会默默降级为固定计划。日常固定图可用 `AGENT_OPS_PLANNER=deterministic` 避免模型延迟/费用；LLM模式用于验证真实调用行为，不能证明自主规划。模型名、预算、重试与配置详见 [docs/llm-planner.md](docs/llm-planner.md)。默认不加载本地凭据，离线测试固定使用 mock。
 
 
 ## 2026-10-08 追踪与流式完善

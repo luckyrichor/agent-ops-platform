@@ -10,7 +10,7 @@ Agent 应用与可观测评测平台。电商场景的多 Agent 任务拆解、�
 
 三个月求职计划六项目之一（原编号 ③），对应岗位 **05、07、10、11、14**，另含 **08** 作为子方向。总计划见 [workplan-docs](https://github.com/luckyrichor/workplan-docs)，岗位原文以那里的 `岗位要求原文.md` 为唯一依据。
 
-**当前状态：M1–M4本地验收通过；第二轮评审修复及独立构建通过。TX 已部署持久化 Jaeger 后端，四类 trace 导出及重启保留验收通过；业务 API 未常驻、跨服务传播未实现。部署见 docs/tracing-backend.md，实测进度见 docs/progress.md。**
+**当前状态：M1–M4本地验收通过；第二轮评审修复及独立构建通过；mini/lite 真实调用初验通过，默认模型 2.1-lite。LLM 仅验证固定四角色 DAG 的在线调用行为，精确依赖校验保持 pricing/shipping 并发。TX 已部署持久化 Jaeger 后端，四类 trace 导出及重启保留验收通过；业务 API 未常驻、跨服务传播未实现。部署见 docs/tracing-backend.md，实测进度见 docs/progress.md。**
 
 ## 分工模式：偏产出
 
@@ -107,20 +107,13 @@ bash workplan-docs/scripts/run-on-tx.sh agent-memory 'docker compose up -d postg
 写进「环境与踩坑记录」时，用 **［实测］**／**［预警］** 标注区分「已验证的事实」和「未触发的已知风险」，不要把推断写成结论。
 
 
-## 2026-10-08 模型接入补充
+## 当前模型接入与运行约定
 
-可选 llm planner 已实现，受四角色/依赖契约限制；本地工具仍提供价格、运费及预算判断。`.local/ark.env` 存当前指定凭据，只由用户显式 source 加载，不进版本库。当前目标 mini 模型返回 ModelNotOpen，在线成功验收仍阻塞，不能称真实模型任务已验证通过。离线测试必须移除 ARK_API_KEY 并使用确定性默认 / 注入 mock，严禁意外调用付费服务。运行与错误契约见 docs/llm-planner.md。
+可选 llm planner 已实现，四角色与依赖集合固定；本地工具使用显式类目/预算/地区，模型不提取自然语言需求、不自由选择工具。它验证真实模型延迟、限流、失败及取消传播，不能称为自主规划能力。pricing/shipping 只能依赖 catalog，不允许模型添加依赖使其串行。
 
+mini（doubao-seed-2-0-mini-260428）与 lite（doubao-seed-2-1-lite-260915）均已通过3/3真实应用初验；默认模型及服务器私密环境使用lite。旧 ModelNotOpen 阻塞已解决，原失败与成功证据只在 docs/progress.md 和 measurements 中作为历史保留，不作为当前指引。重复评测与边界见 docs/llm-planner.md。
 
-## 2026-10-08 模型权限复验
-
-上述 mini 权限阻塞为历史记录。用户已开通 Doubao-Seed-2.1-lite，默认及服务器私密配置改为 doubao-seed-2-1-lite-260915，同一指定 key 的三个真实规划→工具执行用例通过。证据在 docs/measurements/llm-live-2026-10-08.json；旧失败证据单独保留，不外推生产质量，未启动常驻服务。
-
-
-## 2026-10-08 mini 权限再次复验
-
-同一指定 key 的 doubao-seed-2-0-mini-260428 现已完成真实应用端到端 3/3 初验。首次复验 ModelNotOpen 与稍后成功分别保存在 docs/measurements/llm-mini-recheck-2026-10-08.json 和 llm-mini-live-2026-10-08.json。默认及私密环境继续使用已通过的 2.1-lite，本轮仅增加验收记录，未修改程序代码或启动常驻服务。
-
+未配置模式默认 deterministic；固定业务图日常执行优先使用该模式，无模型延迟/费用。llm 是显式在线验证模式，每次请求都会调用、不缓存、不静默回退。`.local/ark.env` 保存私密凭据和llm配置，需要用户显式source，不入GitHub/ZIP。离线测试强制 deterministic、移除 ARK_API_KEY，模型测试显式mock；真实评测脚本才可调用已授权模型。Jaeger 已常驻，业务API尚未常驻。
 
 ## 2026-10-08 第二轮评审补充
 

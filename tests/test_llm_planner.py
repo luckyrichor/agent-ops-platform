@@ -252,3 +252,23 @@ async def test_sse_model_failure_exposes_safe_code():
             reply = await api.post("/v1/commerce/stream", json=request().model_dump(mode="json"))
             assert "event: error" in reply.text and "LLM_MODEL_UNAVAILABLE" in reply.text
             assert "event: result" not in reply.text
+
+
+@pytest.mark.parametrize("role,extra", [("shipping", "pricing"), ("pricing", "shipping"),
+                                       ("recommendation", "catalog")])
+def test_extra_dependencies_are_rejected_even_if_acyclic(role, extra):
+    plan = valid_plan()
+    task = next(t for t in plan["tasks"] if t["task_id"] == role)
+    task["depends_on"].append(extra)
+    with pytest.raises(PlanningError, match="LLM_INVALID_PLAN"):
+        validated_tasks(json.dumps(plan))
+
+
+def test_reordered_tasks_and_dependencies_keep_same_valid_graph():
+    plan = valid_plan()
+    plan["tasks"].reverse()
+    for task in plan["tasks"]:
+        task["depends_on"].reverse()
+    tasks = validated_tasks(json.dumps(plan))
+    assert {t.task_id: set(t.depends_on) for t in tasks} == {
+        t.task_id: set(t.depends_on) for t in CommercePlanner().plan(request())}

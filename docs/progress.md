@@ -83,3 +83,12 @@ memory_read_status/memory_write_status 和对应错误码分别保留，读写�
 应用 OTLP 批量导出接入，API lifespan/CLI 关闭时排空，采样配置检查、生命周期和元数据回归通过。最终 **62 passed in 4.15s**，ruff 通过，strict mypy10文件通过。真实应用经 OTLP 进入 Jaeger 后按 trace_id 查询：成功10 spans、422拒绝1 span、依赖阻塞9 spans、主动取消4 spans，4/4通过；422与取消无 ERROR。请求/异常正文标记未被导出。容器重启后四条 trace 与 span 数均保留。没有调用付费模型。
 
 验证中旧 /api/services 返回404，改用当前 /api/v3 查询；Badger 查询适配把数组属性以 JSON 字符串返回，脚本兼容两种表示并断言 blocked_by 内容。首次验证因此失败，修正查询断言后4/4通过，未把失败隐去。服务器私有 .local/ark.env 新增 OTLP 启用配置（需启动前 source，不自动加载），凭据仍不进入仓库。业务 API 未常驻、跨服务传播/HA/告警及负载容量尚未验收。
+
+
+## 2026-10-08：规划评审与重复在线评测（Codex）
+
+来源 agent-ops-platform@6e1e7bc + 本轮修改，精确源码SHA256见 measurements/llm-repeated-2026-10-08.json。确认四角色图没有自主规划自由度；自然语言不被工具解析，显式参数驱动本地工具。精确依赖集合取代最小依赖校验，拒绝额外shipping→pricing/pricing→shipping和冗余recommendation→catalog边；列表顺序可变不影响有效图。新增4项回归，离线 **66 passed in4.31s**，ruff、strict mypy10文件通过。评测脚本初次ruff发现dict样式与async阻塞git调用，改为字面量及to_thread后通过。
+
+使用已授权 doubao-seed-2-1-lite-260915 执行30次真实规划（3类合成请求各10次，串行、max_attempts=1），合法30/30、无效0/30、HTTP429为0/30，HTTP200共30次。规划p50 1913.643ms、p95 2703.883ms、p99/最大值 3553.229ms；相同请求确定性规划p50 0.012ms。报告逐样本记录固定原因码和耗时，无请求/原始响应/凭据；此次只测规划不调用工具或memory，不能作为端到端自由规划质量或长期限流概率。保持默认deterministic及显式llm验证模式，不加入会掩盖真实调用延迟的计划缓存。私密环境仍保留llm配置，日常可显式覆盖模式。
+
+AGENTS合并三个模型历史补充为当前状态，mini/lite均已可用、默认lite，旧阻塞只保留在历史进度与证据；顶部补齐模型接入和并发契约。旧422机制已由memory@bb09ed0修复并由ops@25abaac固定数字UUID联调验收，原随机请求正文未留存，因此不宣称已还原具体失败请求。本轮全量联调通过；未改memory源码/依赖或常驻服务。M5仅完成固定图provider工程评测，未宣称整个M5验收通过。

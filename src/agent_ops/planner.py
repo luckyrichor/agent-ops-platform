@@ -66,7 +66,8 @@ fees; recommendation combines prices and fees within the supplied budget.
 Pricing and shipping must depend on catalog; recommendation must depend on pricing
 and shipping. Only these four registered agents exist. No cycles, duplicate dependencies,
 URLs, commands, scope, permissions, credentials, product facts or extra fields.
-You may order tasks and add necessary dependencies, but preserve these minimum inputs."""
+Task list order may vary, but dependencies must be exactly those specified above.
+Do not add dependencies: pricing and shipping must remain parallel after catalog."""
 
 
 def validated_tasks(content: str) -> list[Task]:
@@ -83,9 +84,9 @@ def validated_tasks(content: str) -> list[Task]:
             if (
                 task.agent != task.task_id
                 or len(set(task.depends_on)) != len(task.depends_on)
-                or not REQUIRED[task.task_id] <= set(task.depends_on)
+                or REQUIRED[task.task_id] != set(task.depends_on)
             ):
-                raise ValueError("missing role inputs")
+                raise ValueError("role dependencies must match contract")
         return tasks
     except (ValueError, ValidationError, TypeError):
         raise PlanningError("LLM_INVALID_PLAN") from None
