@@ -26,3 +26,8 @@ M2 官方 memory SDK 集成与 M3 SSE/背压/取消已通过本地自动验收�
 ## 可选大模型调用
 
 服务器凭据保存于 gitignored `.local/ark.env`。`source .local/ark.env` 后运行上述 CLI / API 启用 llm 模式；正常结果返回 planner_mode/planner_model，模型失败不会默默降级为固定计划。模型名、预算、重试与配置详见 [docs/llm-planner.md](docs/llm-planner.md)。默认不加载本地凭据，离线测试固定使用 mock。
+
+
+## 2026-10-08 追踪与流式完善
+
+HTTP 响应在开始时提供 `X-Trace-Id`，业务错误 JSON 和 SSE 事件也携带 `trace_id`。失败依赖的下游节点记录 `blocked_by`，未执行不伪造工具调用；主动取消记录 cancelled，不当作故障。慢消费者恢复读取后收到 `aborted` / `SLOW_CONSUMER`；断开的连接无法保证通知送达。当前契约见 [调用树](docs/call-tree.md) 和 [记忆与流式](docs/memory-streaming.md)，原始测量及历史测试数量保留原版本来源。

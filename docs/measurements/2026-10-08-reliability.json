@@ -1,0 +1,23 @@
+{
+  "date_beijing": "2026-10-08",
+  "source_base": "caa453fc48e37a7f7fa827a7ca8d67da2ade7a99",
+  "source_dirty": true,
+  "source_sha256": {
+    "src/agent_ops/__init__.py": "790a09b52d965efce6fdde2575c4ba2a7d009cd5a210181548e98fab8f45cdcd",
+    "src/agent_ops/__main__.py": "9db8b62778216ba2d32c24f82fbb5e387225e3ffa703b55b0a111a1a27185a10",
+    "src/agent_ops/agents.py": "dc30a08884dc2d99415989460a9ffa82f72d2a9c93ca561e9b397d88e793ffa8",
+    "src/agent_ops/api.py": "d63790825988d740b48fc7b92046cb0860625bbe0e63761f0bd1f5b019532f7a",
+    "src/agent_ops/memory.py": "849407604677590ae6107acfb593a15d24ca7216f6071c1b8f0c00d3ec06a1ef",
+    "src/agent_ops/models.py": "e1ccb97b3f7d21afbe6a42336638ef7063f7c9b797104bec067950b8409e7b50",
+    "src/agent_ops/orchestrator.py": "8313918452ecb3485b7c3be2d343dee091430393665ab21be2d355d506cd173d",
+    "src/agent_ops/planner.py": "b513e6b597a87f35557d4302f3a6dea03ee269d2e7e9f413cdbe5406ac3d5dbf",
+    "src/agent_ops/streaming.py": "746b71fdb0056b9a863220ffc70d5101c650ecdaadc196000023e5554a706dc1",
+    "src/agent_ops/telemetry.py": "9aafea8e2388f366f85bd11c4a79bca6550f58dfb2c1ce257cb1eeb882979684"
+  },
+  "verification": {
+    "pytest": "48 passed in 4.13s",
+    "ruff": "passed (src, tests, call-tree-demo.py)",
+    "mypy": "strict passed, 10 source files"
+  },
+  "scope": "local regressions including real TCP disconnect and temporary PostgreSQL integration; no paid LLM call, production deployment or load claim"
+}

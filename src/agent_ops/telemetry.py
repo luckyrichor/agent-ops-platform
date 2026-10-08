@@ -1,4 +1,5 @@
 """Safe call-tree telemetry: never export request text, responses or exceptions."""
+import asyncio
 import os
 from collections.abc import Iterator
 from contextlib import contextmanager
@@ -6,6 +7,7 @@ from contextlib import contextmanager
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import ConsoleSpanExporter, SimpleSpanProcessor
 from opentelemetry.trace import Span, Status, StatusCode, Tracer
+from starlette.requests import ClientDisconnect
 
 
 def configured_tracer() -> Tracer:
@@ -25,6 +27,10 @@ def hop(tracer: Tracer, name: str) -> Iterator[Span]:
     ) as current:
         try:
             yield current
+        except (asyncio.CancelledError, GeneratorExit, ClientDisconnect):
+            current.set_attribute("outcome", "cancelled")
+            current.set_attribute("reason_code", "REQUEST_CANCELLED")
+            raise
         except BaseException:
             current.set_status(Status(StatusCode.ERROR))
             current.set_attribute("reason_code", "HOP_FAILED")

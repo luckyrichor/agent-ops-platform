@@ -1,4 +1,14 @@
-# W8维护 / W10 M4：调用树（Codex，2026-10-07）
+# 调用树与终止语义（Codex，2026-10-08）
+
+本次代码基线 agent-ops-platform@caa453f + 本轮修改；历史测量保留原始来源。
+
+HTTP 调用树现在为 commerce.http → commerce.request → agent角色 → tool实际handler。blocked 任务有 agent 节点、outcome=blocked、task_id 和直接 blocked_by；没有实际执行就不生成 tool 节点。客户端断开/取消记录 cancelled，span 不标 ERROR；业务失败仍标 ERROR。
+
+所有 HTTP 响应头含 X-Trace-Id，业务错误 JSON 保留 detail 并新增 trace_id；SSE started/error/aborted/result 也携带 trace_id。慢消费者恢复读取后获得 aborted/SLOW_CONSUMER，连接已断开时仅能依靠先前响应头及服务端 trace。
+
+当前本地回归见 progress.md；新的演示证据为 measurements/2026-10-08-call-tree.json，含源码 SHA256、实际基线与 dirty 标记。下方 W10 证据及 22 个测试为历史验收，不表示当前版本。
+
+## 历史：W8维护 / W10 M4（2026-10-07）
 
 M4本地验收通过：commerce.request 根span → agent角色span → tool实际handler span；
 可选memory get/search/remember HTTP工具也在同一根span下。
@@ -23,7 +33,7 @@ AGENT_OPS_TRACE_EXPORTER=console uv run uvicorn 'agent_ops.api:create_app' --fac
 ```
 
 控制台导出默认关闭；配置console后可检查span/parent/trace_id，示例JSON在
-`measurements/w10-call-tree.json`，包含成功与pricing失败两条调用树。
+`measurements/w10-call-tree.json`（历史产物），包含成功与pricing失败两条调用树。
 22个测试通过，含真实memory API/PostgreSQL旧回归、请求工具失败、memory降级、
 并行取消收尾；不存在请求正文或异常正文导出。
 来源agent-ops-platform@8c041be + 本轮工作树修改，源码SHA256见元数据。

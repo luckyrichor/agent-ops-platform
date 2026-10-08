@@ -1,6 +1,6 @@
 # W5–W7 记忆工具与 SSE
 
-最后更新：2026-10-02（北京时间）；Codex；来源 agent-ops-platform@ed6f887 + 本轮工作树修改，依赖本轮 agent-memory SDK 工作树。
+最后更新：2026-10-08（北京时间）；Codex；本次代码基线 agent-ops-platform@caa453f + 本轮修改。W5–W7 原始来源 ed6f887 + 当时工作树；历史测量保留原版本。
 
 ## W5 / M2
 
@@ -18,13 +18,13 @@
 
 ## W7 / M3
 
-`POST /v1/commerce/stream` 接受同样请求；SSE 事件 started → heartbeat → result 或 error。当前流的是运行状态与最终推荐，未实现 LLM token 流或逐角色 trace（M4 后续里程碑）。
+`POST /v1/commerce/stream` 接受同样请求；SSE 事件 started → heartbeat → result、error 或 aborted（终止事件）。当前流的是运行状态与最终推荐，未实现 LLM token 流；逐角色 trace 已在 M4 实现，详见 call-tree.md。
 
-每请求独立容量 2 的队列，入队等待上限 2 秒；堵塞只取消该请求。正常流 heartbeat 每 0.1 秒。客户端断开/关闭迭代器时 finally 取消 producer 和所有正在执行的工具，无全局共享出队锁。错误事件只含 RUN_FAILED，不输出内部异常正文。
+每请求独立容量 2 的队列，入队等待上限 2 秒；堵塞只取消该请求。正常流 heartbeat 每 0.1 秒。客户端断开/关闭迭代器时 finally 取消 producer 和所有正在执行的工具，无全局共享出队锁。错误事件含固定原因码和 trace_id（包括模型错误和记忆冲突），不输出内部异常正文。每次响应在开始时提供 X-Trace-Id；started 同时携带 trace_id。慢消费者超时保留 aborted/SLOW_CONSUMER 终止事件，恢复读取后可收到；已经断开的连接无法保证送达。
 
 ## 证据与边界
 
-18 pytest passed：包括真实 SDK→memory API→迁移后 PostgreSQL 的读写/重放/冲突/archive 回退；真实 TCP HTTP 服务断开后的取消、16 个并发正常 HTTP 请求；一个未消费迭代器与 32 个正常流的隔离。ruff、strict mypy 8 文件通过。
+W5–W7 历史验收为 18 pytest passed：包括真实 SDK→memory API→迁移后 PostgreSQL 的读写/重放/冲突/archive 回退；真实 TCP HTTP 服务断开后的取消、16 个并发正常 HTTP 请求；一个未消费迭代器与 32 个正常流的隔离。ruff、strict mypy 8 文件通过。
 
 `uv run python scripts/measure-streams.py` 生成 docs/measurements/2026-10-02-streams.json，包含机器、工作树/源码哈希、每请求耗时。只测单机确定性工具和队列隔离，不是线上模型吞吐、网络慢连接饱和或生产容量。临时服务测试完成后退出。
 

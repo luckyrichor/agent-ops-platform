@@ -1,14 +1,12 @@
 # 进度记录
 
-最后更新：2026-10-02（北京时间）
+最后更新：2026-10-08（北京时间）
 
 本文件是 `agent-ops-platform` 的进度事实源，汇总到 `workplan-docs/进度总览.md`。
 
 格式：每条记录写明日期、做了什么、验证方式与结果、遇到的问题。**不写计划，只写已发生的事**；失败和返工也要记，那是面试时最有料的部分。
 
 ---
-
-_尚无记录。_
 
 ## 2026-10-01 W2 维持（Codex）
 
@@ -56,3 +54,12 @@ W8独立维护：TaskGroup管理ready角色批次，取消时收完pricing/shipp
 用户开通 mini 后，首次复验仍返回 ModelNotOpen（0/3，见 `docs/measurements/llm-mini-recheck-2026-10-08.json`）。稍后用同一指定 key 直接调用已返回 HTTP 200，再运行应用端到端验证，`doubao-seed-2-0-mini-260428` 的预算内推荐、运费超预算和空目录三个构造场景 **3/3 成功**；模型计划经过本地契约校验，四角色工具任务完成。成功证据见 `docs/measurements/llm-mini-live-2026-10-08.json`，包含实测时间及源码 SHA256，对应代码基线 99ff2aa；本轮只补充记录，未修改程序代码。
 
 mini 与 2.1-lite 均已真实验证可用。默认模型及服务器私密配置继续使用 `doubao-seed-2-1-lite-260915`；如需使用 mini，在 source 私密环境后设置 `AGENT_OPS_LLM_MODEL=doubao-seed-2-0-mini-260428`。两个模型的报告分开保存，首次失败记录保留。不将三个构造场景外推为生产质量或长期可用性，未启动常驻服务。
+
+
+## 2026-10-08：追踪与 SSE 五项完善（Codex）
+
+来源 agent-ops-platform@caa453f + 本轮修改；精确源码 SHA256 见 measurements/2026-10-08-reliability.json。blocked 下游生成带 task_id/blocked_by 的 agent span，不伪造 tool span；CancelledError、GeneratorExit 与发送阶段断连按 cancelled 分类，不标 ERROR。HTTP 外层 commerce.http 保持整条响应 context，X-Trace-Id 在响应开始时返回；业务错误 JSON、SSE started/error/aborted/result 都可关联 trace，包含模型故障、记忆 409、未知异常 500。未知异常仍脱敏。
+
+满队列的终止帧使用单独槽位，不再向满队列等待；慢消费者恢复读取后收到 aborted/SLOW_CONSUMER。已断开的连接不能保证通知送达。原容量 2、子任务取消收尾和多请求隔离保留；业务 TimeoutError 不误标慢消费者。文档去掉“尚无记录”，更新当前头部日期/基线，旧日期、提交与测试数字明确保留为历史记录。
+
+最终 pytest **48 passed in 4.13s**；ruff（src/tests/调用树脚本）通过；strict mypy **10 文件**通过。新增 8 项用例覆盖 503/409/500 trace、实际 memory 写冲突 SSE、取消分类、满队列终止、业务超时分类和传输断连；更新原 blocked 树及真实 TCP 取消测试，16 个并发请求仍能完成。新的调用树演示成功导出两条合成 trace，见 measurements/2026-10-08-call-tree.json。初次新增测试受系统 SOCKS 代理且缺 socksio 影响，隔离测试代理环境后通过；之后一次既有 memory 集成回归返回 422，单独复验及最终全量通过，未将该偶发失败隐去，也未宣称已定位其根因。未新增软件/容器常驻服务，未改模型配置或调用付费模型。

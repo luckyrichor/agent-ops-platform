@@ -68,6 +68,7 @@ class Dispatcher:
 
         async def execute(record: TaskRecord) -> None:
             with hop(self.tracer, "agent." + record.task.agent) as current:
+                current.set_attribute("task_id", record.task.task_id)
                 await execute_role(record)
                 current.set_attribute("outcome", record.status.value)
                 if record.error_code:
@@ -80,6 +81,12 @@ class Dispatcher:
                     records[d].status in {TaskStatus.FAILED, TaskStatus.BLOCKED}
                     for d in record.task.depends_on):
                     record.status, record.error_code = TaskStatus.BLOCKED, "DEPENDENCY_FAILED"
+                    with hop(self.tracer, "agent." + record.task.agent) as current:
+                        current.set_attribute("task_id", record.task.task_id)
+                        current.set_attribute("outcome", "blocked")
+                        current.set_attribute("reason_code", "DEPENDENCY_FAILED")
+                        current.set_attribute("blocked_by", [d for d in record.task.depends_on
+                            if records[d].status in {TaskStatus.FAILED, TaskStatus.BLOCKED}])
             ready = [r for r in records.values() if r.status is TaskStatus.PENDING and all(
                 records[d].status is TaskStatus.SUCCEEDED for d in r.task.depends_on)]
             if ready:

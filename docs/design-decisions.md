@@ -1,6 +1,6 @@
 # 设计取舍
 
-最后更新：2026-10-01；Codex；agent-ops-platform@216d302 + 未提交修改。
+最后更新：2026-10-08；Codex；本次代码基线 agent-ops-platform@caa453f + 本轮修改。各历史章节保留原始来源。
 
 M1 先用确定性 planner + 四角色 handler，隔离编排正确性与模型随机性。用户可以观察实际任务依赖、分派与汇总；更换 planner/工具不必重写 DAG executor。代价是没有自由自然语言解析，用户需显式提供预算/类目/地域。真实模型/工具接入后必须另外评估，当前不夸大。
 
@@ -20,3 +20,14 @@ DAG 执行按 ready wave 并发：catalog 后 pricing/shipping 独立，recommen
 ## 2026-10-08：真实模型参与规划
 
 需要在线模型调用来验证延迟与故障对编排的影响。先采用受约束 JSON DAG（四个已注册角色），模型不能修改预算、商品事实或权限；本地验证后再调工具。固定 planner 保留作离线基线，显式 llm 模式失败时不静默回退，从结果元数据可区分路径。总预算包含排队与退避，取消传播至 HTTP；共享客户端由应用 lifespan 关闭。当前 key 的 mini 模型未开通，在线初验阻塞，代码通过 mock/集成测试并不等于真实模型调用已验收成功。
+
+
+## 2026-10-08：失败树、取消和终止通知
+
+未执行的 blocked 任务仍生成 agent span，记录 task_id 与直接 blocked_by，不生成伪造的 tool span。阻塞节点不单独标 ERROR，实际失败工具及业务请求才标 ERROR，避免把一次依赖失败计成多个执行故障。
+
+CancelledError / GeneratorExit 记录 cancelled 与稳定原因码，并继续传播、等待子任务收尾，不记录异常事件或设置 ERROR。HTTP 使用纯 ASGI 中间件保持 context 跨完整响应周期，增加 commerce.http 外层 span；成功体、业务错误体、SSE started/error/aborted/result 与 X-Trace-Id 头关联同一 trace。响应开始后无法修改 HTTP 状态，SSE 用终止事件报告。
+
+终止事件使用队列之外的单个槽位，保证容量 2 的队列堵塞时也能记录 aborted/SLOW_CONSUMER 并及时取消工作，不再等待向满队列入队。消费者恢复读取后先读完最多两条排队帧，再读终止帧；已断开的连接无法保证通知送达。队列超时与业务 TimeoutError 区分，后者属于 RUN_FAILED。未改变模型、安装软件或启动常驻服务。
+
+模型权限说明：此前 mini 未开通为历史记录；截至 caa453f，mini 与 2.1-lite 都已完成真实调用 3/3 初验，默认仍为 2.1-lite。

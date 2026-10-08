@@ -1,6 +1,9 @@
 """Export safe successful and failed local call trees for inspection."""
 import asyncio
+import hashlib
 import json
+import subprocess
+from datetime import UTC, datetime
 from pathlib import Path
 
 from opentelemetry.sdk.trace import TracerProvider
@@ -28,9 +31,16 @@ async def main() -> None:
             CommerceRequest(request="synthetic fixture", category="kettle", budget_cent=5000,
                             region="北京"))
         outcomes.append({"outcome": result.outcome, "trace_id": result.trace_id})
-    path = Path("docs/measurements/w10-call-tree.json")
+    path = Path("docs/measurements/2026-10-08-call-tree.json")
     path.parent.mkdir(parents=True, exist_ok=True)
-    path.write_text(json.dumps({"outcomes": outcomes,
+    path.write_text(json.dumps({"generated_at": datetime.now(UTC).isoformat(),
+                               "source_commit": (await asyncio.to_thread(subprocess.check_output,
+                                   ["git", "rev-parse", "HEAD"], text=True)).strip(),
+                               "source_dirty": bool((await asyncio.to_thread(subprocess.check_output,
+                                   ["git", "status", "--porcelain"], text=True)).strip()),
+                               "source_sha256": {str(p): hashlib.sha256(p.read_bytes()).hexdigest()
+                                   for p in sorted(Path("src/agent_ops").glob("*.py"))},
+                               "outcomes": outcomes,
                                "spans": [json.loads(s.to_json()) for s in exporter.get_finished_spans()]},
                               indent=2)+"\n")
     provider.shutdown()

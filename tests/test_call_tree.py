@@ -48,9 +48,13 @@ async def test_request_agent_tool_tree_and_redacted_failure(fail: bool) -> None:
     if fail:
         assert by_name["tool.pricing"].status.status_code == StatusCode.ERROR
         assert by_name["agent.pricing"].attributes["reason_code"] == "AGENT_EXECUTION_FAILED"
-        assert "agent.recommendation" not in by_name
+        blocked = by_name["agent.recommendation"]
+        assert blocked.attributes["outcome"] == "blocked"
+        assert blocked.attributes["blocked_by"] == ("pricing",)
+        assert blocked.parent.span_id == root.context.span_id
+        assert "tool.recommendation" not in by_name
     else:
-        assert len(spans) == 9
+        assert len(spans) == 10
     provider.shutdown()
 
 

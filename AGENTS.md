@@ -1,6 +1,6 @@
 # AGENTS.md
 
-最后更新：2026-10-07（北京时间）
+最后更新：2026-10-08（北京时间）
 
 本文件为在本仓库工作的编码 agent 提供指引（Claude Code 读 `CLAUDE.md`、Codex 读 `AGENTS.md`，两者都指向这里）。
 
