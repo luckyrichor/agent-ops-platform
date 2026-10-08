@@ -31,6 +31,7 @@ dependencies = [
     { name = "fastapi" },
     { name = "httpx" },
     { name = "opentelemetry-api" },
+    { name = "opentelemetry-exporter-otlp-proto-http" },
     { name = "opentelemetry-sdk" },
     { name = "uvicorn" },
 ]
@@ -50,6 +51,7 @@ requires-dist = [
     { name = "fastapi", specifier = ">=0.115,<1" },
     { name = "httpx", specifier = ">=0.27,<1" },
     { name = "opentelemetry-api", specifier = ">=1.27,<2" },
+    { name = "opentelemetry-exporter-otlp-proto-http", specifier = ">=1.27,<2" },
     { name = "opentelemetry-sdk", specifier = ">=1.27,<2" },
     { name = "uvicorn", specifier = ">=0.30,<1" },
 ]

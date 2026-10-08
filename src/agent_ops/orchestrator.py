@@ -5,7 +5,7 @@ from uuid import uuid4
 from opentelemetry.trace import Status, StatusCode, Tracer
 
 from agent_ops.models import CommerceRequest, RunResult, Task, TaskRecord, TaskStatus
-from agent_ops.telemetry import configured_tracer, hop
+from agent_ops.telemetry import Telemetry, hop
 
 AgentHandler = Callable[[CommerceRequest, dict[str, dict[str, object]]],
                         Awaitable[dict[str, object]]]
@@ -41,7 +41,16 @@ def validate_plan(tasks: list[Task]) -> None:
 class Dispatcher:
     def __init__(self, handlers: dict[str, AgentHandler], tracer: Tracer | None = None) -> None:
         self.handlers = handlers
-        self.tracer = tracer or configured_tracer()
+        if tracer is None:
+            self.telemetry: Telemetry | None = Telemetry()
+            self.tracer = self.telemetry.tracer
+        else:
+            self.telemetry = None
+            self.tracer = tracer
+
+    async def aclose(self) -> None:
+        if self.telemetry is not None:
+            await self.telemetry.aclose()
 
     async def run(self, request: CommerceRequest, tasks: list[Task]) -> RunResult:
         validate_plan(tasks)

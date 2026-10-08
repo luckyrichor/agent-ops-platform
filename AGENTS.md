@@ -10,7 +10,7 @@ Agent 应用与可观测评测平台。电商场景的多 Agent 任务拆解、�
 
 三个月求职计划六项目之一（原编号 ③），对应岗位 **05、07、10、11、14**，另含 **08** 作为子方向。总计划见 [workplan-docs](https://github.com/luckyrichor/workplan-docs)，岗位原文以那里的 `岗位要求原文.md` 为唯一依据。
 
-**当前状态：M1–M4本地验收通过；W8取消收尾维护完成。调用树与边界见docs/call-tree.md，实测进度见docs/progress.md。**
+**当前状态：M1–M4本地验收通过；第二轮评审修复及独立构建通过。TX 已部署持久化 Jaeger 后端，四类 trace 导出及重启保留验收通过；业务 API 未常驻、跨服务传播未实现。部署见 docs/tracing-backend.md，实测进度见 docs/progress.md。**
 
 ## 分工模式：偏产出
 

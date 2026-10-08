@@ -1,0 +1,46 @@
+# Jaeger v2: single-server development tracing with persistent Badger storage.
+service:
+  extensions: [jaeger_storage, jaeger_query, healthcheckv2]
+  pipelines:
+    traces:
+      receivers: [otlp]
+      processors: [memory_limiter, batch]
+      exporters: [jaeger_storage_exporter]
+  telemetry:
+    logs:
+      level: warn
+extensions:
+  healthcheckv2:
+    use_v2: true
+    http:
+      endpoint: 0.0.0.0:13133
+  jaeger_query:
+    storage:
+      traces: local
+  jaeger_storage:
+    backends:
+      local:
+        badger:
+          directories:
+            keys: /badger/keys
+            values: /badger/values
+          ephemeral: false
+          ttl:
+            spans: 72h
+receivers:
+  otlp:
+    protocols:
+      http:
+        endpoint: 0.0.0.0:4318
+processors:
+  memory_limiter:
+    check_interval: 1s
+    limit_mib: 512
+    spike_limit_mib: 128
+  batch:
+    timeout: 1s
+    send_batch_size: 256
+    send_batch_max_size: 512
+exporters:
+  jaeger_storage_exporter:
+    trace_storage: local

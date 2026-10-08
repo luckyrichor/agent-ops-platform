@@ -1,6 +1,6 @@
 # 设计取舍
 
-最后更新：2026-10-08；Codex；本次代码基线 agent-ops-platform@caa453f + 本轮修改。各历史章节保留原始来源。
+最后更新：2026-10-08；Codex；本次代码基线 agent-ops-platform@25abaac + 本轮修改。各历史章节保留原始来源。
 
 M1 先用确定性 planner + 四角色 handler，隔离编排正确性与模型随机性。用户可以观察实际任务依赖、分派与汇总；更换 planner/工具不必重写 DAG executor。代价是没有自由自然语言解析，用户需显式提供预算/类目/地域。真实模型/工具接入后必须另外评估，当前不夸大。
 
@@ -40,3 +40,10 @@ CancelledError / GeneratorExit 记录 cancelled 与稳定原因码，并继续�
 采用 PEP508 HTTPS Git 固定提交替代 editable sibling 路径，wheel 依赖元数据也保留来源，防止从 PyPI 获取同名包。已在无同级仓库目录独立安装、构建 wheel/sdist 和启动 CLI；仍依赖完整 agent-memory Python 包，首次取依赖需 Git/网络，轻量 SDK 拆包未做。数据库联调需要迁移源码，因此单独设置 AGENT_MEMORY_SOURCE；默认独立测试明确 skip 该用例，工作区完整门不跳过。
 
 记忆读、写状态与原因码分开，聚合状态新增 read_write_degraded/search_write_degraded；旧单阶段状态保持，不通过“最后一次错误”覆盖先前错误。UUID 误判根因机制与修复证据由 agent-memory@bb09ed0 提供，ops 用固定数字 UUID 经真实 API/PostgreSQL 回归验证；旧随机失败没有正文，不能声称还原了当时具体字符串。
+
+
+## 2026-10-08：持久化追踪后端
+
+TX 采用 Jaeger 2.22.0 单容器与 Badger 持久卷，镜像固定摘要，保留 72 小时，避免为当前单机开发部署引入 Elasticsearch 集群。监听仅限回环地址，远端使用 SSH 隧道；768 MiB/1 CPU 上限与日志轮转约束资源。Docker 开机启动与 unless-stopped 保证后端常驻，业务 API 的常驻部署不在本次范围内。此方案没有 HA、容量压测、告警或跨服务 traceparent 验收。
+
+应用自持 TracerProvider，使用有界批量 OTLP HTTP 导出，关闭时排空；API/CLI 只关闭自身创建的 Dispatcher，注入的对象由调用者关闭。导出默认关闭，采样率默认 1，支持 0..1 的 ParentBased 比例采样。本机 collector 客户端禁用环境代理，避免 shell SOCKS 配置影响回环连接。只记录固定元数据与原因码，继续禁止导出请求/响应/异常正文。真实后端查询验证成功、阻塞、422、取消四类 trace，并验证重启持久化。

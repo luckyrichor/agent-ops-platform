@@ -19,7 +19,7 @@ M4本地验收通过：commerce.request 根span → agent角色span → tool实�
 仅输出span名称、结果、memory状态、reason_code；不输出请求、返回正文、
 凭证和异常事件。根span失败与工具失败不同：memory降级可见工具ERROR，
 而导购仍成功。数据库内部span不属于本进程调用树，未配置跨服务traceparent传播。
-未部署Jaeger/OTLP后端或常驻API；这是可运行、可导出的本地调用树。
+TX 已部署 Jaeger/OTLP 持久化后端，见 [部署与访问](tracing-backend.md)；业务 API 尚未作为常驻服务部署。
 
 W8维护：ready批次改为TaskGroup，使取消后等待所有并行角色finally完成，
 测试同时取消pricing/shipping，不留下后台角色。

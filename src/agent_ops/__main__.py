@@ -12,10 +12,14 @@ async def main() -> None:
     request = CommerceRequest(request="帮我选预算 50 元、送上海的水壶", category="kettle",
                               budget_cent=5000, region="上海")
     planner = planner_from_env()
+    dispatcher = Dispatcher(demo_agents())
     try:
-        result = await MemoryCommerce(Dispatcher(demo_agents()), None, planner).run(request)
+        result = await MemoryCommerce(dispatcher, None, planner).run(request)
     finally:
-        await planner.aclose()
+        try:
+            await planner.aclose()
+        finally:
+            await dispatcher.aclose()
     print(json.dumps(result.model_dump(mode="json"), ensure_ascii=False, indent=2))
 
 

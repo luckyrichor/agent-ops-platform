@@ -74,7 +74,11 @@ def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = N
         try:
             yield
         finally:
-            await plan.aclose()
+            try:
+                await plan.aclose()
+            finally:
+                if dispatcher is None:
+                    await dispatch.aclose()
 
     app = FastAPI(title="Agent Ops commerce orchestration", version="0.1.0", lifespan=lifespan)
     dispatch = dispatcher or Dispatcher(demo_agents())

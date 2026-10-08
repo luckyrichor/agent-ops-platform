@@ -19,7 +19,7 @@ HTTP：POST /v1/commerce/runs，JSON 输入 `request`、`category`、`budget_cen
 
 M2 官方 memory SDK 集成与 M3 SSE/背压/取消已通过本地自动验收；W6 维护接入检索 SDK。配置 AGENT_MEMORY_URL 后转发调用者 Bearer 身份；客户端重试复用 run_id，写记忆使用稳定幂等键。SSE 入口 POST /v1/commerce/stream。完整协议、运行与验证见 [docs/memory-streaming.md](docs/memory-streaming.md)。
 
-覆盖边界：本地固定商品/运费工具；支持确定性及受约束 LLM 计划，Doubao-Seed-2.1-lite 已通过 3 项真实调用初验，不声称自由规划或生产目录/订单能力。没有持久 run 存储、生产身份服务或分布式 worker；M4 trace调用树本地验收通过，见 [调用树](docs/call-tree.md)，追踪后端与跨服务传播未部署。M5评测/客服子方向尚未完成。写幂等仅覆盖 memory 写入，不保证所有工具 exactly-once。
+覆盖边界：本地固定商品/运费工具；支持确定性及受约束 LLM 计划，Doubao-Seed-2.1-lite 已通过 3 项真实调用初验，不声称自由规划或生产目录/订单能力。没有持久 run 存储、生产身份服务或分布式 worker；M4 trace调用树本地验收通过，见 [调用树](docs/call-tree.md)，TX 已部署持久化 Jaeger/OTLP 后端，见 [部署与访问](docs/tracing-backend.md)；跨服务传播未部署。M5评测/客服子方向尚未完成。写幂等仅覆盖 memory 写入，不保证所有工具 exactly-once。
 
 对应岗位 05/07/10/11/14，另含 08 客服子方向；这些是目标关联，不代表单次演示覆盖完整岗位要求。memory 通过独立 HTTP API 集成，仅安装/导入其 SDK、契约与领域类型。
 

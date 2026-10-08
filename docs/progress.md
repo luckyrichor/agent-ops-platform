@@ -74,3 +74,12 @@ mini 与 2.1-lite 均已真实验证可用。默认模型及服务器私密配�
 独立安装去掉 ../agent-memory editable 源，PEP508 HTTPS Git 固定至 bb09ed0693d23aa6e8538c0cee2cdfe807cf00ce，uv.lock 与 wheel 元数据同步。无同级 checkout 临时目录 bootstrap、wheel/sdist 构建、CLI 全成功；隔离测试57 passed/1 skipped（迁移源码联调明确跳过，未算通过）。首次取包仍需 Git/网络/仓库读取权限，完整 Python 服务包仍是依赖，未发布轻量 SDK；联调可显式 AGENT_MEMORY_SOURCE，要求源码 HEAD 匹配已安装 SDK 固定版本且 src/migrations 干净。当前工作区全量 **58 passed in 4.10s**，ruff、strict mypy10文件通过，无跳过。
 
 memory_read_status/memory_write_status 和对应错误码分别保留，读写同时失败为 read_write_degraded，向量搜索降级加写失败为 search_write_degraded；原单阶段值保留。已测试四种读写成功/失败组合。未调用付费模型、未改私密凭据或常驻部署。
+
+
+## 2026-10-08：Jaeger 后端部署与真实导出（Codex）
+
+来源 agent-ops-platform@25abaac + 本轮修改；精确源码/配置摘要见 measurements/2026-10-08-tracing-backend.json。TX 启动 Jaeger 2.22.0 固定摘要镜像，Badger 外部专用卷保留 72 小时，回环绑定 16686/4318/13133；容器 unless-stopped，Docker 已启用开机启动。配置与脚本已纳入仓库，现有 memory 数据库未改动。健康检查与查询 API 返回 200；实际闲置快照内存 12.53 MiB（不是压力测量），限制 768 MiB/1 CPU。
+
+应用 OTLP 批量导出接入，API lifespan/CLI 关闭时排空，采样配置检查、生命周期和元数据回归通过。最终 **62 passed in 4.15s**，ruff 通过，strict mypy10文件通过。真实应用经 OTLP 进入 Jaeger 后按 trace_id 查询：成功10 spans、422拒绝1 span、依赖阻塞9 spans、主动取消4 spans，4/4通过；422与取消无 ERROR。请求/异常正文标记未被导出。容器重启后四条 trace 与 span 数均保留。没有调用付费模型。
+
+验证中旧 /api/services 返回404，改用当前 /api/v3 查询；Badger 查询适配把数组属性以 JSON 字符串返回，脚本兼容两种表示并断言 blocked_by 内容。首次验证因此失败，修正查询断言后4/4通过，未把失败隐去。服务器私有 .local/ark.env 新增 OTLP 启用配置（需启动前 source，不自动加载），凭据仍不进入仓库。业务 API 未常驻、跨服务传播/HA/告警及负载容量尚未验收。
