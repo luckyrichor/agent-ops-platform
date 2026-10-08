@@ -42,3 +42,10 @@ W8独立维护：TaskGroup管理ready角色批次，取消时收完pricing/shipp
 本地 pytest 40 passed in 3.73s，ruff 通过，strict mypy 10 文件通过，含实际 memory API + PostgreSQL 集成。旧集成 JWT 缺新 memory:archive 权限，更新测试显式授权；生产授权未改变。首次测试 shell 启用 llm 影响离线测试，增加 fixture 清理 key/模式后重验。
 
 真实使用用户本次指定 key：mini/lite HTTP404 ModelNotOpen；另外两个探测名 HTTP404 InvalidEndpointOrModel.NotFound。真实三案例脚本第一个用例即阻塞，0/3 成功。源码校验和与安全错误证据在 measurements/llm-live-2026-10-08.json，不伪造线上成功。需要账号开通目标模型或提供有效接入点后重验。此前 M1–M4 验收记录为历史版本，不能替代本次在线模型验收。
+
+
+## 2026-10-08：Doubao-Seed-2.1-lite 真实调用复验（Codex）
+
+用户开通 2.1-lite 后，核对官方 ID doubao-seed-2-1-lite-260915，修改默认模型与服务器 .local/ark.env（key 不变）。使用真实模型通过应用 API 完成 3/3 构造场景：5000 分上海选择基础水壶；4500 分杭州因运费超预算不推荐；unknown 类目为空目录。每例四个角色任务完成，planner_mode=llm。模型负责受约束计划，本地工具仍负责事实与预算，不声称生产评测或所有角色由 LLM 驱动。
+
+新报告 docs/measurements/llm-live-2026-10-08.json 包含实际耗时/模型名/源码 SHA256；旧 mini 阻塞报告保存为 llm-mini-blocked-2026-10-08.json。pytest 40 项、ruff、strict mypy 10 文件重验通过；未启动常驻 API，未公开凭据。

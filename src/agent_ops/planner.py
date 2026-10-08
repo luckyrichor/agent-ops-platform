@@ -95,7 +95,7 @@ def validated_tasks(content: str) -> list[Task]:
 class LLMConfig:
     token: str = field(repr=False)
     endpoint: str = "https://ark.cn-beijing.volces.com/api/v3/chat/completions"
-    model: str = "doubao-seed-2-0-mini-260428"
+    model: str = "doubao-seed-2-1-lite-260915"
     timeout_seconds: float = 15
     concurrency: int = 8
     max_attempts: int = 3

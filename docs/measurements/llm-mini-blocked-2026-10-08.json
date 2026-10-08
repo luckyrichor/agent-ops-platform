@@ -1,32 +1,12 @@
 {
-  "generated_at": "2026-10-08T03:01:58.160409+00:00",
+  "generated_at": "2026-10-08T02:52:31.672662+00:00",
   "cases": [
     {
       "case": "in-budget",
-      "outcome": "succeeded",
-      "planner_mode": "llm",
-      "planner_model": "doubao-seed-2-1-lite-260915",
-      "tasks": 4,
-      "selected": "kettle-basic",
-      "duration_ms": 2639.43
-    },
-    {
-      "case": "shipping-over-budget",
-      "outcome": "succeeded",
-      "planner_mode": "llm",
-      "planner_model": "doubao-seed-2-1-lite-260915",
-      "tasks": 4,
-      "selected": null,
-      "duration_ms": 1969.68
-    },
-    {
-      "case": "empty-catalog",
-      "outcome": "succeeded",
-      "planner_mode": "llm",
-      "planner_model": "doubao-seed-2-1-lite-260915",
-      "tasks": 4,
-      "selected": null,
-      "duration_ms": 2518.63
+      "outcome": "blocked",
+      "http_status": 503,
+      "reason_code": "LLM_MODEL_UNAVAILABLE",
+      "planner_model": "doubao-seed-2-0-mini-260428"
     }
   ],
   "source_sha256": {
@@ -37,7 +17,7 @@
     "src/agent_ops/memory.py": "849407604677590ae6107acfb593a15d24ca7216f6071c1b8f0c00d3ec06a1ef",
     "src/agent_ops/models.py": "e1ccb97b3f7d21afbe6a42336638ef7063f7c9b797104bec067950b8409e7b50",
     "src/agent_ops/orchestrator.py": "d6ca6bf7b47f2c170aebdbd880ac7377b0f0c4ad96fd5b90e482861433dfeff4",
-    "src/agent_ops/planner.py": "b513e6b597a87f35557d4302f3a6dea03ee269d2e7e9f413cdbe5406ac3d5dbf",
+    "src/agent_ops/planner.py": "e7b1497103c90cf4a10cf92e25bbe8f110c93cf8afe1cb5477d2b2ce765a3c23",
     "src/agent_ops/streaming.py": "3a5966d59eac695bc1cf1134027b0245edaa9c06335bb6d6a82cc84e14a47390",
     "src/agent_ops/telemetry.py": "11cf1b68cb0da9fb42a86457e9e250c512ceee8db41eeb00e83e3394788e4891"
   },

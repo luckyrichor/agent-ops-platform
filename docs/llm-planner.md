@@ -10,7 +10,7 @@
 
 ## 运行
 
-凭据只存服务器项目 `.local/ark.env`（0600，gitignored）。程序只从环境取值，不自动扫描/加载文件。当前文件保存用户指定的 key、llm 模式和 mini 模型，不会进入 GitHub/ZIP。启动示例：
+凭据只存服务器项目 `.local/ark.env`（0600，gitignored）。程序只从环境取值，不自动扫描/加载文件。当前文件保存用户指定的 key、llm 模式和 Doubao-Seed-2.1-lite 模型，不会进入 GitHub/ZIP。启动示例：
 
 ```bash
 source .local/ark.env
@@ -24,7 +24,7 @@ uv run uvicorn agent_ops.api:create_app --factory --host 127.0.0.1 --port 8087
 |---|---|
 | AGENT_OPS_PLANNER | deterministic；设置 llm 启用真实请求 |
 | ARK_API_KEY | 服务器环境注入，不回显 |
-| AGENT_OPS_LLM_MODEL | doubao-seed-2-0-mini-260428 |
+| AGENT_OPS_LLM_MODEL | doubao-seed-2-1-lite-260915 |
 | AGENT_OPS_LLM_ENDPOINT | https://ark.cn-beijing.volces.com/api/v3/chat/completions |
 | AGENT_OPS_LLM_TIMEOUT_SECONDS | 15，总预算（含并发排队、重试等待、响应读取），最多 60 |
 | AGENT_OPS_LLM_CONCURRENCY | 8，每个服务进程的模型请求并发上限，最多 64 |
@@ -43,11 +43,11 @@ HTTP 成功结果包含 `planner_mode / planner_model`，可分辨是否真实�
 - 新增测试覆盖真实应用 API/SSE 路径（MockTransport）、角色契约拒绝、429 后成功、永久失败、耗尽重试、总超时、HTTP 取消、并发上限、共享客户端和安全 trace。
 - memory 集成测试按 agent-memory 新权限显式授予 `memory:archive`；未给生产调用者增加权限。
 - 首次全量运行受同一 shell 已启用 llm 模式影响，离线测试意外走线上失败路径；新增 autouse fixture 强制离线默认并移除测试 key，模型测试显式注入 mock。随后全量通过。
-- 真实调用使用本次用户指定 key：mini 和 lite 返回 **HTTP 404 / ModelNotOpen**，另外两个探测名返回 InvalidEndpointOrModel.NotFound。因此 **真实成功调用验收尚未通过**，不能称在线模型已可用，也不能仅凭这一结果判定 key 无效。
-- 可复现脚本：`source .local/ark.env` 后运行 `uv run python scripts/verify-live-llm.py`；包含预算内商品、运费超预算、空目录三项。遇到首个阻塞即停止，落盘固定错误码和源码 SHA256；不写凭据/原始响应。当前证据见 `measurements/llm-live-2026-10-08.json`，0/3 成功，模型权限阻塞。
+- 首次尝试历史记录：用户指定 key 调用 2.0 mini/lite 返回 HTTP404 / ModelNotOpen，其他两个旧模型名返回 NotFound。原始失败证据保留在 `measurements/llm-mini-blocked-2026-10-08.json`。随后用户开通 Doubao-Seed-2.1-lite，使用同一 key 调用 `doubao-seed-2-1-lite-260915`，**三个真实用例全部成功**。
+- 可复现脚本：`source .local/ark.env` 后运行 `uv run python scripts/verify-live-llm.py`；包含预算内商品、运费超预算、空目录三项。遇到首个阻塞即停止，落盘固定错误码和源码 SHA256；不写凭据/原始响应。当前证据见 `measurements/llm-live-2026-10-08.json`，**3/3 成功**；每个用例 planner_mode=llm、planner_model=doubao-seed-2-1-lite-260915，四个工具任务完成。预算内选择 kettle-basic，运费超预算及空目录均 selected=null。
 
-## 需要用户完成
+## 当前状态
 
-在火山方舟控制台，为该 key 所属账号开通 `doubao-seed-2-0-mini-260428` 的调用权限与可用额度，或提供已开通的模型 ID / 推理接入点 ID。完成后重跑三项真实验收，实际通过后再更新记录。
+用户已开通 Doubao-Seed-2.1-lite，本次目标模型权限阻塞已解决。三个构造场景属于真实调用工程初验，不能推断生产质量、性能或付费额度的长期可用性。模型 ID 根据[官方模型列表](https://docs.volcengine.com/docs/82379/1330310?lang=en)核对。
 
-本项目未新增直接依赖；锁文件和 .venv 已同步 agent-memory 的新 OTLP 传递依赖。未安装新数据库/容器服务，也未启动常驻 API。程序代码已具备真实调用能力，但当前凭据的目标模型权限仍阻塞在线运行。
+本项目未新增直接依赖；锁文件和 .venv 已同步 agent-memory 的新 OTLP 传递依赖。未安装新数据库/容器服务，也未启动常驻 API。程序代码已具备真实调用能力，当前已配置的 2.1-lite 完成在线初验。
