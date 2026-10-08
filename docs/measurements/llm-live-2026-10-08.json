@@ -1,0 +1,25 @@
+{
+  "generated_at": "2026-10-08T02:52:31.672662+00:00",
+  "cases": [
+    {
+      "case": "in-budget",
+      "outcome": "blocked",
+      "http_status": 503,
+      "reason_code": "LLM_MODEL_UNAVAILABLE",
+      "planner_model": "doubao-seed-2-0-mini-260428"
+    }
+  ],
+  "source_sha256": {
+    "src/agent_ops/__init__.py": "790a09b52d965efce6fdde2575c4ba2a7d009cd5a210181548e98fab8f45cdcd",
+    "src/agent_ops/__main__.py": "9db8b62778216ba2d32c24f82fbb5e387225e3ffa703b55b0a111a1a27185a10",
+    "src/agent_ops/agents.py": "dc30a08884dc2d99415989460a9ffa82f72d2a9c93ca561e9b397d88e793ffa8",
+    "src/agent_ops/api.py": "b332ad65a529bad4dece9500e548abf9eaa64226ef5c940252194a9225db9200",
+    "src/agent_ops/memory.py": "849407604677590ae6107acfb593a15d24ca7216f6071c1b8f0c00d3ec06a1ef",
+    "src/agent_ops/models.py": "e1ccb97b3f7d21afbe6a42336638ef7063f7c9b797104bec067950b8409e7b50",
+    "src/agent_ops/orchestrator.py": "d6ca6bf7b47f2c170aebdbd880ac7377b0f0c4ad96fd5b90e482861433dfeff4",
+    "src/agent_ops/planner.py": "e7b1497103c90cf4a10cf92e25bbe8f110c93cf8afe1cb5477d2b2ce765a3c23",
+    "src/agent_ops/streaming.py": "3a5966d59eac695bc1cf1134027b0245edaa9c06335bb6d6a82cc84e14a47390",
+    "src/agent_ops/telemetry.py": "11cf1b68cb0da9fb42a86457e9e250c512ceee8db41eeb00e83e3394788e4891"
+  },
+  "limits": "3 synthetic commerce cases; real LLM plans, local catalog/price/shipping tools; not production quality or performance"
+}

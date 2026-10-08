@@ -105,3 +105,8 @@ bash workplan-docs/scripts/run-on-tx.sh agent-memory 'docker compose up -d postg
 | 岗位要求本身 | `workplan-docs/岗位要求原文.md`（唯一事实来源，不要在别处改写） |
 
 写进「环境与踩坑记录」时，用 **［实测］**／**［预警］** 标注区分「已验证的事实」和「未触发的已知风险」，不要把推断写成结论。
+
+
+## 2026-10-08 模型接入补充
+
+可选 llm planner 已实现，受四角色/依赖契约限制；本地工具仍提供价格、运费及预算判断。`.local/ark.env` 存当前指定凭据，只由用户显式 source 加载，不进版本库。当前目标 mini 模型返回 ModelNotOpen，在线成功验收仍阻塞，不能称真实模型任务已验证通过。离线测试必须移除 ARK_API_KEY 并使用确定性默认 / 注入 mock，严禁意外调用付费服务。运行与错误契约见 docs/llm-planner.md。

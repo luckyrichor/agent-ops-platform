@@ -15,3 +15,8 @@ DAG 执行按 ready wave 并发：catalog 后 pricing/shipping 独立，recommen
 ## 2026-10-07 Codex：W8–W10
 
 为每个dispatcher注入Tracer而不替换全局provider，便于隔离测试和独立运行；请求root在MemoryCommerce执行周期内关闭，适用于SSE任务。工具异常仅ERROR与稳定code，不使用默认异常事件。TaskGroup保证取消后所有并行角色收尾完成。跨服务传播和部署追踪后端后续验证。
+
+
+## 2026-10-08：真实模型参与规划
+
+需要在线模型调用来验证延迟与故障对编排的影响。先采用受约束 JSON DAG（四个已注册角色），模型不能修改预算、商品事实或权限；本地验证后再调工具。固定 planner 保留作离线基线，显式 llm 模式失败时不静默回退，从结果元数据可区分路径。总预算包含排队与退避，取消传播至 HTTP；共享客户端由应用 lifespan 关闭。当前 key 的 mini 模型未开通，在线初验阻塞，代码通过 mock/集成测试并不等于真实模型调用已验收成功。

@@ -5,6 +5,7 @@ from collections.abc import AsyncIterator, Awaitable, Callable
 from contextlib import suppress
 
 from agent_ops.models import RunResult
+from agent_ops.planner import PlanningError
 
 
 async def stream_run(run: Callable[[], Awaitable[RunResult]],
@@ -29,6 +30,8 @@ async def stream_run(run: Callable[[], Awaitable[RunResult]],
             await emit("result", result.model_dump(mode="json"))
         except TimeoutError:
             pass  # Slow subscriber loses only its own run.
+        except PlanningError as error:
+            await emit("error", {"code": error.code})
         except Exception:  # noqa: BLE001 - redact tool failures in transport
             await emit("error", {"code": "RUN_FAILED"})
         finally:

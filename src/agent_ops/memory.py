@@ -9,14 +9,17 @@ from agent_memory.sdk import MemoryAPIError, MemoryClient
 from opentelemetry.trace import Status, StatusCode
 
 from agent_ops.models import CommerceRequest, RunResult
-from agent_ops.orchestrator import CommercePlanner, Dispatcher
+from agent_ops.orchestrator import Dispatcher
+from agent_ops.planner import DeterministicPlanner, Planner, PlanningError
 from agent_ops.telemetry import hop
 
 
 class MemoryCommerce:
-    def __init__(self, dispatcher: Dispatcher, client: MemoryClient | None) -> None:
+    def __init__(self, dispatcher: Dispatcher, client: MemoryClient | None,
+                 planner: Planner | None = None) -> None:
         self.dispatcher = dispatcher
         self.client = client
+        self.planner = planner or DeterministicPlanner()
 
     async def run(self, request: CommerceRequest) -> RunResult:
         with hop(self.dispatcher.tracer, "commerce.request") as current:
@@ -57,7 +60,20 @@ class MemoryCommerce:
                     status = "search_degraded"
             except (MemoryAPIError, httpx.HTTPError, ValueError):
                 status = "read_degraded"
-        result = await self.dispatcher.run(effective, CommercePlanner().plan(effective))
+        if self.planner.mode == "llm":
+            with hop(self.dispatcher.tracer, "planner.llm") as planning_span:
+                planning_span.set_attribute("planner_mode", self.planner.mode)
+                planning_span.set_attribute("planner_model", self.planner.model or "none")
+                try:
+                    tasks = await self.planner.plan(effective)
+                except PlanningError as error:
+                    planning_span.set_attribute("planner_error_code", error.code)
+                    raise
+        else:
+            tasks = await self.planner.plan(effective)
+        result = await self.dispatcher.run(effective, tasks)
+        result.planner_mode = self.planner.mode
+        result.planner_model = self.planner.model
         result.request_id = str(request.run_id)
         result.memory_status = status
         result.memory_hit_count = hit_count

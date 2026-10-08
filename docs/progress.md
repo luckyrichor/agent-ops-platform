@@ -33,3 +33,12 @@ _尚无记录。_
 W8独立维护：TaskGroup管理ready角色批次，取消时收完pricing/shipping两个并行finally。W10 M4：OpenTelemetry请求根span→Agent→实际工具调用树，memory HTTP读写工具也在同一请求上下文；API返回trace_id，失败标ERROR+原因码，不记录正文/凭证/异常事件。成功与pricing失败两条实测调用树已导出，memory HTTP503降级仍可定位具体hop。当前为本地/控制台导出，不声称部署追踪后端或跨服务traceparent。
 
 22 pytest passed in 7.60s，ruff/strict mypy9文件通过。包含真实memory API/数据库原回归、并行取消、失败工具及memory降级追踪。来源agent-ops-platform@8c041be + 本轮工作树；精确SHA256见测量元数据。说明见docs/call-tree.md。
+
+
+## 2026-10-08：可选真实 LLM 规划器（Codex）
+
+实现 Ark Chat Completions planner，API/SSE/CLI 共用，模型计划经过四角色白名单、必需输入和无环验证；价格/运费/预算仍由演示工具确定。新增共享 HTTP 池、总时间预算、并发 8、最多 3 次临时错误重试、取消、显式 planner 元数据、失败原因和安全 span。未新增直接依赖；锁文件/.venv 同步 agent-memory 新传递依赖，未启动常驻 API。
+
+本地 pytest 40 passed in 3.73s，ruff 通过，strict mypy 10 文件通过，含实际 memory API + PostgreSQL 集成。旧集成 JWT 缺新 memory:archive 权限，更新测试显式授权；生产授权未改变。首次测试 shell 启用 llm 影响离线测试，增加 fixture 清理 key/模式后重验。
+
+真实使用用户本次指定 key：mini/lite HTTP404 ModelNotOpen；另外两个探测名 HTTP404 InvalidEndpointOrModel.NotFound。真实三案例脚本第一个用例即阻塞，0/3 成功。源码校验和与安全错误证据在 measurements/llm-live-2026-10-08.json，不伪造线上成功。需要账号开通目标模型或提供有效接入点后重验。此前 M1–M4 验收记录为历史版本，不能替代本次在线模型验收。

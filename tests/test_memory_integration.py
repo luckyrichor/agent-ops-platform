@@ -37,7 +37,7 @@ async def test_actual_memory_api_read_write_replay_conflict_and_archive(monkeypa
     now = datetime.now(UTC)
     token = jwt.encode({"iss": "ops-test", "aud": "memory-api", "sub": str(user),
         "tenant_id": str(tenant), "roles": [],
-        "permissions": ["memory:read", "memory:write", "memory:delete"],
+        "permissions": ["memory:read", "memory:write", "memory:delete", "memory:archive"],
         "allowed_workspace_ids": ["commerce"], "iat": now, "exp": now+timedelta(minutes=5)},
         private, algorithm="RS256")
     with PostgresContainer("pgvector/pgvector:pg16", driver="psycopg") as postgres:

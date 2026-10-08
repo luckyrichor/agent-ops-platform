@@ -1,5 +1,6 @@
 import os
 from collections.abc import AsyncIterator
+from contextlib import asynccontextmanager
 
 import httpx
 from agent_memory.sdk import MemoryAPIError, MemoryClient
@@ -10,24 +11,34 @@ from agent_ops.agents import demo_agents
 from agent_ops.memory import MemoryCommerce
 from agent_ops.models import CommerceRequest, RunResult
 from agent_ops.orchestrator import Dispatcher
+from agent_ops.planner import Planner, PlanningError, planner_from_env
 from agent_ops.streaming import stream_run
 
 
-def create_app(dispatcher: Dispatcher | None = None) -> FastAPI:
-    app = FastAPI(title="Agent Ops commerce orchestration", version="0.1.0")
+def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = None) -> FastAPI:
+    plan = planner or planner_from_env()
+
+    @asynccontextmanager
+    async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+        try:
+            yield
+        finally:
+            await plan.aclose()
+
+    app = FastAPI(title="Agent Ops commerce orchestration", version="0.1.0", lifespan=lifespan)
     dispatch = dispatcher or Dispatcher(demo_agents())
 
     async def execute(body: CommerceRequest, request: Request) -> RunResult:
         url = os.environ.get("AGENT_MEMORY_URL")
         if not url:
-            return await MemoryCommerce(dispatch, None).run(body)
+            return await MemoryCommerce(dispatch, None, plan).run(body)
         authorization = request.headers.get("authorization", "")
         if not authorization.startswith("Bearer "):
             raise HTTPException(401, "memory integration requires caller bearer token")
         async with httpx.AsyncClient(base_url=url, timeout=2) as client:
             try:
                 return await MemoryCommerce(dispatch, MemoryClient(
-                    client, token=authorization[7:])).run(body)
+                    client, token=authorization[7:]), plan).run(body)
             except MemoryAPIError as error:
                 raise HTTPException(error.status_code, error.code) from error
 
@@ -42,6 +53,9 @@ def create_app(dispatcher: Dispatcher | None = None) -> FastAPI:
 
     @app.post("/v1/commerce/runs", response_model=RunResult)
     async def run(body: CommerceRequest, request: Request) -> RunResult:
-        return await execute(body, request)
+        try:
+            return await execute(body, request)
+        except PlanningError as error:
+            raise HTTPException(503, error.code) from None
 
     return app
