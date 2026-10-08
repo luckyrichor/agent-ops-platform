@@ -120,3 +120,8 @@ bash workplan-docs/scripts/run-on-tx.sh agent-memory 'docker compose up -d postg
 ## 2026-10-08 mini 权限再次复验
 
 同一指定 key 的 doubao-seed-2-0-mini-260428 现已完成真实应用端到端 3/3 初验。首次复验 ModelNotOpen 与稍后成功分别保存在 docs/measurements/llm-mini-recheck-2026-10-08.json 和 llm-mini-live-2026-10-08.json。默认及私密环境继续使用已通过的 2.1-lite，本轮仅增加验收记录，未修改程序代码或启动常驻服务。
+
+
+## 2026-10-08 第二轮评审补充
+
+构建不再强制 sibling agent-memory：使用 HTTPS Git 固定 bb09ed0，pyproject/uv.lock 与实际依赖一致；该版本含数字 UUID 内容误判修复。首次安装需要 Git 与仓库读取权限，仍安装完整 SDK 所属包。实际数据库联调需源码迁移，可指定 AGENT_MEMORY_SOURCE；必须与安装 SDK commit 一致且干净，无源码时独立环境只跳过该用例。当前工作区完整58测试通过。HTTP SERVER 4xx 不标 ERROR；422/框架错误 JSON 返回 trace_id；读写降级独立保留，组合状态见 README。

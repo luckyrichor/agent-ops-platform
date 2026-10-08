@@ -31,3 +31,12 @@ CancelledError / GeneratorExit 记录 cancelled 与稳定原因码，并继续�
 终止事件使用队列之外的单个槽位，保证容量 2 的队列堵塞时也能记录 aborted/SLOW_CONSUMER 并及时取消工作，不再等待向满队列入队。消费者恢复读取后先读完最多两条排队帧，再读终止帧；已断开的连接无法保证通知送达。队列超时与业务 TimeoutError 区分，后者属于 RUN_FAILED。未改变模型、安装软件或启动常驻服务。
 
 模型权限说明：此前 mini 未开通为历史记录；截至 caa453f，mini 与 2.1-lite 都已完成真实调用 3/3 初验，默认仍为 2.1-lite。
+
+
+## 2026-10-08 第二轮：HTTP 分类、构建与双向降级
+
+统一 RequestValidationError/StarletteHTTPException JSON，让 422 与框架错误也返回 trace_id；校验详情不回显 input/ctx。commerce.http 用 SERVER kind，4xx 留 UNSET、5xx ERROR；业务内部 span 不直接充当 HTTP 服务端错误率，SSE 的业务拒绝另记录 application.response.status_code。
+
+采用 PEP508 HTTPS Git 固定提交替代 editable sibling 路径，wheel 依赖元数据也保留来源，防止从 PyPI 获取同名包。已在无同级仓库目录独立安装、构建 wheel/sdist 和启动 CLI；仍依赖完整 agent-memory Python 包，首次取依赖需 Git/网络，轻量 SDK 拆包未做。数据库联调需要迁移源码，因此单独设置 AGENT_MEMORY_SOURCE；默认独立测试明确 skip 该用例，工作区完整门不跳过。
+
+记忆读、写状态与原因码分开，聚合状态新增 read_write_degraded/search_write_degraded；旧单阶段状态保持，不通过“最后一次错误”覆盖先前错误。UUID 误判根因机制与修复证据由 agent-memory@bb09ed0 提供，ops 用固定数字 UUID 经真实 API/PostgreSQL 回归验证；旧随机失败没有正文，不能声称还原了当时具体字符串。

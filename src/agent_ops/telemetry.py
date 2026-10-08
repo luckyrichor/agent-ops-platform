@@ -6,7 +6,7 @@ from contextlib import contextmanager
 
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import ConsoleSpanExporter, SimpleSpanProcessor
-from opentelemetry.trace import Span, Status, StatusCode, Tracer
+from opentelemetry.trace import Span, SpanKind, Status, StatusCode, Tracer
 from starlette.requests import ClientDisconnect
 
 
@@ -21,9 +21,9 @@ def configured_tracer() -> Tracer:
 
 
 @contextmanager
-def hop(tracer: Tracer, name: str) -> Iterator[Span]:
+def hop(tracer: Tracer, name: str, *, kind: SpanKind = SpanKind.INTERNAL) -> Iterator[Span]:
     with tracer.start_as_current_span(
-        name, record_exception=False, set_status_on_exception=False,
+        name, kind=kind, record_exception=False, set_status_on_exception=False,
     ) as current:
         try:
             yield current

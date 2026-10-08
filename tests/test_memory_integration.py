@@ -1,7 +1,11 @@
 """Actual SDK -> memory ASGI API -> migrated PostgreSQL integration."""
+import json
+import os
+import subprocess
 from datetime import UTC, datetime, timedelta
+from importlib.metadata import distribution
 from pathlib import Path
-from uuid import uuid4
+from uuid import UUID, uuid4
 
 import httpx
 import jwt
@@ -25,9 +29,24 @@ from agent_ops.models import CommerceRequest
 from agent_ops.orchestrator import Dispatcher
 
 
+def memory_source_root():
+    root = Path(os.environ.get("AGENT_MEMORY_SOURCE",
+                   str(Path(__file__).resolve().parents[2] / "agent-memory")))
+    if not (root / "alembic.ini").exists():
+        pytest.skip("Optional database integration requires AGENT_MEMORY_SOURCE checkout")
+    direct_url = json.loads(distribution("agent-memory").read_text("direct_url.json") or "{}")
+    expected = direct_url.get("vcs_info", {}).get("commit_id")
+    actual = subprocess.check_output(["git", "-C", str(root), "rev-parse", "HEAD"], text=True).strip()
+    assert expected and actual == expected, "Migration checkout must match installed SDK commit"
+    assert not subprocess.check_output(
+        ["git", "-C", str(root), "status", "--porcelain", "--", "src", "migrations"], text=True
+    ).strip(), "Migration/source checkout must be clean"
+    return root
+
+
 @pytest.mark.asyncio
 async def test_actual_memory_api_read_write_replay_conflict_and_archive(monkeypatch):
-    root = Path(__file__).resolve().parents[2] / "agent-memory"
+    root = memory_source_root()
     key = rsa.generate_private_key(public_exponent=65537, key_size=2048)
     private = key.private_bytes(serialization.Encoding.PEM, serialization.PrivateFormat.PKCS8,
                                 serialization.NoEncryption()).decode()
@@ -63,7 +82,8 @@ async def test_actual_memory_api_read_write_replay_conflict_and_archive(monkeypa
                 preference = await sdk.remember('{"budget_cent":3000}', MemoryType.SEMANTIC,
                     MemoryScope(ScopeKind.WORKSPACE, "commerce", None), idempotency_key="preference")
                 request = CommerceRequest(request="水壶", category="kettle", budget_cent=5000,
-                                          region="上海", memory_id=preference.memory_id)
+                                          region="上海", memory_id=preference.memory_id,
+                                          run_id=UUID("12345678-1234-4234-8123-123456789012"))
                 service = MemoryCommerce(Dispatcher(demo_agents()), sdk)
                 first = await service.run(request)
                 replay = await service.run(request)

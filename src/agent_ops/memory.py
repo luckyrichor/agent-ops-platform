@@ -28,6 +28,8 @@ class MemoryCommerce:
             result.trace_id = f"{context.trace_id:032x}" if context.is_valid else None
             current.set_attribute("outcome", result.outcome)
             current.set_attribute("memory_status", result.memory_status)
+            current.set_attribute("memory_read_status", result.memory_read_status)
+            current.set_attribute("memory_write_status", result.memory_write_status)
             if result.outcome != "succeeded":
                 current.set_status(Status(StatusCode.ERROR))
             return result
@@ -36,6 +38,7 @@ class MemoryCommerce:
         status = "not_configured" if self.client is None else "available"
         effective = request
         hit_count = 0
+        read_error_code = None
         if self.client is not None and request.memory_id is not None:
             try:
                 with hop(self.dispatcher.tracer, "tool.memory.get"):
@@ -46,8 +49,10 @@ class MemoryCommerce:
                 if isinstance(budget, int) and not isinstance(budget, bool) and budget >= 0:
                     effective = request.model_copy(update={
                         "budget_cent": min(request.budget_cent, budget)})
-            except (MemoryAPIError, httpx.HTTPError, ValueError):
+            except (MemoryAPIError, httpx.HTTPError, ValueError) as error:
                 status = "read_degraded"
+                read_error_code = (error.code if isinstance(error, MemoryAPIError)
+                                   else "MEMORY_READ_FAILED")
         elif self.client is not None:
             try:
                 with hop(self.dispatcher.tracer, "tool.memory.search"):
@@ -58,8 +63,10 @@ class MemoryCommerce:
                 # into executable tool instructions or overwrite the explicit user's request.
                 if page.vector_status == "degraded":
                     status = "search_degraded"
-            except (MemoryAPIError, httpx.HTTPError, ValueError):
+            except (MemoryAPIError, httpx.HTTPError, ValueError) as error:
                 status = "read_degraded"
+                read_error_code = (error.code if isinstance(error, MemoryAPIError)
+                                   else "MEMORY_READ_FAILED")
         if self.planner.mode == "llm":
             with hop(self.dispatcher.tracer, "planner.llm") as planning_span:
                 planning_span.set_attribute("planner_mode", self.planner.mode)
@@ -76,6 +83,9 @@ class MemoryCommerce:
         result.planner_model = self.planner.model
         result.request_id = str(request.run_id)
         result.memory_status = status
+        result.memory_read_status = status
+        result.memory_read_error_code = read_error_code
+        result.memory_write_status = "not_configured" if self.client is None else "not_attempted"
         result.memory_hit_count = hit_count
         if self.client is not None and result.outcome == "succeeded":
             try:
@@ -87,10 +97,17 @@ class MemoryCommerce:
                         MemoryType.EPISODIC, MemoryScope(ScopeKind.WORKSPACE, "commerce", None),
                         idempotency_key=f"commerce:{request.run_id}")
                 result.memory_id = saved.memory_id
+                result.memory_write_status = "succeeded"
             except MemoryAPIError as error:
                 if error.status_code == 409:
                     raise
-                result.memory_status = "write_degraded"
+                result.memory_write_status = "degraded"
+                result.memory_write_error_code = error.code
             except (httpx.HTTPError, ValueError):
-                result.memory_status = "write_degraded"
+                result.memory_write_status = "degraded"
+                result.memory_write_error_code = "MEMORY_WRITE_FAILED"
+        if result.memory_write_status == "degraded":
+            result.memory_status = {"read_degraded": "read_write_degraded",
+                                    "search_degraded": "search_write_degraded"}.get(
+                                        status, "write_degraded")
         return result

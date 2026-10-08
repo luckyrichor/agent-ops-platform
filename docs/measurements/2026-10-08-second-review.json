@@ -1,0 +1,30 @@
+{
+  "generated_at": "2026-10-08T06:32:07.838634+00:00",
+  "base_commit": "43969b42072410ffa0cef34a930af9397a6abb68",
+  "source_dirty": true,
+  "memory_dependency": "bb09ed0693d23aa6e8538c0cee2cdfe807cf00ce",
+  "source_sha256": {
+    "src/agent_ops/__init__.py": "790a09b52d965efce6fdde2575c4ba2a7d009cd5a210181548e98fab8f45cdcd",
+    "src/agent_ops/__main__.py": "9db8b62778216ba2d32c24f82fbb5e387225e3ffa703b55b0a111a1a27185a10",
+    "src/agent_ops/agents.py": "dc30a08884dc2d99415989460a9ffa82f72d2a9c93ca561e9b397d88e793ffa8",
+    "src/agent_ops/api.py": "314e98a731118c25b45276b5b36b3069198f9eeaf2e734f1805885b607b9a6fb",
+    "src/agent_ops/memory.py": "f200315d15abab076dcfaccfa40a58d7455e73c01014de06e64a6368de0e4b2c",
+    "src/agent_ops/models.py": "694c4b597aa30c66b2ed4b4478a0024736a7fc3e8da1db5c5bf8c042c63a7c9e",
+    "src/agent_ops/orchestrator.py": "8313918452ecb3485b7c3be2d343dee091430393665ab21be2d355d506cd173d",
+    "src/agent_ops/planner.py": "b513e6b597a87f35557d4302f3a6dea03ee269d2e7e9f413cdbe5406ac3d5dbf",
+    "src/agent_ops/streaming.py": "bc463218f37a2d1fbea25c45c6bea501b45a0dcf36337a6f5defb535691a681d",
+    "src/agent_ops/telemetry.py": "960eb517732fe9c12f1501ae0f194e739628b990a8e19e8e3671c6ea0f321f87"
+  },
+  "pytest": "58 passed in 4.10s",
+  "ruff": "passed",
+  "mypy": "strict, 10 files passed",
+  "independent_build": {
+    "no_sibling_checkout": true,
+    "bootstrap": "passed",
+    "wheel_and_sdist": "passed",
+    "cli": "succeeded",
+    "pytest": "57 passed, 1 skipped in 3.91s",
+    "skip_reason": "database integration requires Alembic source checkout"
+  },
+  "historical_failure_limit": "Old random 422 input was not retained; numeric UUID false positive deterministically reproduced, not exact historical input reconstruction."
+}

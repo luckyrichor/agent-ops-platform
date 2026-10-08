@@ -63,3 +63,14 @@ mini 与 2.1-lite 均已真实验证可用。默认模型及服务器私密配�
 满队列的终止帧使用单独槽位，不再向满队列等待；慢消费者恢复读取后收到 aborted/SLOW_CONSUMER。已断开的连接不能保证通知送达。原容量 2、子任务取消收尾和多请求隔离保留；业务 TimeoutError 不误标慢消费者。文档去掉“尚无记录”，更新当前头部日期/基线，旧日期、提交与测试数字明确保留为历史记录。
 
 最终 pytest **48 passed in 4.13s**；ruff（src/tests/调用树脚本）通过；strict mypy **10 文件**通过。新增 8 项用例覆盖 503/409/500 trace、实际 memory 写冲突 SSE、取消分类、满队列终止、业务超时分类和传输断连；更新原 blocked 树及真实 TCP 取消测试，16 个并发请求仍能完成。新的调用树演示成功导出两条合成 trace，见 measurements/2026-10-08-call-tree.json。初次新增测试受系统 SOCKS 代理且缺 socksio 影响，隔离测试代理环境后通过；之后一次既有 memory 集成回归返回 422，单独复验及最终全量通过，未将该偶发失败隐去，也未宣称已定位其根因。未新增软件/容器常驻服务，未改模型配置或调用付费模型。
+
+
+## 2026-10-08：第二轮评审与独立构建（Codex）
+
+来源 agent-ops-platform@43969b4 + 本轮修改；精确源码 SHA256 见 measurements/2026-10-08-second-review.json。422 RequestValidationError 和框架 StarletteHTTPException 均携带 trace_id；校验详情保留 loc/type/msg，不回显 input/ctx。commerce.http 改 SERVER kind，http.response.status_code 记录实际状态；4xx 留 UNSET，5xx 标 ERROR；内部工具故障语义保留，SSE HTTPException 的应用 4xx 不标服务端 ERROR。
+
+已确定性复现 agent-memory 内容正则将数字 UUID 片段误判为银行卡，旧版本 sensitive=True，修复后 False。旧偶发失败未保留正文，无法确认它实际命中的具体随机字段；机制与 422 一致，未用“重跑通过”替代定位。agent-memory@bb09ed0 只在数字类检测中排除规范独立 UUID，真实卡号/手机号、密钥词和令牌仍拒绝；memory 四道门192测试及 GitHub Actions #37737890139 全部通过。本项目真实 API/迁移后 PostgreSQL 集成用固定数字 run_id 验证创建、重放、冲突、归档/搜索。
+
+独立安装去掉 ../agent-memory editable 源，PEP508 HTTPS Git 固定至 bb09ed0693d23aa6e8538c0cee2cdfe807cf00ce，uv.lock 与 wheel 元数据同步。无同级 checkout 临时目录 bootstrap、wheel/sdist 构建、CLI 全成功；隔离测试57 passed/1 skipped（迁移源码联调明确跳过，未算通过）。首次取包仍需 Git/网络/仓库读取权限，完整 Python 服务包仍是依赖，未发布轻量 SDK；联调可显式 AGENT_MEMORY_SOURCE，要求源码 HEAD 匹配已安装 SDK 固定版本且 src/migrations 干净。当前工作区全量 **58 passed in 4.10s**，ruff、strict mypy10文件通过，无跳过。
+
+memory_read_status/memory_write_status 和对应错误码分别保留，读写同时失败为 read_write_degraded，向量搜索降级加写失败为 search_write_degraded；原单阶段值保留。已测试四种读写成功/失败组合。未调用付费模型、未改私密凭据或常驻部署。

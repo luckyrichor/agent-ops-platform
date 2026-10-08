@@ -42,6 +42,10 @@ class RunResult(BaseModel):
     dispatch_order: list[str]
     recommendation: dict[str, object] | None
     memory_status: str = "not_configured"
+    memory_read_status: str = "not_configured"
+    memory_write_status: str = "not_configured"
+    memory_read_error_code: str | None = None
+    memory_write_error_code: str | None = None
     memory_id: UUID | None = None
     memory_hit_count: int = 0
     trace_id: str | None = None

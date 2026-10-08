@@ -54,7 +54,9 @@ async def stream_run(run: Callable[[], Awaitable[RunResult]],
             span.set_attribute("reason_code", error.code)
             terminal = frame("error", {"code": error.code})
         except HTTPException as error:
-            span.set_status(Status(StatusCode.ERROR))
+            if error.status_code >= 500:
+                span.set_status(Status(StatusCode.ERROR))
+            span.set_attribute("application.response.status_code", error.status_code)
             span.set_attribute("reason_code", "HTTP_REJECTED")
             terminal = frame("error", {"code": error.detail})
         except Exception:  # noqa: BLE001 - redact tool failures in transport

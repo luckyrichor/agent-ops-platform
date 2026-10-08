@@ -5,8 +5,10 @@ from contextlib import asynccontextmanager
 import httpx
 from agent_memory.sdk import MemoryAPIError, MemoryClient
 from fastapi import FastAPI, HTTPException, Request
+from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse, StreamingResponse
-from opentelemetry.trace import Status, StatusCode
+from opentelemetry.trace import SpanKind, Status, StatusCode
+from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.requests import ClientDisconnect
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
@@ -29,7 +31,7 @@ class RequestTraceMiddleware:
         if scope["type"] != "http":
             await self.app(scope, receive, send)
             return
-        with hop(self.dispatcher.tracer, "commerce.http") as current:
+        with hop(self.dispatcher.tracer, "commerce.http", kind=SpanKind.SERVER) as current:
             trace_id = f"{current.get_span_context().trace_id:032x}"
             scope.setdefault("state", {})["trace_id"] = trace_id
 
@@ -41,7 +43,8 @@ class RequestTraceMiddleware:
                     response_started = True
                     message["headers"] = list(message.get("headers", [])) + [
                         (b"x-trace-id", trace_id.encode())]
-                    if message["status"] >= 400:
+                    current.set_attribute("http.response.status_code", message["status"])
+                    if message["status"] >= 500:
                         current.set_status(Status(StatusCode.ERROR))
                         current.set_attribute("reason_code", "HTTP_REJECTED")
                 try:
@@ -78,11 +81,19 @@ def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = N
 
     app.add_middleware(RequestTraceMiddleware, dispatcher=dispatch)
 
-    @app.exception_handler(HTTPException)
-    async def http_error(request: Request, error: HTTPException) -> JSONResponse:
+    @app.exception_handler(StarletteHTTPException)
+    async def http_error(request: Request, error: StarletteHTTPException) -> JSONResponse:
         return JSONResponse(status_code=error.status_code, headers=error.headers,
                             content={"detail": error.detail,
                                      "trace_id": request.state.trace_id})
+
+    @app.exception_handler(RequestValidationError)
+    async def validation_error(request: Request, error: RequestValidationError) -> JSONResponse:
+        # Preserve field/type/message structure without echoing untrusted input or ctx.
+        details = [{key: value for key, value in item.items() if key in {"loc", "msg", "type"}}
+                   for item in error.errors()]
+        return JSONResponse(status_code=422, content={"detail": details,
+                            "trace_id": request.state.trace_id})
 
     async def execute(body: CommerceRequest, request: Request) -> RunResult:
         url = os.environ.get("AGENT_MEMORY_URL")

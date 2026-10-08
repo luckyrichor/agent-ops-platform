@@ -92,7 +92,7 @@ async def test_memory_http_failure_visible_in_same_trace() -> None:
         result = await MemoryCommerce(dispatcher, MemoryClient(http, token="test")).run(request)
     spans = {s.name: s for s in exporter.get_finished_spans()}
     assert result.outcome == "succeeded"
-    assert result.memory_status == "write_degraded"
+    assert result.memory_status == "read_write_degraded"
     for name in ("tool.memory.search", "tool.memory.remember"):
         assert spans[name].status.status_code == StatusCode.ERROR
         assert spans[name].parent.span_id == spans["commerce.request"].context.span_id

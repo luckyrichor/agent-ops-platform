@@ -37,3 +37,8 @@ AGENT_OPS_TRACE_EXPORTER=console uv run uvicorn 'agent_ops.api:create_app' --fac
 22个测试通过，含真实memory API/PostgreSQL旧回归、请求工具失败、memory降级、
 并行取消收尾；不存在请求正文或异常正文导出。
 来源agent-ops-platform@8c041be + 本轮工作树修改，源码SHA256见元数据。
+
+
+## 2026-10-08 第二轮：HTTP 服务端分类
+
+commerce.http 明确为 SERVER span；响应状态写入 http.response.status_code。4xx 留 UNSET，5xx 标 ERROR；内部 commerce.request/memory 工具错误仍有独立语义。422 校验错误及框架 HTTPException（如404）响应体均提供 trace_id，校验详情省略 input/ctx。此前 48 个测试与测量对应43969b4，第二轮完整回归58个测试对应本轮源码，详见 progress.md。

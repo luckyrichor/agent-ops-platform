@@ -56,7 +56,7 @@ async def test_memory_failure_does_not_forge_memory_success(status):
         result = await MemoryCommerce(Dispatcher(demo_agents()), MemoryClient(
             client, token="caller")).run(body().model_copy(update={"memory_id": uuid4()}))
     assert result.outcome == "succeeded"
-    assert result.memory_status == "write_degraded" and result.memory_id is None
+    assert result.memory_status == "read_write_degraded" and result.memory_id is None
 
 
 @pytest.mark.asyncio
@@ -104,3 +104,27 @@ async def test_slow_subscriber_isolated_from_32_other_streams():
     await asyncio.wait_for(cancelled.wait(), 1)
     await stalled.aclose()
     assert all(any("event: result" in event for event in result) for result in results)
+
+
+@pytest.mark.parametrize('read_failed,write_failed,expected', [
+    (False, False, 'available'), (True, False, 'read_degraded'),
+    (False, True, 'write_degraded'), (True, True, 'read_write_degraded'),
+])
+async def test_read_and_write_statuses_are_preserved(read_failed, write_failed, expected):
+    memory_id, tenant, version = uuid4(), uuid4(), uuid4()
+    def respond(request):
+        if request.method == 'GET':
+            return httpx.Response(503) if read_failed else httpx.Response(200, json={
+                'tenant_id': str(tenant), 'memory_id': str(memory_id), 'memory_type': 'episodic',
+                'status': 'active', 'revision': 1, 'content': '{"budget_cent":3000}'})
+        return httpx.Response(422, json={'error':{'code':'CONTENT_POLICY_REJECTED'}}) if write_failed else httpx.Response(201, json={
+            'tenant_id':str(tenant), 'memory_id':str(memory_id), 'version_id':str(version),
+            'revision':1, 'status':'active'})
+    async with httpx.AsyncClient(transport=httpx.MockTransport(respond), base_url='http://memory') as client:
+        result = await MemoryCommerce(Dispatcher(demo_agents()), MemoryClient(client, token='fixture')).run(
+            body().model_copy(update={'memory_id':memory_id}))
+    assert result.memory_status == expected
+    assert result.memory_read_status == ('read_degraded' if read_failed else 'available')
+    assert result.memory_write_status == ('degraded' if write_failed else 'succeeded')
+    assert (result.memory_read_error_code is not None) == read_failed
+    assert (result.memory_write_error_code is not None) == write_failed

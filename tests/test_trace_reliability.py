@@ -160,3 +160,40 @@ async def test_transport_disconnect_is_not_server_failure():
     assert span.status.status_code != StatusCode.ERROR
     assert span.attributes['outcome'] == 'cancelled'
     provider.shutdown()
+
+
+@pytest.mark.parametrize('path', ['/v1/commerce/runs', '/v1/commerce/stream'])
+async def test_validation_body_trace_and_server_4xx_status(path):
+    from opentelemetry.trace import SpanKind
+    provider, exporter, dispatcher = tracing()
+    payload = body().model_dump(mode='json')
+    payload['budget_cent'] = -1
+    async with httpx.AsyncClient(transport=httpx.ASGITransport(app=create_app(dispatcher)),
+                                 base_url='http://test') as client:
+        response = await client.post(path, json=payload)
+    assert response.status_code == 422
+    assert response.json()['trace_id'] == response.headers['x-trace-id']
+    assert response.json()['detail'][0]['loc'] == ['body', 'budget_cent']
+    assert 'input' not in response.json()['detail'][0]
+    span, = exporter.get_finished_spans()
+    assert span.kind == SpanKind.SERVER
+    assert span.attributes['http.response.status_code'] == 422
+    assert span.status.status_code == StatusCode.UNSET
+    provider.shutdown()
+
+
+@pytest.mark.parametrize('status', [401, 404, 409, 500])
+async def test_http_server_status_semantics(monkeypatch, status):
+    from fastapi import HTTPException
+    provider, exporter, dispatcher = tracing()
+    async def rejected(self, request):
+        raise HTTPException(status, 'FIXTURE_REJECTION')
+    monkeypatch.setattr(MemoryCommerce, '_run', rejected)
+    async with httpx.AsyncClient(transport=httpx.ASGITransport(app=create_app(dispatcher)),
+                                 base_url='http://test') as client:
+        response = await client.post('/v1/commerce/runs', json=body().model_dump(mode='json'))
+    assert response.status_code == status
+    server = next(s for s in exporter.get_finished_spans() if s.name == 'commerce.http')
+    assert server.status.status_code == (StatusCode.ERROR if status >= 500 else StatusCode.UNSET)
+    assert response.json()['trace_id'] == response.headers['x-trace-id']
+    provider.shutdown()
