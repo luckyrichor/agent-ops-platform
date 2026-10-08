@@ -92,3 +92,12 @@ memory_read_status/memory_write_status 和对应错误码分别保留，读写�
 使用已授权 doubao-seed-2-1-lite-260915 执行30次真实规划（3类合成请求各10次，串行、max_attempts=1），合法30/30、无效0/30、HTTP429为0/30，HTTP200共30次。规划p50 1913.643ms、p95 2703.883ms、p99/最大值 3553.229ms；相同请求确定性规划p50 0.012ms。报告逐样本记录固定原因码和耗时，无请求/原始响应/凭据；此次只测规划不调用工具或memory，不能作为端到端自由规划质量或长期限流概率。保持默认deterministic及显式llm验证模式，不加入会掩盖真实调用延迟的计划缓存。私密环境仍保留llm配置，日常可显式覆盖模式。
 
 AGENTS合并三个模型历史补充为当前状态，mini/lite均已可用、默认lite，旧阻塞只保留在历史进度与证据；顶部补齐模型接入和并发契约。旧422机制已由memory@bb09ed0修复并由ops@25abaac固定数字UUID联调验收，原随机请求正文未留存，因此不宣称已还原具体失败请求。本轮全量联调通过；未改memory源码/依赖或常驻服务。M5仅完成固定图provider工程评测，未宣称整个M5验收通过。
+
+
+## 2026-10-08：采样可查性与记忆最小化评审（Codex）
+
+来源 agent-ops-platform@53508fe + 本轮修改；当前源码摘要见 measurements/2026-10-08-tracing-review.json。成功/错误/422/500及全部SSE帧新增trace_sampled，HTTP头X-Trace-Sampled与trace_id一同返回；sampled不是入库保证。新增采样0/0.5/1的90次离线HTTP/SSE断言及409/500错误标记测试。episodic内容只留schema_version/category/有效budget_cent/region/recommendation，不再写原话、run_id、memory_id。真实PostgreSQL SDK联调验证仅措辞改变重放、预算改变409和最小内容字段；幂等key仍包含run_id，搜索仍使用用户查询，未声称没有任何编号/原话传输。
+
+首轮67 passed/4 failed：两项旧SSE精确字典未纳入新字段、旧联调期待原话变化冲突（新契约不存原话）、新增409测试受shell代理影响。更新断言/契约并隔离该测试代理环境后，最终 **71 passed in4.47s**，ruff、strict mypy10文件通过。requests新增直接依赖并更新uv.lock；删除无人调用的configured_tracer。启动辅助镜像从未固定数据库镜像改固定BusyBox1.37.0摘要，实际运行脚本成功，原Jaeger仍健康。
+
+当前源码真实OTLP导出4类trace（10/1/9/4 spans）4/4查询通过，新报告独立保留旧报告。真实后端采样0/0.5/1各10次，共30次标记与查询全匹配，本轮15采样/15未采样。首轮采样验证立即查采样trace未等待采集异步写入而失败，改为最多5秒轮询后通过。没有重跑付费LLM样本，旧30次评测仍对应旧源码；报告不混算。无压力容量、业务API常驻、入口traceparent或跨服务传播验收；M5仍部分工程评测。下一步自然语言参数/客服路由/工具选择尚未实现。

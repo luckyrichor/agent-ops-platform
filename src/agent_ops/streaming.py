@@ -25,7 +25,8 @@ async def stream_run(run: Callable[[], Awaitable[RunResult]],
 
     def frame(event: str, data: dict[str, object]) -> str:
         return f"event: {event}\ndata: " + json.dumps(
-            {**data, "trace_id": trace_id or data.get("trace_id")}, ensure_ascii=False) + "\n\n"
+            {**data, "trace_id": trace_id or data.get("trace_id"),
+             "trace_sampled": span.get_span_context().trace_flags.sampled}, ensure_ascii=False) + "\n\n"
 
     async def emit(event: str, data: dict[str, object]) -> None:
         try:

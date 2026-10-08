@@ -86,12 +86,15 @@ async def test_actual_memory_api_read_write_replay_conflict_and_archive(monkeypa
                                           run_id=UUID("12345678-1234-4234-8123-123456789012"))
                 service = MemoryCommerce(Dispatcher(demo_agents()), sdk)
                 first = await service.run(request)
-                replay = await service.run(request)
+                replay = await service.run(request.model_copy(update={"request": "different user wording"}))
+                stored = json.loads((await sdk.get(first.memory_id)).content)
+                assert set(stored) == {"schema_version", "category", "region", "budget_cent", "recommendation"}
+                assert str(request.run_id) not in json.dumps(stored)
                 assert first.memory_id == replay.memory_id
                 assert first.memory_status == "available"
                 assert first.recommendation["selected"] is None
                 with pytest.raises(MemoryAPIError) as conflict:
-                    await service.run(request.model_copy(update={"request": "changed"}))
+                    await service.run(request.model_copy(update={"budget_cent": 2000}))
                 assert conflict.value.status_code == 409
                 await sdk.archive(preference.memory_id, expected_revision=1)
                 fallback = await service.run(request.model_copy(update={"run_id": uuid4()}))

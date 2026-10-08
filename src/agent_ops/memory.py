@@ -26,6 +26,7 @@ class MemoryCommerce:
             result = await self._run(request)
             context = current.get_span_context()
             result.trace_id = f"{context.trace_id:032x}" if context.is_valid else None
+            result.trace_sampled = context.trace_flags.sampled
             current.set_attribute("outcome", result.outcome)
             current.set_attribute("memory_status", result.memory_status)
             current.set_attribute("memory_read_status", result.memory_read_status)
@@ -91,7 +92,8 @@ class MemoryCommerce:
             try:
                 with hop(self.dispatcher.tracer, "tool.memory.remember"):
                     saved = await self.client.remember(
-                        json.dumps({"request": request.model_dump(mode="json"),
+                        json.dumps({"schema_version": 1, "category": request.category,
+                                    "region": request.region,
                                     "budget_cent": effective.budget_cent,
                                     "recommendation": result.recommendation}, sort_keys=True),
                         MemoryType.EPISODIC, MemoryScope(ScopeKind.WORKSPACE, "commerce", None),

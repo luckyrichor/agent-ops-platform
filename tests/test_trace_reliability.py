@@ -81,7 +81,8 @@ async def test_actual_memory_write_conflict_stream_has_trace(monkeypatch):
                                      headers={'authorization': 'Bearer fixture'})
     frames = [json.loads(part.split('data: ', 1)[1]) for part in response.text.strip().split('\n\n')]
     assert frames[0]['trace_id'] == response.headers['x-trace-id']
-    assert frames[-1] == {'code': 'IDEMPOTENCY_CONFLICT', 'trace_id': response.headers['x-trace-id']}
+    assert frames[-1] == {'code': 'IDEMPOTENCY_CONFLICT', 'trace_id': response.headers['x-trace-id'],
+                          'trace_sampled': True}
     assert 'event: error' in response.text
     assert any(s.name == 'tool.memory.remember' for s in exporter.get_finished_spans())
     provider.shutdown()
@@ -128,7 +129,7 @@ async def test_full_queue_retains_terminal_abort_without_blocking_cleanup():
     assert len(remainder) <= 3
     assert remainder[-1].startswith('event: aborted\n')
     assert json.loads(remainder[-1].split('data: ', 1)[1]) == {
-        'code': 'SLOW_CONSUMER', 'trace_id': 'fixture-trace'}
+        'code': 'SLOW_CONSUMER', 'trace_id': 'fixture-trace', 'trace_sampled': False}
     assert not any('event: result' in event for event in remainder)
 
 

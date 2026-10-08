@@ -33,6 +33,7 @@ dependencies = [
     { name = "opentelemetry-api" },
     { name = "opentelemetry-exporter-otlp-proto-http" },
     { name = "opentelemetry-sdk" },
+    { name = "requests" },
     { name = "uvicorn" },
 ]
 
@@ -53,6 +54,7 @@ requires-dist = [
     { name = "opentelemetry-api", specifier = ">=1.27,<2" },
     { name = "opentelemetry-exporter-otlp-proto-http", specifier = ">=1.27,<2" },
     { name = "opentelemetry-sdk", specifier = ">=1.27,<2" },
+    { name = "requests", specifier = ">=2.32,<3" },
     { name = "uvicorn", specifier = ">=0.30,<1" },
 ]
 

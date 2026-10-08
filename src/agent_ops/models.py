@@ -49,5 +49,6 @@ class RunResult(BaseModel):
     memory_id: UUID | None = None
     memory_hit_count: int = 0
     trace_id: str | None = None
+    trace_sampled: bool = False
     planner_mode: str = "deterministic"
     planner_model: str | None = None

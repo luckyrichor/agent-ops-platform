@@ -32,3 +32,10 @@ W5–W7 历史验收为 18 pytest passed：包括真实 SDK→memory API→迁�
 
 
 第二轮：422 校验 JSON 也提供 trace_id；HTTP SERVER 的 4xx 留 UNSET、5xx 才标 ERROR。完整工作区测试 58 passed；无同级源码独立环境 57 passed/1 skipped（唯一跳过的是需要外部 Alembic 源码的数据库联调）。数据库联调固定数字 UUID，确认修复后的服务不误拒绝；见 README 安装说明。
+
+
+## 结构化最小记忆（2026-10-08）
+
+episodic内容仅保存 schema_version=1、category、有效budget_cent、region、recommendation，不保存自由文本、run_id、memory_id或调用者身份。run_id只用于幂等key（仍是持久幂等元数据，不等于完全不存编号）。同run_id且结构化内容不变时，即使用户措辞不同也重放；预算/类目/地区/推荐结果改变且复用key仍409。历史预算仍只能收窄显式预算，content根级budget_cent保留兼容。
+
+真实SDK/API/PostgreSQL联调已覆盖措辞改变重放、结构化预算改变冲突、读取保存字段和编号不进入内容。减少内容只降低敏感信息误判/持久化表面积，不绕过memory内容检查；结构化字段本身若携带敏感值仍可能被拒绝。搜索仍会把本次查询正文发送给memory（不等于写入内容），未声明所有自由文本传输被移除。

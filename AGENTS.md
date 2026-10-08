@@ -10,7 +10,7 @@ Agent 应用与可观测评测平台。电商场景的多 Agent 任务拆解、�
 
 三个月求职计划六项目之一（原编号 ③），对应岗位 **05、07、10、11、14**，另含 **08** 作为子方向。总计划见 [workplan-docs](https://github.com/luckyrichor/workplan-docs)，岗位原文以那里的 `岗位要求原文.md` 为唯一依据。
 
-**当前状态：M1–M4本地验收通过；第二轮评审修复及独立构建通过；mini/lite 真实调用初验通过，默认模型 2.1-lite。LLM 仅验证固定四角色 DAG 的在线调用行为，精确依赖校验保持 pricing/shipping 并发。TX 已部署持久化 Jaeger 后端，四类 trace 导出及重启保留验收通过；业务 API 未常驻、跨服务传播未实现。部署见 docs/tracing-backend.md，实测进度见 docs/progress.md。**
+**当前状态：M1–M4本地验收通过；第二轮评审修复及独立构建通过；mini/lite 真实调用初验通过，默认模型 2.1-lite。LLM 仅验证固定四角色 DAG 的在线调用行为，精确依赖校验保持 pricing/shipping 并发；响应明确trace_sampled，记忆内容只存结构化字段。TX 已部署持久化 Jaeger 后端，四类 trace 导出及重启保留验收通过；业务 API 未常驻、跨服务传播未实现。部署见 docs/tracing-backend.md，实测进度见 docs/progress.md。**
 
 ## 分工模式：偏产出
 
@@ -118,3 +118,8 @@ mini（doubao-seed-2-0-mini-260428）与 lite（doubao-seed-2-1-lite-260915）�
 ## 2026-10-08 第二轮评审补充
 
 构建不再强制 sibling agent-memory：使用 HTTPS Git 固定 bb09ed0，pyproject/uv.lock 与实际依赖一致；该版本含数字 UUID 内容误判修复。首次安装需要 Git 与仓库读取权限，仍安装完整 SDK 所属包。实际数据库联调需源码迁移，可指定 AGENT_MEMORY_SOURCE；必须与安装 SDK commit 一致且干净，无源码时独立环境只跳过该用例。当前工作区完整58测试通过。HTTP SERVER 4xx 不标 ERROR；422/框架错误 JSON 返回 trace_id；读写降级独立保留，组合状态见 README。
+
+
+## 当前追踪/记忆契约补充
+
+trace_id是关联号；trace_sampled=false不能期待后端查询，true也不是导出投递确认。header/JSON/SSE均提供采样标记。最新源码后端复验见tracing-review.json，历史报告须对照生成源码摘要。记忆内容不存原话/run_id/memory_id；run_id仍作为幂等key持久元数据，措辞不同而结构化内容相同应重放。业务API未常驻、入口traceparent与跨服务传播未实现，M5仅固定图provider评测，不称规划可靠性或完整M5。

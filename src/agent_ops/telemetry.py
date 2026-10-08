@@ -55,10 +55,6 @@ class Telemetry:
         await asyncio.to_thread(self.provider.shutdown)
 
 
-def configured_tracer() -> Tracer:
-    # Compatibility for standalone helpers. Prefer Telemetry ownership in Dispatcher.
-    return Telemetry().tracer
-
 
 @contextmanager
 def hop(tracer: Tracer, name: str, *, kind: SpanKind = SpanKind.INTERNAL) -> Iterator[Span]:

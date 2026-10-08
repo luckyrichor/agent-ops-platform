@@ -1,4 +1,5 @@
 """Real OTLP export/query verification against the running local Jaeger v2 backend."""
+import argparse
 import asyncio
 import hashlib
 import json
@@ -101,9 +102,12 @@ async def main() -> None:
               'source_sha256': {str(p): hashlib.sha256(p.read_bytes()).hexdigest()
                                 for p in sorted(Path('src/agent_ops').glob('*.py'))},
               'config_sha256': hashlib.sha256(Path('deploy/jaeger.yaml').read_bytes()).hexdigest()}
-    Path('docs/measurements/2026-10-08-tracing-backend.json').write_text(
+    Path(options.output).write_text(
         json.dumps(report, ensure_ascii=False, indent=2) + '\n')
     print(json.dumps({'verified': len(cases), 'cases': cases}, ensure_ascii=False))
 
 
+parser = argparse.ArgumentParser()
+parser.add_argument('--output', default='docs/measurements/2026-10-08-tracing-backend.json')
+options = parser.parse_args()
 asyncio.run(main())

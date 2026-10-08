@@ -29,7 +29,13 @@ async def test_sdk_order_context_and_stable_write_key():
                 "memory_id": str(memory_id), "memory_type": "episodic", "status": "active",
                 "revision": 1, "content": '{"budget_cent":3000}'})
         calls.append(request.headers["idempotency-key"])
-        assert json.loads(request.content)["scope"]["workspace_id"] == "commerce"
+        payload = json.loads(request.content)
+        assert payload["scope"]["workspace_id"] == "commerce"
+        stored = json.loads(payload["content"])
+        assert set(stored) == {"schema_version", "category", "region", "budget_cent", "recommendation"}
+        assert stored["budget_cent"] == 3000
+        assert str(memory_id) not in payload["content"]
+        assert 'private-user-free-text' not in payload["content"]
         return httpx.Response(201, json={"tenant_id": str(tenant), "memory_id": str(memory_id),
             "version_id": str(version), "revision": 1, "status": "active"})
     handlers = demo_agents()
@@ -41,7 +47,8 @@ async def test_sdk_order_context_and_stable_write_key():
     async with httpx.AsyncClient(transport=httpx.MockTransport(respond),
                                  base_url="http://memory") as client:
         service = MemoryCommerce(Dispatcher(handlers), MemoryClient(client, token="caller"))
-        request = body().model_copy(update={"memory_id": memory_id})
+        request = body().model_copy(update={"memory_id": memory_id,
+                                           "request": "private-user-free-text"})
         first, second = await service.run(request), await service.run(request)
     assert first.memory_id == second.memory_id == memory_id
     assert first.recommendation["selected"] is None

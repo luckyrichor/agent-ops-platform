@@ -34,6 +34,8 @@ class RequestTraceMiddleware:
         with hop(self.dispatcher.tracer, "commerce.http", kind=SpanKind.SERVER) as current:
             trace_id = f"{current.get_span_context().trace_id:032x}"
             scope.setdefault("state", {})["trace_id"] = trace_id
+            sampled = current.get_span_context().trace_flags.sampled
+            scope["state"]["trace_sampled"] = sampled
 
             response_started = False
 
@@ -42,7 +44,8 @@ class RequestTraceMiddleware:
                 if message["type"] == "http.response.start":
                     response_started = True
                     message["headers"] = list(message.get("headers", [])) + [
-                        (b"x-trace-id", trace_id.encode())]
+                        (b"x-trace-id", trace_id.encode()),
+                        (b"x-trace-sampled", str(sampled).lower().encode())]
                     current.set_attribute("http.response.status_code", message["status"])
                     if message["status"] >= 500:
                         current.set_status(Status(StatusCode.ERROR))
@@ -62,7 +65,7 @@ class RequestTraceMiddleware:
                 if response_started:
                     raise
                 response = JSONResponse(status_code=500, content={
-                    "detail": "RUN_FAILED", "trace_id": trace_id})
+                    "detail": "RUN_FAILED", "trace_id": trace_id, "trace_sampled": sampled})
                 await response(scope, receive, traced_send)
 
 
@@ -89,7 +92,8 @@ def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = N
     async def http_error(request: Request, error: StarletteHTTPException) -> JSONResponse:
         return JSONResponse(status_code=error.status_code, headers=error.headers,
                             content={"detail": error.detail,
-                                     "trace_id": request.state.trace_id})
+                                     "trace_id": request.state.trace_id,
+                                     "trace_sampled": request.state.trace_sampled})
 
     @app.exception_handler(RequestValidationError)
     async def validation_error(request: Request, error: RequestValidationError) -> JSONResponse:
@@ -97,7 +101,8 @@ def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = N
         details = [{key: value for key, value in item.items() if key in {"loc", "msg", "type"}}
                    for item in error.errors()]
         return JSONResponse(status_code=422, content={"detail": details,
-                            "trace_id": request.state.trace_id})
+                            "trace_id": request.state.trace_id,
+                                     "trace_sampled": request.state.trace_sampled})
 
     async def execute(body: CommerceRequest, request: Request) -> RunResult:
         url = os.environ.get("AGENT_MEMORY_URL")
