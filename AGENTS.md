@@ -115,3 +115,8 @@ bash workplan-docs/scripts/run-on-tx.sh agent-memory 'docker compose up -d postg
 ## 2026-10-08 模型权限复验
 
 上述 mini 权限阻塞为历史记录。用户已开通 Doubao-Seed-2.1-lite，默认及服务器私密配置改为 doubao-seed-2-1-lite-260915，同一指定 key 的三个真实规划→工具执行用例通过。证据在 docs/measurements/llm-live-2026-10-08.json；旧失败证据单独保留，不外推生产质量，未启动常驻服务。
+
+
+## 2026-10-08 mini 权限再次复验
+
+同一指定 key 的 doubao-seed-2-0-mini-260428 现已完成真实应用端到端 3/3 初验。首次复验 ModelNotOpen 与稍后成功分别保存在 docs/measurements/llm-mini-recheck-2026-10-08.json 和 llm-mini-live-2026-10-08.json。默认及私密环境继续使用已通过的 2.1-lite，本轮仅增加验收记录，未修改程序代码或启动常驻服务。

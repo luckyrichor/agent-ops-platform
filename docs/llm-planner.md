@@ -51,3 +51,10 @@ HTTP 成功结果包含 `planner_mode / planner_model`，可分辨是否真实�
 用户已开通 Doubao-Seed-2.1-lite，本次目标模型权限阻塞已解决。三个构造场景属于真实调用工程初验，不能推断生产质量、性能或付费额度的长期可用性。模型 ID 根据[官方模型列表](https://docs.volcengine.com/docs/82379/1330310?lang=en)核对。
 
 本项目未新增直接依赖；锁文件和 .venv 已同步 agent-memory 的新 OTLP 传递依赖。未安装新数据库/容器服务，也未启动常驻 API。程序代码已具备真实调用能力，当前已配置的 2.1-lite 完成在线初验。
+
+
+## 2026-10-08 mini 模型再次复验
+
+用户开通 mini 后，首次复验仍返回 ModelNotOpen（0/3，见 `measurements/llm-mini-recheck-2026-10-08.json`）。稍后用同一指定 key 直接调用已返回 HTTP 200，再运行应用端到端验证，`doubao-seed-2-0-mini-260428` 的预算内推荐、运费超预算和空目录三个构造场景 **3/3 成功**；模型计划经过本地契约校验，四角色工具任务完成。成功证据见 `measurements/llm-mini-live-2026-10-08.json`，包含实测时间及源码 SHA256，对应代码基线 99ff2aa；本轮只补充记录，未修改程序代码。
+
+mini 与 2.1-lite 均已真实验证可用。默认模型及服务器私密配置继续使用 `doubao-seed-2-1-lite-260915`；如需使用 mini，在 source 私密环境后设置 `AGENT_OPS_LLM_MODEL=doubao-seed-2-0-mini-260428`。两个模型的报告分开保存，首次失败记录保留。不将三个构造场景外推为生产质量或长期可用性，未启动常驻服务。

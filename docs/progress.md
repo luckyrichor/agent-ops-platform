@@ -49,3 +49,10 @@ W8独立维护：TaskGroup管理ready角色批次，取消时收完pricing/shipp
 用户开通 2.1-lite 后，核对官方 ID doubao-seed-2-1-lite-260915，修改默认模型与服务器 .local/ark.env（key 不变）。使用真实模型通过应用 API 完成 3/3 构造场景：5000 分上海选择基础水壶；4500 分杭州因运费超预算不推荐；unknown 类目为空目录。每例四个角色任务完成，planner_mode=llm。模型负责受约束计划，本地工具仍负责事实与预算，不声称生产评测或所有角色由 LLM 驱动。
 
 新报告 docs/measurements/llm-live-2026-10-08.json 包含实际耗时/模型名/源码 SHA256；旧 mini 阻塞报告保存为 llm-mini-blocked-2026-10-08.json。pytest 40 项、ruff、strict mypy 10 文件重验通过；未启动常驻 API，未公开凭据。
+
+
+## 2026-10-08 mini 模型再次复验
+
+用户开通 mini 后，首次复验仍返回 ModelNotOpen（0/3，见 `docs/measurements/llm-mini-recheck-2026-10-08.json`）。稍后用同一指定 key 直接调用已返回 HTTP 200，再运行应用端到端验证，`doubao-seed-2-0-mini-260428` 的预算内推荐、运费超预算和空目录三个构造场景 **3/3 成功**；模型计划经过本地契约校验，四角色工具任务完成。成功证据见 `docs/measurements/llm-mini-live-2026-10-08.json`，包含实测时间及源码 SHA256，对应代码基线 99ff2aa；本轮只补充记录，未修改程序代码。
+
+mini 与 2.1-lite 均已真实验证可用。默认模型及服务器私密配置继续使用 `doubao-seed-2-1-lite-260915`；如需使用 mini，在 source 私密环境后设置 `AGENT_OPS_LLM_MODEL=doubao-seed-2-0-mini-260428`。两个模型的报告分开保存，首次失败记录保留。不将三个构造场景外推为生产质量或长期可用性，未启动常驻服务。
