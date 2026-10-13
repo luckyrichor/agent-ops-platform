@@ -18,6 +18,8 @@ from agent_ops.models import CommerceRequest, RunResult
 from agent_ops.orchestrator import Dispatcher
 from agent_ops.planner import Planner, PlanningError, planner_from_env
 from agent_ops.streaming import stream_run
+from agent_ops.support import SupportService
+from agent_ops.support_api import support_router
 from agent_ops.telemetry import hop
 
 
@@ -31,7 +33,7 @@ class RequestTraceMiddleware:
         if scope["type"] != "http":
             await self.app(scope, receive, send)
             return
-        with hop(self.dispatcher.tracer, "commerce.http", kind=SpanKind.SERVER) as current:
+        with hop(self.dispatcher.tracer, "support.http" if scope.get("path", "").startswith("/support") else "commerce.http", kind=SpanKind.SERVER) as current:
             trace_id = f"{current.get_span_context().trace_id:032x}"
             scope.setdefault("state", {})["trace_id"] = trace_id
             sampled = current.get_span_context().trace_flags.sampled
@@ -85,6 +87,7 @@ def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = N
 
     app = FastAPI(title="Agent Ops commerce orchestration", version="0.1.0", lifespan=lifespan)
     dispatch = dispatcher or Dispatcher(demo_agents())
+    app.include_router(support_router(SupportService(dispatch.tracer, os.getenv("SUPPORT_HUMAN_TOKEN"))))
 
     app.add_middleware(RequestTraceMiddleware, dispatcher=dispatch)
 

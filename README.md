@@ -42,3 +42,7 @@ HTTP 响应在开始时提供 `X-Trace-Id` / `X-Trace-Sampled`，成功/错误 J
 422 校验响应 JSON 提供 trace_id 和字段/type/msg，不回显 input/ctx；404 等框架 HTTP 错误也携带 trace_id。commerce.http 为 SERVER span，记录 http.response.status_code；4xx 不标 ERROR，5xx 标 ERROR，符合 [OpenTelemetry HTTP 语义](https://opentelemetry.io/docs/specs/semconv/http/http-spans/)。内部 memory 工具失败仍可标 ERROR，不混算 HTTP 服务端错误率。
 
 结果新增 memory_read_status、memory_write_status 与对应 error_code；读写同时降级为 read_write_degraded（向量搜索降级加写失败为 search_write_degraded），避免覆盖读失败。未配置两者为 not_configured；业务失败未尝试写为 not_attempted，写成功为 succeeded，写失败为 degraded。memory_status 单阶段值兼容旧值，新增组合值；消费端应允许这些新增值。
+
+## M5 客服与决策评测
+
+接口、人工接管、47条标注集及岗位08前端差距见[客服方向](docs/customer-support.md)。

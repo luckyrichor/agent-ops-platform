@@ -4,7 +4,7 @@ version = "0.1.0"
 description = "Deterministic commerce multi-agent orchestration foundation"
 requires-python = ">=3.12,<3.13"
 dependencies = [
-    "agent-memory @ git+https://github.com/luckyrichor/agent-memory.git@bb09ed0693d23aa6e8538c0cee2cdfe807cf00ce",
+    "agent-memory @ git+https://github.com/luckyrichor/agent-memory.git@1e2730c0a0b6a25f2ee9f102dadcd3ca8288a474",
     "fastapi>=0.115,<1",
     "httpx>=0.27,<1",
     "requests>=2.32,<3",

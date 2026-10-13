@@ -101,3 +101,7 @@ AGENTS合并三个模型历史补充为当前状态，mini/lite均已可用、�
 首轮67 passed/4 failed：两项旧SSE精确字典未纳入新字段、旧联调期待原话变化冲突（新契约不存原话）、新增409测试受shell代理影响。更新断言/契约并隔离该测试代理环境后，最终 **71 passed in4.47s**，ruff、strict mypy10文件通过。requests新增直接依赖并更新uv.lock；删除无人调用的configured_tracer。启动辅助镜像从未固定数据库镜像改固定BusyBox1.37.0摘要，实际运行脚本成功，原Jaeger仍健康。
 
 当前源码真实OTLP导出4类trace（10/1/9/4 spans）4/4查询通过，新报告独立保留旧报告。真实后端采样0/0.5/1各10次，共30次标记与查询全匹配，本轮15采样/15未采样。首轮采样验证立即查采样trace未等待采集异步写入而失败，改为最多5秒轮询后通过。没有重跑付费LLM样本，旧30次评测仍对应旧源码；报告不混算。无压力容量、业务API常驻、入口traceparent或跨服务传播验收；M5仍部分工程评测。下一步自然语言参数/客服路由/工具选择尚未实现。
+
+## 2026-10-13 M5 客服与评测（Codex）
+
+来源 d11c7a8 + 本轮修改。新增四意图路由、只读订单、澄清、人工接管和工单CAS；47标注全部route/state正确，数据摘要见measurements/2026-10-13-support.json。全量74测试通过、ruff、strict mypy14文件通过，含16并发幂等与真实memory API集成。首次全量因memory源码已推进M6而安装SDK仍旧pin，73通过/1版本一致性门失败；将pyproject/uv.lock更新为1e2730c后全量通过。前端与真实业务工具未实现，规则不是LLM；边界见customer-support.md。
