@@ -114,7 +114,7 @@ def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = N
         authorization = request.headers.get("authorization", "")
         if not authorization.startswith("Bearer "):
             raise HTTPException(401, "memory integration requires caller bearer token")
-        async with httpx.AsyncClient(base_url=url, timeout=2) as client:
+        async with httpx.AsyncClient(base_url=url, timeout=2, trust_env=False) as client:
             try:
                 return await MemoryCommerce(dispatch, MemoryClient(
                     client, token=authorization[7:]), plan).run(body)

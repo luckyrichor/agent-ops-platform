@@ -1,0 +1,32 @@
+{
+  "original_source_commit": "1c5d1ef5eaabb189b737e4bbb5ccbc7a3f362a2f",
+  "original_full_suite": {
+    "passed": 74,
+    "skipped": 0,
+    "seconds": 5.17
+  },
+  "new_regressions_on_original": {
+    "failed": 4,
+    "passed": 3,
+    "seconds": 0.4,
+    "method": "detached git worktree at original commit; PYTHONPATH points at original/src; current new regression tests; no source changes in original worktree"
+  },
+  "new_regressions_after_fix": {
+    "passed": 7,
+    "failed": 0
+  },
+  "current_full_suite": {
+    "passed": 81,
+    "skipped": 0,
+    "seconds": 4.51
+  },
+  "regression_test_sha256": "815f1019bdbb03faadf67d8b575a148a477601dede761b7f889a254f763997de",
+  "failures_before": [
+    "humanitarian aid incorrectly routed human",
+    "inhuman behavior incorrectly routed human",
+    "humanoid robot incorrectly routed human",
+    "invalid shell proxy caused HTTP500 before memory fallback"
+  ],
+  "paid_calls": 0,
+  "note": "test wall times are gate observations, not performance measurements"
+}

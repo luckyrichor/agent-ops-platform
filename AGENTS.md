@@ -123,3 +123,10 @@ mini（doubao-seed-2-0-mini-260428）与 lite（doubao-seed-2-1-lite-260915）�
 ## 当前追踪/记忆契约补充
 
 trace_id是关联号；trace_sampled=false不能期待后端查询，true也不是导出投递确认。header/JSON/SSE均提供采样标记。最新源码后端复验见tracing-review.json，历史报告须对照生成源码摘要。记忆内容不存原话/run_id/memory_id；run_id仍作为幂等key持久元数据，措辞不同而结构化内容相同应重放。业务API未常驻、入口traceparent与跨服务传播未实现，M5客服规则路由/工单路径与47条标注评测已实现，见docs/customer-support.md；固定图provider评测仍不称规划可靠性。
+
+
+## 2026-10-18 首次 B0 交付范围（Codex）
+
+用户附件原件在docs/agent-ops-platform面试级完善方案.md，保持署名/原文，不改写计划。用户本次明确限定“修已知错误、建立B0，首次交付后再决定后续”。附件P0/P1却是环境栈/PG数据层，与消息中的阶段解释不同，已请求澄清；本次以明确描述的修错+B0为范围。不要将本次报告写成环境栈/PG已完成，后续数据库、前端、数据集和支付等待用户审阅后的指示。原baseline-v0与修复后baseline-b0标签、历史数据保留，不重写/覆盖；基线不得故意劣化。
+
+B0入口docs/baselines/b0/README.md；HTTP脚本scripts/benchmark-b0.py必须离线确定性、localhost、与业务核分离、至少五轮并记录原始数据/源码hash。LLM原本已默认8槽，并非无并发上限；暂无入口排队界限/熔断，不能拿不实方案文字当实际基线。47条标签仅回归，不当真实准确率。本轮没有默认授权大批真实模型调用、外网暴露或改其他项目范围。

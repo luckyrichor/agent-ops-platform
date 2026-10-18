@@ -33,7 +33,8 @@ class Ticket(BaseModel):
 
 def route_message(message: str) -> Route:
     text = message.lower()
-    if any(x in text for x in ("人工", "客服人员", "投诉", "盗刷", "隐私", "human", "fraud", "privacy")):
+    if any(x in text for x in ("人工", "客服人员", "投诉", "盗刷", "隐私")) or bool(
+        re.search(r"\b(human|fraud|privacy)\b", text)):
         return "human"
     # Denial/ambiguous instructions are not treated as positive requests.
     if any(x in text for x in ("不要", "不想", "don't", "do not", "ignore previous", "忽略指令")):
