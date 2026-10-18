@@ -1,6 +1,6 @@
 # 进度记录
 
-最后更新：2026-10-08（北京时间）
+最后更新：2026-10-18（北京时间）
 
 本文件是 `agent-ops-platform` 的进度事实源，汇总到 `workplan-docs/进度总览.md`。
 
@@ -105,3 +105,14 @@ AGENTS合并三个模型历史补充为当前状态，mini/lite均已可用、�
 ## 2026-10-13 M5 客服与评测（Codex）
 
 来源 d11c7a8 + 本轮修改。新增四意图路由、只读订单、澄清、人工接管和工单CAS；47标注全部route/state正确，数据摘要见measurements/2026-10-13-support.json。全量74测试通过、ruff、strict mypy14文件通过，含16并发幂等与真实memory API集成。首次全量因memory源码已推进M6而安装SDK仍旧pin，73通过/1版本一致性门失败；将pyproject/uv.lock更新为1e2730c后全量通过。前端与真实业务工具未实现，规则不是LLM；边界见customer-support.md。
+
+
+## 2026-10-18 修错与B0首次交付（Codex）
+
+用户附件原件44746字节纳入docs/agent-ops-platform面试级完善方案.md，保留原署名及独立hash。附件P0/P1为环境栈/PG，用户消息解释为修错/B0，已提出澄清；本次按明确描述完成修复和B0，不称附件环境栈/数据持久化完成，后续等审阅。baseline-v0=1c5d1ef，baseline-b0=d37c7d3，已推送并保留。
+
+原74测试全过。新增7回归在原始代码独立worktree上4失败3通过，修复后7/7：英文人工词子串误判、内部HTTP客户端继承坏代理构造500。修词边界及trust_env=False；不拿后续质量语料调规则。旧measure-streams.py改共享Dispatcher+finally关闭，默认.local且拒绝覆盖既有输出。方案S4“无并发上限”与已有默认8槽不符，未移除既有保护造差基线。
+
+干净d37c7d3上真实loopback HTTP/SSE，5进程×6场景×128请求，并发8，3840次业务契约全符合（640预期409，其余预期200）。客户端CPU0/API CPU1/2/3；源码SHA256回查一致。窗口0.206–0.244秒、工单上限256，近尾波动明显，仅工程基线不当稳态容量。首轮16请求脚本试跑480次全部通过，仅正式结果入库；新增脚本ruff初次报import/异步阻塞/闭包捕获，改异步子进程/绑定闭包/非阻塞git读取后通过。报告生成首次误用系统Python读取包metadata失败，改uv环境读取后完成，未影响测量原件。
+
+四门pytest81通过0skip（含真实PG联调）、ruff、strict mypy14文件、客服固定回归47/47。旧流脚本32健康流完成/慢流取消。交付见docs/baselines/b0/delivery.md与results；没有付费调用、部署新栈、开放外网或推进后续阶段。

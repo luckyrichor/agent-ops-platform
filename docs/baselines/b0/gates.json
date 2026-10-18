@@ -1,0 +1,29 @@
+{
+  "source_commit": "d37c7d34e80f88ca345b074821531ba8e0ab303b",
+  "pytest": {
+    "passed": 81,
+    "skipped": 0,
+    "seconds": 4.51,
+    "actual_memory_postgresql_integration": "passed, SDK/migration checkout commit verified"
+  },
+  "ruff": "src/tests and new/changed B0 scripts pass",
+  "mypy_strict": {
+    "source_files": 14,
+    "result": "pass"
+  },
+  "support_regression": {
+    "passed": 47,
+    "cases": 47,
+    "not_independent_accuracy": true
+  },
+  "stream_cleanup_smoke": {
+    "normal_completed": 32,
+    "slow_consumer_cancelled": true,
+    "historical_measurement_unchanged": true
+  },
+  "agent_memory_installed_commit": "1e2730c0a0b6a25f2ee9f102dadcd3ca8288a474",
+  "runtime_source_sha256_verified": true,
+  "http_contract_checks": 3840,
+  "unexpected_results": 0,
+  "paid_model_calls": 0
+}

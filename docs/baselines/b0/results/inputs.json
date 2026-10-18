@@ -1,0 +1,22 @@
+{
+  "commerce": {
+    "request": "B0 fixture",
+    "category": "kettle",
+    "budget_cent": 5000,
+    "region": "上海"
+  },
+  "support": {
+    "message": "转人工"
+  },
+  "conflict": {
+    "message": "我要退款"
+  },
+  "scenarios": [
+    "commerce",
+    "sse",
+    "ticket_create",
+    "ticket_replay",
+    "ticket_conflict",
+    "ticket_get"
+  ]
+}

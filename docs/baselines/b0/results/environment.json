@@ -1,0 +1,70 @@
+{
+  "generated_at": "2026-10-18T14:17:28.238792+00:00",
+  "source_head": "d37c7d34e80f88ca345b074821531ba8e0ab303b",
+  "source_dirty": "",
+  "source_sha256": {
+    "src/agent_ops/telemetry.py": "fda8ecc6dff2ba41d61257be72bf495c9761f3df3267ccdc9d04d329b80fafdf",
+    "src/agent_ops/planner.py": "e220eb4e82dd1eb82e868a60d2ed7df9602ee748131abcd2bbbf7566ea44b7c4",
+    "src/agent_ops/agents.py": "dc30a08884dc2d99415989460a9ffa82f72d2a9c93ca561e9b397d88e793ffa8",
+    "src/agent_ops/support.py": "e85d2e83ceea225275be71bfbea95cbf09e40491ed83364ab105a4fd5486e731",
+    "src/agent_ops/models.py": "11e487edf6ceaf39daa143e48beb3f420ec1b9643a46d44c952476340077a331",
+    "src/agent_ops/api.py": "4e542641c2063d1b0369929eef39bc94fbf50670065a2f8a92bb3a3c7ff02f15",
+    "src/agent_ops/support_api.py": "887090223ee964c1d368b25d666b786bcc979dbf1b176c3b01270441739e92e4",
+    "src/agent_ops/orchestrator.py": "e229f4b35b14a1aeed24fb557e50c3267463d19af6d873a11ac37d08fb1a8733",
+    "src/agent_ops/memory.py": "5957e370ec885dd1a417eec9ae611b37007eb0a92a05df64d0388f9581edab9c",
+    "src/agent_ops/__init__.py": "790a09b52d965efce6fdde2575c4ba2a7d009cd5a210181548e98fab8f45cdcd",
+    "src/agent_ops/__main__.py": "d569e10e101e680b51f7d9bbddcf778074e80bc97068e07dfffd82276f341da0",
+    "src/agent_ops/streaming.py": "deb908ef1624b6826b2d351ff035c1a6c97a1511007901c58f415becb79097c6",
+    "src/agent_ops/evals/support_runner.py": "92bc3bf05f57e7f786b7c2e5b54743512798a274dcd81d4d3c8e42f9d73be466",
+    "src/agent_ops/evals/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scripts/benchmark-b0.py": "90070957ac374e470b813ab3ae384c5fc1c05e80690364367d752abece0a7e84",
+    "uv.lock": "0f3bf98c69e2e0af9e0b338fe6f825be7273e16c69b7113bfa3eba6f9da93118",
+    "pyproject.toml": "97f8426526ebb88e69523ee0193a8e528f24afeed2c47cac560e8e3d9a4f0b80"
+  },
+  "platform": "Linux-6.8.0-139-generic-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "cpu_count": 4,
+  "cpu_affinity": {
+    "client": [
+      0
+    ],
+    "server": [
+      1,
+      2,
+      3
+    ]
+  },
+  "cpu_model": "AMD EPYC 7K62 48-Core Processor",
+  "meminfo": {
+    "MemTotal": "7869640 kB",
+    "MemAvailable": "6390696 kB"
+  },
+  "versions": {
+    "fastapi": "0.142.2",
+    "starlette": "1.7.0",
+    "uvicorn": "0.54.0",
+    "httpx": "0.28.1",
+    "agent-memory": "0.1.0",
+    "opentelemetry-sdk": "1.45.0"
+  },
+  "load_before": [
+    0.0888671875,
+    0.10693359375,
+    0.08935546875
+  ],
+  "config": {
+    "output": ".local/b0-http-final",
+    "repeats": 5,
+    "requests": 128,
+    "concurrency": 8,
+    "warmup": 10
+  },
+  "mode": "deterministic planner / local demo tools / memory disabled / in-memory support / trace ratio1 exporter none / one uvicorn worker",
+  "method": "closed-loop bounded client; real loopback TCP; latency begins after generator semaphore; includes HTTP pool and parsing, not generator backlog. New server per repeat; fixed scenario order (not randomized), warmup each commerce/SSE/support; service CPU and VmHWM via /proc, process peak cumulative; no allocator attribution; first SSE event is started, not first model token; no live model, stub or paid call; local credentials removed; no capacity claims",
+  "inputs_sha256": "a205d714fd6b7ea5700e52544c6c434615aac139549b7c0de072dac344c58f24",
+  "load_after": [
+    0.2294921875,
+    0.13671875,
+    0.099609375
+  ]
+}
