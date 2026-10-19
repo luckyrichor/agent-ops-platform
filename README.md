@@ -53,3 +53,15 @@ HTTP 响应在开始时提供 `X-Trace-Id` / `X-Trace-Sampled`，成功/错误 J
 用户提供的 [完善方案原件](docs/agent-ops-platform面试级完善方案.md) 已原样纳入仓库。本轮仅按用户明确描述修复问题并建立B0，后续阶段等待审阅；附件P0/P1与用户阶段解释存在差异，不能当成环境栈/PG数据层已完成。
 
 [B0 范围、修复及复现方式](docs/baselines/b0/README.md)。冻结原始`baseline-v0`和修复后`baseline-b0`；旧内存工单与确定性业务图保留。基线测量为loopback实际HTTP/SSE，不调用付费模型，不提供生产容量或路由准确率结论。后续对照使用新输出目录，不覆盖历史。
+
+### agent-memory 后续独立开发后的迁移源码匹配（2026-10-19）
+
+本仓库SDK仍固定`1e2730c`，没有随memory阶段0自动升级。当前邻接agent-memory主分支已加入0008对话事件迁移，与SDK来源不同；测试的源码一致性检查会正确拒绝混用。联调旧SDK时应显式指定它对应的干净源码，例如在工作区根目录：
+
+```bash
+git -C agent-memory worktree add --detach .local/compat-1e2730c 1e2730c
+cd agent-ops-platform
+AGENT_MEMORY_SOURCE=../agent-memory/.local/compat-1e2730c uv run pytest -q tests/test_memory_integration.py
+```
+
+worktree已存在时复用，不重复创建；运行前核对HEAD为完整固定提交且src/migrations干净。这个约束防止“新迁移+旧SDK”的假联调，不代表现有SDK与扩展后的API已做完整升级验收。B0报告里的原始验收版本不修改。
