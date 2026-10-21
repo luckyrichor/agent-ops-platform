@@ -1,0 +1,200 @@
+{
+  "queried_at": "2026-10-21T11:35:44.695549+00:00",
+  "datasets": {
+    "olist": {
+      "archive_bytes": 44717580,
+      "archive_sha256": "967e41e04fc306fe604e2a693f488995a8b41e5047418f8a5c8e4abd6deca784",
+      "expected_bytes": 44717580,
+      "members": [
+        {
+          "name": "olist_customers_dataset.csv",
+          "uncompressed_bytes": 9033957,
+          "sha256": "983a422239e1712ded753b3bf9ecf47dc73f144d306029dcfa99e70a226883d2",
+          "columns": [
+            "customer_id",
+            "customer_unique_id",
+            "customer_zip_code_prefix",
+            "customer_city",
+            "customer_state"
+          ],
+          "rows": 99441,
+          "header_excluded": true
+        },
+        {
+          "name": "olist_geolocation_dataset.csv",
+          "uncompressed_bytes": 61273883,
+          "sha256": "b514f6fc991b9566aeba02aa5d67e2c3630f034b60a0e05aa0d082a3b66d88d6",
+          "columns": [
+            "geolocation_zip_code_prefix",
+            "geolocation_lat",
+            "geolocation_lng",
+            "geolocation_city",
+            "geolocation_state"
+          ],
+          "rows": 1000163,
+          "header_excluded": true
+        },
+        {
+          "name": "olist_order_items_dataset.csv",
+          "uncompressed_bytes": 15438671,
+          "sha256": "0bc4d068c4fe38cbb01bd90e8746e3c613fe7b4baef75fab7b0e329701c3e279",
+          "columns": [
+            "order_id",
+            "order_item_id",
+            "product_id",
+            "seller_id",
+            "shipping_limit_date",
+            "price",
+            "freight_value"
+          ],
+          "rows": 112650,
+          "header_excluded": true
+        },
+        {
+          "name": "olist_order_payments_dataset.csv",
+          "uncompressed_bytes": 5777138,
+          "sha256": "4f713964f2815dbbaa40b9488268c55aac3627bfce5aa96cf58d1f3616de3cc0",
+          "columns": [
+            "order_id",
+            "payment_sequential",
+            "payment_type",
+            "payment_installments",
+            "payment_value"
+          ],
+          "rows": 103886,
+          "header_excluded": true
+        },
+        {
+          "name": "olist_order_reviews_dataset.csv",
+          "uncompressed_bytes": 14451670,
+          "sha256": "012b61c7593e34f51fa614efdf802b9c7056ce6aae5307ddb93236e7cfc797d7",
+          "columns": [
+            "review_id",
+            "order_id",
+            "review_score",
+            "review_comment_title",
+            "review_comment_message",
+            "review_creation_date",
+            "review_answer_timestamp"
+          ],
+          "rows": 99224,
+          "header_excluded": true
+        },
+        {
+          "name": "olist_orders_dataset.csv",
+          "uncompressed_bytes": 17654914,
+          "sha256": "8df58ef3d2d7e9944010f7beecd9b75367f5588ec6e3c91cec19ae3345ef9ecf",
+          "columns": [
+            "order_id",
+            "customer_id",
+            "order_status",
+            "order_purchase_timestamp",
+            "order_approved_at",
+            "order_delivered_carrier_date",
+            "order_delivered_customer_date",
+            "order_estimated_delivery_date"
+          ],
+          "rows": 99441,
+          "header_excluded": true
+        },
+        {
+          "name": "olist_products_dataset.csv",
+          "uncompressed_bytes": 2379446,
+          "sha256": "3e6569628a17fbc75fd206ee357b59e20364b9afa90f5b6cd5b4d624c58aa9cc",
+          "columns": [
+            "product_id",
+            "product_category_name",
+            "product_name_lenght",
+            "product_description_lenght",
+            "product_photos_qty",
+            "product_weight_g",
+            "product_length_cm",
+            "product_height_cm",
+            "product_width_cm"
+          ],
+          "rows": 32951,
+          "header_excluded": true
+        },
+        {
+          "name": "olist_sellers_dataset.csv",
+          "uncompressed_bytes": 174703,
+          "sha256": "1f643d2b950373b85735e7794b20986f528d7a000432e7c6f9bcbb44d0846a0e",
+          "columns": [
+            "seller_id",
+            "seller_zip_code_prefix",
+            "seller_city",
+            "seller_state"
+          ],
+          "rows": 3095,
+          "header_excluded": true
+        },
+        {
+          "name": "product_category_name_translation.csv",
+          "uncompressed_bytes": 2613,
+          "sha256": "a81f0d1f27b27e7293f761bc79e3ce8f348ee39c4b3ed3e49bde38f478586278",
+          "columns": [
+            "product_category_name",
+            "product_category_name_english"
+          ],
+          "rows": 71,
+          "header_excluded": true
+        }
+      ],
+      "crc_pass": true,
+      "url": "https://www.kaggle.com/api/v1/datasets/download/olistbr/brazilian-ecommerce?datasetVersionNumber=2",
+      "license": "CC-BY-NC-SA-4.0",
+      "path": ".local/datasets/raw/olist.zip",
+      "downloaded_this_command": false,
+      "verification_seconds": 3.1996847030241042
+    },
+    "ecd": {
+      "archive_bytes": 54000633,
+      "archive_sha256": "41f09f0312b7611863794fb46d9f7f4061d8171901232ac3c17929295e4878b2",
+      "expected_bytes": 54000633,
+      "members": [
+        {
+          "name": "E-commerce dataset/README.md",
+          "uncompressed_bytes": 650,
+          "sha256": "bdbfd90e3399e36ac4edcaaf01e7d18a4d85115f914ab6c3236069c7db1777ad"
+        },
+        {
+          "name": "E-commerce dataset/dev.txt",
+          "uncompressed_bytes": 2556423,
+          "sha256": "7ee4da6a7144040337b0f3dc999641255d5ef19a035d939ae4a6eafd3cadd7a3",
+          "rows": 10000,
+          "header_excluded": false
+        },
+        {
+          "name": "E-commerce dataset/test.txt",
+          "uncompressed_bytes": 2810240,
+          "sha256": "7c5d5c60fee198e6855a714e1161ed165b564ccb96b4a9db36593e5f854319e6",
+          "rows": 10000,
+          "header_excluded": false
+        },
+        {
+          "name": "E-commerce dataset/train.txt",
+          "uncompressed_bytes": 257254049,
+          "sha256": "7f7923594f2c4efec272850a21ec3c96b3259fae9e3fbb5d20bd4c1ca4199c3d",
+          "rows": 1000000,
+          "header_excluded": false
+        }
+      ],
+      "crc_pass": true,
+      "url": "https://drive.usercontent.google.com/download?id=154J-neBo20ABtSmJDvm7DK0eTuieAuvw&export=download&confirm=t",
+      "license": "not specified; local personal evaluation only; do not redistribute",
+      "path": ".local/datasets/raw/ecd.zip",
+      "downloaded_this_command": false,
+      "verification_seconds": 3.6592774810269475
+    },
+    "userbehavior": {
+      "status": "requires-owner-file",
+      "downloaded_bytes": 0,
+      "url": "https://tianchi.aliyun.com/dataset/649",
+      "expected_archive_bytes": 949805174,
+      "license": "CC-BY-NC-SA-4.0 (plan metadata; file unverified)",
+      "verification": "public page accessible; authenticated download not attempted; login requirement stated by owner/plan",
+      "actual_rows": null,
+      "sha256": null
+    }
+  }
+}

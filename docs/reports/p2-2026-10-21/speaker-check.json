@@ -1,0 +1,174 @@
+{
+  "seed": 42,
+  "sample_n": 40,
+  "cue_counts": {
+    "no-clear-cue": 35,
+    "service-cue": 5
+  },
+  "human_reviewed": false,
+  "speaker_confirmed": false,
+  "conclusion": "quick lexical cues cannot establish speaker identity; no explicit role fields in ECD. Keep first-speaker-unconfirmed note.",
+  "intent_proxy_note": "规则代理，非人工真实意图分布，首片段说话人未确认",
+  "records": [
+    {
+      "first_segment_sha256": "670d9743542cae3ea7ebe36af56bd53648b0a1126162e78d81a32934a711302e",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "76b1df94bc82558fc3268772f67f7842873ebc6f304a8493d80485e1d591d66b",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "4feafb585b359d6ba88bbe1b5889f3676031b3e5ca9bad965d7e9a29bff6e7a1",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "670d9743542cae3ea7ebe36af56bd53648b0a1126162e78d81a32934a711302e",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "e12d5cddc726b7b11b0a247588e0d6146ddda6f5dbfa079f9353210b671f22f8",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "42e5dbf9def668977f2b5175c6acb9cc81ace4df5cb09b73b7e155da1c59c17c",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "6241b14e49c30374d1332685fdc47d106a49cc58917e8223e966b2c2ea5f6924",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "582505ba0f968dad7b72dda81611aba86f208acff7e122079b6cb436c340a671",
+      "cue": "service-cue"
+    },
+    {
+      "first_segment_sha256": "670d9743542cae3ea7ebe36af56bd53648b0a1126162e78d81a32934a711302e",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "92ec4ba2f632fb20f69e838918e93d9a65b0dcaeb0120dccda9da915c0fa01a8",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "1c6b020044715ac569d971171022b318b3fdb6b90318c7b3f28d8b0586025ca2",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "42e5dbf9def668977f2b5175c6acb9cc81ace4df5cb09b73b7e155da1c59c17c",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "06ee1e38036fef4d356edd60432689e2a26b910cdd2bb51bb2b475fd696ce75f",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "f749c0c8942ebfbd75c90f1c8c1bd14bee956157bd511ee739aee984a53f7fa2",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "e066e0f8371adb9a15d48a184258b09280aab503eb869b20d86e2a9356b09e1e",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "153103fe02cf6e7a4c84a75f784bd24354103f69369b7ecfe893ea6de9a98fd4",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "75d3911791b8b3845d929e127da1a445edc175edb734dcdabc2e8f48428a8faf",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "d9ea558dcd5a3a8cba301847002a084e7d47d75359e17d775e748c77bdc03cd6",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "9f7945b39ef7d95c43edba95bb459fa0fbbf51c590e62b3b66ffd7fe29edc852",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "89e3f003d216549a17c4e575bf558ba20a53e8eba59c7ccdf58575be77381867",
+      "cue": "service-cue"
+    },
+    {
+      "first_segment_sha256": "3521a4805b4e5cd31351696af3c36e993c68db15a907574032505bc2d4bbd157",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "670d9743542cae3ea7ebe36af56bd53648b0a1126162e78d81a32934a711302e",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "1d0757a17cacdc424dd039e724d7222a019ea7a4229eb63ee7f16c7ef2a15858",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "670d9743542cae3ea7ebe36af56bd53648b0a1126162e78d81a32934a711302e",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "5de3f1b3e3ed30fe020a3163097be59bc3d6193fb8b68505497ae71f66e55866",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "ae34fd64dc266499edeb22e03bbdfb9e49f4d228a75ca914582d11691cdf395e",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "b30acb8a8d849bcffad4dff20e29013c5e778bc0afb04ba261a1ed6cbd47bd77",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "582505ba0f968dad7b72dda81611aba86f208acff7e122079b6cb436c340a671",
+      "cue": "service-cue"
+    },
+    {
+      "first_segment_sha256": "42e5dbf9def668977f2b5175c6acb9cc81ace4df5cb09b73b7e155da1c59c17c",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "d1c24fdc0905626a4d663afa7ffa5d06c672ce5ba26da7526a8b985c99fc95cc",
+      "cue": "service-cue"
+    },
+    {
+      "first_segment_sha256": "16d5b4a5e1f2d48e59ca3c7ec721b152bd51965bc2169ddd94443d57c381e1fa",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "b9724cd93d99441150469f33c8a087e42a6cf9aee62d975e3c268315cdb57cf8",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "8a3bfe18e50f55e1e21a6fed7a70667f879b739d7d28e5bbd8638b4acd4129c1",
+      "cue": "service-cue"
+    },
+    {
+      "first_segment_sha256": "670d9743542cae3ea7ebe36af56bd53648b0a1126162e78d81a32934a711302e",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "9294f86977f21e559a5bbe5161539853eef43ff2cba7700732b51c24bc8f4b78",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "43c7b05837ec4864c43de01f908d2b711b97071152f6186a5a41767b4f4856ce",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "314d351d3f33e4d057e46a76885f40fbfd68abd7ad6188734a04b333e338bfed",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "67b50697e6faa2f13d91e461c04c353789d94f8c6f94e19918bac4bdc9acb633",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "0cca940c99d18282a5d14ba538d2d61417ca4205b9a78392352e46fb7137a2cf",
+      "cue": "no-clear-cue"
+    },
+    {
+      "first_segment_sha256": "7ef5db683290825f8ad6c095ac398a2f381397d87d8749748b7e949f314790a4",
+      "cue": "no-clear-cue"
+    }
+  ]
+}

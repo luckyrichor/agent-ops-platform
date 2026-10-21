@@ -1,0 +1,100 @@
+{
+  "complete": true,
+  "database": "agent_ops_p2_seed42",
+  "tables": [
+    {
+      "table": "commerce.categories",
+      "rows": 74,
+      "table_and_indexes_bytes": 49152
+    },
+    {
+      "table": "commerce.conversations",
+      "rows": 1444788,
+      "table_and_indexes_bytes": 215998464
+    },
+    {
+      "table": "commerce.inventory",
+      "rows": 200000,
+      "table_and_indexes_bytes": 16605184
+    },
+    {
+      "table": "commerce.message_keys",
+      "rows": 10000000,
+      "table_and_indexes_bytes": 1243537408
+    },
+    {
+      "table": "commerce.messages",
+      "rows": 10000000,
+      "table_and_indexes_bytes": 1697103872
+    },
+    {
+      "table": "commerce.order_items",
+      "rows": 2264789,
+      "table_and_indexes_bytes": 245129216
+    },
+    {
+      "table": "commerce.orders",
+      "rows": 2000000,
+      "table_and_indexes_bytes": 335683584
+    },
+    {
+      "table": "commerce.products",
+      "rows": 200000,
+      "table_and_indexes_bytes": 47718400
+    },
+    {
+      "table": "commerce.shipments",
+      "rows": 1962484,
+      "table_and_indexes_bytes": 322404352
+    },
+    {
+      "table": "support.ticket_events",
+      "rows": 1000000,
+      "table_and_indexes_bytes": 297033728
+    },
+    {
+      "table": "support.tickets",
+      "rows": 1000000,
+      "table_and_indexes_bytes": 259227648
+    },
+    {
+      "table": "commerce.users",
+      "rows": 1000000,
+      "table_and_indexes_bytes": 58834944
+    }
+  ],
+  "database_bytes": 4748172311,
+  "source_manifest_sha256": "7f3f73161dd563d7c6ba59f8d36be8f07e14f59e4a984469af85f650e06e8c8e",
+  "import_seconds_measured_copy_and_count": 726.4554198605474,
+  "original_total_wall_time_including_analyze": null,
+  "analyze_elapsed_recorded": false,
+  "timing_definition": "sum of observed per-table COPY+count stages; initial ANALYZE/summary wall time not preserved and not invented",
+  "csv_bytes": 1943961490,
+  "new_database_same_p0_instance": true,
+  "existing_business_database_untouched": true,
+  "main_business_api_switched": false,
+  "user_activity_fit_complete": false,
+  "tickets_blocked": false,
+  "phase_p2_accepted": false,
+  "json_decimal_failure_recovered_read_only": true,
+  "proxy_augmentation_seconds": 98.0182400920894,
+  "proxy_table_imports": [
+    {
+      "table": "support.tickets",
+      "rows": 1000000,
+      "seconds_including_count": 6.24466088716872
+    },
+    {
+      "table": "support.ticket_events",
+      "rows": 1000000,
+      "seconds_including_count": 28.38349841721356
+    }
+  ],
+  "conversation_link_update_seconds": 39.396301979897544,
+  "import_method": "base load plus approved ticket/event COPY and deterministic conversation linkage; unchanged table source SHA256 verified",
+  "intent_proxy_note": "规则代理，非人工真实意图分布，首片段说话人未确认",
+  "waiting_human_ratio": 0.05,
+  "waiting_human_count": 50000,
+  "base_import_report_sha256": "00266471600a2d50b57ec71148c840be9045e6e3a6f937087086d03ef71ef12e",
+  "total_data_import_seconds": 824.4736599526368
+}

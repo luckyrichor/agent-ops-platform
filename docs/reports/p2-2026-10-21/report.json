@@ -1,0 +1,1928 @@
+{
+  "generated_at": "2026-10-21T12:02:27.886427+00:00",
+  "date_beijing": "2026-10-21",
+  "source_commit": "711d89decac27f0a65274a89b9268248acff8c1a",
+  "environment": {
+    "python": "3.12.3",
+    "platform": "Linux-6.8.0-139-generic-x86_64-with-glibc2.39",
+    "cpu_count": 4,
+    "postgres_memory_limit_bytes": 536870912,
+    "source_files_sha256": {
+      "src/agent_ops/telemetry.py": "fda8ecc6dff2ba41d61257be72bf495c9761f3df3267ccdc9d04d329b80fafdf",
+      "src/agent_ops/planner.py": "e220eb4e82dd1eb82e868a60d2ed7df9602ee748131abcd2bbbf7566ea44b7c4",
+      "src/agent_ops/agents.py": "dc30a08884dc2d99415989460a9ffa82f72d2a9c93ca561e9b397d88e793ffa8",
+      "src/agent_ops/commerce_backend.py": "969d304300908ecc49ff24836ff48aff65576d9d5c08b4384f08689c27f17e7a",
+      "src/agent_ops/support.py": "e85d2e83ceea225275be71bfbea95cbf09e40491ed83364ab105a4fd5486e731",
+      "src/agent_ops/models.py": "11e487edf6ceaf39daa143e48beb3f420ec1b9643a46d44c952476340077a331",
+      "src/agent_ops/support_postgres.py": "a8bbf038815203e85fa0af464b31d83aaf0e3b17be8dfbce54a8124b0cfde537",
+      "src/agent_ops/api.py": "72b4b0475267e40452afc1cde091e2edabcf22febfa41b38db7eb167ffc4903b",
+      "src/agent_ops/support_api.py": "283a8f132823157cecc739be15a6109cc18a6889c9695584bdfcd33a60b6abfa",
+      "src/agent_ops/orchestrator.py": "e229f4b35b14a1aeed24fb557e50c3267463d19af6d873a11ac37d08fb1a8733",
+      "src/agent_ops/memory.py": "5957e370ec885dd1a417eec9ae611b37007eb0a92a05df64d0388f9581edab9c",
+      "src/agent_ops/__init__.py": "790a09b52d965efce6fdde2575c4ba2a7d009cd5a210181548e98fab8f45cdcd",
+      "src/agent_ops/__main__.py": "d569e10e101e680b51f7d9bbddcf778074e80bc97068e07dfffd82276f341da0",
+      "src/agent_ops/streaming.py": "deb908ef1624b6826b2d351ff035c1a6c97a1511007901c58f415becb79097c6",
+      "src/agent_ops/evals/support_runner.py": "92bc3bf05f57e7f786b7c2e5b54743512798a274dcd81d4d3c8e42f9d73be466",
+      "src/agent_ops/evals/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "migrations/env.py": "a4b82ebea482a6ed25bf72c009811646495043eb9b7d00e637052f98e021ecf9",
+      "migrations/versions/0003_proxy_provenance.py": "112defeaa08aa3cfc196f08e9596720d4bfa3410be4e2d884fa11e4ff13fc3e5",
+      "migrations/versions/0002_commerce.py": "4652331d6579207069f5d733386ef6555c6b9694fae037fab106606b4b92b0ef",
+      "migrations/versions/0001_support.py": "8883095ffbd5506d44eebd56ae80506e5b9469d3687ea837c33923aa042f5aaa",
+      "scripts/verify-live-llm.py": "e2c9f090e67c86a6e7b2b0e3b52a8252acb48c378f9bb4665e417539e10ea913",
+      "scripts/recover-p2-import.py": "06c9bbe82578c3fa3ceb27bf7e397717551a0f0c8d0f7ddab30e4f73990d3702",
+      "scripts/report-b1.py": "a16d9a8d1696f98002fcb4319f88599980b624281d91b8664a30d906ed849f70",
+      "scripts/synthesize-p2.py": "eeb1d2b66532a7de356ff1d014f83d4a3c4898e6d3a39cc6ff47875686d228d6",
+      "scripts/verify-tracing-backend.py": "09b0babd989c56dcf60fd9f11b0d962bae39993265e80bf4ed962674f06d35c7",
+      "scripts/check-ecd-speaker.py": "5587d4f0479fbde4ca6cc0371030f02284e78beff72105d6313e31f15ce9c6fe",
+      "scripts/report-p0p1.py": "0ff93383c6bcebf512efca858fe2a0511e3117ac9ee1bb71579b0f601b9bcf6b",
+      "scripts/generate-behavior-events.py": "5f49cc6aa750b27873cb7fdbb3130fc06c4e0a7b3b4865487b498d385858d719",
+      "scripts/verify-stack.py": "e6a80bb4cdef95a4f604c8ebf2f8a17a825372aff99c62f92a171d2bd5704563",
+      "scripts/augment-p2-proxy.py": "70d1b2a40e7c6e945e697a5419e99d096b72077ee110e138d66ff17e66b6ccba",
+      "scripts/download-datasets.py": "032cedf93db0e643ba7f70de2712eb4f6a265539c4c78923b292dfc226f0ece1",
+      "scripts/p2-provenance.py": "0d1603698d19a7d0c2d3161b74fd15fe8c594de4df8dc9949b1c01f443e7c402",
+      "scripts/serve.py": "9ac893123ba9def59c19d5949bc88035459c75c264e8cab156ae630c33c7ffef",
+      "scripts/stack.py": "408a0392b885851e8108abffacc527a8ecfef66264f831739ad3d6f866a61487",
+      "scripts/verify-p2-db.py": "8ad0e12d6e84d6eed95a4c6033845d00b2be02e87e60224ffdeb05fa77961e76",
+      "scripts/measure-streams.py": "88cc04260f354a81114a23b05199682a771003b7a76c2c596b4fe5ea5f1f010c",
+      "scripts/import-p2.py": "a53133074778c8fa08fbed780575357e3f25e0f755e47e701064bb63779860ef",
+      "scripts/commerce-local.py": "5f45b39dc9b2f767ab32e46eb03d8ec538fa5671027f23c84ffb7003d690be98",
+      "scripts/report-p2.py": "1a733f67cfa82503446a1f39d1c89dab6b61d7f56b02e96a625e684a57762e66",
+      "scripts/fit-p2-data.py": "f709578572f60c414a18c323010baf91c4f80471312b2976dd1a74dbbfa93a31",
+      "scripts/benchmark-b0.py": "90070957ac374e470b813ab3ae384c5fc1c05e80690364367d752abece0a7e84",
+      "scripts/verify-p2-repro.py": "efc2b69906a3285bfb862a98c9bda361c786ba7a78de1b9f0705fb7067957c3c",
+      "scripts/benchmark-b1.py": "ead346d8d2584fa2ae70c72569a8addcbb2624df3a8e61dd9e846a8f222bb431",
+      "scripts/verify-backend-sampling.py": "b4e9e65ef9c03fe2510627cb290637589b2d93620c110b985b1af0a4079e4095",
+      "scripts/call-tree-demo.py": "6bb450e86dfc82c2520880919da142d9e755b1b7e08c58c433393df5dfe5d958",
+      "scripts/verify-p1-http.py": "ab3247fa1af80ef067ed4b6de5100b9b431b3f7447abb53008f3b1c68fca75dc",
+      "scripts/evaluate-live-planner.py": "6fb0f507c143e1d6ea5c7acc6fff9d069f45712eabfc3030fa9154dffb435b46"
+    }
+  },
+  "source_dirty": false,
+  "plan": {
+    "new_sha256": "87a17db6b5149be64e75a93967454634fe129d3356afe2a401f51cdeb7ba2ed5",
+    "new_bytes": 45487,
+    "old_sha256": "61a6b22c0e6123e53732ef12ca49e71a8f86330324aaf1185e612a6f6d77b220",
+    "old_archive": "docs/plans/archive/agent-ops-platform-plan-61a6b22c0e61.md",
+    "latest": "docs/agent-ops-platform面试级完善方案.md",
+    "date_beijing": "2026-10-21",
+    "original_author_preserved": true
+  },
+  "scope": "P2 only; B1 separately reported; no P3 or later stages",
+  "datasets": {
+    "queried_at": "2026-10-21T11:35:44.695549+00:00",
+    "datasets": {
+      "olist": {
+        "archive_bytes": 44717580,
+        "archive_sha256": "967e41e04fc306fe604e2a693f488995a8b41e5047418f8a5c8e4abd6deca784",
+        "expected_bytes": 44717580,
+        "members": [
+          {
+            "name": "olist_customers_dataset.csv",
+            "uncompressed_bytes": 9033957,
+            "sha256": "983a422239e1712ded753b3bf9ecf47dc73f144d306029dcfa99e70a226883d2",
+            "columns": [
+              "customer_id",
+              "customer_unique_id",
+              "customer_zip_code_prefix",
+              "customer_city",
+              "customer_state"
+            ],
+            "rows": 99441,
+            "header_excluded": true
+          },
+          {
+            "name": "olist_geolocation_dataset.csv",
+            "uncompressed_bytes": 61273883,
+            "sha256": "b514f6fc991b9566aeba02aa5d67e2c3630f034b60a0e05aa0d082a3b66d88d6",
+            "columns": [
+              "geolocation_zip_code_prefix",
+              "geolocation_lat",
+              "geolocation_lng",
+              "geolocation_city",
+              "geolocation_state"
+            ],
+            "rows": 1000163,
+            "header_excluded": true
+          },
+          {
+            "name": "olist_order_items_dataset.csv",
+            "uncompressed_bytes": 15438671,
+            "sha256": "0bc4d068c4fe38cbb01bd90e8746e3c613fe7b4baef75fab7b0e329701c3e279",
+            "columns": [
+              "order_id",
+              "order_item_id",
+              "product_id",
+              "seller_id",
+              "shipping_limit_date",
+              "price",
+              "freight_value"
+            ],
+            "rows": 112650,
+            "header_excluded": true
+          },
+          {
+            "name": "olist_order_payments_dataset.csv",
+            "uncompressed_bytes": 5777138,
+            "sha256": "4f713964f2815dbbaa40b9488268c55aac3627bfce5aa96cf58d1f3616de3cc0",
+            "columns": [
+              "order_id",
+              "payment_sequential",
+              "payment_type",
+              "payment_installments",
+              "payment_value"
+            ],
+            "rows": 103886,
+            "header_excluded": true
+          },
+          {
+            "name": "olist_order_reviews_dataset.csv",
+            "uncompressed_bytes": 14451670,
+            "sha256": "012b61c7593e34f51fa614efdf802b9c7056ce6aae5307ddb93236e7cfc797d7",
+            "columns": [
+              "review_id",
+              "order_id",
+              "review_score",
+              "review_comment_title",
+              "review_comment_message",
+              "review_creation_date",
+              "review_answer_timestamp"
+            ],
+            "rows": 99224,
+            "header_excluded": true
+          },
+          {
+            "name": "olist_orders_dataset.csv",
+            "uncompressed_bytes": 17654914,
+            "sha256": "8df58ef3d2d7e9944010f7beecd9b75367f5588ec6e3c91cec19ae3345ef9ecf",
+            "columns": [
+              "order_id",
+              "customer_id",
+              "order_status",
+              "order_purchase_timestamp",
+              "order_approved_at",
+              "order_delivered_carrier_date",
+              "order_delivered_customer_date",
+              "order_estimated_delivery_date"
+            ],
+            "rows": 99441,
+            "header_excluded": true
+          },
+          {
+            "name": "olist_products_dataset.csv",
+            "uncompressed_bytes": 2379446,
+            "sha256": "3e6569628a17fbc75fd206ee357b59e20364b9afa90f5b6cd5b4d624c58aa9cc",
+            "columns": [
+              "product_id",
+              "product_category_name",
+              "product_name_lenght",
+              "product_description_lenght",
+              "product_photos_qty",
+              "product_weight_g",
+              "product_length_cm",
+              "product_height_cm",
+              "product_width_cm"
+            ],
+            "rows": 32951,
+            "header_excluded": true
+          },
+          {
+            "name": "olist_sellers_dataset.csv",
+            "uncompressed_bytes": 174703,
+            "sha256": "1f643d2b950373b85735e7794b20986f528d7a000432e7c6f9bcbb44d0846a0e",
+            "columns": [
+              "seller_id",
+              "seller_zip_code_prefix",
+              "seller_city",
+              "seller_state"
+            ],
+            "rows": 3095,
+            "header_excluded": true
+          },
+          {
+            "name": "product_category_name_translation.csv",
+            "uncompressed_bytes": 2613,
+            "sha256": "a81f0d1f27b27e7293f761bc79e3ce8f348ee39c4b3ed3e49bde38f478586278",
+            "columns": [
+              "product_category_name",
+              "product_category_name_english"
+            ],
+            "rows": 71,
+            "header_excluded": true
+          }
+        ],
+        "crc_pass": true,
+        "url": "https://www.kaggle.com/api/v1/datasets/download/olistbr/brazilian-ecommerce?datasetVersionNumber=2",
+        "license": "CC-BY-NC-SA-4.0",
+        "path": ".local/datasets/raw/olist.zip",
+        "downloaded_this_command": false,
+        "verification_seconds": 3.1996847030241042
+      },
+      "ecd": {
+        "archive_bytes": 54000633,
+        "archive_sha256": "41f09f0312b7611863794fb46d9f7f4061d8171901232ac3c17929295e4878b2",
+        "expected_bytes": 54000633,
+        "members": [
+          {
+            "name": "E-commerce dataset/README.md",
+            "uncompressed_bytes": 650,
+            "sha256": "bdbfd90e3399e36ac4edcaaf01e7d18a4d85115f914ab6c3236069c7db1777ad"
+          },
+          {
+            "name": "E-commerce dataset/dev.txt",
+            "uncompressed_bytes": 2556423,
+            "sha256": "7ee4da6a7144040337b0f3dc999641255d5ef19a035d939ae4a6eafd3cadd7a3",
+            "rows": 10000,
+            "header_excluded": false
+          },
+          {
+            "name": "E-commerce dataset/test.txt",
+            "uncompressed_bytes": 2810240,
+            "sha256": "7c5d5c60fee198e6855a714e1161ed165b564ccb96b4a9db36593e5f854319e6",
+            "rows": 10000,
+            "header_excluded": false
+          },
+          {
+            "name": "E-commerce dataset/train.txt",
+            "uncompressed_bytes": 257254049,
+            "sha256": "7f7923594f2c4efec272850a21ec3c96b3259fae9e3fbb5d20bd4c1ca4199c3d",
+            "rows": 1000000,
+            "header_excluded": false
+          }
+        ],
+        "crc_pass": true,
+        "url": "https://drive.usercontent.google.com/download?id=154J-neBo20ABtSmJDvm7DK0eTuieAuvw&export=download&confirm=t",
+        "license": "not specified; local personal evaluation only; do not redistribute",
+        "path": ".local/datasets/raw/ecd.zip",
+        "downloaded_this_command": false,
+        "verification_seconds": 3.6592774810269475
+      },
+      "userbehavior": {
+        "status": "requires-owner-file",
+        "downloaded_bytes": 0,
+        "url": "https://tianchi.aliyun.com/dataset/649",
+        "expected_archive_bytes": 949805174,
+        "license": "CC-BY-NC-SA-4.0 (plan metadata; file unverified)",
+        "verification": "public page accessible; authenticated download not attempted; login requirement stated by owner/plan",
+        "actual_rows": null,
+        "sha256": null
+      }
+    }
+  },
+  "download_evidence": {
+    "olist": {
+      "http_status": 200,
+      "downloaded_bytes": 44717580,
+      "seconds": 6.866604
+    },
+    "ecd": {
+      "http_status": 200,
+      "downloaded_bytes": 54000633,
+      "seconds": 7.58981
+    }
+  },
+  "fits": {
+    "ecd": {
+      "intent_distribution_status": "NOT human intent labels; first-segment speaker attribution unknown; use as generator weight only after owner approval",
+      "intent_proxy_note": "规则代理，非人工真实意图分布，首片段说话人未确认",
+      "labels": {
+        "0": 514000,
+        "1": 506000
+      },
+      "method": "deduplicate positive-response contexts; negative retrieval candidates excluded; remove segmentation spaces; length-stratified seeded reservoir for text templates",
+      "rule_route_first_segment_unverified": {
+        "clarify": 337581,
+        "human": 378,
+        "order_status": 47002,
+        "return_request": 5381
+      },
+      "seed": 42,
+      "text_reservoir_per_length": 200,
+      "turn_count_histogram": {
+        "10": 30971,
+        "100": 4,
+        "102": 2,
+        "104": 2,
+        "106": 2,
+        "108": 1,
+        "110": 1,
+        "112": 1,
+        "116": 1,
+        "118": 1,
+        "12": 25641,
+        "120": 1,
+        "14": 7765,
+        "16": 5636,
+        "18": 4228,
+        "2": 41820,
+        "20": 3184,
+        "22": 2394,
+        "24": 1793,
+        "26": 1387,
+        "28": 1110,
+        "30": 898,
+        "32": 702,
+        "34": 570,
+        "36": 468,
+        "38": 370,
+        "4": 158668,
+        "40": 291,
+        "42": 243,
+        "44": 202,
+        "46": 171,
+        "48": 148,
+        "50": 131,
+        "52": 108,
+        "54": 92,
+        "56": 74,
+        "58": 67,
+        "6": 69753,
+        "60": 58,
+        "62": 53,
+        "64": 39,
+        "66": 34,
+        "68": 29,
+        "70": 23,
+        "72": 17,
+        "74": 15,
+        "76": 13,
+        "78": 10,
+        "8": 31091,
+        "80": 8,
+        "82": 8,
+        "84": 8,
+        "86": 7,
+        "88": 7,
+        "90": 6,
+        "92": 4,
+        "94": 3,
+        "96": 4,
+        "98": 4
+      },
+      "unique_positive_contexts": 390342,
+      "utterance_chars_histogram": {
+        "1": 46405,
+        "10": 121262,
+        "100": 134,
+        "101": 126,
+        "102": 109,
+        "103": 109,
+        "104": 47,
+        "105": 87,
+        "106": 94,
+        "107": 42,
+        "108": 58,
+        "109": 49,
+        "11": 121723,
+        "110": 48,
+        "111": 22,
+        "112": 70,
+        "113": 48,
+        "114": 21,
+        "115": 12,
+        "116": 67,
+        "117": 32,
+        "118": 31,
+        "119": 53,
+        "12": 142234,
+        "120": 37,
+        "121": 50,
+        "122": 61,
+        "123": 49,
+        "124": 92,
+        "125": 18,
+        "126": 28,
+        "127": 6,
+        "128": 54,
+        "129": 27,
+        "13": 84277,
+        "130": 16,
+        "131": 39,
+        "132": 47,
+        "133": 32,
+        "134": 45,
+        "135": 135,
+        "136": 12,
+        "137": 23,
+        "138": 13,
+        "139": 43,
+        "14": 74937,
+        "140": 24,
+        "141": 2,
+        "142": 22,
+        "144": 2,
+        "146": 14,
+        "147": 4,
+        "148": 8,
+        "149": 25,
+        "15": 67125,
+        "151": 5,
+        "152": 2,
+        "153": 6,
+        "154": 3,
+        "155": 32,
+        "156": 1,
+        "157": 9,
+        "159": 11,
+        "16": 58241,
+        "160": 4,
+        "166": 10,
+        "167": 5,
+        "168": 20,
+        "169": 6,
+        "17": 51467,
+        "171": 3,
+        "172": 15,
+        "175": 4,
+        "18": 44410,
+        "180": 2,
+        "182": 1,
+        "183": 2,
+        "185": 2,
+        "189": 5,
+        "19": 38228,
+        "192": 10,
+        "193": 9,
+        "199": 5,
+        "2": 248103,
+        "20": 36382,
+        "204": 4,
+        "21": 31613,
+        "22": 26716,
+        "228": 13,
+        "23": 25099,
+        "24": 21892,
+        "240": 1,
+        "241": 16,
+        "25": 19148,
+        "26": 16567,
+        "27": 14515,
+        "277": 1,
+        "278": 3,
+        "28": 14145,
+        "29": 11872,
+        "290": 1,
+        "295": 1,
+        "3": 226999,
+        "30": 11455,
+        "31": 11269,
+        "314": 1,
+        "32": 9992,
+        "33": 8957,
+        "34": 7562,
+        "344": 5,
+        "35": 7359,
+        "36": 7873,
+        "37": 5266,
+        "38": 5740,
+        "39": 5769,
+        "4": 197799,
+        "40": 9064,
+        "41": 5951,
+        "42": 5127,
+        "43": 3830,
+        "44": 3154,
+        "45": 3048,
+        "46": 2822,
+        "47": 2217,
+        "48": 2558,
+        "49": 4532,
+        "5": 174933,
+        "50": 2255,
+        "51": 3113,
+        "52": 1881,
+        "53": 1647,
+        "54": 1514,
+        "55": 1657,
+        "56": 2880,
+        "57": 1326,
+        "58": 1648,
+        "59": 1249,
+        "6": 168701,
+        "60": 1442,
+        "61": 1010,
+        "62": 1169,
+        "63": 2079,
+        "64": 1004,
+        "65": 1209,
+        "66": 788,
+        "67": 762,
+        "68": 481,
+        "69": 810,
+        "7": 162011,
+        "70": 577,
+        "71": 564,
+        "72": 766,
+        "73": 440,
+        "74": 593,
+        "75": 433,
+        "76": 336,
+        "77": 555,
+        "78": 1434,
+        "79": 258,
+        "8": 153210,
+        "80": 217,
+        "81": 216,
+        "82": 274,
+        "83": 658,
+        "84": 395,
+        "85": 335,
+        "86": 384,
+        "87": 208,
+        "88": 167,
+        "89": 163,
+        "9": 132623,
+        "90": 135,
+        "91": 99,
+        "92": 270,
+        "93": 143,
+        "94": 169,
+        "95": 1582,
+        "96": 162,
+        "97": 266,
+        "98": 152,
+        "99": 620
+      }
+    },
+    "olist": {
+      "cart_items": {
+        "max": 21,
+        "min": 0,
+        "n": 99441,
+        "p50": 1,
+        "p95": 2,
+        "p99": 3
+      },
+      "freight_cents": {
+        "max": 40968,
+        "min": 0,
+        "n": 32951,
+        "p50": 1646,
+        "p95": 4971,
+        "p99": 9930
+      },
+      "limitations": "products without observed price excluded, not filled with invented prices; historical order price may differ from current product median",
+      "method": "empirical joint bootstrap; preserve category/observed per-product median price and freight; sample complete order status/time/cart bundles",
+      "order_month": {
+        "2016-09": 4,
+        "2016-10": 324,
+        "2016-12": 1,
+        "2017-01": 800,
+        "2017-02": 1780,
+        "2017-03": 2682,
+        "2017-04": 2404,
+        "2017-05": 3700,
+        "2017-06": 3245,
+        "2017-07": 4026,
+        "2017-08": 4331,
+        "2017-09": 4285,
+        "2017-10": 4631,
+        "2017-11": 7544,
+        "2017-12": 5673,
+        "2018-01": 7269,
+        "2018-02": 6728,
+        "2018-03": 7211,
+        "2018-04": 6939,
+        "2018-05": 6873,
+        "2018-06": 6167,
+        "2018-07": 6292,
+        "2018-08": 6512,
+        "2018-09": 16,
+        "2018-10": 4
+      },
+      "order_status": {
+        "approved": 2,
+        "canceled": 625,
+        "created": 5,
+        "delivered": 96478,
+        "invoiced": 314,
+        "processing": 301,
+        "shipped": 1107,
+        "unavailable": 609
+      },
+      "orders": 99441,
+      "price_cents": {
+        "max": 673500,
+        "min": 85,
+        "n": 32951,
+        "p50": 7900,
+        "p95": 47990,
+        "p99": 119900
+      },
+      "product_categories": {
+        "agro_industria_e_comercio": 74,
+        "alimentos": 82,
+        "alimentos_bebidas": 104,
+        "artes": 55,
+        "artes_e_artesanato": 19,
+        "artigos_de_festas": 26,
+        "artigos_de_natal": 65,
+        "audio": 58,
+        "automotivo": 1900,
+        "bebes": 919,
+        "bebidas": 81,
+        "beleza_saude": 2444,
+        "brinquedos": 1411,
+        "cama_mesa_banho": 3029,
+        "casa_conforto": 111,
+        "casa_conforto_2": 5,
+        "casa_construcao": 225,
+        "cds_dvds_musicais": 1,
+        "cine_foto": 28,
+        "climatizacao": 124,
+        "consoles_games": 317,
+        "construcao_ferramentas_construcao": 400,
+        "construcao_ferramentas_ferramentas": 39,
+        "construcao_ferramentas_iluminacao": 78,
+        "construcao_ferramentas_jardim": 88,
+        "construcao_ferramentas_seguranca": 91,
+        "cool_stuff": 789,
+        "dvds_blu_ray": 48,
+        "eletrodomesticos": 370,
+        "eletrodomesticos_2": 90,
+        "eletronicos": 517,
+        "eletroportateis": 231,
+        "esporte_lazer": 2867,
+        "fashion_bolsas_e_acessorios": 849,
+        "fashion_calcados": 173,
+        "fashion_esporte": 19,
+        "fashion_roupa_feminina": 27,
+        "fashion_roupa_infanto_juvenil": 5,
+        "fashion_roupa_masculina": 95,
+        "fashion_underwear_e_moda_praia": 53,
+        "ferramentas_jardim": 753,
+        "flores": 14,
+        "fraldas_higiene": 12,
+        "industria_comercio_e_negocios": 68,
+        "informatica_acessorios": 1639,
+        "instrumentos_musicais": 289,
+        "la_cuisine": 10,
+        "livros_importados": 31,
+        "livros_interesse_geral": 216,
+        "livros_tecnicos": 123,
+        "malas_acessorios": 349,
+        "market_place": 104,
+        "moveis_colchao_e_estofado": 10,
+        "moveis_cozinha_area_de_servico_jantar_e_jardim": 94,
+        "moveis_decoracao": 2657,
+        "moveis_escritorio": 309,
+        "moveis_quarto": 45,
+        "moveis_sala": 156,
+        "musica": 27,
+        "papelaria": 849,
+        "pc_gamer": 3,
+        "pcs": 30,
+        "perfumaria": 868,
+        "pet_shop": 719,
+        "portateis_casa_forno_e_cafe": 31,
+        "portateis_cozinha_e_preparadores_de_alimentos": 10,
+        "relogios_presentes": 1329,
+        "seguros_e_servicos": 2,
+        "sinalizacao_e_seguranca": 93,
+        "tablets_impressao_imagem": 9,
+        "telefonia": 1134,
+        "telefonia_fixa": 116,
+        "uncategorized": 610,
+        "utilidades_domesticas": 2335
+      },
+      "products_with_observed_price": 32951,
+      "products_without_price": 0
+    },
+    "raw_text_in_git": false,
+    "seed": 42,
+    "source_archive_sha256": {
+      "ecd": "41f09f0312b7611863794fb46d9f7f4061d8171901232ac3c17929295e4878b2",
+      "olist": "967e41e04fc306fe604e2a693f488995a8b41e5047418f8a5c8e4abd6deca784",
+      "userbehavior": null
+    },
+    "synthetic": false,
+    "userbehavior": {
+      "fitted": false,
+      "status": "requires-owner-file",
+      "user_activity_histogram": null,
+      "zipf_exponent": null
+    }
+  },
+  "generated": {
+    "files": {
+      "categories": {
+        "bytes": 1558,
+        "columns": [
+          "id",
+          "name"
+        ],
+        "intent_proxy_note": null,
+        "path": ".local/datasets/scale42-proxy05-a/categories.csv",
+        "provenance_sha256": "c8b69b27ad7a3959d2ede27866bb675ccf3eaca8fb25538f0f5729395528c8d8",
+        "rows": 74,
+        "sha256": "159932aa01031c8d30db224b5c18c00ad76506a8e0d07c80a628c0bd60c997a8"
+      },
+      "conversations": {
+        "bytes": 73795663,
+        "columns": [
+          "id",
+          "user_id",
+          "ticket_id"
+        ],
+        "intent_proxy_note": null,
+        "path": ".local/datasets/scale42-proxy05-a/conversations.csv",
+        "provenance_sha256": "2a6901cd86547124ae79ec29b01bdb9b067542e51afe0b94ed64647f270d2f4e",
+        "rows": 1444788,
+        "sha256": "5ac373faf5231b8471c082b440c99e8c311568e8174db1bfd30bc126513cfa26"
+      },
+      "inventory": {
+        "bytes": 3088895,
+        "columns": [
+          "product_id",
+          "stock",
+          "reserved",
+          "version"
+        ],
+        "intent_proxy_note": null,
+        "path": ".local/datasets/scale42-proxy05-a/inventory.csv",
+        "provenance_sha256": "ab7853b409de88a52192ee4bfa774f4c0b3a39e31d87830ae4c7f23d3f7680a1",
+        "rows": 200000,
+        "sha256": "64237ba4d4d85b34764ef261299cc653bd1bb5bafa8d8cf229bdc3e588f798f9"
+      },
+      "message_keys": {
+        "bytes": 324221772,
+        "columns": [
+          "conversation_id",
+          "seq",
+          "created_at"
+        ],
+        "intent_proxy_note": null,
+        "path": ".local/datasets/scale42-proxy05-a/message_keys.csv",
+        "provenance_sha256": "e0d91a78ebc862e6d7bb93a211ff51e34305b86e81c530a0a587e9a07ed4e54f",
+        "rows": 10000000,
+        "sha256": "610dc006199c71aa306e36dab48ef90fb57b870004fbf7fbcec1b9f6646960dd"
+      },
+      "messages": {
+        "bytes": 725759447,
+        "columns": [
+          "conversation_id",
+          "seq",
+          "created_at",
+          "sender",
+          "content"
+        ],
+        "intent_proxy_note": null,
+        "path": ".local/datasets/scale42-proxy05-a/messages.csv",
+        "provenance_sha256": "b1c3c5f2ce50f9999b5c15884b70847a906fef3aa2abda07578005d358d6abe7",
+        "rows": 10000000,
+        "sha256": "09255e7a50c175ad9b4424924006861f9129581178a95fc70705bc4f84e34ab6"
+      },
+      "order_items": {
+        "bytes": 63576826,
+        "columns": [
+          "order_id",
+          "line_no",
+          "product_id",
+          "quantity",
+          "unit_price_cents",
+          "freight_cents"
+        ],
+        "intent_proxy_note": null,
+        "path": ".local/datasets/scale42-proxy05-a/order_items.csv",
+        "provenance_sha256": "a28a88e31c23d421a5ffb26d94805f5cca9357ab7e5da867331066802551cedf",
+        "rows": 2264789,
+        "sha256": "f105fdaf2312746dfd295d5216820227b38d747e9547acbdca0ed1c9ef76d5fe"
+      },
+      "orders": {
+        "bytes": 115651317,
+        "columns": [
+          "id",
+          "user_id",
+          "status",
+          "total_cents",
+          "created_at",
+          "revision"
+        ],
+        "intent_proxy_note": null,
+        "path": ".local/datasets/scale42-proxy05-a/orders.csv",
+        "provenance_sha256": "79606c78f55ed3491edc3074faa9da78bfb4552222124da3b634e6a1605e1a6e",
+        "rows": 2000000,
+        "sha256": "a8c31ad3e84cec0c0d0ae642e689e7e58c296d10acbcecd9dd8bf5aacfcb2901"
+      },
+      "products": {
+        "bytes": 16202270,
+        "columns": [
+          "id",
+          "sku",
+          "title",
+          "category_id",
+          "price_cents",
+          "freight_cents",
+          "attrs",
+          "status"
+        ],
+        "intent_proxy_note": null,
+        "path": ".local/datasets/scale42-proxy05-a/products.csv",
+        "provenance_sha256": "c5f7b38e719d3a8823a720409c1d2fc41f3f15b17ff30c2dee41a9d54f1fd184",
+        "rows": 200000,
+        "sha256": "79acf461e52751c4f06978663bd50f8cdd5a9dc1ec0babd84d61baa912aa51ab"
+      },
+      "shipments": {
+        "bytes": 126427037,
+        "columns": [
+          "order_id",
+          "carrier",
+          "tracking_no",
+          "status"
+        ],
+        "intent_proxy_note": null,
+        "path": ".local/datasets/scale42-proxy05-a/shipments.csv",
+        "provenance_sha256": "1adf59f557aa393b897314bf3f50726e9e83473f2f1efd7b2bd4f54b69d839cc",
+        "rows": 1962484,
+        "sha256": "12937849ce5e8500465f511510c5479e91e3b709cc2e46dfab2c5ff9325c8f09"
+      },
+      "ticket_events": {
+        "bytes": 257200000,
+        "columns": [
+          "ticket_id",
+          "revision",
+          "type",
+          "actor",
+          "payload",
+          "created_at"
+        ],
+        "intent_proxy_note": "规则代理，非人工真实意图分布，首片段说话人未确认",
+        "path": ".local/datasets/scale42-proxy05-a/ticket_events.csv",
+        "provenance_sha256": "ae12803f0df5bb136857b15169e169d9038f33f656403ebdc4658b8733eb855f",
+        "rows": 1000000,
+        "sha256": "5b1307b91e8aa4e618e83b9b5c4f54f6f3e085ea1b9eb68f11c50b24bb9b0454"
+      },
+      "tickets": {
+        "bytes": 228147809,
+        "columns": [
+          "ticket_id",
+          "route",
+          "state",
+          "revision",
+          "reason_code",
+          "order_status",
+          "history",
+          "created_at",
+          "updated_at",
+          "synthetic_distribution_note"
+        ],
+        "intent_proxy_note": "规则代理，非人工真实意图分布，首片段说话人未确认",
+        "path": ".local/datasets/scale42-proxy05-a/tickets.csv",
+        "provenance_sha256": "24505fd1531dd0289de60ee13d6e9e3ab8d9442b9e8f28c95c035ed15b9af63e",
+        "rows": 1000000,
+        "sha256": "c7606d1ffb2c09b775eb7e563e3ceb220f8cec1ef5cf6e11249c0349c0de76e7"
+      },
+      "users": {
+        "bytes": 9888896,
+        "columns": [
+          "id",
+          "activity_events"
+        ],
+        "intent_proxy_note": null,
+        "path": ".local/datasets/scale42-proxy05-a/users.csv",
+        "provenance_sha256": "8a1a58bea0a37dce12347905655ce76e2e3d0c4b30349dcff55de763f31e6383",
+        "rows": 1000000,
+        "sha256": "68eda0941b496ed427b256891d4e7f4b03daa6a8b60a39c04bb0e9a327015c9b"
+      }
+    },
+    "final_conversation_truncated_turns": 2,
+    "generated_distributions": {
+      "category_counts": {
+        "agro_industria_e_comercio": 446,
+        "alimentos": 509,
+        "alimentos_bebidas": 629,
+        "artes": 337,
+        "artes_e_artesanato": 134,
+        "artigos_de_festas": 160,
+        "artigos_de_natal": 413,
+        "audio": 331,
+        "automotivo": 11592,
+        "bebes": 5459,
+        "bebidas": 474,
+        "beleza_saude": 14906,
+        "brinquedos": 8512,
+        "cama_mesa_banho": 18507,
+        "casa_conforto": 643,
+        "casa_conforto_2": 27,
+        "casa_construcao": 1384,
+        "cds_dvds_musicais": 5,
+        "cine_foto": 177,
+        "climatizacao": 722,
+        "consoles_games": 1951,
+        "construcao_ferramentas_construcao": 2423,
+        "construcao_ferramentas_ferramentas": 211,
+        "construcao_ferramentas_iluminacao": 445,
+        "construcao_ferramentas_jardim": 522,
+        "construcao_ferramentas_seguranca": 528,
+        "cool_stuff": 4828,
+        "dvds_blu_ray": 280,
+        "eletrodomesticos": 2177,
+        "eletrodomesticos_2": 547,
+        "eletronicos": 3222,
+        "eletroportateis": 1386,
+        "esporte_lazer": 17403,
+        "fashion_bolsas_e_acessorios": 5147,
+        "fashion_calcados": 1060,
+        "fashion_esporte": 111,
+        "fashion_roupa_feminina": 157,
+        "fashion_roupa_infanto_juvenil": 27,
+        "fashion_roupa_masculina": 583,
+        "fashion_underwear_e_moda_praia": 345,
+        "ferramentas_jardim": 4588,
+        "flores": 87,
+        "fraldas_higiene": 82,
+        "industria_comercio_e_negocios": 419,
+        "informatica_acessorios": 9861,
+        "instrumentos_musicais": 1707,
+        "la_cuisine": 67,
+        "livros_importados": 191,
+        "livros_interesse_geral": 1304,
+        "livros_tecnicos": 804,
+        "malas_acessorios": 2141,
+        "market_place": 661,
+        "moveis_colchao_e_estofado": 68,
+        "moveis_cozinha_area_de_servico_jantar_e_jardim": 531,
+        "moveis_decoracao": 16212,
+        "moveis_escritorio": 1886,
+        "moveis_quarto": 285,
+        "moveis_sala": 964,
+        "musica": 171,
+        "papelaria": 5084,
+        "pc_gamer": 19,
+        "pcs": 184,
+        "perfumaria": 5279,
+        "pet_shop": 4446,
+        "portateis_casa_forno_e_cafe": 180,
+        "portateis_cozinha_e_preparadores_de_alimentos": 68,
+        "relogios_presentes": 7981,
+        "seguros_e_servicos": 15,
+        "sinalizacao_e_seguranca": 569,
+        "tablets_impressao_imagem": 57,
+        "telefonia": 6810,
+        "telefonia_fixa": 728,
+        "uncategorized": 3664,
+        "utilidades_domesticas": 14167
+      },
+      "conversation_turns": {
+        "10": 114278,
+        "100": 15,
+        "102": 7,
+        "104": 9,
+        "106": 10,
+        "108": 3,
+        "110": 4,
+        "112": 2,
+        "116": 3,
+        "118": 2,
+        "12": 94780,
+        "120": 7,
+        "14": 28791,
+        "16": 20877,
+        "18": 15454,
+        "2": 154508,
+        "20": 11788,
+        "22": 8968,
+        "24": 6693,
+        "26": 5136,
+        "28": 4222,
+        "30": 3364,
+        "32": 2566,
+        "34": 2054,
+        "36": 1745,
+        "38": 1378,
+        "4": 587753,
+        "40": 1078,
+        "42": 873,
+        "44": 743,
+        "46": 655,
+        "48": 584,
+        "50": 471,
+        "52": 411,
+        "54": 346,
+        "56": 285,
+        "58": 272,
+        "6": 258370,
+        "60": 236,
+        "62": 193,
+        "64": 158,
+        "66": 119,
+        "68": 125,
+        "70": 83,
+        "72": 58,
+        "74": 53,
+        "76": 45,
+        "78": 29,
+        "8": 115001,
+        "80": 22,
+        "82": 26,
+        "84": 21,
+        "86": 25,
+        "88": 18,
+        "90": 18,
+        "92": 13,
+        "94": 13,
+        "96": 13,
+        "98": 14
+      },
+      "order_month": {
+        "2016-09": 96,
+        "2016-10": 6462,
+        "2016-12": 15,
+        "2017-01": 16157,
+        "2017-02": 35725,
+        "2017-03": 53955,
+        "2017-04": 48241,
+        "2017-05": 74175,
+        "2017-06": 65566,
+        "2017-07": 81290,
+        "2017-08": 86800,
+        "2017-09": 85898,
+        "2017-10": 92749,
+        "2017-11": 151544,
+        "2017-12": 113948,
+        "2018-01": 146621,
+        "2018-02": 135940,
+        "2018-03": 145097,
+        "2018-04": 139591,
+        "2018-05": 137995,
+        "2018-06": 124170,
+        "2018-07": 126758,
+        "2018-08": 130808,
+        "2018-09": 325,
+        "2018-10": 74
+      },
+      "order_status": {
+        "approved": 41,
+        "canceled": 12673,
+        "created": 106,
+        "delivered": 1940369,
+        "invoiced": 6313,
+        "processing": 6068,
+        "shipped": 22115,
+        "unavailable": 12315
+      }
+    },
+    "generation_seconds": 94.38798262900673,
+    "intent_proxy_note": "规则代理，非人工真实意图分布，首片段说话人未确认",
+    "intent_proxy_owner_approved": true,
+    "omitted_source_order_lines": 0,
+    "phase_p2_accepted": false,
+    "quality_or_production_claim": false,
+    "seed": 42,
+    "sender_attribution": "source: ECD does not identify speaker roles; no fabricated customer attribution",
+    "source_fit_sha256": {
+      "ecd-bootstrap-local.json": "721665c229719e5ff3a485dc45acc29e15bd9c834c07b611af2d4386cb89a178",
+      "fits.json": "43ba6be36dc30b67c4fc7dd2631ae07828418f42d1b190ae863a92a0ca35d84f",
+      "olist-bootstrap.json": "acb1d6f738b37717ee31df8a06dbf8f6373dfbb0060ec08d0e5221158ea23caa"
+    },
+    "source_text_distribution": "private only; ECD raw/synthetic reused text must not be redistributed",
+    "state_occupancy_note": "independently configured queue-state occupancy; not route-to-outcome labels, not workflow quality evidence",
+    "stock_method": "fixed1000 synthetic fixture; no real inventory distribution claim",
+    "synthetic": true,
+    "ticket_target_blocked": false,
+    "total_csv_bytes": 1943961490,
+    "true_intent_fit_complete": false,
+    "user_activity_fit_complete": false,
+    "user_assignment": "round-robin identity linkage only, NOT a UserBehavior-fitted activity or order distribution",
+    "waiting_human_count": 50000,
+    "waiting_human_ratio": 0.05
+  },
+  "repeat_proof": {
+    "seed": 42,
+    "full_scale_runs": 2,
+    "all_files_identical": true,
+    "dataset_checksum": "981aea6ace0ac4d07195148384359077bd269327a83130e3f44879e260e3bb8f",
+    "files": {
+      "categories": {
+        "rows": 74,
+        "bytes": 1558,
+        "sha256": "159932aa01031c8d30db224b5c18c00ad76506a8e0d07c80a628c0bd60c997a8",
+        "provenance_sha256": "c8b69b27ad7a3959d2ede27866bb675ccf3eaca8fb25538f0f5729395528c8d8"
+      },
+      "conversations": {
+        "rows": 1444788,
+        "bytes": 73795663,
+        "sha256": "5ac373faf5231b8471c082b440c99e8c311568e8174db1bfd30bc126513cfa26",
+        "provenance_sha256": "2a6901cd86547124ae79ec29b01bdb9b067542e51afe0b94ed64647f270d2f4e"
+      },
+      "inventory": {
+        "rows": 200000,
+        "bytes": 3088895,
+        "sha256": "64237ba4d4d85b34764ef261299cc653bd1bb5bafa8d8cf229bdc3e588f798f9",
+        "provenance_sha256": "ab7853b409de88a52192ee4bfa774f4c0b3a39e31d87830ae4c7f23d3f7680a1"
+      },
+      "message_keys": {
+        "rows": 10000000,
+        "bytes": 324221772,
+        "sha256": "610dc006199c71aa306e36dab48ef90fb57b870004fbf7fbcec1b9f6646960dd",
+        "provenance_sha256": "e0d91a78ebc862e6d7bb93a211ff51e34305b86e81c530a0a587e9a07ed4e54f"
+      },
+      "messages": {
+        "rows": 10000000,
+        "bytes": 725759447,
+        "sha256": "09255e7a50c175ad9b4424924006861f9129581178a95fc70705bc4f84e34ab6",
+        "provenance_sha256": "b1c3c5f2ce50f9999b5c15884b70847a906fef3aa2abda07578005d358d6abe7"
+      },
+      "order_items": {
+        "rows": 2264789,
+        "bytes": 63576826,
+        "sha256": "f105fdaf2312746dfd295d5216820227b38d747e9547acbdca0ed1c9ef76d5fe",
+        "provenance_sha256": "a28a88e31c23d421a5ffb26d94805f5cca9357ab7e5da867331066802551cedf"
+      },
+      "orders": {
+        "rows": 2000000,
+        "bytes": 115651317,
+        "sha256": "a8c31ad3e84cec0c0d0ae642e689e7e58c296d10acbcecd9dd8bf5aacfcb2901",
+        "provenance_sha256": "79606c78f55ed3491edc3074faa9da78bfb4552222124da3b634e6a1605e1a6e"
+      },
+      "products": {
+        "rows": 200000,
+        "bytes": 16202270,
+        "sha256": "79acf461e52751c4f06978663bd50f8cdd5a9dc1ec0babd84d61baa912aa51ab",
+        "provenance_sha256": "c5f7b38e719d3a8823a720409c1d2fc41f3f15b17ff30c2dee41a9d54f1fd184"
+      },
+      "shipments": {
+        "rows": 1962484,
+        "bytes": 126427037,
+        "sha256": "12937849ce5e8500465f511510c5479e91e3b709cc2e46dfab2c5ff9325c8f09",
+        "provenance_sha256": "1adf59f557aa393b897314bf3f50726e9e83473f2f1efd7b2bd4f54b69d839cc"
+      },
+      "ticket_events": {
+        "rows": 1000000,
+        "bytes": 257200000,
+        "sha256": "5b1307b91e8aa4e618e83b9b5c4f54f6f3e085ea1b9eb68f11c50b24bb9b0454",
+        "provenance_sha256": "ae12803f0df5bb136857b15169e169d9038f33f656403ebdc4658b8733eb855f"
+      },
+      "tickets": {
+        "rows": 1000000,
+        "bytes": 228147809,
+        "sha256": "c7606d1ffb2c09b775eb7e563e3ceb220f8cec1ef5cf6e11249c0349c0de76e7",
+        "provenance_sha256": "24505fd1531dd0289de60ee13d6e9e3ab8d9442b9e8f28c95c035ed15b9af63e"
+      },
+      "users": {
+        "rows": 1000000,
+        "bytes": 9888896,
+        "sha256": "68eda0941b496ed427b256891d4e7f4b03daa6a8b60a39c04bb0e9a327015c9b",
+        "provenance_sha256": "8a1a58bea0a37dce12347905655ce76e2e3d0c4b30349dcff55de763f31e6383"
+      }
+    },
+    "generation_seconds": [
+      94.38798262900673,
+      98.70778634608723
+    ],
+    "intent_proxy_note": "规则代理，非人工真实意图分布，首片段说话人未确认",
+    "waiting_human_ratio": 0.05,
+    "routing_accuracy_or_evaluation_use": false,
+    "userbehavior_fit_complete": false
+  },
+  "import": {
+    "complete": true,
+    "database": "agent_ops_p2_seed42",
+    "tables": [
+      {
+        "table": "commerce.categories",
+        "rows": 74,
+        "table_and_indexes_bytes": 49152
+      },
+      {
+        "table": "commerce.conversations",
+        "rows": 1444788,
+        "table_and_indexes_bytes": 215998464
+      },
+      {
+        "table": "commerce.inventory",
+        "rows": 200000,
+        "table_and_indexes_bytes": 16605184
+      },
+      {
+        "table": "commerce.message_keys",
+        "rows": 10000000,
+        "table_and_indexes_bytes": 1243537408
+      },
+      {
+        "table": "commerce.messages",
+        "rows": 10000000,
+        "table_and_indexes_bytes": 1697103872
+      },
+      {
+        "table": "commerce.order_items",
+        "rows": 2264789,
+        "table_and_indexes_bytes": 245129216
+      },
+      {
+        "table": "commerce.orders",
+        "rows": 2000000,
+        "table_and_indexes_bytes": 335683584
+      },
+      {
+        "table": "commerce.products",
+        "rows": 200000,
+        "table_and_indexes_bytes": 47718400
+      },
+      {
+        "table": "commerce.shipments",
+        "rows": 1962484,
+        "table_and_indexes_bytes": 322404352
+      },
+      {
+        "table": "support.ticket_events",
+        "rows": 1000000,
+        "table_and_indexes_bytes": 297033728
+      },
+      {
+        "table": "support.tickets",
+        "rows": 1000000,
+        "table_and_indexes_bytes": 259227648
+      },
+      {
+        "table": "commerce.users",
+        "rows": 1000000,
+        "table_and_indexes_bytes": 58834944
+      }
+    ],
+    "database_bytes": 4748172311,
+    "source_manifest_sha256": "7f3f73161dd563d7c6ba59f8d36be8f07e14f59e4a984469af85f650e06e8c8e",
+    "import_seconds_measured_copy_and_count": 726.4554198605474,
+    "original_total_wall_time_including_analyze": null,
+    "analyze_elapsed_recorded": false,
+    "timing_definition": "sum of observed per-table COPY+count stages; initial ANALYZE/summary wall time not preserved and not invented",
+    "csv_bytes": 1943961490,
+    "new_database_same_p0_instance": true,
+    "existing_business_database_untouched": true,
+    "main_business_api_switched": false,
+    "user_activity_fit_complete": false,
+    "tickets_blocked": false,
+    "phase_p2_accepted": false,
+    "json_decimal_failure_recovered_read_only": true,
+    "proxy_augmentation_seconds": 98.0182400920894,
+    "proxy_table_imports": [
+      {
+        "table": "support.tickets",
+        "rows": 1000000,
+        "seconds_including_count": 6.24466088716872
+      },
+      {
+        "table": "support.ticket_events",
+        "rows": 1000000,
+        "seconds_including_count": 28.38349841721356
+      }
+    ],
+    "conversation_link_update_seconds": 39.396301979897544,
+    "import_method": "base load plus approved ticket/event COPY and deterministic conversation linkage; unchanged table source SHA256 verified",
+    "intent_proxy_note": "规则代理，非人工真实意图分布，首片段说话人未确认",
+    "waiting_human_ratio": 0.05,
+    "waiting_human_count": 50000,
+    "base_import_report_sha256": "00266471600a2d50b57ec71148c840be9045e6e3a6f937087086d03ef71ef12e",
+    "total_data_import_seconds": 824.4736599526368
+  },
+  "database_verification": {
+    "order_total_mismatch": 0,
+    "inventory_check_violations": 0,
+    "unvalidated_constraints": 0,
+    "proxy_note_missing_rows": 0,
+    "waiting_human": 50000,
+    "ticket_count": 1000000,
+    "conversation_ticket_link_mismatch": 0,
+    "runtime_non_superuser_no_create_privileges": true,
+    "server_version": "16.15",
+    "counts": {
+      "commerce.products": 200000,
+      "commerce.users": 1000000,
+      "commerce.orders": 2000000,
+      "support.tickets": 1000000,
+      "commerce.messages": 10000000
+    },
+    "read_only": true,
+    "seconds": 13.656240571988747,
+    "intent_proxy_note": "规则代理，非人工真实意图分布，首片段说话人未确认",
+    "routing_accuracy_or_evaluation_use": false
+  },
+  "speaker_quick_check": {
+    "seed": 42,
+    "sample_n": 40,
+    "cue_counts": {
+      "no-clear-cue": 35,
+      "service-cue": 5
+    },
+    "human_reviewed": false,
+    "speaker_confirmed": false,
+    "conclusion": "quick lexical cues cannot establish speaker identity; no explicit role fields in ECD. Keep first-speaker-unconfirmed note.",
+    "intent_proxy_note": "规则代理，非人工真实意图分布，首片段说话人未确认",
+    "records": [
+      {
+        "first_segment_sha256": "670d9743542cae3ea7ebe36af56bd53648b0a1126162e78d81a32934a711302e",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "76b1df94bc82558fc3268772f67f7842873ebc6f304a8493d80485e1d591d66b",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "4feafb585b359d6ba88bbe1b5889f3676031b3e5ca9bad965d7e9a29bff6e7a1",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "670d9743542cae3ea7ebe36af56bd53648b0a1126162e78d81a32934a711302e",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "e12d5cddc726b7b11b0a247588e0d6146ddda6f5dbfa079f9353210b671f22f8",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "42e5dbf9def668977f2b5175c6acb9cc81ace4df5cb09b73b7e155da1c59c17c",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "6241b14e49c30374d1332685fdc47d106a49cc58917e8223e966b2c2ea5f6924",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "582505ba0f968dad7b72dda81611aba86f208acff7e122079b6cb436c340a671",
+        "cue": "service-cue"
+      },
+      {
+        "first_segment_sha256": "670d9743542cae3ea7ebe36af56bd53648b0a1126162e78d81a32934a711302e",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "92ec4ba2f632fb20f69e838918e93d9a65b0dcaeb0120dccda9da915c0fa01a8",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "1c6b020044715ac569d971171022b318b3fdb6b90318c7b3f28d8b0586025ca2",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "42e5dbf9def668977f2b5175c6acb9cc81ace4df5cb09b73b7e155da1c59c17c",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "06ee1e38036fef4d356edd60432689e2a26b910cdd2bb51bb2b475fd696ce75f",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "f749c0c8942ebfbd75c90f1c8c1bd14bee956157bd511ee739aee984a53f7fa2",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "e066e0f8371adb9a15d48a184258b09280aab503eb869b20d86e2a9356b09e1e",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "153103fe02cf6e7a4c84a75f784bd24354103f69369b7ecfe893ea6de9a98fd4",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "75d3911791b8b3845d929e127da1a445edc175edb734dcdabc2e8f48428a8faf",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "d9ea558dcd5a3a8cba301847002a084e7d47d75359e17d775e748c77bdc03cd6",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "9f7945b39ef7d95c43edba95bb459fa0fbbf51c590e62b3b66ffd7fe29edc852",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "89e3f003d216549a17c4e575bf558ba20a53e8eba59c7ccdf58575be77381867",
+        "cue": "service-cue"
+      },
+      {
+        "first_segment_sha256": "3521a4805b4e5cd31351696af3c36e993c68db15a907574032505bc2d4bbd157",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "670d9743542cae3ea7ebe36af56bd53648b0a1126162e78d81a32934a711302e",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "1d0757a17cacdc424dd039e724d7222a019ea7a4229eb63ee7f16c7ef2a15858",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "670d9743542cae3ea7ebe36af56bd53648b0a1126162e78d81a32934a711302e",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "5de3f1b3e3ed30fe020a3163097be59bc3d6193fb8b68505497ae71f66e55866",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "ae34fd64dc266499edeb22e03bbdfb9e49f4d228a75ca914582d11691cdf395e",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "b30acb8a8d849bcffad4dff20e29013c5e778bc0afb04ba261a1ed6cbd47bd77",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "582505ba0f968dad7b72dda81611aba86f208acff7e122079b6cb436c340a671",
+        "cue": "service-cue"
+      },
+      {
+        "first_segment_sha256": "42e5dbf9def668977f2b5175c6acb9cc81ace4df5cb09b73b7e155da1c59c17c",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "d1c24fdc0905626a4d663afa7ffa5d06c672ce5ba26da7526a8b985c99fc95cc",
+        "cue": "service-cue"
+      },
+      {
+        "first_segment_sha256": "16d5b4a5e1f2d48e59ca3c7ec721b152bd51965bc2169ddd94443d57c381e1fa",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "b9724cd93d99441150469f33c8a087e42a6cf9aee62d975e3c268315cdb57cf8",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "8a3bfe18e50f55e1e21a6fed7a70667f879b739d7d28e5bbd8638b4acd4129c1",
+        "cue": "service-cue"
+      },
+      {
+        "first_segment_sha256": "670d9743542cae3ea7ebe36af56bd53648b0a1126162e78d81a32934a711302e",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "9294f86977f21e559a5bbe5161539853eef43ff2cba7700732b51c24bc8f4b78",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "43c7b05837ec4864c43de01f908d2b711b97071152f6186a5a41767b4f4856ce",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "314d351d3f33e4d057e46a76885f40fbfd68abd7ad6188734a04b333e338bfed",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "67b50697e6faa2f13d91e461c04c353789d94f8c6f94e19918bac4bdc9acb633",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "0cca940c99d18282a5d14ba538d2d61417ca4205b9a78392352e46fb7137a2cf",
+        "cue": "no-clear-cue"
+      },
+      {
+        "first_segment_sha256": "7ef5db683290825f8ad6c095ac398a2f381397d87d8749748b7e949f314790a4",
+        "cue": "no-clear-cue"
+      }
+    ]
+  },
+  "fit_deviations": {
+    "category_max_absolute_share_diff": 0.0006106274468149764,
+    "order_status_max_absolute_share_diff": 7.472916101004638e-05,
+    "conversation_length_max_absolute_share_diff": 0.00032459514042804116
+  },
+  "targets": {
+    "products": 200000,
+    "users": 1000000,
+    "orders": 2000000,
+    "tickets": 1000000,
+    "messages": 10000000
+  },
+  "actual_target_rows": {
+    "products": 200000,
+    "users": 1000000,
+    "orders": 2000000,
+    "tickets": 1000000,
+    "messages": 10000000
+  },
+  "gates": {
+    "pytest_passed": 91,
+    "seconds": 18.2,
+    "skipped": 0,
+    "ruff": true,
+    "strict_mypy": true,
+    "regression_only": {
+      "dataset_sha256": "eeace62cbed81cd494ee0ae77d739f06c1350f7ae08c513d516cd6da2580f31d",
+      "cases": 47,
+      "passed": 47,
+      "confusion": {
+        "human": {
+          "human": 10
+        },
+        "return_request": {
+          "return_request": 10
+        },
+        "order_status": {
+          "order_status": 12
+        },
+        "clarify": {
+          "clarify": 15
+        }
+      },
+      "results": [
+        {
+          "id": "human-0",
+          "predicted": "human",
+          "expected": "human",
+          "state": "waiting_human",
+          "expected_state": "waiting_human",
+          "passed": true
+        },
+        {
+          "id": "human-1",
+          "predicted": "human",
+          "expected": "human",
+          "state": "waiting_human",
+          "expected_state": "waiting_human",
+          "passed": true
+        },
+        {
+          "id": "human-2",
+          "predicted": "human",
+          "expected": "human",
+          "state": "waiting_human",
+          "expected_state": "waiting_human",
+          "passed": true
+        },
+        {
+          "id": "human-3",
+          "predicted": "human",
+          "expected": "human",
+          "state": "waiting_human",
+          "expected_state": "waiting_human",
+          "passed": true
+        },
+        {
+          "id": "human-4",
+          "predicted": "human",
+          "expected": "human",
+          "state": "waiting_human",
+          "expected_state": "waiting_human",
+          "passed": true
+        },
+        {
+          "id": "human-5",
+          "predicted": "human",
+          "expected": "human",
+          "state": "waiting_human",
+          "expected_state": "waiting_human",
+          "passed": true
+        },
+        {
+          "id": "human-6",
+          "predicted": "human",
+          "expected": "human",
+          "state": "waiting_human",
+          "expected_state": "waiting_human",
+          "passed": true
+        },
+        {
+          "id": "human-7",
+          "predicted": "human",
+          "expected": "human",
+          "state": "waiting_human",
+          "expected_state": "waiting_human",
+          "passed": true
+        },
+        {
+          "id": "human-8",
+          "predicted": "human",
+          "expected": "human",
+          "state": "waiting_human",
+          "expected_state": "waiting_human",
+          "passed": true
+        },
+        {
+          "id": "human-9",
+          "predicted": "human",
+          "expected": "human",
+          "state": "waiting_human",
+          "expected_state": "waiting_human",
+          "passed": true
+        },
+        {
+          "id": "return_request-0",
+          "predicted": "return_request",
+          "expected": "return_request",
+          "state": "waiting_human",
+          "expected_state": "waiting_human",
+          "passed": true
+        },
+        {
+          "id": "return_request-1",
+          "predicted": "return_request",
+          "expected": "return_request",
+          "state": "waiting_human",
+          "expected_state": "waiting_human",
+          "passed": true
+        },
+        {
+          "id": "return_request-2",
+          "predicted": "return_request",
+          "expected": "return_request",
+          "state": "waiting_human",
+          "expected_state": "waiting_human",
+          "passed": true
+        },
+        {
+          "id": "return_request-3",
+          "predicted": "return_request",
+          "expected": "return_request",
+          "state": "waiting_human",
+          "expected_state": "waiting_human",
+          "passed": true
+        },
+        {
+          "id": "return_request-4",
+          "predicted": "return_request",
+          "expected": "return_request",
+          "state": "waiting_human",
+          "expected_state": "waiting_human",
+          "passed": true
+        },
+        {
+          "id": "return_request-5",
+          "predicted": "return_request",
+          "expected": "return_request",
+          "state": "waiting_human",
+          "expected_state": "waiting_human",
+          "passed": true
+        },
+        {
+          "id": "return_request-6",
+          "predicted": "return_request",
+          "expected": "return_request",
+          "state": "waiting_human",
+          "expected_state": "waiting_human",
+          "passed": true
+        },
+        {
+          "id": "return_request-7",
+          "predicted": "return_request",
+          "expected": "return_request",
+          "state": "waiting_human",
+          "expected_state": "waiting_human",
+          "passed": true
+        },
+        {
+          "id": "return_request-8",
+          "predicted": "return_request",
+          "expected": "return_request",
+          "state": "waiting_human",
+          "expected_state": "waiting_human",
+          "passed": true
+        },
+        {
+          "id": "return_request-9",
+          "predicted": "return_request",
+          "expected": "return_request",
+          "state": "waiting_human",
+          "expected_state": "waiting_human",
+          "passed": true
+        },
+        {
+          "id": "order_status-0",
+          "predicted": "order_status",
+          "expected": "order_status",
+          "state": "resolved",
+          "expected_state": "resolved",
+          "passed": true
+        },
+        {
+          "id": "order_status-1",
+          "predicted": "order_status",
+          "expected": "order_status",
+          "state": "resolved",
+          "expected_state": "resolved",
+          "passed": true
+        },
+        {
+          "id": "order_status-2",
+          "predicted": "order_status",
+          "expected": "order_status",
+          "state": "resolved",
+          "expected_state": "resolved",
+          "passed": true
+        },
+        {
+          "id": "order_status-3",
+          "predicted": "order_status",
+          "expected": "order_status",
+          "state": "resolved",
+          "expected_state": "resolved",
+          "passed": true
+        },
+        {
+          "id": "order_status-4",
+          "predicted": "order_status",
+          "expected": "order_status",
+          "state": "resolved",
+          "expected_state": "resolved",
+          "passed": true
+        },
+        {
+          "id": "order_status-5",
+          "predicted": "order_status",
+          "expected": "order_status",
+          "state": "resolved",
+          "expected_state": "resolved",
+          "passed": true
+        },
+        {
+          "id": "order_status-6",
+          "predicted": "order_status",
+          "expected": "order_status",
+          "state": "resolved",
+          "expected_state": "resolved",
+          "passed": true
+        },
+        {
+          "id": "order_status-7",
+          "predicted": "order_status",
+          "expected": "order_status",
+          "state": "resolved",
+          "expected_state": "resolved",
+          "passed": true
+        },
+        {
+          "id": "order_status-8",
+          "predicted": "order_status",
+          "expected": "order_status",
+          "state": "resolved",
+          "expected_state": "resolved",
+          "passed": true
+        },
+        {
+          "id": "order_status-9",
+          "predicted": "order_status",
+          "expected": "order_status",
+          "state": "resolved",
+          "expected_state": "resolved",
+          "passed": true
+        },
+        {
+          "id": "clarify-0",
+          "predicted": "clarify",
+          "expected": "clarify",
+          "state": "needs_information",
+          "expected_state": "needs_information",
+          "passed": true
+        },
+        {
+          "id": "clarify-1",
+          "predicted": "clarify",
+          "expected": "clarify",
+          "state": "needs_information",
+          "expected_state": "needs_information",
+          "passed": true
+        },
+        {
+          "id": "clarify-2",
+          "predicted": "clarify",
+          "expected": "clarify",
+          "state": "needs_information",
+          "expected_state": "needs_information",
+          "passed": true
+        },
+        {
+          "id": "clarify-3",
+          "predicted": "clarify",
+          "expected": "clarify",
+          "state": "needs_information",
+          "expected_state": "needs_information",
+          "passed": true
+        },
+        {
+          "id": "clarify-4",
+          "predicted": "clarify",
+          "expected": "clarify",
+          "state": "needs_information",
+          "expected_state": "needs_information",
+          "passed": true
+        },
+        {
+          "id": "clarify-5",
+          "predicted": "clarify",
+          "expected": "clarify",
+          "state": "needs_information",
+          "expected_state": "needs_information",
+          "passed": true
+        },
+        {
+          "id": "clarify-6",
+          "predicted": "clarify",
+          "expected": "clarify",
+          "state": "needs_information",
+          "expected_state": "needs_information",
+          "passed": true
+        },
+        {
+          "id": "clarify-7",
+          "predicted": "clarify",
+          "expected": "clarify",
+          "state": "needs_information",
+          "expected_state": "needs_information",
+          "passed": true
+        },
+        {
+          "id": "clarify-8",
+          "predicted": "clarify",
+          "expected": "clarify",
+          "state": "needs_information",
+          "expected_state": "needs_information",
+          "passed": true
+        },
+        {
+          "id": "clarify-9",
+          "predicted": "clarify",
+          "expected": "clarify",
+          "state": "needs_information",
+          "expected_state": "needs_information",
+          "passed": true
+        },
+        {
+          "id": "clarify-10",
+          "predicted": "clarify",
+          "expected": "clarify",
+          "state": "needs_information",
+          "expected_state": "needs_information",
+          "passed": true
+        },
+        {
+          "id": "clarify-11",
+          "predicted": "clarify",
+          "expected": "clarify",
+          "state": "needs_information",
+          "expected_state": "needs_information",
+          "passed": true
+        },
+        {
+          "id": "clarify-12",
+          "predicted": "clarify",
+          "expected": "clarify",
+          "state": "needs_information",
+          "expected_state": "needs_information",
+          "passed": true
+        },
+        {
+          "id": "clarify-13",
+          "predicted": "clarify",
+          "expected": "clarify",
+          "state": "needs_information",
+          "expected_state": "needs_information",
+          "passed": true
+        },
+        {
+          "id": "clarify-14",
+          "predicted": "clarify",
+          "expected": "clarify",
+          "state": "needs_information",
+          "expected_state": "needs_information",
+          "passed": true
+        },
+        {
+          "id": "missing-order",
+          "predicted": "order_status",
+          "expected": "order_status",
+          "state": "needs_information",
+          "expected_state": "needs_information",
+          "passed": true
+        },
+        {
+          "id": "unknown-order",
+          "predicted": "order_status",
+          "expected": "order_status",
+          "state": "needs_information",
+          "expected_state": "needs_information",
+          "passed": true
+        }
+      ],
+      "method": "deterministic rule routing + in-memory fixture order tool; no live LLM"
+    }
+  },
+  "disk": {
+    "datasets_workdir_bytes": 6835117461,
+    "database_bytes": 4748172311,
+    "final_csv_bytes_per_copy": 1943961490,
+    "filesystem_free_bytes": 61380517888
+  },
+  "intent_proxy_note": "规则代理，非人工真实意图分布，首片段说话人未确认",
+  "waiting_human_ratio_configurable": true,
+  "s1_experiments_executed": false,
+  "replace_proxy_after_P8": true,
+  "scale_counts_pass": true,
+  "determinism_pass": true,
+  "import_measured": true,
+  "all_datasets_available": false,
+  "p2_accepted": false,
+  "model_calls": 0,
+  "p3_or_later_started": false,
+  "remaining": [
+    "UserBehavior owner-downloaded full ZIP missing; actual file/row/hash/fit and behavior events unverified",
+    "user activity NULL and order-user linkage is structural placeholder, not UserBehavior distribution",
+    "P8 human intent labels not done; proxy weight replacement deferred to P8",
+    "main HTTP app not switched to P2 scale database; future commerce/support integration belongs to P4/P7"
+  ],
+  "failures_and_rework": [
+    "initial admin username postgres was wrong for existing compose; fixed to configured ops_owner without credential change",
+    "mypy caught local Row variable reuse; corrected before final gates",
+    "ruff caught missing explicit check=False in expected-failure test; corrected before final gates",
+    "owner approved proxy during base import; preserved base data and augmented only proxy tables and conversation linkage after hash checks",
+    "partition sum size returned Decimal and broke JSON summary after load committed; fixed cast and recovered counts/sizes read-only; initial ANALYZE wall time unrecorded"
+  ],
+  "original_data_exported": false
+}

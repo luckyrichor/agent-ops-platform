@@ -1,0 +1,22 @@
+{
+  "order_total_mismatch": 0,
+  "inventory_check_violations": 0,
+  "unvalidated_constraints": 0,
+  "proxy_note_missing_rows": 0,
+  "waiting_human": 50000,
+  "ticket_count": 1000000,
+  "conversation_ticket_link_mismatch": 0,
+  "runtime_non_superuser_no_create_privileges": true,
+  "server_version": "16.15",
+  "counts": {
+    "commerce.products": 200000,
+    "commerce.users": 1000000,
+    "commerce.orders": 2000000,
+    "support.tickets": 1000000,
+    "commerce.messages": 10000000
+  },
+  "read_only": true,
+  "seconds": 13.656240571988747,
+  "intent_proxy_note": "规则代理，非人工真实意图分布，首片段说话人未确认",
+  "routing_accuracy_or_evaluation_use": false
+}
