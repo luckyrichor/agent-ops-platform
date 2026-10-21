@@ -1,5 +1,5 @@
 """Generate P2 handoff from actual archives, scale manifests, DB results and gate logs."""
-import hashlib,json,re,shutil,subprocess
+import hashlib,json,re,shutil,subprocess,os,platform
 from datetime import datetime,UTC
 from pathlib import Path
 from zoneinfo import ZoneInfo
@@ -36,7 +36,9 @@ errors={'category_max_absolute_share_diff':diff(data['generated_distributions'][
         'conversation_length_max_absolute_share_diff':diff(data['generated_distributions']['conversation_turns'],fit['ecd']['turn_count_histogram'])}
 # JSON histogram keys are strings in both artifacts; no schema changes or manual numbers.
 r={'generated_at':datetime.now(UTC).isoformat(),'date_beijing':str(datetime.now(ZoneInfo('Asia/Shanghai')).date()),
- 'source_commit':source,'source_dirty':bool(subprocess.check_output(['git','diff','--','src','migrations','scripts'])),
+ 'source_commit':source,'environment':{'python':platform.python_version(),'platform':platform.platform(),'cpu_count':os.cpu_count(),
+    'postgres_memory_limit_bytes':int(subprocess.check_output(['docker','inspect','agent-ops-tracing-postgres-1','--format','{{.HostConfig.Memory}}'],text=True)),
+    'source_files_sha256':{str(p):hashlib.sha256(p.read_bytes()).hexdigest() for p in [*Path('src').rglob('*.py'),*Path('migrations').rglob('*.py'),*Path('scripts').glob('*.py')]}},'source_dirty':bool(subprocess.check_output(['git','diff','--','src','migrations','scripts'])),
  'plan':plan,'scope':'P2 only; B1 separately reported; no P3 or later stages',
  'datasets':v,'download_evidence':downloads,'fits':fit,'generated':data,'repeat_proof':repro,'import':db,'database_verification':verify,
  'speaker_quick_check':speaker,'fit_deviations':errors,'targets':targets,'actual_target_rows':checks,
@@ -60,6 +62,7 @@ r={'generated_at':datetime.now(UTC).isoformat(),'date_beijing':str(datetime.now(
                       'partition sum size returned Decimal and broke JSON summary after load committed; fixed cast and recovered counts/sizes read-only; initial ANALYZE wall time unrecorded'],
  'original_data_exported':False}
 write(out/'report.json',r)
+write(out/'environment.json',r['environment'])
 for src,name in [(root/'verified.json','dataset-verification.json'),(root/'fit-v1/fits.json','fits.json'),
  (root/'repeat-proxy05-proof.json','repeat-proof.json'),(root/'import-proxy05.json','import.json'),
  (root/'db-verification.json','database-verification.json'),(root/'speaker-check.json','speaker-check.json'),
@@ -121,7 +124,7 @@ loadrows=[f"| {t['table']} | {t['rows']:,} | {t['table_and_indexes_bytes']:,} |"
 
 ## 做了什么
 
-商品/类目、库存、订单/明细、物流、用户标识、会话与月分区消息迁移；本地应用服务和 CLI。幂等下单与库存预留同事务、失败回滚、取消释放、版本并发校验；消息注册表保证跨分区序号唯一。使用原 P0 PostgreSQL 实例内的隔离验收数据库 `{db['database']}`，未清空旧业务数据库，也未把本地可信 user_id 过滤称为登录鉴权。HTTP 客户认证留 P3，客服/导购实际接入留后续阶段。
+商品/类目、库存、订单/明细、物流、用户标识、会话与月分区消息迁移；本地应用服务和 CLI。幂等下单与库存预留同事务、失败回滚、取消释放、版本并发校验；消息注册表保证跨分区序号唯一。实际环境：Python {r['environment']['python']}，CPU {r['environment']['cpu_count']} 个逻辑核，PostgreSQL 容器内存上限 {r['environment']['postgres_memory_limit_bytes']:,} 字节；主机、源码摘要见 environment.json。使用原 P0 PostgreSQL 实例内的隔离验收数据库 `{db['database']}`，未清空旧业务数据库，也未把本地可信 user_id 过滤称为登录鉴权。HTTP 客户认证留 P3，客服/导购实际接入留后续阶段。
 
 完整下载、CRC、大小、行数和 SHA256 见 [docs/datasets.md](../../datasets.md)。Olist/ECD 到位；UserBehavior 缺文件，未登录或注册。商品和订单做联合经验重采样，ECD 做正例去重及长度分层采样，随机种子 {data['seed']}。
 
