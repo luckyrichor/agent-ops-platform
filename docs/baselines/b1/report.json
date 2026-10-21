@@ -1,0 +1,923 @@
+{
+  "generated_at": "2026-10-21T11:30:25.522947+00:00",
+  "date_beijing": "2026-10-21",
+  "source_commit": "22d7aa9149915bd02ded3bd6072843ee26fdf803",
+  "source_sha256": {
+    "src/agent_ops/telemetry.py": "fda8ecc6dff2ba41d61257be72bf495c9761f3df3267ccdc9d04d329b80fafdf",
+    "src/agent_ops/planner.py": "e220eb4e82dd1eb82e868a60d2ed7df9602ee748131abcd2bbbf7566ea44b7c4",
+    "src/agent_ops/agents.py": "dc30a08884dc2d99415989460a9ffa82f72d2a9c93ca561e9b397d88e793ffa8",
+    "src/agent_ops/support.py": "e85d2e83ceea225275be71bfbea95cbf09e40491ed83364ab105a4fd5486e731",
+    "src/agent_ops/models.py": "11e487edf6ceaf39daa143e48beb3f420ec1b9643a46d44c952476340077a331",
+    "src/agent_ops/support_postgres.py": "a8bbf038815203e85fa0af464b31d83aaf0e3b17be8dfbce54a8124b0cfde537",
+    "src/agent_ops/api.py": "72b4b0475267e40452afc1cde091e2edabcf22febfa41b38db7eb167ffc4903b",
+    "src/agent_ops/support_api.py": "283a8f132823157cecc739be15a6109cc18a6889c9695584bdfcd33a60b6abfa",
+    "src/agent_ops/orchestrator.py": "e229f4b35b14a1aeed24fb557e50c3267463d19af6d873a11ac37d08fb1a8733",
+    "src/agent_ops/memory.py": "5957e370ec885dd1a417eec9ae611b37007eb0a92a05df64d0388f9581edab9c",
+    "src/agent_ops/__init__.py": "790a09b52d965efce6fdde2575c4ba2a7d009cd5a210181548e98fab8f45cdcd",
+    "src/agent_ops/__main__.py": "d569e10e101e680b51f7d9bbddcf778074e80bc97068e07dfffd82276f341da0",
+    "src/agent_ops/streaming.py": "deb908ef1624b6826b2d351ff035c1a6c97a1511007901c58f415becb79097c6",
+    "src/agent_ops/evals/support_runner.py": "92bc3bf05f57e7f786b7c2e5b54743512798a274dcd81d4d3c8e42f9d73be466",
+    "src/agent_ops/evals/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scripts/benchmark-b0.py": "90070957ac374e470b813ab3ae384c5fc1c05e80690364367d752abece0a7e84",
+    "uv.lock": "14587ad0e7bb9ca5d1ead7e164b78673dc3e18daa54ac6163a9df3b8778e6758",
+    "pyproject.toml": "c70450d73824342b00275e9979b04d586775fa212d372338846123f48406e1bf"
+  },
+  "harness_unchanged_from_baseline_b0": true,
+  "parameters": {
+    "requests": 128,
+    "concurrency": 8,
+    "warmup": 10,
+    "repeats": 5
+  },
+  "contract_checks_postgres": 3840,
+  "contract_checks_current_memory": 3840,
+  "tests": {
+    "passed": 86,
+    "seconds": 10.06,
+    "skipped": 0
+  },
+  "support_eval": {
+    "dataset_sha256": "eeace62cbed81cd494ee0ae77d739f06c1350f7ae08c513d516cd6da2580f31d",
+    "cases": 47,
+    "passed": 47,
+    "confusion": {
+      "human": {
+        "human": 10
+      },
+      "return_request": {
+        "return_request": 10
+      },
+      "order_status": {
+        "order_status": 12
+      },
+      "clarify": {
+        "clarify": 15
+      }
+    },
+    "results": [
+      {
+        "id": "human-0",
+        "predicted": "human",
+        "expected": "human",
+        "state": "waiting_human",
+        "expected_state": "waiting_human",
+        "passed": true
+      },
+      {
+        "id": "human-1",
+        "predicted": "human",
+        "expected": "human",
+        "state": "waiting_human",
+        "expected_state": "waiting_human",
+        "passed": true
+      },
+      {
+        "id": "human-2",
+        "predicted": "human",
+        "expected": "human",
+        "state": "waiting_human",
+        "expected_state": "waiting_human",
+        "passed": true
+      },
+      {
+        "id": "human-3",
+        "predicted": "human",
+        "expected": "human",
+        "state": "waiting_human",
+        "expected_state": "waiting_human",
+        "passed": true
+      },
+      {
+        "id": "human-4",
+        "predicted": "human",
+        "expected": "human",
+        "state": "waiting_human",
+        "expected_state": "waiting_human",
+        "passed": true
+      },
+      {
+        "id": "human-5",
+        "predicted": "human",
+        "expected": "human",
+        "state": "waiting_human",
+        "expected_state": "waiting_human",
+        "passed": true
+      },
+      {
+        "id": "human-6",
+        "predicted": "human",
+        "expected": "human",
+        "state": "waiting_human",
+        "expected_state": "waiting_human",
+        "passed": true
+      },
+      {
+        "id": "human-7",
+        "predicted": "human",
+        "expected": "human",
+        "state": "waiting_human",
+        "expected_state": "waiting_human",
+        "passed": true
+      },
+      {
+        "id": "human-8",
+        "predicted": "human",
+        "expected": "human",
+        "state": "waiting_human",
+        "expected_state": "waiting_human",
+        "passed": true
+      },
+      {
+        "id": "human-9",
+        "predicted": "human",
+        "expected": "human",
+        "state": "waiting_human",
+        "expected_state": "waiting_human",
+        "passed": true
+      },
+      {
+        "id": "return_request-0",
+        "predicted": "return_request",
+        "expected": "return_request",
+        "state": "waiting_human",
+        "expected_state": "waiting_human",
+        "passed": true
+      },
+      {
+        "id": "return_request-1",
+        "predicted": "return_request",
+        "expected": "return_request",
+        "state": "waiting_human",
+        "expected_state": "waiting_human",
+        "passed": true
+      },
+      {
+        "id": "return_request-2",
+        "predicted": "return_request",
+        "expected": "return_request",
+        "state": "waiting_human",
+        "expected_state": "waiting_human",
+        "passed": true
+      },
+      {
+        "id": "return_request-3",
+        "predicted": "return_request",
+        "expected": "return_request",
+        "state": "waiting_human",
+        "expected_state": "waiting_human",
+        "passed": true
+      },
+      {
+        "id": "return_request-4",
+        "predicted": "return_request",
+        "expected": "return_request",
+        "state": "waiting_human",
+        "expected_state": "waiting_human",
+        "passed": true
+      },
+      {
+        "id": "return_request-5",
+        "predicted": "return_request",
+        "expected": "return_request",
+        "state": "waiting_human",
+        "expected_state": "waiting_human",
+        "passed": true
+      },
+      {
+        "id": "return_request-6",
+        "predicted": "return_request",
+        "expected": "return_request",
+        "state": "waiting_human",
+        "expected_state": "waiting_human",
+        "passed": true
+      },
+      {
+        "id": "return_request-7",
+        "predicted": "return_request",
+        "expected": "return_request",
+        "state": "waiting_human",
+        "expected_state": "waiting_human",
+        "passed": true
+      },
+      {
+        "id": "return_request-8",
+        "predicted": "return_request",
+        "expected": "return_request",
+        "state": "waiting_human",
+        "expected_state": "waiting_human",
+        "passed": true
+      },
+      {
+        "id": "return_request-9",
+        "predicted": "return_request",
+        "expected": "return_request",
+        "state": "waiting_human",
+        "expected_state": "waiting_human",
+        "passed": true
+      },
+      {
+        "id": "order_status-0",
+        "predicted": "order_status",
+        "expected": "order_status",
+        "state": "resolved",
+        "expected_state": "resolved",
+        "passed": true
+      },
+      {
+        "id": "order_status-1",
+        "predicted": "order_status",
+        "expected": "order_status",
+        "state": "resolved",
+        "expected_state": "resolved",
+        "passed": true
+      },
+      {
+        "id": "order_status-2",
+        "predicted": "order_status",
+        "expected": "order_status",
+        "state": "resolved",
+        "expected_state": "resolved",
+        "passed": true
+      },
+      {
+        "id": "order_status-3",
+        "predicted": "order_status",
+        "expected": "order_status",
+        "state": "resolved",
+        "expected_state": "resolved",
+        "passed": true
+      },
+      {
+        "id": "order_status-4",
+        "predicted": "order_status",
+        "expected": "order_status",
+        "state": "resolved",
+        "expected_state": "resolved",
+        "passed": true
+      },
+      {
+        "id": "order_status-5",
+        "predicted": "order_status",
+        "expected": "order_status",
+        "state": "resolved",
+        "expected_state": "resolved",
+        "passed": true
+      },
+      {
+        "id": "order_status-6",
+        "predicted": "order_status",
+        "expected": "order_status",
+        "state": "resolved",
+        "expected_state": "resolved",
+        "passed": true
+      },
+      {
+        "id": "order_status-7",
+        "predicted": "order_status",
+        "expected": "order_status",
+        "state": "resolved",
+        "expected_state": "resolved",
+        "passed": true
+      },
+      {
+        "id": "order_status-8",
+        "predicted": "order_status",
+        "expected": "order_status",
+        "state": "resolved",
+        "expected_state": "resolved",
+        "passed": true
+      },
+      {
+        "id": "order_status-9",
+        "predicted": "order_status",
+        "expected": "order_status",
+        "state": "resolved",
+        "expected_state": "resolved",
+        "passed": true
+      },
+      {
+        "id": "clarify-0",
+        "predicted": "clarify",
+        "expected": "clarify",
+        "state": "needs_information",
+        "expected_state": "needs_information",
+        "passed": true
+      },
+      {
+        "id": "clarify-1",
+        "predicted": "clarify",
+        "expected": "clarify",
+        "state": "needs_information",
+        "expected_state": "needs_information",
+        "passed": true
+      },
+      {
+        "id": "clarify-2",
+        "predicted": "clarify",
+        "expected": "clarify",
+        "state": "needs_information",
+        "expected_state": "needs_information",
+        "passed": true
+      },
+      {
+        "id": "clarify-3",
+        "predicted": "clarify",
+        "expected": "clarify",
+        "state": "needs_information",
+        "expected_state": "needs_information",
+        "passed": true
+      },
+      {
+        "id": "clarify-4",
+        "predicted": "clarify",
+        "expected": "clarify",
+        "state": "needs_information",
+        "expected_state": "needs_information",
+        "passed": true
+      },
+      {
+        "id": "clarify-5",
+        "predicted": "clarify",
+        "expected": "clarify",
+        "state": "needs_information",
+        "expected_state": "needs_information",
+        "passed": true
+      },
+      {
+        "id": "clarify-6",
+        "predicted": "clarify",
+        "expected": "clarify",
+        "state": "needs_information",
+        "expected_state": "needs_information",
+        "passed": true
+      },
+      {
+        "id": "clarify-7",
+        "predicted": "clarify",
+        "expected": "clarify",
+        "state": "needs_information",
+        "expected_state": "needs_information",
+        "passed": true
+      },
+      {
+        "id": "clarify-8",
+        "predicted": "clarify",
+        "expected": "clarify",
+        "state": "needs_information",
+        "expected_state": "needs_information",
+        "passed": true
+      },
+      {
+        "id": "clarify-9",
+        "predicted": "clarify",
+        "expected": "clarify",
+        "state": "needs_information",
+        "expected_state": "needs_information",
+        "passed": true
+      },
+      {
+        "id": "clarify-10",
+        "predicted": "clarify",
+        "expected": "clarify",
+        "state": "needs_information",
+        "expected_state": "needs_information",
+        "passed": true
+      },
+      {
+        "id": "clarify-11",
+        "predicted": "clarify",
+        "expected": "clarify",
+        "state": "needs_information",
+        "expected_state": "needs_information",
+        "passed": true
+      },
+      {
+        "id": "clarify-12",
+        "predicted": "clarify",
+        "expected": "clarify",
+        "state": "needs_information",
+        "expected_state": "needs_information",
+        "passed": true
+      },
+      {
+        "id": "clarify-13",
+        "predicted": "clarify",
+        "expected": "clarify",
+        "state": "needs_information",
+        "expected_state": "needs_information",
+        "passed": true
+      },
+      {
+        "id": "clarify-14",
+        "predicted": "clarify",
+        "expected": "clarify",
+        "state": "needs_information",
+        "expected_state": "needs_information",
+        "passed": true
+      },
+      {
+        "id": "missing-order",
+        "predicted": "order_status",
+        "expected": "order_status",
+        "state": "needs_information",
+        "expected_state": "needs_information",
+        "passed": true
+      },
+      {
+        "id": "unknown-order",
+        "predicted": "order_status",
+        "expected": "order_status",
+        "state": "needs_information",
+        "expected_state": "needs_information",
+        "passed": true
+      }
+    ],
+    "method": "deterministic rule routing + in-memory fixture order tool; no live LLM"
+  },
+  "tables": [
+    {
+      "scenario": "commerce",
+      "historical_b0": {
+        "scenario": "commerce",
+        "rounds": 5,
+        "p50_ms": {
+          "median": 10.862437076866627,
+          "min": 10.439953999593854,
+          "max": 12.2271329164505
+        },
+        "p95_ms": {
+          "median": 21.055096993222833,
+          "min": 20.561167038977146,
+          "max": 24.350913939997554
+        },
+        "p99_ms": {
+          "median": 28.92733016051352,
+          "min": 25.847367011010647,
+          "max": 45.058435993269086
+        },
+        "rps": {
+          "median": 608.6968886626198,
+          "min": 573.4328062914169,
+          "max": 614.7789283977926
+        }
+      },
+      "current_memory": {
+        "scenario": "commerce",
+        "rounds": 5,
+        "p50_ms": {
+          "median": 12.55729584954679,
+          "min": 11.740650050342083,
+          "max": 13.171410886570811
+        },
+        "p95_ms": {
+          "median": 24.368047015741467,
+          "min": 21.637293975800276,
+          "max": 26.99414500966668
+        },
+        "p99_ms": {
+          "median": 38.9331488404423,
+          "min": 30.444269068539143,
+          "max": 43.62449795007706
+        },
+        "rps": {
+          "median": 539.7184433159078,
+          "min": 520.7398903745903,
+          "max": 572.4965171054849
+        }
+      },
+      "b1_postgres": {
+        "scenario": "commerce",
+        "rounds": 5,
+        "p50_ms": {
+          "median": 12.437229976058006,
+          "min": 11.762061854824424,
+          "max": 17.768091056495905
+        },
+        "p95_ms": {
+          "median": 49.87030802294612,
+          "min": 45.788083923980594,
+          "max": 58.89263818971813
+        },
+        "p99_ms": {
+          "median": 62.10114015266299,
+          "min": 48.51620295085013,
+          "max": 97.65019593760371
+        },
+        "rps": {
+          "median": 471.028132290588,
+          "min": 314.17404516615346,
+          "max": 515.3769787092199
+        }
+      },
+      "paired_p99_ratio": 1.5950710898614666,
+      "paired_rps_ratio": 0.872729361251207
+    },
+    {
+      "scenario": "sse",
+      "historical_b0": {
+        "scenario": "sse",
+        "rounds": 5,
+        "p50_ms": {
+          "median": 12.118280166760087,
+          "min": 12.029532110318542,
+          "max": 13.470722828060389
+        },
+        "p95_ms": {
+          "median": 23.69683305732906,
+          "min": 17.488067969679832,
+          "max": 25.214798050001264
+        },
+        "p99_ms": {
+          "median": 29.993344098329544,
+          "min": 26.138235116377473,
+          "max": 39.31706794537604
+        },
+        "rps": {
+          "median": 589.0595171866382,
+          "min": 525.2098941890425,
+          "max": 619.910366462269
+        }
+      },
+      "current_memory": {
+        "scenario": "sse",
+        "rounds": 5,
+        "p50_ms": {
+          "median": 12.873370898887515,
+          "min": 12.498625088483095,
+          "max": 14.262961922213435
+        },
+        "p95_ms": {
+          "median": 26.584444101899862,
+          "min": 18.731039948761463,
+          "max": 30.33498488366604
+        },
+        "p99_ms": {
+          "median": 34.29706301540136,
+          "min": 25.84558492526412,
+          "max": 38.51188602857292
+        },
+        "rps": {
+          "median": 535.3825928328625,
+          "min": 498.2744251558253,
+          "max": 545.1798279210507
+        }
+      },
+      "b1_postgres": {
+        "scenario": "sse",
+        "rounds": 5,
+        "p50_ms": {
+          "median": 14.480351936072111,
+          "min": 13.297316851094365,
+          "max": 18.06938787922263
+        },
+        "p95_ms": {
+          "median": 32.23423520103097,
+          "min": 29.05180212110281,
+          "max": 43.227901216596365
+        },
+        "p99_ms": {
+          "median": 36.90441511571407,
+          "min": 35.71939701214433,
+          "max": 60.931209940463305
+        },
+        "rps": {
+          "median": 466.52732747059076,
+          "min": 366.071467914575,
+          "max": 491.70802981301006
+        }
+      },
+      "paired_p99_ratio": 1.0760226057590372,
+      "paired_rps_ratio": 0.8713905414855966
+    },
+    {
+      "scenario": "ticket_create",
+      "historical_b0": {
+        "scenario": "ticket_create",
+        "rounds": 5,
+        "p50_ms": {
+          "median": 11.23618008568883,
+          "min": 6.999532924965024,
+          "max": 11.317793978378177
+        },
+        "p95_ms": {
+          "median": 28.418222907930613,
+          "min": 17.681140918284655,
+          "max": 29.9036658834666
+        },
+        "p99_ms": {
+          "median": 100.19755712710321,
+          "min": 36.09193419106305,
+          "max": 137.4961209949106
+        },
+        "rps": {
+          "median": 556.8004881861616,
+          "min": 542.6619914450782,
+          "max": 598.0426408846421
+        }
+      },
+      "current_memory": {
+        "scenario": "ticket_create",
+        "rounds": 5,
+        "p50_ms": {
+          "median": 11.599545134231448,
+          "min": 7.412453880533576,
+          "max": 12.328174896538258
+        },
+        "p95_ms": {
+          "median": 23.7296880222857,
+          "min": 15.33152093179524,
+          "max": 31.42493311315775
+        },
+        "p99_ms": {
+          "median": 38.858416955918074,
+          "min": 34.927868982777,
+          "max": 208.47910712473094
+        },
+        "rps": {
+          "median": 552.1769158499044,
+          "min": 502.7226534404075,
+          "max": 590.2588566105643
+        }
+      },
+      "b1_postgres": {
+        "scenario": "ticket_create",
+        "rounds": 5,
+        "p50_ms": {
+          "median": 24.847789900377393,
+          "min": 22.920637158676982,
+          "max": 29.533138033002615
+        },
+        "p95_ms": {
+          "median": 67.36864196136594,
+          "min": 60.5295249260962,
+          "max": 96.6060240752995
+        },
+        "p99_ms": {
+          "median": 77.19884114339948,
+          "min": 66.43594801425934,
+          "max": 104.85901706852019
+        },
+        "rps": {
+          "median": 270.47049608653725,
+          "min": 207.9944989697261,
+          "max": 283.07750096298884
+        }
+      },
+      "paired_p99_ratio": 1.9866697408434242,
+      "paired_rps_ratio": 0.48982579373176466
+    },
+    {
+      "scenario": "ticket_replay",
+      "historical_b0": {
+        "scenario": "ticket_replay",
+        "rounds": 5,
+        "p50_ms": {
+          "median": 11.125613003969193,
+          "min": 9.816410951316357,
+          "max": 12.0724739972502
+        },
+        "p95_ms": {
+          "median": 29.32559885084629,
+          "min": 16.971066128462553,
+          "max": 30.882174847647548
+        },
+        "p99_ms": {
+          "median": 33.77570793963969,
+          "min": 23.08742795139551,
+          "max": 37.02917485497892
+        },
+        "rps": {
+          "median": 592.8091185424919,
+          "min": 557.3987891639837,
+          "max": 616.4293561202264
+        }
+      },
+      "current_memory": {
+        "scenario": "ticket_replay",
+        "rounds": 5,
+        "p50_ms": {
+          "median": 9.585188003256917,
+          "min": 7.026898907497525,
+          "max": 12.475952971726656
+        },
+        "p95_ms": {
+          "median": 20.85208799690008,
+          "min": 15.099633950740099,
+          "max": 29.76471185684204
+        },
+        "p99_ms": {
+          "median": 33.40622805990279,
+          "min": 19.72007006406784,
+          "max": 213.67557486519217
+        },
+        "rps": {
+          "median": 582.823765016314,
+          "min": 542.8133167879726,
+          "max": 612.7855971888122
+        }
+      },
+      "b1_postgres": {
+        "scenario": "ticket_replay",
+        "rounds": 5,
+        "p50_ms": {
+          "median": 23.121052887290716,
+          "min": 21.03851898573339,
+          "max": 26.03938989341259
+        },
+        "p95_ms": {
+          "median": 49.85621199011803,
+          "min": 43.024137848988175,
+          "max": 61.749538173899055
+        },
+        "p99_ms": {
+          "median": 55.400594137609005,
+          "min": 47.90902091190219,
+          "max": 69.99314506538212
+        },
+        "rps": {
+          "median": 304.5094917199818,
+          "min": 258.49622053181656,
+          "max": 331.36567446156204
+        }
+      },
+      "paired_p99_ratio": 1.6583911849690647,
+      "paired_rps_ratio": 0.5224726752716717
+    },
+    {
+      "scenario": "ticket_conflict",
+      "historical_b0": {
+        "scenario": "ticket_conflict",
+        "rounds": 5,
+        "p50_ms": {
+          "median": 11.014343006536365,
+          "min": 10.609210934489965,
+          "max": 11.864492204040289
+        },
+        "p95_ms": {
+          "median": 29.806423000991344,
+          "min": 22.413400001823902,
+          "max": 32.49758388847113
+        },
+        "p99_ms": {
+          "median": 35.7805781532079,
+          "min": 33.153328113257885,
+          "max": 37.75447001680732
+        },
+        "rps": {
+          "median": 574.1301715858772,
+          "min": 562.4814032804829,
+          "max": 580.3651291599202
+        }
+      },
+      "current_memory": {
+        "scenario": "ticket_conflict",
+        "rounds": 5,
+        "p50_ms": {
+          "median": 11.211255099624395,
+          "min": 9.766068076714873,
+          "max": 12.182971928268671
+        },
+        "p95_ms": {
+          "median": 40.885568130761385,
+          "min": 28.48040801472962,
+          "max": 41.50106501765549
+        },
+        "p99_ms": {
+          "median": 46.59549193456769,
+          "min": 37.236649077385664,
+          "max": 147.72120118141174
+        },
+        "rps": {
+          "median": 508.41772934890224,
+          "min": 408.02445629456986,
+          "max": 599.9122155616151
+        }
+      },
+      "b1_postgres": {
+        "scenario": "ticket_conflict",
+        "rounds": 5,
+        "p50_ms": {
+          "median": 23.115241900086403,
+          "min": 19.136815099045634,
+          "max": 26.76528412848711
+        },
+        "p95_ms": {
+          "median": 45.690229861065745,
+          "min": 39.572288980707526,
+          "max": 55.748559068888426
+        },
+        "p99_ms": {
+          "median": 54.101812886074185,
+          "min": 49.914261093363166,
+          "max": 60.19259290769696
+        },
+        "rps": {
+          "median": 305.5869693193277,
+          "min": 263.9734250336567,
+          "max": 354.36868908341364
+        }
+      },
+      "paired_p99_ratio": 1.1610954330527798,
+      "paired_rps_ratio": 0.6010549036334221
+    },
+    {
+      "scenario": "ticket_get",
+      "historical_b0": {
+        "scenario": "ticket_get",
+        "rounds": 5,
+        "p50_ms": {
+          "median": 10.21055318415165,
+          "min": 6.744052981957793,
+          "max": 11.172299971804023
+        },
+        "p95_ms": {
+          "median": 28.022579150274396,
+          "min": 20.869597094133496,
+          "max": 31.234329100698233
+        },
+        "p99_ms": {
+          "median": 31.98671294376254,
+          "min": 27.712786104530096,
+          "max": 127.60819611139596
+        },
+        "rps": {
+          "median": 593.1825647141793,
+          "min": 571.1610307824603,
+          "max": 609.4933641270552
+        }
+      },
+      "current_memory": {
+        "scenario": "ticket_get",
+        "rounds": 5,
+        "p50_ms": {
+          "median": 10.268002049997449,
+          "min": 10.077254148200154,
+          "max": 13.086410937830806
+        },
+        "p95_ms": {
+          "median": 29.537133872509003,
+          "min": 20.128688076511025,
+          "max": 40.87208304554224
+        },
+        "p99_ms": {
+          "median": 49.52143202535808,
+          "min": 28.347187908366323,
+          "max": 85.05679201334715
+        },
+        "rps": {
+          "median": 538.479635159952,
+          "min": 460.52714775726383,
+          "max": 598.7113253595884
+        }
+      },
+      "b1_postgres": {
+        "scenario": "ticket_get",
+        "rounds": 5,
+        "p50_ms": {
+          "median": 16.079125925898552,
+          "min": 13.1647780071944,
+          "max": 19.17601702734828
+        },
+        "p95_ms": {
+          "median": 34.09186704084277,
+          "min": 29.995977180078626,
+          "max": 44.44902599789202
+        },
+        "p99_ms": {
+          "median": 49.86402695067227,
+          "min": 35.58195801451802,
+          "max": 62.854666961357
+        },
+        "rps": {
+          "median": 398.3738232132728,
+          "min": 341.5545595216832,
+          "max": 503.423108050064
+        }
+      },
+      "paired_p99_ratio": 1.006918114264926,
+      "paired_rps_ratio": 0.7398122365294991
+    }
+  ],
+  "original_plan": {
+    "new_sha256": "87a17db6b5149be64e75a93967454634fe129d3356afe2a401f51cdeb7ba2ed5",
+    "new_bytes": 45487,
+    "old_sha256": "61a6b22c0e6123e53732ef12ca49e71a8f86330324aaf1185e612a6f6d77b220",
+    "old_archive": "docs/plans/archive/agent-ops-platform-plan-61a6b22c0e61.md",
+    "latest": "docs/agent-ops-platform面试级完善方案.md",
+    "date_beijing": "2026-10-21",
+    "original_author_preserved": true
+  },
+  "memory_capacity": 256,
+  "postgres_capacity": null,
+  "measured_creates_per_repeat_including_unique_warmup": 129,
+  "scope": "B1 is S1/S2 background, not optimization evidence; offline fixtures and short closed-loop windows",
+  "deviations": [
+    "historical B0 measured on earlier date and different ambient load; paired current-memory added to expose this confound",
+    "unchanged B0 harness pins API to non-client cores; PostgreSQL shares those cores, unlike ideal disjoint CPU allocation; reported explicitly",
+    "API CPU and RSS exclude PostgreSQL process; do not call them total persistence resource cost",
+    "first pytest used current agent-memory source against pinned SDK and failed; corrected environment to existing clean pinned checkout without code/SDK change"
+  ],
+  "model_calls": 0,
+  "p2_started": false,
+  "p3_or_later_started": false
+}

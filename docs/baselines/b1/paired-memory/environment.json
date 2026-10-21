@@ -1,0 +1,71 @@
+{
+  "generated_at": "2026-10-21T11:29:06.188557+00:00",
+  "source_head": "0925df76779cfb3ff0035e7c5ddc9c3a92cf7f88",
+  "source_dirty": " M AGENTS.md\n M \"docs/agent-ops-platform\\351\\235\\242\\350\\257\\225\\347\\272\\247\\345\\256\\214\\345\\226\\204\\346\\226\\271\\346\\241\\210.md\"\n M docs/progress.md\n?? docs/plans/\n?? scripts/benchmark-b1.py\n",
+  "source_sha256": {
+    "src/agent_ops/telemetry.py": "fda8ecc6dff2ba41d61257be72bf495c9761f3df3267ccdc9d04d329b80fafdf",
+    "src/agent_ops/planner.py": "e220eb4e82dd1eb82e868a60d2ed7df9602ee748131abcd2bbbf7566ea44b7c4",
+    "src/agent_ops/agents.py": "dc30a08884dc2d99415989460a9ffa82f72d2a9c93ca561e9b397d88e793ffa8",
+    "src/agent_ops/support.py": "e85d2e83ceea225275be71bfbea95cbf09e40491ed83364ab105a4fd5486e731",
+    "src/agent_ops/models.py": "11e487edf6ceaf39daa143e48beb3f420ec1b9643a46d44c952476340077a331",
+    "src/agent_ops/support_postgres.py": "a8bbf038815203e85fa0af464b31d83aaf0e3b17be8dfbce54a8124b0cfde537",
+    "src/agent_ops/api.py": "72b4b0475267e40452afc1cde091e2edabcf22febfa41b38db7eb167ffc4903b",
+    "src/agent_ops/support_api.py": "283a8f132823157cecc739be15a6109cc18a6889c9695584bdfcd33a60b6abfa",
+    "src/agent_ops/orchestrator.py": "e229f4b35b14a1aeed24fb557e50c3267463d19af6d873a11ac37d08fb1a8733",
+    "src/agent_ops/memory.py": "5957e370ec885dd1a417eec9ae611b37007eb0a92a05df64d0388f9581edab9c",
+    "src/agent_ops/__init__.py": "790a09b52d965efce6fdde2575c4ba2a7d009cd5a210181548e98fab8f45cdcd",
+    "src/agent_ops/__main__.py": "d569e10e101e680b51f7d9bbddcf778074e80bc97068e07dfffd82276f341da0",
+    "src/agent_ops/streaming.py": "deb908ef1624b6826b2d351ff035c1a6c97a1511007901c58f415becb79097c6",
+    "src/agent_ops/evals/support_runner.py": "92bc3bf05f57e7f786b7c2e5b54743512798a274dcd81d4d3c8e42f9d73be466",
+    "src/agent_ops/evals/__init__.py": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+    "scripts/benchmark-b0.py": "90070957ac374e470b813ab3ae384c5fc1c05e80690364367d752abece0a7e84",
+    "uv.lock": "14587ad0e7bb9ca5d1ead7e164b78673dc3e18daa54ac6163a9df3b8778e6758",
+    "pyproject.toml": "c70450d73824342b00275e9979b04d586775fa212d372338846123f48406e1bf"
+  },
+  "platform": "Linux-6.8.0-139-generic-x86_64-with-glibc2.39",
+  "python": "3.12.3",
+  "cpu_count": 4,
+  "cpu_affinity": {
+    "client": [
+      0
+    ],
+    "server": [
+      1,
+      2,
+      3
+    ]
+  },
+  "cpu_model": "AMD EPYC 7K62 48-Core Processor",
+  "meminfo": {
+    "MemTotal": "7869640 kB",
+    "MemAvailable": "5450112 kB"
+  },
+  "versions": {
+    "fastapi": "0.142.2",
+    "starlette": "1.7.0",
+    "uvicorn": "0.54.0",
+    "httpx": "0.28.1",
+    "agent-memory": "0.1.0",
+    "opentelemetry-sdk": "1.45.0"
+  },
+  "load_before": [
+    0.529296875,
+    0.39404296875,
+    0.36865234375
+  ],
+  "config": {
+    "output": ".local/b1-paired-memory",
+    "repeats": 5,
+    "requests": 128,
+    "concurrency": 8,
+    "warmup": 10
+  },
+  "mode": "deterministic planner / local demo tools / memory disabled / in-memory support / trace ratio1 exporter none / one uvicorn worker",
+  "method": "closed-loop bounded client; real loopback TCP; latency begins after generator semaphore; includes HTTP pool and parsing, not generator backlog. New server per repeat; fixed scenario order (not randomized), warmup each commerce/SSE/support; service CPU and VmHWM via /proc, process peak cumulative; no allocator attribution; first SSE event is started, not first model token; no live model, stub or paid call; local credentials removed; no capacity claims",
+  "inputs_sha256": "a205d714fd6b7ea5700e52544c6c434615aac139549b7c0de072dac344c58f24",
+  "load_after": [
+    0.72021484375,
+    0.4404296875,
+    0.3837890625
+  ]
+}
