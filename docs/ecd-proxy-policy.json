@@ -1,0 +1,15 @@
+{
+  "date_beijing": "2026-10-21",
+  "owner_approved": true,
+  "note": "规则代理，非人工真实意图分布，首片段说话人未确认",
+  "allowed_use": "synthetic category proportions only",
+  "forbidden_use": "routing accuracy or quality metrics",
+  "waiting_human_ratio_configurable": true,
+  "s1_future_ratio_examples": [
+    0.05,
+    0.2,
+    0.5
+  ],
+  "replace_after": "P8 2000 owner-reviewed labels; record replacement in docs/progress.md",
+  "current_scope": "P2 only; no S1 experiment run"
+}
