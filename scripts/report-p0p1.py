@@ -33,6 +33,7 @@ properties = {
 }
 trace = json.loads(Path(".local/p0-verification/tracing.json").read_text())
 metrics = json.loads(Path(".local/p0-verification/metrics.json").read_text())
+http_proof = json.loads(Path(".local/p0-verification/p1-http.json").read_text())
 eval = json.loads(Path(".local/p0p1-eval.json").read_text())
 report = {
     "generated_at": datetime.now(UTC).isoformat(),
@@ -54,6 +55,7 @@ report = {
         k: trace[k] for k in ("backend", "cases", "private_markers_exported", "source_sha256")
     },
     "metrics_probe": metrics,
+    "p1_real_http_probe": http_proof,
     "scope": "P0 six-component localhost stack and P1 support persistence only",
     "remaining": [
         "P2 commerce tables/data",
@@ -78,6 +80,7 @@ for src, name in [
     (".local/p0p1-gates.xml", "pytest.xml"),
     (".local/p0-verification/metrics.json", "metrics.json"),
     (".local/p0-verification/tracing.json", "tracing.json"),
+    (".local/p0-verification/p1-http.json", "p1-http.json"),
 ]:
     shutil.copyfile(src, a.output / name)
 concurrent = properties["test_two_processes_unique_key_and_atomic_audit"]
@@ -109,6 +112,7 @@ lines += [
     "Alembic upgrade head 创建support.tickets、idempotency_keys、ticket_events；支持downgrade base/re-upgrade隔离验收。运行角色非owner，只能追加事件；触发器禁止事件UPDATE/DELETE。原工单/人工完成接口保持，未提前实现P4抢单租约。",
     f"- {concurrent['processes']} 个独立OS进程，共 {concurrent['requests']} 次同键写入：工单 {concurrent['unique_tickets']} 张，重复工单 {concurrent['duplicate_tickets']}。",
     f"- 实际PostgreSQL容器重启后保留={restart['retained_after_database_restart']}；并发CAS成功 {restart['successful_resolves']}，版本/状态冲突 {restart['conflicted_resolves']}；当前revision={restart['current_revision']}，原请求重放仍为初始revision={restart['replayed_revision']}。",
+    f"- 主P0持久库实际TCP HTTP复验：{http_proof['api_processes_initial']} 个API进程、{http_proof['requests']} 请求、{http_proof['unique_tickets']} 张工单；应用进程重启后保留={http_proof['retained_after_api_process_restart']}，重复工单 {http_proof['duplicate_tickets']}。",
     "- 事件插入故障注入验证事务回滚：工单和幂等记录不留半成品；HTTP切换、trace头、404、人工完成及append-only权限测试均通过。",
     "- 保留原SupportService为memory开关；create_app默认memory，scripts/serve.py默认postgres。PG故障不会自动回退内存。",
     "",
