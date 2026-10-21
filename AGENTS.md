@@ -134,3 +134,7 @@ B0入口docs/baselines/b0/README.md；HTTP脚本scripts/benchmark-b0.py必须离
 ## 2026-10-21 P0/P1继续开发授权
 
 负责人已明确“继续做P0/P1”，覆盖此前首次B0交付后的暂停范围。按附件第六节只做六组件环境栈与support PG数据层；P2起各阶段仍按后续指令。baseline-v0、baseline-b0标签及docs/baselines/b0原始结果不可覆盖；保留内存版开关。PG运行角色与迁移角色分离，事务幂等/事件追加/版本CAS不得退回进程内锁。P0新compose复用既有Jaeger项目和external数据卷，只绑定本地端口；不要down -v或删除历史追踪。应用不会自动常驻或暴露公网。
+
+## 2026-10-21 最新用户方案与范围
+
+最新原件 docs/agent-ops-platform面试级完善方案.md，旧版保留 docs/plans/archive/，SHA256 见 docs/plans/source-2026-10-21.json。先补 P1 的 baseline-b1（原 B0 脚本、参数/场景与五轮，工单切 PostgreSQL），单独报告后继续 P2；仅 P2，不提前做 P3及以后。UserBehavior 缺登录文件时不登录/注册、不偷换数据源，完成其他独立部分并报告缺口；P2 数据原文仅本地。P2 可建立不含密码/登录功能的业务用户ID供订单外键使用，认证和公网 API 权限仍属 P3；不得把 P2 本地后端接口称具备身份隔离。不可替负责人标注 ECD 意图，代理标签/未知分布须如实说明并等待决定。
