@@ -1,0 +1,164 @@
+{
+  "generated_at": "2026-10-21T08:26:34.697523+00:00",
+  "source_commit": "65f9f370ff802cf170ae79cc6a9ae6b8380c598c",
+  "dirty": true,
+  "host": {
+    "cpu_count": 4,
+    "machine": "x86_64",
+    "kernel": "6.8.0-139-generic",
+    "cpu_affinity": [
+      0,
+      1,
+      2,
+      3
+    ],
+    "meminfo": {
+      "MemTotal": "7869640 kB",
+      "MemAvailable": "5447492 kB"
+    }
+  },
+  "versions": {
+    "postgres": "16.15",
+    "redis": "7.4.11",
+    "grafana": "11.5.2",
+    "docker": "Docker version 29.8.1, build 4a63305",
+    "compose": "5.5.1"
+  },
+  "containers": [
+    {
+      "service": "collector",
+      "image": "otel/opentelemetry-collector-contrib:0.120.0@sha256:85ac41c2db88d0df9bd6145e608a3cb023f5d8443868adbfbbf66efb51087917",
+      "image_id": "sha256:85ac41c2db88d0df9bd6145e608a3cb023f5d8443868adbfbbf66efb51087917",
+      "state": "running",
+      "memory_limit": 268435456,
+      "nano_cpus": 500000000,
+      "ports": {
+        "13133/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "13134"
+          }
+        ],
+        "4317/tcp": null,
+        "4318/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "14318"
+          }
+        ],
+        "55678/tcp": null,
+        "55679/tcp": null
+      }
+    },
+    {
+      "service": "grafana",
+      "image": "grafana/grafana:11.5.2@sha256:8b37a2f028f164ce7b9889e1765b9d6ee23fec80f871d156fbf436d6198d32b7",
+      "image_id": "sha256:8b37a2f028f164ce7b9889e1765b9d6ee23fec80f871d156fbf436d6198d32b7",
+      "state": "running",
+      "memory_limit": 268435456,
+      "nano_cpus": 500000000,
+      "ports": {
+        "3000/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "13001"
+          }
+        ]
+      }
+    },
+    {
+      "service": "jaeger",
+      "image": "jaegertracing/jaeger:2.22.0@sha256:836b967b5abcf1f7758066aa6b348619267a2f1459f72d472840570f9bd88a17",
+      "image_id": "sha256:836b967b5abcf1f7758066aa6b348619267a2f1459f72d472840570f9bd88a17",
+      "state": "running",
+      "memory_limit": 805306368,
+      "nano_cpus": 1000000000,
+      "ports": {
+        "13132/tcp": null,
+        "13133/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "13133"
+          }
+        ],
+        "14250/tcp": null,
+        "14268/tcp": null,
+        "16686/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "16686"
+          }
+        ],
+        "4317/tcp": null,
+        "4318/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "4318"
+          }
+        ],
+        "5778/tcp": null,
+        "5779/tcp": null,
+        "9411/tcp": null
+      }
+    },
+    {
+      "service": "postgres",
+      "image": "postgres:16-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea",
+      "image_id": "sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea",
+      "state": "running",
+      "memory_limit": 536870912,
+      "nano_cpus": 1000000000,
+      "ports": {
+        "5432/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "55433"
+          }
+        ]
+      }
+    },
+    {
+      "service": "prometheus",
+      "image": "prom/prometheus:v3.2.1@sha256:6927e0919a144aa7616fd0137d4816816d42f6b816de3af269ab065250859a62",
+      "image_id": "sha256:6927e0919a144aa7616fd0137d4816816d42f6b816de3af269ab065250859a62",
+      "state": "running",
+      "memory_limit": 268435456,
+      "nano_cpus": 500000000,
+      "ports": {
+        "9090/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "19091"
+          }
+        ]
+      }
+    },
+    {
+      "service": "redis",
+      "image": "redis:7.4-alpine@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499",
+      "image_id": "sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499",
+      "state": "running",
+      "memory_limit": 134217728,
+      "nano_cpus": 250000000,
+      "ports": {
+        "6379/tcp": [
+          {
+            "HostIp": "127.0.0.1",
+            "HostPort": "16380"
+          }
+        ]
+      }
+    }
+  ],
+  "http_health": {
+    "jaeger": 200,
+    "collector": 200,
+    "prometheus": 200,
+    "grafana": 200
+  },
+  "runtime_not_superuser": true,
+  "baseline_tags": {
+    "baseline-v0": "b59ea2cfb7509de3eab20fd1f5f447b0b692de8b",
+    "baseline-b0": "01066a86b931767fbf3a8c1fd8592ad6117c23ef"
+  }
+}

@@ -1,0 +1,13 @@
+{
+  "generated_at": "2026-10-21T08:21:00.915251+00:00",
+  "metric_ingest_http": 200,
+  "prometheus_collector_up": true,
+  "probe_metric_visible": true,
+  "grafana_datasource_http": 200,
+  "grafana_datasource_status": "OK",
+  "versions": {
+    "prometheus": "3.2.1"
+  },
+  "model_calls": 0,
+  "scope": "connectivity probe only; no production workload/latency claim"
+}

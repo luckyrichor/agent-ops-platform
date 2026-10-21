@@ -65,3 +65,7 @@ AGENT_MEMORY_SOURCE=../agent-memory/.local/compat-1e2730c uv run pytest -q tests
 ```
 
 worktree已存在时复用，不重复创建；运行前核对HEAD为完整固定提交且src/migrations干净。这个约束防止“新迁移+旧SDK”的假联调，不代表现有SDK与扩展后的API已做完整升级验收。B0报告里的原始验收版本不修改。
+
+## P0/P1 环境栈与PostgreSQL续作
+
+[本轮交付报告](docs/reports/p0-p1-2026-10-21/delivery.md) · [操作入口](docs/p0-p1-operations.md)。实际六组件栈已接通，support工单/幂等/审计改用可切换PG适配器，保留内存基线。完整86测试通过、无跳过；规则回归47/47。B0继续作为冻结历史；后续P2起尚未实现。业务API仍需显式运行，不常驻。

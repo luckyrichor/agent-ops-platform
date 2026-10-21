@@ -1,0 +1,13 @@
+{
+  "generated_at": "2026-10-21T08:26:36.965658+00:00",
+  "api_processes_initial": 2,
+  "requests": 16,
+  "unique_tickets": 1,
+  "duplicate_tickets": 0,
+  "all_http_200": true,
+  "retained_after_api_process_restart": true,
+  "resolved_revision": 2,
+  "replay_revision": 1,
+  "model_calls": 0,
+  "scope": "loopback real TCP HTTP, P0 persistent PG; one synthetic verification ticket retained"
+}

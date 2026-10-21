@@ -1,0 +1,54 @@
+{
+  "generated_at": "2026-10-21T08:18:06.827292+00:00",
+  "backend": "Jaeger 2.22.0 / Badger",
+  "health": {
+    "start_time": "2026-10-08T06:57:02.406471348Z",
+    "healthy": true,
+    "status": "StatusOK",
+    "status_time": "2026-10-08T06:57:02.416753667Z",
+    "attributes": {}
+  },
+  "cases": [
+    {
+      "case": "success",
+      "trace_id": "72e3fd7ebadf08ef081a4886cab47aac",
+      "span_count": 10,
+      "query_status": 200
+    },
+    {
+      "case": "validation",
+      "trace_id": "979e1be2f0fe06820ac1d7ac5bf337f1",
+      "span_count": 1,
+      "query_status": 200
+    },
+    {
+      "case": "blocked",
+      "trace_id": "e91dc66915f73b1b18975d28999c376e",
+      "span_count": 9,
+      "query_status": 200
+    },
+    {
+      "case": "cancelled",
+      "trace_id": "b99c3718c0d3122ef8026d1249d67744",
+      "span_count": 4,
+      "query_status": 200
+    }
+  ],
+  "private_markers_exported": false,
+  "source_sha256": {
+    "src/agent_ops/__init__.py": "790a09b52d965efce6fdde2575c4ba2a7d009cd5a210181548e98fab8f45cdcd",
+    "src/agent_ops/__main__.py": "d569e10e101e680b51f7d9bbddcf778074e80bc97068e07dfffd82276f341da0",
+    "src/agent_ops/agents.py": "dc30a08884dc2d99415989460a9ffa82f72d2a9c93ca561e9b397d88e793ffa8",
+    "src/agent_ops/api.py": "72b4b0475267e40452afc1cde091e2edabcf22febfa41b38db7eb167ffc4903b",
+    "src/agent_ops/memory.py": "5957e370ec885dd1a417eec9ae611b37007eb0a92a05df64d0388f9581edab9c",
+    "src/agent_ops/models.py": "11e487edf6ceaf39daa143e48beb3f420ec1b9643a46d44c952476340077a331",
+    "src/agent_ops/orchestrator.py": "e229f4b35b14a1aeed24fb557e50c3267463d19af6d873a11ac37d08fb1a8733",
+    "src/agent_ops/planner.py": "e220eb4e82dd1eb82e868a60d2ed7df9602ee748131abcd2bbbf7566ea44b7c4",
+    "src/agent_ops/streaming.py": "deb908ef1624b6826b2d351ff035c1a6c97a1511007901c58f415becb79097c6",
+    "src/agent_ops/support.py": "e85d2e83ceea225275be71bfbea95cbf09e40491ed83364ab105a4fd5486e731",
+    "src/agent_ops/support_api.py": "283a8f132823157cecc739be15a6109cc18a6889c9695584bdfcd33a60b6abfa",
+    "src/agent_ops/support_postgres.py": "a8bbf038815203e85fa0af464b31d83aaf0e3b17be8dfbce54a8124b0cfde537",
+    "src/agent_ops/telemetry.py": "fda8ecc6dff2ba41d61257be72bf495c9761f3df3267ccdc9d04d329b80fafdf"
+  },
+  "config_sha256": "3dbbbcb3924142f391447f5edfa5f0e0a47c19bd1048df8d3119b0d5ae2fae7f"
+}

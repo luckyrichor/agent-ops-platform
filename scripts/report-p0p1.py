@@ -110,6 +110,7 @@ lines += [
     "## P1 PostgreSQL数据层",
     "",
     "Alembic upgrade head 创建support.tickets、idempotency_keys、ticket_events；支持downgrade base/re-upgrade隔离验收。运行角色非owner，只能追加事件；触发器禁止事件UPDATE/DELETE。原工单/人工完成接口保持，未提前实现P4抢单租约。",
+    "",
     f"- {concurrent['processes']} 个独立OS进程，共 {concurrent['requests']} 次同键写入：工单 {concurrent['unique_tickets']} 张，重复工单 {concurrent['duplicate_tickets']}。",
     f"- 实际PostgreSQL容器重启后保留={restart['retained_after_database_restart']}；并发CAS成功 {restart['successful_resolves']}，版本/状态冲突 {restart['conflicted_resolves']}；当前revision={restart['current_revision']}，原请求重放仍为初始revision={restart['replayed_revision']}。",
     f"- 主P0持久库实际TCP HTTP复验：{http_proof['api_processes_initial']} 个API进程、{http_proof['requests']} 请求、{http_proof['unique_tickets']} 张工单；应用进程重启后保留={http_proof['retained_after_api_process_restart']}，重复工单 {http_proof['duplicate_tickets']}。",
