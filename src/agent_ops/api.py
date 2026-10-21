@@ -19,7 +19,8 @@ from agent_ops.orchestrator import Dispatcher
 from agent_ops.planner import Planner, PlanningError, planner_from_env
 from agent_ops.streaming import stream_run
 from agent_ops.support import SupportService
-from agent_ops.support_api import support_router
+from agent_ops.support_api import SupportBackend, support_router
+from agent_ops.support_postgres import PostgresSupportService
 from agent_ops.telemetry import hop
 
 
@@ -82,12 +83,24 @@ def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = N
             try:
                 await plan.aclose()
             finally:
+                if isinstance(support, PostgresSupportService):
+                    await support.aclose()
                 if dispatcher is None:
                     await dispatch.aclose()
 
     app = FastAPI(title="Agent Ops commerce orchestration", version="0.1.0", lifespan=lifespan)
     dispatch = dispatcher or Dispatcher(demo_agents())
-    app.include_router(support_router(SupportService(dispatch.tracer, os.getenv("SUPPORT_HUMAN_TOKEN"))))
+    backend = os.environ.get("AGENT_OPS_SUPPORT_BACKEND", "memory")
+    support: SupportBackend
+    if backend == "postgres":
+        support = PostgresSupportService(os.environ["AGENT_OPS_DATABASE_URL"], dispatch.tracer,
+                                         os.getenv("SUPPORT_HUMAN_TOKEN"))
+    elif backend == "memory":
+        support = SupportService(dispatch.tracer, os.getenv("SUPPORT_HUMAN_TOKEN"))
+    else:
+        raise ValueError("unknown support backend")
+    app.state.support = support
+    app.include_router(support_router(support))
 
     app.add_middleware(RequestTraceMiddleware, dispatcher=dispatch)
 

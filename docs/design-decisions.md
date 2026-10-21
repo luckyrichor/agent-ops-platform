@@ -72,3 +72,13 @@ TX 采用 Jaeger 2.22.0 单容器与 Badger 持久卷，镜像固定摘要，保
 - 修复英文子串误路由而不拿后续质量评测语料调规则；修复内部memory客户端继承shell代理导致构造失败，固定直连内部服务。仍有JWT/409/超时/读写降级语义，不引入跨服务身份改造。
 - 旧流式脚本改为每次测量一个Dispatcher，在finally释放；拒绝覆盖既有数据文件，避免复跑抹掉历史。B0另用实际TCP和逐帧消费，started不是模型首token，不把ASGI收集结果伪称网络首帧。
 - 客户端与API分核，仅减少直接CPU竞争，不称完全消除共享cache/内核/内存带宽争用；1worker、内存表、固定本地商品和短测量均写明。SSE慢客户端隔离由原回归测试验证，不用该B0脚本宣称万连接能力。未来实际S6压测另做。
+
+## P0/P1：基础栈与事务工单
+
+- 范围依方案第六节：P0六基础组件；P1仅support.tickets、idempotency_keys、ticket_events。商品/订单表P2、账号鉴权P3、claimed/租约/推送P4再实现，不提前称为完成。P1保留原waiting_human→resolved接口，避免偷偷把P4状态机语义塞进本轮。
+- 保留SupportService原内存实现，create_app默认memory；显式scripts/serve.py默认postgres并载入服务器私有环境。不允许PG故障后悄悄回退内存，否则跨进程幂等/持久性失效。
+- PG用(scope,key)唯一约束抢占幂等键；原请求摘要和不可变响应快照存同事务。工单变化用state+revision条件更新，事件同事务追加；重放返回初始快照而非当前工单状态。没有进程间锁，没有请求正文入库。
+- Alembic迁移角色拥有schema；运行角色只读写业务表、只能追加事件，无DDL/事件删除权限；触发器也拒绝事件UPDATE/DELETE。迁移降到base会删除P1 schema与业务数据，仅在隔离库做回滚验收。
+- P0复用agent-ops-tracing既有Jaeger与external Badger volume，不开第二个Badger写者，不删除历史trace；新增服务端口只绑定loopback，所有镜像固定实际拉取的摘要。已有4318直达Jaeger保留，新增14318是Collector入口。
+- P0只接通采集与可视化通路：Collector批处理转发trace，Prometheus拉指标，Grafana预配数据源。尾部采样/业务指标/跨服务trace传播属于后续S7，不将本轮连通性测试称为生产观测或容量验收。
+- 环境脚本生成.local私密配置，不打印它；启动可重复执行且不清理数据卷。应用仍为显式本地开发命令，不部署公网、不替换既有服务。

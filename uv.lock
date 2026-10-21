@@ -28,12 +28,15 @@ version = "0.1.0"
 source = { editable = "." }
 dependencies = [
     { name = "agent-memory" },
+    { name = "alembic" },
     { name = "fastapi" },
     { name = "httpx" },
     { name = "opentelemetry-api" },
     { name = "opentelemetry-exporter-otlp-proto-http" },
     { name = "opentelemetry-sdk" },
+    { name = "psycopg", extra = ["binary"] },
     { name = "requests" },
+    { name = "sqlalchemy", extra = ["asyncio"] },
     { name = "uvicorn" },
 ]
 
@@ -49,12 +52,15 @@ dev = [
 [package.metadata]
 requires-dist = [
     { name = "agent-memory", git = "https://github.com/luckyrichor/agent-memory.git?rev=1e2730c0a0b6a25f2ee9f102dadcd3ca8288a474" },
+    { name = "alembic", specifier = ">=1.13,<2" },
     { name = "fastapi", specifier = ">=0.115,<1" },
     { name = "httpx", specifier = ">=0.27,<1" },
     { name = "opentelemetry-api", specifier = ">=1.27,<2" },
     { name = "opentelemetry-exporter-otlp-proto-http", specifier = ">=1.27,<2" },
     { name = "opentelemetry-sdk", specifier = ">=1.27,<2" },
+    { name = "psycopg", extras = ["binary"], specifier = ">=3.2,<4" },
     { name = "requests", specifier = ">=2.32,<3" },
+    { name = "sqlalchemy", extras = ["asyncio"], specifier = ">=2.0,<3" },
     { name = "uvicorn", specifier = ">=0.30,<1" },
 ]
 

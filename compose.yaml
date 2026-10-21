@@ -1,0 +1,75 @@
+# Reuse the existing Jaeger project/container and external volume; never start a second Badger writer.
+name: agent-ops-tracing
+services:
+  jaeger:
+    extends:
+      file: compose.tracing.yaml
+      service: jaeger
+  postgres:
+    image: postgres:16-alpine@sha256:721873c34ceb9f8d8fc265984940dc982404c105f19ad51be9fdc5970a6080ea
+    restart: unless-stopped
+    environment:
+      POSTGRES_DB: agent_ops
+      POSTGRES_USER: ops_owner
+      POSTGRES_PASSWORD: ${POSTGRES_PASSWORD:?run scripts/start-stack.sh}
+    ports: ["127.0.0.1:55433:5432"]
+    volumes: ["postgres:/var/lib/postgresql/data"]
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U ops_owner -d agent_ops"]
+      interval: 2s
+      timeout: 3s
+      retries: 30
+    mem_limit: 512m
+    cpus: 1.0
+  redis:
+    image: redis:7.4-alpine@sha256:858f009f9709ce576febc734aa78b8f6d624b82571f9ddb6bda4377c833b3499
+    restart: unless-stopped
+    command: ["redis-server", "--appendonly", "yes", "--requirepass", "${REDIS_PASSWORD:?run scripts/start-stack.sh}"]
+    environment:
+      REDISCLI_AUTH: ${REDIS_PASSWORD}
+    ports: ["127.0.0.1:16380:6379"]
+    volumes: ["redis:/data"]
+    healthcheck:
+      test: ["CMD", "redis-cli", "ping"]
+      interval: 2s
+      retries: 30
+    mem_limit: 128m
+    cpus: 0.25
+  collector:
+    image: otel/opentelemetry-collector-contrib:0.120.0@sha256:85ac41c2db88d0df9bd6145e608a3cb023f5d8443868adbfbbf66efb51087917
+    restart: unless-stopped
+    command: ["--config=/etc/otelcol/config.yaml"]
+    volumes: ["./deploy/collector.yaml:/etc/otelcol/config.yaml:ro"]
+    ports: ["127.0.0.1:14318:4318", "127.0.0.1:13134:13133"]
+    depends_on: [jaeger]
+    mem_limit: 256m
+    cpus: 0.5
+  prometheus:
+    image: prom/prometheus:v3.2.1@sha256:6927e0919a144aa7616fd0137d4816816d42f6b816de3af269ab065250859a62
+    restart: unless-stopped
+    command: ["--config.file=/etc/prometheus/prometheus.yml", "--storage.tsdb.retention.time=3d", "--storage.tsdb.retention.size=512MB"]
+    volumes: ["./deploy/prometheus.yaml:/etc/prometheus/prometheus.yml:ro", "prometheus:/prometheus"]
+    ports: ["127.0.0.1:19091:9090"]
+    depends_on: [collector]
+    mem_limit: 256m
+    cpus: 0.5
+  grafana:
+    image: grafana/grafana:11.5.2@sha256:8b37a2f028f164ce7b9889e1765b9d6ee23fec80f871d156fbf436d6198d32b7
+    restart: unless-stopped
+    environment:
+      GF_SECURITY_ADMIN_PASSWORD: ${GRAFANA_PASSWORD:?run scripts/start-stack.sh}
+      GF_USERS_ALLOW_SIGN_UP: "false"
+      GF_ANALYTICS_REPORTING_ENABLED: "false"
+    volumes: ["grafana:/var/lib/grafana", "./deploy/grafana/provisioning:/etc/grafana/provisioning:ro"]
+    ports: ["127.0.0.1:13001:3000"]
+    depends_on: [prometheus]
+    mem_limit: 256m
+    cpus: 0.5
+volumes:
+  traces:
+    name: agent-ops-tracing-data
+    external: true
+  postgres: {}
+  redis: {}
+  prometheus: {}
+  grafana: {}

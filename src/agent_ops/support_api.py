@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, Protocol
 
 from fastapi import APIRouter, Header, HTTPException
 from pydantic import BaseModel, ConfigDict, Field
@@ -7,7 +7,6 @@ from agent_ops.support import (
     SupportCapacity,
     SupportConflict,
     SupportRequest,
-    SupportService,
     Ticket,
 )
 
@@ -17,7 +16,13 @@ class ResolveRequest(BaseModel):
     expected_revision: int = Field(ge=1)
 
 
-def support_router(service: SupportService) -> APIRouter:
+class SupportBackend(Protocol):
+    async def handle(self, request: SupportRequest, key: str) -> Ticket: ...
+    async def get(self, ticket_id: str) -> Ticket: ...
+    async def resolve(self, ticket_id: str, expected: int, token: str) -> Ticket: ...
+
+
+def support_router(service: SupportBackend) -> APIRouter:
     router = APIRouter(prefix="/support")
 
     @router.post("/requests", response_model=Ticket)
