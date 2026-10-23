@@ -1,0 +1,162 @@
+{
+  "activity_copy_update_verify_seconds": 9.804397647967562,
+  "batch_manifest_sha256": "acfa89ae762b39954ad0dd4821a2acbfccfa3c248a57eca15b5bd8d92109fc83",
+  "changed_columns": [
+    "commerce.users.activity_events"
+  ],
+  "complete": true,
+  "counts": {
+    "commerce.categories": 74,
+    "commerce.conversations": 1444788,
+    "commerce.idempotency_keys": 0,
+    "commerce.inventory": 200000,
+    "commerce.message_keys": 10000000,
+    "commerce.messages": 10000000,
+    "commerce.order_items": 2264789,
+    "commerce.orders": 2000000,
+    "commerce.products": 200000,
+    "commerce.shipments": 1962484,
+    "commerce.users": 1000000,
+    "support.idempotency_keys": 0,
+    "support.ticket_events": 1000000,
+    "support.tickets": 1000000
+  },
+  "database": "agent_ops_p2_seed42",
+  "database_bytes": 4814879767,
+  "existing_product_order_data_overwritten": false,
+  "id_set_unchanged": true,
+  "main_application_database_unchanged": true,
+  "mismatch_rows": 0,
+  "no_new_permanent_table": true,
+  "old_frozen_files_unchanged": true,
+  "old_nonnull_activity_rows": 0,
+  "source_users_sha256": "d04147a8064b0f8aa3ad0125b4abe71e971848f94b53e870af3339e3fc724943",
+  "table_and_indexes_bytes": {
+    "commerce.categories": 49152,
+    "commerce.conversations": 215998464,
+    "commerce.idempotency_keys": 16384,
+    "commerce.inventory": 16605184,
+    "commerce.message_keys": 1243537408,
+    "commerce.messages": 1697103872,
+    "commerce.order_items": 245129216,
+    "commerce.orders": 335683584,
+    "commerce.products": 47718400,
+    "commerce.shipments": 322404352,
+    "commerce.users": 125526016,
+    "support.idempotency_keys": 16384,
+    "support.ticket_events": 297041920,
+    "support.tickets": 259227648
+  },
+  "total_seconds_including_full_hashes_and_analyze": 165.0687951729633,
+  "unaffected_full_table_hashes_identical": true,
+  "unaffected_tables_after": {
+    "commerce.categories": {
+      "ordered_csv_sha256": "159932aa01031c8d30db224b5c18c00ad76506a8e0d07c80a628c0bd60c997a8",
+      "rows": 74
+    },
+    "commerce.conversations": {
+      "ordered_csv_sha256": "5ac373faf5231b8471c082b440c99e8c311568e8174db1bfd30bc126513cfa26",
+      "rows": 1444788
+    },
+    "commerce.idempotency_keys": {
+      "ordered_csv_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rows": 0
+    },
+    "commerce.inventory": {
+      "ordered_csv_sha256": "64237ba4d4d85b34764ef261299cc653bd1bb5bafa8d8cf229bdc3e588f798f9",
+      "rows": 200000
+    },
+    "commerce.message_keys": {
+      "ordered_csv_sha256": "610dc006199c71aa306e36dab48ef90fb57b870004fbf7fbcec1b9f6646960dd",
+      "rows": 10000000
+    },
+    "commerce.messages": {
+      "ordered_csv_sha256": "649581f69b11c7a96395c16410b95a3921eeae3959159851147e017cc153ec11",
+      "rows": 10000000
+    },
+    "commerce.order_items": {
+      "ordered_csv_sha256": "f105fdaf2312746dfd295d5216820227b38d747e9547acbdca0ed1c9ef76d5fe",
+      "rows": 2264789
+    },
+    "commerce.orders": {
+      "ordered_csv_sha256": "44989efa943431813358a2825e4090489d91c2fb328781409925cc52cdd9c112",
+      "rows": 2000000
+    },
+    "commerce.products": {
+      "ordered_csv_sha256": "79acf461e52751c4f06978663bd50f8cdd5a9dc1ec0babd84d61baa912aa51ab",
+      "rows": 200000
+    },
+    "commerce.shipments": {
+      "ordered_csv_sha256": "12937849ce5e8500465f511510c5479e91e3b709cc2e46dfab2c5ff9325c8f09",
+      "rows": 1962484
+    },
+    "support.idempotency_keys": {
+      "ordered_csv_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rows": 0
+    },
+    "support.ticket_events": {
+      "ordered_csv_sha256": "5b1307b91e8aa4e618e83b9b5c4f54f6f3e085ea1b9eb68f11c50b24bb9b0454",
+      "rows": 1000000
+    },
+    "support.tickets": {
+      "ordered_csv_sha256": "9e4f1f46fcb74f6ae3d70f7375d94a191b479cf9ae8e9571ac6e2c64c8aaad0a",
+      "rows": 1000000
+    }
+  },
+  "unaffected_tables_before": {
+    "commerce.categories": {
+      "ordered_csv_sha256": "159932aa01031c8d30db224b5c18c00ad76506a8e0d07c80a628c0bd60c997a8",
+      "rows": 74
+    },
+    "commerce.conversations": {
+      "ordered_csv_sha256": "5ac373faf5231b8471c082b440c99e8c311568e8174db1bfd30bc126513cfa26",
+      "rows": 1444788
+    },
+    "commerce.idempotency_keys": {
+      "ordered_csv_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rows": 0
+    },
+    "commerce.inventory": {
+      "ordered_csv_sha256": "64237ba4d4d85b34764ef261299cc653bd1bb5bafa8d8cf229bdc3e588f798f9",
+      "rows": 200000
+    },
+    "commerce.message_keys": {
+      "ordered_csv_sha256": "610dc006199c71aa306e36dab48ef90fb57b870004fbf7fbcec1b9f6646960dd",
+      "rows": 10000000
+    },
+    "commerce.messages": {
+      "ordered_csv_sha256": "649581f69b11c7a96395c16410b95a3921eeae3959159851147e017cc153ec11",
+      "rows": 10000000
+    },
+    "commerce.order_items": {
+      "ordered_csv_sha256": "f105fdaf2312746dfd295d5216820227b38d747e9547acbdca0ed1c9ef76d5fe",
+      "rows": 2264789
+    },
+    "commerce.orders": {
+      "ordered_csv_sha256": "44989efa943431813358a2825e4090489d91c2fb328781409925cc52cdd9c112",
+      "rows": 2000000
+    },
+    "commerce.products": {
+      "ordered_csv_sha256": "79acf461e52751c4f06978663bd50f8cdd5a9dc1ec0babd84d61baa912aa51ab",
+      "rows": 200000
+    },
+    "commerce.shipments": {
+      "ordered_csv_sha256": "12937849ce5e8500465f511510c5479e91e3b709cc2e46dfab2c5ff9325c8f09",
+      "rows": 1962484
+    },
+    "support.idempotency_keys": {
+      "ordered_csv_sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855",
+      "rows": 0
+    },
+    "support.ticket_events": {
+      "ordered_csv_sha256": "5b1307b91e8aa4e618e83b9b5c4f54f6f3e085ea1b9eb68f11c50b24bb9b0454",
+      "rows": 1000000
+    },
+    "support.tickets": {
+      "ordered_csv_sha256": "9e4f1f46fcb74f6ae3d70f7375d94a191b479cf9ae8e9571ac6e2c64c8aaad0a",
+      "rows": 1000000
+    }
+  },
+  "updated_rows": 1000000,
+  "users": 1000000
+}

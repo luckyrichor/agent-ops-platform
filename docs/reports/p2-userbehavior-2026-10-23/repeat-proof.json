@@ -1,0 +1,83 @@
+{
+  "all_data_file_checksums_identical": true,
+  "events_per_run": 1000000,
+  "events_sha256": "fe22b8fbf580ef3f77daca1762e5116c966d458c6bd0cd1acc1ecccc750006c7",
+  "files": {
+    "categories": {
+      "bytes": 1558,
+      "provenance_sha256": "c8b69b27ad7a3959d2ede27866bb675ccf3eaca8fb25538f0f5729395528c8d8",
+      "rows": 74,
+      "sha256": "159932aa01031c8d30db224b5c18c00ad76506a8e0d07c80a628c0bd60c997a8"
+    },
+    "conversations": {
+      "bytes": 73795663,
+      "provenance_sha256": "2a6901cd86547124ae79ec29b01bdb9b067542e51afe0b94ed64647f270d2f4e",
+      "rows": 1444788,
+      "sha256": "5ac373faf5231b8471c082b440c99e8c311568e8174db1bfd30bc126513cfa26"
+    },
+    "inventory": {
+      "bytes": 3088895,
+      "provenance_sha256": "ab7853b409de88a52192ee4bfa774f4c0b3a39e31d87830ae4c7f23d3f7680a1",
+      "rows": 200000,
+      "sha256": "64237ba4d4d85b34764ef261299cc653bd1bb5bafa8d8cf229bdc3e588f798f9"
+    },
+    "message_keys": {
+      "bytes": 324221772,
+      "provenance_sha256": "e0d91a78ebc862e6d7bb93a211ff51e34305b86e81c530a0a587e9a07ed4e54f",
+      "rows": 10000000,
+      "sha256": "610dc006199c71aa306e36dab48ef90fb57b870004fbf7fbcec1b9f6646960dd"
+    },
+    "messages": {
+      "bytes": 725759447,
+      "provenance_sha256": "b1c3c5f2ce50f9999b5c15884b70847a906fef3aa2abda07578005d358d6abe7",
+      "rows": 10000000,
+      "sha256": "09255e7a50c175ad9b4424924006861f9129581178a95fc70705bc4f84e34ab6"
+    },
+    "order_items": {
+      "bytes": 63576826,
+      "provenance_sha256": "a28a88e31c23d421a5ffb26d94805f5cca9357ab7e5da867331066802551cedf",
+      "rows": 2264789,
+      "sha256": "f105fdaf2312746dfd295d5216820227b38d747e9547acbdca0ed1c9ef76d5fe"
+    },
+    "orders": {
+      "bytes": 115651317,
+      "provenance_sha256": "79606c78f55ed3491edc3074faa9da78bfb4552222124da3b634e6a1605e1a6e",
+      "rows": 2000000,
+      "sha256": "a8c31ad3e84cec0c0d0ae642e689e7e58c296d10acbcecd9dd8bf5aacfcb2901"
+    },
+    "products": {
+      "bytes": 16202270,
+      "provenance_sha256": "c5f7b38e719d3a8823a720409c1d2fc41f3f15b17ff30c2dee41a9d54f1fd184",
+      "rows": 200000,
+      "sha256": "79acf461e52751c4f06978663bd50f8cdd5a9dc1ec0babd84d61baa912aa51ab"
+    },
+    "shipments": {
+      "bytes": 126427037,
+      "provenance_sha256": "1adf59f557aa393b897314bf3f50726e9e83473f2f1efd7b2bd4f54b69d839cc",
+      "rows": 1962484,
+      "sha256": "12937849ce5e8500465f511510c5479e91e3b709cc2e46dfab2c5ff9325c8f09"
+    },
+    "ticket_events": {
+      "bytes": 257200000,
+      "provenance_sha256": "ae12803f0df5bb136857b15169e169d9038f33f656403ebdc4658b8733eb855f",
+      "rows": 1000000,
+      "sha256": "5b1307b91e8aa4e618e83b9b5c4f54f6f3e085ea1b9eb68f11c50b24bb9b0454"
+    },
+    "tickets": {
+      "bytes": 228147809,
+      "provenance_sha256": "24505fd1531dd0289de60ee13d6e9e3ab8d9442b9e8f28c95c035ed15b9af63e",
+      "rows": 1000000,
+      "sha256": "c7606d1ffb2c09b775eb7e563e3ceb220f8cec1ef5cf6e11249c0349c0de76e7"
+    },
+    "users": {
+      "bytes": 10250620,
+      "provenance_sha256": "e1cf2d6bd631b5f6f564ef2ee404384c9a97eafad85082704f118531e779d414",
+      "rows": 1000000,
+      "sha256": "d04147a8064b0f8aa3ad0125b4abe71e971848f94b53e870af3339e3fc724943"
+    }
+  },
+  "full_user_batch_runs": 2,
+  "seed": 42,
+  "timings_excluded_from_checksum": true,
+  "unchanged_tables_reused_from_frozen_batch": true
+}
