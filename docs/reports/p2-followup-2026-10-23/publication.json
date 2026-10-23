@@ -1,0 +1,29 @@
+{
+  "published_at": "2026-10-23T00:26:13.852177+00:00",
+  "assistant": "Codex",
+  "profile": "codex",
+  "identity": "user",
+  "source_commit": "db2386c33cf47534e39581fd6362d4b85c475975",
+  "source_dirty_at_publish": false,
+  "directory": "我的文档库 / WorkPlan / agent-ops-platform：多 Agent 编排与客服处理平台",
+  "new_folders": [],
+  "original_project_document_preserved": true,
+  "documents": [
+    {
+      "title": "B1 基线复验报告（2026-10-23）",
+      "wiki_url": "https://kcn0pbn0hwo0.feishu.cn/wiki/HrEXwOOKRi7jrbkMf9ocTKj5n1n",
+      "parent_verified": true,
+      "body_fetched_and_checked": true,
+      "signature_verified": true,
+      "draft_sha256": "aa7650e0d64b22596398ac4bdd1578ba2b0f2c5c748c7c44005726716733d521"
+    },
+    {
+      "title": "P2 电商数据与分布拟合报告（2026-10-23）",
+      "wiki_url": "https://kcn0pbn0hwo0.feishu.cn/wiki/SlNOw5pF5iUYTJk960Qc788inKf",
+      "parent_verified": true,
+      "body_fetched_and_checked": true,
+      "signature_verified": true,
+      "draft_sha256": "b4188680db86e9219913520b85ac38e757a697872c8afdfe5fed8f9a1ce4e821"
+    }
+  ]
+}
