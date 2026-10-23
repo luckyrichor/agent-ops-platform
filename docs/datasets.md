@@ -51,3 +51,15 @@ uv run python scripts/synthesize-p2.py --fit .local/fit-new --output .local/scal
 ```
 
 UserBehavior 到位后显式传 `--userbehavior-file .local/datasets/raw/UserBehavior.csv.zip` 再核验，重新拟合并建新批次；当前未用猜测/均匀分布冒充其活跃度或商品热度。
+
+## 2026-10-23 延时任务补跑核查（Codex，北京时间）
+
+本次分析与四门复验的代码版本为 `3ccfe84f58e85395ae75ff909b0921045e4f87a2`，开始时工作区干净、pull 后与远端一致；本节和本次报告是新增文档，以上 2026-10-21 的来源与原始数据不改写。
+
+负责人消息称 UserBehavior ZIP 已上传，但本次在实际 tx 主机仍未找到。项目 `.local/datasets/raw/` 只有 `olist.zip`（44,717,580 字节）和 `ecd.zip`（54,000,633 字节）；`/home/ubuntu/files` 不存在。已递归检查 `/home/ubuntu`、`/tmp`、`/mnt`、`/data`、`/srv`、`/var/tmp` 的 UserBehavior 名称变体，并检查大体积 ZIP/GZIP 和 800–1100 MiB 的其他命名文件，未发现候选。该结论仅限本次可读路径，不声称文件未上传到任何位置。
+
+附录 C 的 **949,805,174 字节仍是历史页面元数据，非本次文件实测值**。实际 ZIP 大小、行数、CRC、SHA256、活跃度、热度、浏览/加购/购买比例均为未验证，差值无法计算；不得把“未找到”记作实际 0 字节文件。没有登录、注册、改用镜像或替代数据源。
+
+没有重建或导入批次，没有修改已验收商品、库存、订单、用户或访问事件表；本轮导入耗时不适用。既有 `.local/datasets/` 表观占用复查为 6,835,117,461 字节（不含 Docker 数据卷），两份 raw ZIP 大小与旧记录相同，但本轮没有重跑其全量 CRC/行数核验。原有数据库行数、导入耗时和校验和仍属于 2026-10-21 的证据。
+
+本轮完整日志、源码摘要、文件搜索记录、B1 旧证据核对及待补文件说明见 [补跑报告](reports/p2-followup-2026-10-23/delivery.md)。需要负责人提供服务器上可读的 ZIP 实际绝对路径；不需要密码或令牌。P2 仍未全部验收，P3 及以后未执行。

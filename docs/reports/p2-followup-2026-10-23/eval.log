@@ -1,0 +1,398 @@
+{
+  "dataset_sha256": "eeace62cbed81cd494ee0ae77d739f06c1350f7ae08c513d516cd6da2580f31d",
+  "cases": 47,
+  "passed": 47,
+  "confusion": {
+    "human": {
+      "human": 10
+    },
+    "return_request": {
+      "return_request": 10
+    },
+    "order_status": {
+      "order_status": 12
+    },
+    "clarify": {
+      "clarify": 15
+    }
+  },
+  "results": [
+    {
+      "id": "human-0",
+      "predicted": "human",
+      "expected": "human",
+      "state": "waiting_human",
+      "expected_state": "waiting_human",
+      "passed": true
+    },
+    {
+      "id": "human-1",
+      "predicted": "human",
+      "expected": "human",
+      "state": "waiting_human",
+      "expected_state": "waiting_human",
+      "passed": true
+    },
+    {
+      "id": "human-2",
+      "predicted": "human",
+      "expected": "human",
+      "state": "waiting_human",
+      "expected_state": "waiting_human",
+      "passed": true
+    },
+    {
+      "id": "human-3",
+      "predicted": "human",
+      "expected": "human",
+      "state": "waiting_human",
+      "expected_state": "waiting_human",
+      "passed": true
+    },
+    {
+      "id": "human-4",
+      "predicted": "human",
+      "expected": "human",
+      "state": "waiting_human",
+      "expected_state": "waiting_human",
+      "passed": true
+    },
+    {
+      "id": "human-5",
+      "predicted": "human",
+      "expected": "human",
+      "state": "waiting_human",
+      "expected_state": "waiting_human",
+      "passed": true
+    },
+    {
+      "id": "human-6",
+      "predicted": "human",
+      "expected": "human",
+      "state": "waiting_human",
+      "expected_state": "waiting_human",
+      "passed": true
+    },
+    {
+      "id": "human-7",
+      "predicted": "human",
+      "expected": "human",
+      "state": "waiting_human",
+      "expected_state": "waiting_human",
+      "passed": true
+    },
+    {
+      "id": "human-8",
+      "predicted": "human",
+      "expected": "human",
+      "state": "waiting_human",
+      "expected_state": "waiting_human",
+      "passed": true
+    },
+    {
+      "id": "human-9",
+      "predicted": "human",
+      "expected": "human",
+      "state": "waiting_human",
+      "expected_state": "waiting_human",
+      "passed": true
+    },
+    {
+      "id": "return_request-0",
+      "predicted": "return_request",
+      "expected": "return_request",
+      "state": "waiting_human",
+      "expected_state": "waiting_human",
+      "passed": true
+    },
+    {
+      "id": "return_request-1",
+      "predicted": "return_request",
+      "expected": "return_request",
+      "state": "waiting_human",
+      "expected_state": "waiting_human",
+      "passed": true
+    },
+    {
+      "id": "return_request-2",
+      "predicted": "return_request",
+      "expected": "return_request",
+      "state": "waiting_human",
+      "expected_state": "waiting_human",
+      "passed": true
+    },
+    {
+      "id": "return_request-3",
+      "predicted": "return_request",
+      "expected": "return_request",
+      "state": "waiting_human",
+      "expected_state": "waiting_human",
+      "passed": true
+    },
+    {
+      "id": "return_request-4",
+      "predicted": "return_request",
+      "expected": "return_request",
+      "state": "waiting_human",
+      "expected_state": "waiting_human",
+      "passed": true
+    },
+    {
+      "id": "return_request-5",
+      "predicted": "return_request",
+      "expected": "return_request",
+      "state": "waiting_human",
+      "expected_state": "waiting_human",
+      "passed": true
+    },
+    {
+      "id": "return_request-6",
+      "predicted": "return_request",
+      "expected": "return_request",
+      "state": "waiting_human",
+      "expected_state": "waiting_human",
+      "passed": true
+    },
+    {
+      "id": "return_request-7",
+      "predicted": "return_request",
+      "expected": "return_request",
+      "state": "waiting_human",
+      "expected_state": "waiting_human",
+      "passed": true
+    },
+    {
+      "id": "return_request-8",
+      "predicted": "return_request",
+      "expected": "return_request",
+      "state": "waiting_human",
+      "expected_state": "waiting_human",
+      "passed": true
+    },
+    {
+      "id": "return_request-9",
+      "predicted": "return_request",
+      "expected": "return_request",
+      "state": "waiting_human",
+      "expected_state": "waiting_human",
+      "passed": true
+    },
+    {
+      "id": "order_status-0",
+      "predicted": "order_status",
+      "expected": "order_status",
+      "state": "resolved",
+      "expected_state": "resolved",
+      "passed": true
+    },
+    {
+      "id": "order_status-1",
+      "predicted": "order_status",
+      "expected": "order_status",
+      "state": "resolved",
+      "expected_state": "resolved",
+      "passed": true
+    },
+    {
+      "id": "order_status-2",
+      "predicted": "order_status",
+      "expected": "order_status",
+      "state": "resolved",
+      "expected_state": "resolved",
+      "passed": true
+    },
+    {
+      "id": "order_status-3",
+      "predicted": "order_status",
+      "expected": "order_status",
+      "state": "resolved",
+      "expected_state": "resolved",
+      "passed": true
+    },
+    {
+      "id": "order_status-4",
+      "predicted": "order_status",
+      "expected": "order_status",
+      "state": "resolved",
+      "expected_state": "resolved",
+      "passed": true
+    },
+    {
+      "id": "order_status-5",
+      "predicted": "order_status",
+      "expected": "order_status",
+      "state": "resolved",
+      "expected_state": "resolved",
+      "passed": true
+    },
+    {
+      "id": "order_status-6",
+      "predicted": "order_status",
+      "expected": "order_status",
+      "state": "resolved",
+      "expected_state": "resolved",
+      "passed": true
+    },
+    {
+      "id": "order_status-7",
+      "predicted": "order_status",
+      "expected": "order_status",
+      "state": "resolved",
+      "expected_state": "resolved",
+      "passed": true
+    },
+    {
+      "id": "order_status-8",
+      "predicted": "order_status",
+      "expected": "order_status",
+      "state": "resolved",
+      "expected_state": "resolved",
+      "passed": true
+    },
+    {
+      "id": "order_status-9",
+      "predicted": "order_status",
+      "expected": "order_status",
+      "state": "resolved",
+      "expected_state": "resolved",
+      "passed": true
+    },
+    {
+      "id": "clarify-0",
+      "predicted": "clarify",
+      "expected": "clarify",
+      "state": "needs_information",
+      "expected_state": "needs_information",
+      "passed": true
+    },
+    {
+      "id": "clarify-1",
+      "predicted": "clarify",
+      "expected": "clarify",
+      "state": "needs_information",
+      "expected_state": "needs_information",
+      "passed": true
+    },
+    {
+      "id": "clarify-2",
+      "predicted": "clarify",
+      "expected": "clarify",
+      "state": "needs_information",
+      "expected_state": "needs_information",
+      "passed": true
+    },
+    {
+      "id": "clarify-3",
+      "predicted": "clarify",
+      "expected": "clarify",
+      "state": "needs_information",
+      "expected_state": "needs_information",
+      "passed": true
+    },
+    {
+      "id": "clarify-4",
+      "predicted": "clarify",
+      "expected": "clarify",
+      "state": "needs_information",
+      "expected_state": "needs_information",
+      "passed": true
+    },
+    {
+      "id": "clarify-5",
+      "predicted": "clarify",
+      "expected": "clarify",
+      "state": "needs_information",
+      "expected_state": "needs_information",
+      "passed": true
+    },
+    {
+      "id": "clarify-6",
+      "predicted": "clarify",
+      "expected": "clarify",
+      "state": "needs_information",
+      "expected_state": "needs_information",
+      "passed": true
+    },
+    {
+      "id": "clarify-7",
+      "predicted": "clarify",
+      "expected": "clarify",
+      "state": "needs_information",
+      "expected_state": "needs_information",
+      "passed": true
+    },
+    {
+      "id": "clarify-8",
+      "predicted": "clarify",
+      "expected": "clarify",
+      "state": "needs_information",
+      "expected_state": "needs_information",
+      "passed": true
+    },
+    {
+      "id": "clarify-9",
+      "predicted": "clarify",
+      "expected": "clarify",
+      "state": "needs_information",
+      "expected_state": "needs_information",
+      "passed": true
+    },
+    {
+      "id": "clarify-10",
+      "predicted": "clarify",
+      "expected": "clarify",
+      "state": "needs_information",
+      "expected_state": "needs_information",
+      "passed": true
+    },
+    {
+      "id": "clarify-11",
+      "predicted": "clarify",
+      "expected": "clarify",
+      "state": "needs_information",
+      "expected_state": "needs_information",
+      "passed": true
+    },
+    {
+      "id": "clarify-12",
+      "predicted": "clarify",
+      "expected": "clarify",
+      "state": "needs_information",
+      "expected_state": "needs_information",
+      "passed": true
+    },
+    {
+      "id": "clarify-13",
+      "predicted": "clarify",
+      "expected": "clarify",
+      "state": "needs_information",
+      "expected_state": "needs_information",
+      "passed": true
+    },
+    {
+      "id": "clarify-14",
+      "predicted": "clarify",
+      "expected": "clarify",
+      "state": "needs_information",
+      "expected_state": "needs_information",
+      "passed": true
+    },
+    {
+      "id": "missing-order",
+      "predicted": "order_status",
+      "expected": "order_status",
+      "state": "needs_information",
+      "expected_state": "needs_information",
+      "passed": true
+    },
+    {
+      "id": "unknown-order",
+      "predicted": "order_status",
+      "expected": "order_status",
+      "state": "needs_information",
+      "expected_state": "needs_information",
+      "passed": true
+    }
+  ],
+  "method": "deterministic rule routing + in-memory fixture order tool; no live LLM"
+}

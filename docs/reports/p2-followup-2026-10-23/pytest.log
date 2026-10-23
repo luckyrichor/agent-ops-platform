@@ -1,0 +1,14 @@
+........................................................................ [ 79%]
+...................                                                      [100%]
+=============================== warnings summary ===============================
+tests/test_support_postgres.py::test_two_processes_unique_key_and_atomic_audit
+  tests/test_support_postgres.py:67: PytestWarning: record_property is incompatible with junit_family 'xunit2' (use 'legacy' or 'xunit1')
+    def test_two_processes_unique_key_and_atomic_audit(database, record_property):
+
+tests/test_support_postgres.py::test_restart_replay_snapshot_conflict_and_concurrent_resolve
+  tests/test_support_postgres.py:118: PytestWarning: record_property is incompatible with junit_family 'xunit2' (use 'legacy' or 'xunit1')
+    async def test_restart_replay_snapshot_conflict_and_concurrent_resolve(database, record_property):
+
+-- Docs: https://docs.pytest.org/en/stable/how-to/capture-warnings.html
+- generated xml file: /home/ubuntu/project/WorkPlan/agent-ops-platform/.local/p2-followup-2026-10-23/pytest.xml -
+91 passed, 2 warnings in 14.99s
