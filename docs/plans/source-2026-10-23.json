@@ -1,0 +1,14 @@
+{
+  "new_sha256": "3ee56d417ca81c2557589e2d1b658da0ed9cc447cb310158485af74034c351bf",
+  "new_bytes": 45990,
+  "old_sha256": "87a17db6b5149be64e75a93967454634fe129d3356afe2a401f51cdeb7ba2ed5",
+  "old_archive": "docs/plans/archive/agent-ops-platform-plan-87a17db6b514.md",
+  "latest": "docs/agent-ops-platform面试级完善方案.md",
+  "source_message_id": "om_x100b6295afd440a8de3ac332cc7ed15",
+  "original_author_preserved": true,
+  "changes": [
+    "新增同配置两组各五轮A/A测量噪声下限",
+    "优化显著性以噪声下限与10%较大者为准"
+  ],
+  "scope": "P2 only; no optimization experiments"
+}
