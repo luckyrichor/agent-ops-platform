@@ -151,3 +151,8 @@ B0入口docs/baselines/b0/README.md；HTTP脚本scripts/benchmark-b0.py必须离
 ## 2026-10-23 新方案再次归档
 
 当前原件路径不变，最新来源为 docs/plans/source-2026-10-23-v2.json，统一索引 docs/plans/README.md。旧原件与旧来源记录保留。本次只归档；新增S3前置分布/LRU命中率校验尚未执行，不代表已授权启动P3或S3。
+
+
+## 2026-10-23 P3 认证与权限（Claude Code）
+
+负责人确认 P2 已验收后，只授权了 P3。P3 已实现：邮箱密码登录，customer/agent/admin 三种角色，迁移 0004_auth，详见 docs/auth.md 与 design-decisions 的 P3 节。共享 SUPPORT_HUMAN_TOKEN 已取消；postgres 模式必须配置 AGENT_OPS_AUTH_SECRET。P2 的 100 万用户标识仍然没有凭据，演示账号只能通过 `python -m agent_ops.demo_accounts` 从 .local 名单创建。/v1/commerce 仍未加登录，等负责人决定。P4 及以后（队列、抢单、推送、统计、前端、支付、登录限流）都没开始，不要写成已完成。

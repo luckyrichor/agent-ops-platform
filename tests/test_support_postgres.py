@@ -51,7 +51,7 @@ def database():
 
 def worker(url, key, start, queue):
     async def run():
-        service = PostgresSupportService(url, get_tracer("pg-process"), "fixture-token")
+        service = PostgresSupportService(url, get_tracer("pg-process"))
         try:
             start.wait(20)
             tickets = await asyncio.gather(
@@ -119,13 +119,13 @@ async def test_restart_replay_snapshot_conflict_and_concurrent_resolve(database,
     url, owner_engine, pg, _ = database
     key = "restart-" + str(uuid4())
     request = SupportRequest(message="转人工")
-    service = PostgresSupportService(url, get_tracer("restart"), "fixture-token")
+    service = PostgresSupportService(url, get_tracer("restart"))
     first = await service.handle(request, key)
     await service.aclose()
     # Restart the actual container, preserving data and explicitly bound host port.
     await asyncio.to_thread(pg.get_wrapped_container().restart)
     owner_engine.dispose()
-    recreated = PostgresSupportService(url, get_tracer("restarted"), "fixture-token")
+    recreated = PostgresSupportService(url, get_tracer("restarted"))
     try:
         for attempt in range(30):
             try:
@@ -139,7 +139,7 @@ async def test_restart_replay_snapshot_conflict_and_concurrent_resolve(database,
         with pytest.raises(SupportConflict):
             await recreated.handle(SupportRequest(message="我要退款"), key)
         result = await asyncio.gather(
-            *(recreated.resolve(first.ticket_id, 1, "fixture-token") for _ in range(8)),
+            *(recreated.resolve(first.ticket_id, 1, "account:1") for _ in range(8)),
             return_exceptions=True,
         )
         assert sum(not isinstance(r, BaseException) for r in result) == 1
@@ -153,8 +153,9 @@ async def test_restart_replay_snapshot_conflict_and_concurrent_resolve(database,
         record_property("conflicted_resolves", sum(isinstance(r, SupportConflict) for r in result))
         record_property("current_revision", (await recreated.get(first.ticket_id)).revision)
         record_property("replayed_revision", (await recreated.handle(request, key)).revision)
-        with pytest.raises(PermissionError):
-            await recreated.resolve(first.ticket_id, 2, "bad")
+        # P3: role checks moved to HTTP (tests/test_auth*.py); a stale revision still conflicts.
+        with pytest.raises(SupportConflict):
+            await recreated.resolve(first.ticket_id, 1, "account:1")
     finally:
         await recreated.aclose()
 
@@ -197,27 +198,36 @@ async def test_http_pg_backend_trace_and_append_only(database, monkeypatch):
     url, engine, _, _ = database
     monkeypatch.setenv("AGENT_OPS_SUPPORT_BACKEND", "postgres")
     monkeypatch.setenv("AGENT_OPS_DATABASE_URL", url)
-    monkeypatch.setenv("SUPPORT_HUMAN_TOKEN", "fixture-token")
+    monkeypatch.setenv("AGENT_OPS_AUTH_SECRET", "fixture-signing-secret-" + "x" * 32)
     app = create_app()
+    with engine.begin() as conn:
+        conn.execute(text("INSERT INTO commerce.users(id) VALUES (901) ON CONFLICT DO NOTHING"))
+    await app.state.auth.create_account("c901@fixture.invalid", "fixture-password-1", "customer", 901)
+    await app.state.auth.create_account("a901@fixture.invalid", "fixture-password-2", "agent", None)
     async with (
         app.router.lifespan_context(app),
         httpx.AsyncClient(
             transport=httpx.ASGITransport(app=app), base_url="http://local"
         ) as client,
     ):
+        tokens = {}
+        for name, password in (("c901", "fixture-password-1"), ("a901", "fixture-password-2")):
+            login = await client.post("/auth/login", json={
+                "email": f"{name}@fixture.invalid", "password": password})
+            tokens[name] = {"Authorization": "Bearer " + login.json()["access_token"]}
         result = await client.post(
             "/support/requests",
             json={"message": "转人工"},
-            headers={"Idempotency-Key": "http-" + str(uuid4())},
+            headers={"Idempotency-Key": "http-" + str(uuid4()), **tokens["c901"]},
         )
         assert result.status_code == 200 and result.headers["x-trace-id"]
         tid = result.json()["ticket_id"]
-        missing = await client.get("/support/tickets/not-a-uuid")
+        missing = await client.get("/support/tickets/not-a-uuid", headers=tokens["a901"])
         assert missing.status_code == 404
         result = await client.post(
             f"/support/tickets/{tid}/resolve",
             json={"expected_revision": 1},
-            headers={"Authorization": "Bearer fixture-token"},
+            headers=tokens["a901"],
         )
         assert result.status_code == 200 and result.json()["revision"] == 2
     # Trigger protects the audit even against the schema owner; runtime has no delete grant.
@@ -259,5 +269,5 @@ def test_migration_downgrade_and_reupgrade():
                 command.upgrade(config, target)
         engine = create_engine(pg.get_connection_url())
         with engine.connect() as conn:
-            assert conn.scalar(text("SELECT version_num FROM alembic_version")) == "0003_proxy_provenance"
+            assert conn.scalar(text("SELECT version_num FROM alembic_version")) == "0004_auth"
         engine.dispose()

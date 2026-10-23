@@ -1,4 +1,4 @@
-"""P2 local application service. Customer authentication/HTTP exposure belongs to P3.
+"""P2 commerce service; P3 exposes it over HTTP with the caller's user_id taken from the token.
 
 Integer cents, atomic stock reservations, request idempotency and revision checks.
 Payment capture and customer-support workflow are deliberately separate later stages.
@@ -214,3 +214,46 @@ class CommerceBackend:
             )
             result["shipment"] = dict(shipping) if shipping else None
             return result
+
+    async def orders(self, user_id: int, *, after: int | None, limit: int) -> list[dict[str, Any]]:
+        """Newest first; cursor is the last order id seen (only meaningful for the same user)."""
+        async with self.engine.connect() as c:
+            rows = await c.execute(
+                text("""SELECT id AS order_id,status,total_cents,created_at,revision
+                FROM commerce.orders WHERE user_id=:user AND (CAST(:after AS bigint) IS NULL OR
+                  (created_at,id) < (SELECT created_at,id FROM commerce.orders
+                   WHERE id=CAST(:after AS bigint) AND user_id=:user))
+                ORDER BY created_at DESC,id DESC LIMIT :limit"""),
+                {"user": user_id, "after": after, "limit": limit},
+            )
+            return [dict(r) for r in rows.mappings()]
+
+    async def conversations(
+        self, user_id: int, *, after: int | None, limit: int
+    ) -> list[dict[str, Any]]:
+        async with self.engine.connect() as c:
+            rows = await c.execute(
+                text("""SELECT id AS conversation_id,ticket_id::text FROM commerce.conversations
+                WHERE user_id=:user AND id>:after ORDER BY id LIMIT :limit"""),
+                {"user": user_id, "after": after or 0, "limit": limit},
+            )
+            return [dict(r) for r in rows.mappings()]
+
+    async def messages(
+        self, conversation_id: int, user_id: int, *, after: int, limit: int
+    ) -> list[dict[str, Any]]:
+        """Ownership is checked in the same query path; another user's id is simply not found."""
+        async with self.engine.connect() as c:
+            if not await c.scalar(
+                text("SELECT 1 FROM commerce.conversations WHERE id=:id AND user_id=:user"),
+                {"id": conversation_id, "user": user_id},
+            ):
+                raise KeyError("CONVERSATION_NOT_FOUND")
+            rows = await c.execute(
+                text("""SELECT m.seq,m.sender,m.content,m.created_at FROM commerce.message_keys k
+                JOIN commerce.messages m ON m.conversation_id=k.conversation_id AND m.seq=k.seq
+                  AND m.created_at=k.created_at
+                WHERE k.conversation_id=:id AND k.seq>:after ORDER BY k.seq LIMIT :limit"""),
+                {"id": conversation_id, "after": after, "limit": limit},
+            )
+            return [dict(r) for r in rows.mappings()]

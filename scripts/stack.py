@@ -29,10 +29,11 @@ if not secretfile.exists():
     )
 secretfile.chmod(0o600)
 values = dict(line.split("=", 1) for line in secretfile.read_text().splitlines() if line)
-if "SUPPORT_HUMAN_TOKEN" not in values:
-    values["SUPPORT_HUMAN_TOKEN"] = secrets.token_urlsafe(32)
+# P3: the shared SUPPORT_HUMAN_TOKEN is retired; an old value in stack.env is simply unused.
+if "AGENT_OPS_AUTH_SECRET" not in values:
+    values["AGENT_OPS_AUTH_SECRET"] = secrets.token_urlsafe(48)
     with secretfile.open("a") as stream:
-        stream.write("SUPPORT_HUMAN_TOKEN=" + values["SUPPORT_HUMAN_TOKEN"] + "\n")
+        stream.write("AGENT_OPS_AUTH_SECRET=" + values["AGENT_OPS_AUTH_SECRET"] + "\n")
 compose = ["docker", "compose", "--env-file", str(secretfile), "-f", "compose.yaml"]
 subprocess.run(
     ["docker", "volume", "create", "agent-ops-tracing-data"], check=True, stdout=subprocess.DEVNULL
@@ -54,7 +55,7 @@ appurl = f"postgresql+psycopg://ops_runtime:{values['OPS_APP_PASSWORD']}@127.0.0
 appfile = root / "application.env"
 appfile.touch(mode=0o600)
 appfile.write_text(
-    f"AGENT_OPS_SUPPORT_BACKEND=postgres\nAGENT_OPS_DATABASE_URL={appurl}\nSUPPORT_HUMAN_TOKEN={values['SUPPORT_HUMAN_TOKEN']}\nAGENT_OPS_PLANNER=deterministic\nAGENT_OPS_TRACE_EXPORTER=otlp\nAGENT_OPS_OTLP_ENDPOINT=http://127.0.0.1:14318/v1/traces\n"
+    f"AGENT_OPS_SUPPORT_BACKEND=postgres\nAGENT_OPS_DATABASE_URL={appurl}\nAGENT_OPS_AUTH_SECRET={values['AGENT_OPS_AUTH_SECRET']}\nAGENT_OPS_PLANNER=deterministic\nAGENT_OPS_TRACE_EXPORTER=otlp\nAGENT_OPS_OTLP_ENDPOINT=http://127.0.0.1:14318/v1/traces\n"
 )
 appfile.chmod(0o600)
 health = {}

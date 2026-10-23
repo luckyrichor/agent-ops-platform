@@ -176,3 +176,15 @@ B1 只整理既有证据：核对两组各3840有效样本、B0输入逐字节�
 按负责人消息 `om_x100b629f933620a8df2ad7262746929` 接收新版附件，逐字节保存至 `docs/agent-ops-platform面试级完善方案.md`，46589字节，SHA256 `0553d3da1027d9f826742d3dd5c1a1705e5b200b881aa7c20ee677887940aad3`。旧版完整归档 `docs/plans/archive/agent-ops-platform-plan-3ee56d417ca8.md`，原作者/原文未改，来源记 `docs/plans/source-2026-10-23-v2.json`，统一索引 `docs/plans/README.md`。
 
 与前版相比仅S3定位段增加缓存正式实验前的分布检验：原始浏览与合成请求相同容量和LRU策略模拟命中率，至少1%/10%容量，差距超过5个百分点先修正生成，结果记录S3文档；不将合成命中率称淘宝真实值。本次只归档，未运行该实验或开始P3，未把方案新增要求写成已完成功能。验证为新原件字节一致及旧归档哈希一致；仅文档变更，未重跑代码测试。
+
+
+## 2026-10-23 P3 认证与权限（Claude Code，北京时间）
+
+- 范围：负责人确认 P2 已验收，授权只做第六节 P3。开工 `git pull` 后基于干净的 `34ec229`；先跑一遍原测试作为对照：94 passed。重读了方案第六节和附录 B1/B6。没有做 P4 及以后的内容。
+- 做了什么：迁移 `0004_auth`（新增 auth.accounts、auth.refresh_tokens；tickets 加 customer_user_id 归属列；会话表加 user_id 索引）；argon2id 密码哈希；15 分钟 HS256 访问令牌加 7 天轮换刷新令牌（重放时吊销整个 family，单次登录最长 30 天）；接口 /auth、/orders、/admin、/workbench resolve，以及 /support 的工单列表和会话读取；取消共享 SUPPORT_HUMAN_TOKEN 和匿名工单查询；support 幂等键改为按顾客隔离；演示账号模块 `python -m agent_ops.demo_accounts`。新增依赖 argon2-cffi 25.1.0、PyJWT（锁定版本见 uv.lock），agent-memory 的固定提交没动。取舍见 design-decisions 的 P3 节，接口与兼容性变化见 docs/auth.md。
+- 验证：新增 `tests/test_auth.py`（内存模式，26 项：全部路由的 401/403 角色矩阵、按 OpenAPI 路由表核对覆盖、令牌篡改/过期/alg none/类型错、刷新轮换/重放/退出/30 天上限、工单归属、管理员停用、密码不出现在日志/span/响应/存储里）和 `tests/test_auth_postgres.py`（真实 PG16 容器，10 项：订单/会话/工单按归属过滤、跨顾客返回 404、客服访问订单和会话返回 403、下单不能伪造 user_id、8 个并发刷新同一令牌恰好 1 个成功、演示脚本只关联 2 个有订单的用户且 stdout 无密码、运行角色写不进明文哈希也删不了账号、0004 迁移回滚后可重新升级）。
+- 变异检验：分别去掉角色守卫、订单归属过滤、工单归属判断、会话归属判断，把幂等作用域改回全局，关掉内存版重放吊销。6 处改动都有测试失败（分别是 10、2、2、1、2、1 项），之后源码已恢复。
+- 四道门（指定 `AGENT_MEMORY_SOURCE` 为固定的 compat-1e2730c 源码）：pytest **130 passed / 0 skipped / 52.1 秒**（2 个既有的 record_property JUnit 警告）；ruff 通过；strict mypy 20 个文件通过；规则回归 47/47（只是回归检查，不是准确率）。日志在 .local/p3-*。
+- 改动的既有测试和原因：`test_support.py` 两项、`test_support_postgres.py` 四处。服务层去掉了 human_token 参数，resolve 第三个参数从令牌改为操作者；原来服务层的 PermissionError 断言改为过期版本号 409，权限检查移到 HTTP 层、由新测试覆盖；HTTP 用例改为先登录；迁移 head 断言从 0003 改为 0004。没有删除任何用例。
+- 失败与返工：① 路由覆盖测试一开始用 `app.routes`，当前 FastAPI 版本把 include_router 的路由包成惰性对象，不展开，断言失败；改为从 OpenAPI 路由表取。② strict mypy 把 `old and rows.get(...)` 推断成联合类型，报 1 个错，改成显式分支。
+- 未验证/未执行：没有对 P0 主库或 P2 验收库执行 0004 迁移，没有在真实库上建演示账号；`scripts/stack.py` 改为生成 AGENT_OPS_AUTH_SECRET，这次没有运行；没有用 uvicorn 起真实 TCP 服务做烟雾测试，HTTP 都走 ASGI 进程内传输；没有调用真实模型。B0/B1 基准脚本和 verify-p1-http 依赖匿名 /support，在当前 HEAD 上跑不通，只能在各自标签上复现，没有修改。

@@ -1,4 +1,5 @@
 import os
+import secrets
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
@@ -12,7 +13,19 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.requests import ClientDisconnect
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
+from agent_ops.access_api import admin_router, auth_router, orders_router
 from agent_ops.agents import demo_agents
+from agent_ops.auth import (
+    STAFF,
+    AccountStore,
+    AuthService,
+    InMemoryAccountStore,
+    TokenCodec,
+    principal_dependency,
+    role_guard,
+)
+from agent_ops.auth_postgres import PostgresAccountStore
+from agent_ops.commerce_backend import CommerceBackend
 from agent_ops.memory import MemoryCommerce
 from agent_ops.models import CommerceRequest, RunResult
 from agent_ops.orchestrator import Dispatcher
@@ -34,7 +47,10 @@ class RequestTraceMiddleware:
         if scope["type"] != "http":
             await self.app(scope, receive, send)
             return
-        with hop(self.dispatcher.tracer, "support.http" if scope.get("path", "").startswith("/support") else "commerce.http", kind=SpanKind.SERVER) as current:
+        path = scope.get("path", "")
+        name = ("support.http" if path.startswith(("/support", "/workbench"))
+                else "auth.http" if path.startswith(("/auth", "/admin")) else "commerce.http")
+        with hop(self.dispatcher.tracer, name, kind=SpanKind.SERVER) as current:
             trace_id = f"{current.get_span_context().trace_id:032x}"
             scope.setdefault("state", {})["trace_id"] = trace_id
             sampled = current.get_span_context().trace_flags.sampled
@@ -85,6 +101,10 @@ def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = N
             finally:
                 if isinstance(support, PostgresSupportService):
                     await support.aclose()
+                if isinstance(store, PostgresAccountStore):
+                    await store.aclose()
+                if commerce is not None:
+                    await commerce.aclose()
                 if dispatcher is None:
                     await dispatch.aclose()
 
@@ -92,15 +112,34 @@ def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = N
     dispatch = dispatcher or Dispatcher(demo_agents())
     backend = os.environ.get("AGENT_OPS_SUPPORT_BACKEND", "memory")
     support: SupportBackend
+    store: AccountStore
+    commerce: CommerceBackend | None = None
+    secret = os.environ.get("AGENT_OPS_AUTH_SECRET", "")
     if backend == "postgres":
-        support = PostgresSupportService(os.environ["AGENT_OPS_DATABASE_URL"], dispatch.tracer,
-                                         os.getenv("SUPPORT_HUMAN_TOKEN"))
+        if not secret:
+            # Persistent accounts need a stable signing key shared by every worker.
+            raise ValueError("AGENT_OPS_AUTH_SECRET is required with the postgres backend")
+        url = os.environ["AGENT_OPS_DATABASE_URL"]
+        support = PostgresSupportService(url, dispatch.tracer)
+        store = PostgresAccountStore(url)
+        commerce = CommerceBackend(url)
     elif backend == "memory":
-        support = SupportService(dispatch.tracer, os.getenv("SUPPORT_HUMAN_TOKEN"))
+        # Baseline switch: accounts and tokens live and die with this single process.
+        support = SupportService(dispatch.tracer)
+        store = InMemoryAccountStore()
+        secret = secret or secrets.token_urlsafe(48)
     else:
         raise ValueError("unknown support backend")
-    app.state.support = support
-    app.include_router(support_router(support))
+    auth = AuthService(store, TokenCodec(secret))
+    signed_in = principal_dependency(auth.codec)
+    customer = role_guard(signed_in, "customer")
+    staff = role_guard(signed_in, *STAFF)
+    app.state.support, app.state.auth, app.state.commerce = support, auth, commerce
+    app.include_router(auth_router(auth, signed_in=signed_in))
+    app.include_router(support_router(support, commerce, customer=customer, staff=staff,
+                                      signed_in=signed_in))
+    app.include_router(orders_router(commerce, customer=customer))
+    app.include_router(admin_router(auth, admin=role_guard(signed_in, "admin")))
 
     app.add_middleware(RequestTraceMiddleware, dispatcher=dispatch)
 
