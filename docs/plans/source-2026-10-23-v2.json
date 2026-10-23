@@ -1,0 +1,16 @@
+{
+  "recorded_beijing": "2026-10-23T09:54:00.203060+08:00",
+  "latest": "docs/agent-ops-platform面试级完善方案.md",
+  "new_sha256": "0553d3da1027d9f826742d3dd5c1a1705e5b200b881aa7c20ee677887940aad3",
+  "new_bytes": 46589,
+  "old_sha256": "3ee56d417ca81c2557589e2d1b658da0ed9cc447cb310158485af74034c351bf",
+  "old_archive": "docs/plans/archive/agent-ops-platform-plan-3ee56d417ca8.md",
+  "source_message_id": "om_x100b629f0869a4b0c0478c364bc232f",
+  "owner_instruction_message": "om_x100b629f933620a8df2ad7262746929",
+  "source_filename": "agent-ops-platform面试级完善方案.md",
+  "original_bytes_and_author_preserved": true,
+  "changes": [
+    "S3缓存实验前新增原始浏览与合成请求的LRU命中率对照：相同容量及策略，至少商品总数1%和10%两档；差距超过5个百分点先修正生成方法；结果写docs/optimizations/S3.md，合成命中率不冒称淘宝真实命中率"
+  ],
+  "scope": "archive and update plan entry only; no P3 or S3 execution"
+}

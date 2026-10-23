@@ -146,3 +146,8 @@ B0入口docs/baselines/b0/README.md；HTTP脚本scripts/benchmark-b0.py必须离
 ## 2026-10-23 P2 UserBehavior 后续执行口径
 
 最新版方案继续位于 docs/agent-ops-platform面试级完善方案.md，原 2026-10-21 版本已归档，实际 SHA256 与两处 A/A/噪声判据变化见 docs/plans/source-2026-10-23.json。用户已提供完整 UserBehavior 附件，只补 P2，不进入 P3。不得用全量重导覆盖已验收商品、订单；仅增量更新独立 P2 库的用户活动权重并生成私有离线事件。既有订单用户关联仍是结构性轮转，不冒称拟合；源时间戳异常如实计数、不悄悄清洗。正式验收仍由负责人决定。
+
+
+## 2026-10-23 新方案再次归档
+
+当前原件路径不变，最新来源为 docs/plans/source-2026-10-23-v2.json，统一索引 docs/plans/README.md。旧原件与旧来源记录保留。本次只归档；新增S3前置分布/LRU命中率校验尚未执行，不代表已授权启动P3或S3。
