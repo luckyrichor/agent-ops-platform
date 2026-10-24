@@ -42,6 +42,8 @@ uv run python -m agent_ops.demo_accounts          # 按名单建账号；数据�
 
 名单也可以用环境变量 `AGENT_OPS_DEMO_ACCOUNTS`（JSON）传入。顾客没写 customer_user_id 时，按 id 从小到大选有订单、且尚未关联账号的 commerce.users。重复执行不会重复建账号；`--reset-passwords` 重新哈希密码并结束已有登录。输出只有邮箱、角色、关联 id 和动作。目标库需要先升级到迁移 `0004_auth`。
 
+真实 TCP 联调（一次性 PG 容器 + 两个 uvicorn 进程，不碰服务器库）：`uv run python scripts/verify-p3-http.py --output .local/p3-http/result.json`。
+
 ## 未覆盖
 
 注册接口；登录失败限流（P12）；/v1/commerce 登录身份；/ws；工作台队列、抢单、回复（P4）；管理员统计（P4）；客服按工单查看关联订单（P4）；前端令牌存放方式（P5）。support 的“查订单”路由仍用 demo-100/demo-200 固定夹具，不校验订单归属，由 P4 改读真实订单表并按归属过滤。
