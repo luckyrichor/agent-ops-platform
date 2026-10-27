@@ -3,6 +3,7 @@ import asyncio
 import hashlib
 import json
 import re
+from datetime import datetime
 from typing import Literal
 from uuid import uuid4
 
@@ -23,13 +24,20 @@ class SupportRequest(BaseModel):
 class Ticket(BaseModel):
     ticket_id: str
     route: Route
-    state: Literal["resolved", "waiting_human", "needs_information"]
+    state: Literal["resolved", "waiting_human", "needs_information", "claimed"]
     revision: int = 1
     reason_code: str
     order_status: str | None = None
     history: list[str]
     # Owning customer (commerce.users id); None for pre-P3/synthetic tickets, staff-only.
     customer_user_id: int | None = None
+    order_id: int | None = None
+    assigned_account_id: int | None = None
+    lease_expires_at: datetime | None = None
+    priority: int = 1
+    sla_due_at: datetime | None = None
+    sla_warned: bool = False
+    sla_overdue: bool = False
 
 
 def route_message(message: str) -> Route:
@@ -89,7 +97,7 @@ class SupportService:
                 return original.model_copy(deep=True)
             if len(self.tickets) >= 256:
                 raise SupportCapacity("SUPPORT_CAPACITY")
-            state: Literal["resolved", "waiting_human", "needs_information"] = "needs_information"
+            state: Literal["resolved", "waiting_human", "needs_information", "claimed"] = "needs_information"
             reason = "CLARIFY_REQUEST"
             status = None
             if route == "order_status":

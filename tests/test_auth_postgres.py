@@ -206,9 +206,9 @@ async def test_ticket_ownership_scope_and_audit_actor(client, database):
     agent_session = await login(client, "agent1@demo.invalid")
     agent = {"Authorization": "Bearer " + agent_session["access_token"]}
     key = "pg-" + str(uuid4())
-    mine = await client.post("/support/requests", json={"message": "我要退款"},
+    mine = await client.post("/support/requests", json={"message": "转人工"},
                              headers={"Idempotency-Key": key, **c1})
-    theirs = await client.post("/support/requests", json={"message": "我要退款"},
+    theirs = await client.post("/support/requests", json={"message": "转人工"},
                                headers={"Idempotency-Key": key, **c2})
     tid = mine.json()["ticket_id"]
     assert theirs.json()["ticket_id"] != tid and theirs.json()["customer_user_id"] == 2
@@ -217,12 +217,15 @@ async def test_ticket_ownership_scope_and_audit_actor(client, database):
     listed = (await client.get("/support/tickets", headers=c1)).json()["items"]
     assert tid in [t["ticket_id"] for t in listed]
     assert theirs.json()["ticket_id"] not in [t["ticket_id"] for t in listed]
+    claimed = await client.post(f"/workbench/tickets/{tid}/claim",
+                                json={"expected_revision":1}, headers={**agent,"Idempotency-Key":"ownership-claim"})
+    assert claimed.status_code == 200
     resolved = await client.post(f"/workbench/tickets/{tid}/resolve",
-                                 json={"expected_revision": 1}, headers=agent)
+                                 json={"expected_revision": 2}, headers={**agent,"Idempotency-Key":"ownership-resolve"})
     assert resolved.status_code == 200
     with engine.connect() as c:
         actor = c.scalar(text("""SELECT actor FROM support.ticket_events
-            WHERE ticket_id=:id AND type='human_resolved'"""), {"id": tid})
+            WHERE ticket_id=:id AND type='resolved'"""), {"id": tid})
         owner = c.scalar(text("SELECT customer_user_id FROM support.tickets WHERE ticket_id=:id"),
                          {"id": tid})
     assert actor == f"account:{agent_session['account']['id']}" and owner == 1
@@ -296,7 +299,7 @@ def test_auth_migration_downgrade_and_reupgrade():
                 WHERE table_schema='support' AND column_name='customer_user_id'""")) == 0
         command.upgrade(config, "head")
         with engine.connect() as c:
-            assert c.scalar(text("SELECT version_num FROM alembic_version")) == "0004_auth"
+            assert c.scalar(text("SELECT version_num FROM alembic_version")) == "0005_workbench"
         engine.dispose()
 
 

@@ -224,12 +224,15 @@ async def test_http_pg_backend_trace_and_append_only(database, monkeypatch):
         tid = result.json()["ticket_id"]
         missing = await client.get("/support/tickets/not-a-uuid", headers=tokens["a901"])
         assert missing.status_code == 404
+        claimed = await client.post(f"/workbench/tickets/{tid}/claim", json={"expected_revision":1},
+                                    headers={**tokens["a901"],"Idempotency-Key":"claim-http"})
+        assert claimed.status_code == 200
         result = await client.post(
             f"/support/tickets/{tid}/resolve",
-            json={"expected_revision": 1},
-            headers=tokens["a901"],
+            json={"expected_revision": 2},
+            headers={**tokens["a901"], "Idempotency-Key":"resolve-http"},
         )
-        assert result.status_code == 200 and result.json()["revision"] == 2
+        assert result.status_code == 200 and result.json()["revision"] == 3
     # Trigger protects the audit even against the schema owner; runtime has no delete grant.
     with engine.connect() as conn:
         with pytest.raises(DBAPIError):
@@ -269,5 +272,5 @@ def test_migration_downgrade_and_reupgrade():
                 command.upgrade(config, target)
         engine = create_engine(pg.get_connection_url())
         with engine.connect() as conn:
-            assert conn.scalar(text("SELECT version_num FROM alembic_version")) == "0004_auth"
+            assert conn.scalar(text("SELECT version_num FROM alembic_version")) == "0005_workbench"
         engine.dispose()

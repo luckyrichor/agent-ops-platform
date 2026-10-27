@@ -1,3 +1,5 @@
+import asyncio
+import logging
 import os
 import secrets
 from collections.abc import AsyncIterator
@@ -8,6 +10,7 @@ from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse, StreamingResponse
 from opentelemetry.trace import SpanKind, Status, StatusCode
+from sqlalchemy.exc import SQLAlchemyError
 from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.requests import ClientDisconnect
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
@@ -35,6 +38,8 @@ from agent_ops.support import SupportService
 from agent_ops.support_api import SupportBackend, support_router
 from agent_ops.support_postgres import PostgresSupportService
 from agent_ops.telemetry import hop
+from agent_ops.workbench import WorkbenchService
+from agent_ops.workbench_api import workbench_router
 
 
 class RequestTraceMiddleware:
@@ -89,14 +94,27 @@ class RequestTraceMiddleware:
 
 
 def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = None,
-               *, baseline_without_auth: bool = False) -> FastAPI:
+               *, baseline_without_auth: bool = False, legacy_support: bool = False,
+               lifecycle_interval: float = 1) -> FastAPI:
     plan = planner or planner_from_env()
 
     @asynccontextmanager
     async def lifespan(app: FastAPI) -> AsyncIterator[None]:
+        async def lifecycle() -> None:
+            while True:
+                await asyncio.sleep(lifecycle_interval)
+                if isinstance(support, WorkbenchService):
+                    try:
+                        await support.maintain()
+                    except SQLAlchemyError:
+                        logging.getLogger(__name__).warning('support lifecycle failed; retrying')
+        task = asyncio.create_task(lifecycle()) if lifecycle_interval > 0 and isinstance(support, WorkbenchService) else None
         try:
             yield
         finally:
+            if task is not None:
+                task.cancel()
+                await asyncio.gather(task, return_exceptions=True)
             try:
                 await plan.aclose()
             finally:
@@ -121,7 +139,8 @@ def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = N
             # Persistent accounts need a stable signing key shared by every worker.
             raise ValueError("AGENT_OPS_AUTH_SECRET is required with the postgres backend")
         url = os.environ["AGENT_OPS_DATABASE_URL"]
-        support = PostgresSupportService(url, dispatch.tracer)
+        support = (PostgresSupportService(url, dispatch.tracer) if legacy_support
+                   else WorkbenchService(url, dispatch.tracer))
         store = PostgresAccountStore(url)
         commerce = CommerceBackend(url)
     elif backend == "memory":
@@ -143,6 +162,9 @@ def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = N
     app.state.support, app.state.auth, app.state.commerce = support, auth, commerce
     app.include_router(auth_router(auth, signed_in=signed_in))
     app.include_router(support_router(support, commerce, customer=customer, staff=staff,
+                                      signed_in=signed_in, enable_resolve=not isinstance(support, WorkbenchService)))
+    app.include_router(workbench_router(support if isinstance(support, WorkbenchService) else None, auth,
+                                      customer=customer, staff=staff, admin=role_guard(signed_in, "admin"),
                                       signed_in=signed_in))
     app.include_router(orders_router(commerce, customer=customer))
     app.include_router(admin_router(auth, admin=role_guard(signed_in, "admin")))

@@ -11,7 +11,7 @@ def create_app():
     mode = os.environ['AGENT_OPS_BENCHMARK_AUTH']
     if mode not in {'on', 'off'}:
         raise ValueError('explicit benchmark auth on/off required')
-    app = api_app(baseline_without_auth=mode == 'off')
+    app = api_app(baseline_without_auth=mode == 'off', legacy_support=True)
     lifespan = app.router.lifespan_context
 
     @asynccontextmanager

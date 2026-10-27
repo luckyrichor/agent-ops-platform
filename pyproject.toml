@@ -17,6 +17,7 @@ dependencies = [
     "alembic>=1.13,<2",
     "argon2-cffi>=23.1,<26",
     "pyjwt>=2.9,<3",
+    "websockets>=14,<17",
 ]
 [dependency-groups]
 dev = [

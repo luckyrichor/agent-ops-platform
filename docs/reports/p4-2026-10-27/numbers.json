@@ -1,0 +1,212 @@
+{
+  "generated_beijing": "2026-10-27T13:09:53.083499+08:00",
+  "P3_pushed_commit": "89009744cb5772203a64a0acb3bb05c4a321b7c3",
+  "P4_uncommitted": true,
+  "pytest": {
+    "tests": "163",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "65.867"
+  },
+  "workbench_tests": [
+    "test_real_orders_missing_information_and_returns",
+    "test_claim_one_winner_across_connections_and_operation_replay",
+    "test_claim_holder_messages_transitions_and_role_labels",
+    "test_lease_renew_expiry_and_concurrent_reaper",
+    "test_sla_warning_overdue_only_once_and_stats",
+    "test_order_only_linked_to_ticket_each_view_audited",
+    "test_seed_sender_unchanged_and_new_messages_labeled",
+    "test_offset_queue_stable_and_no_s1_index",
+    "test_audit_failure_rolls_back_message_operation_and_push",
+    "test_durable_sequence_orders_commits_and_isolation",
+    "test_real_tcp_websocket_customer_to_seat_reconnect_and_complete_audit",
+    "test_lifespan_runs_lease_and_sla_worker_without_manual_trigger",
+    "test_experimental_naive_claim_rejects_non_experiment_database",
+    "test_workbench_migration_roundtrip_and_claimed_downgrade_guard",
+    "test_customer_can_supply_missing_order_after_seat_has_claimed"
+  ],
+  "ruff": "passed",
+  "strict_mypy": {
+    "passed": true,
+    "files": 23
+  },
+  "rules_regression": {
+    "cases": 47,
+    "passed": 47,
+    "quality_accuracy_claim": false
+  },
+  "compat_TCP": {
+    "started_at": "2026-10-27T01:06:35.675080+00:00",
+    "finished_at": "2026-10-27T01:06:44.587548+00:00",
+    "database": "disposable testcontainers pgvector/pgvector:pg16 (fixture rows only)",
+    "servers": "2 uvicorn processes, 127.0.0.1, shared signing key, no model calls",
+    "checks": {
+      "CLI created the 6-account roster": true,
+      "CLI linked customers to the 3 users that have orders": true,
+      "CLI output has no passwords": true,
+      "token issued by process A is accepted by process B": true,
+      "/v1/commerce/runs rejects anonymous before SSE starts": true,
+      "/v1/commerce/runs rejects agent": true,
+      "/v1/commerce/runs accepts customer with memory not_configured": true,
+      "/v1/commerce/stream rejects anonymous before SSE starts": true,
+      "/v1/commerce/stream rejects agent": true,
+      "/v1/commerce/stream accepts customer with memory not_configured": true,
+      "customer sees only own orders over TCP": true,
+      "other customer's order is 404": true,
+      "other customer's conversation is 404": true,
+      "agent cannot read orders (403)": true,
+      "agent cannot read conversations (403)": true,
+      "customer cannot use workbench (403)": true,
+      "customer cannot use admin (403)": true,
+      "agent claims before resolving": true,
+      "agent resolves on the other process": true,
+      "anonymous requests are 401": true,
+      "refresh on process B": true,
+      "replayed refresh token rejected on process A as reuse": true,
+      "reuse revoked the rotated successor": true,
+      "admin lists exactly the demo roster": true,
+      "logout returns 204": true,
+      "server log has no passwords": true,
+      "server log has no bearer tokens": true
+    },
+    "passed": 27,
+    "total": 27
+  },
+  "real_P2_TCP_and_WS": {
+    "checks": {
+      "login-customer1@demo.invalid": true,
+      "cross-worker-customer1@demo.invalid": true,
+      "login-customer2@demo.invalid": true,
+      "cross-worker-customer2@demo.invalid": true,
+      "login-customer3@demo.invalid": true,
+      "cross-worker-customer3@demo.invalid": true,
+      "login-agent1@demo.invalid": true,
+      "cross-worker-agent1@demo.invalid": true,
+      "login-agent2@demo.invalid": true,
+      "cross-worker-agent2@demo.invalid": true,
+      "login-admin1@demo.invalid": true,
+      "cross-worker-admin1@demo.invalid": true,
+      "own-orders-customer1@demo.invalid": true,
+      "own-seed-tickets-customer1@demo.invalid": true,
+      "own-orders-customer2@demo.invalid": true,
+      "own-seed-tickets-customer2@demo.invalid": true,
+      "own-orders-customer3@demo.invalid": true,
+      "own-seed-tickets-customer3@demo.invalid": true,
+      "staff-orders-forbidden-agent1@demo.invalid": true,
+      "staff-orders-forbidden-agent2@demo.invalid": true,
+      "staff-orders-forbidden-admin1@demo.invalid": true,
+      "other-customer-order-404": true,
+      "other-customer-ticket-404": true,
+      "/v1/commerce/runs-anonymous-401": true,
+      "/v1/commerce/runs-staff-403": true,
+      "/v1/commerce/runs-customer-memory-disabled": true,
+      "/v1/commerce/stream-anonymous-401": true,
+      "/v1/commerce/stream-staff-403": true,
+      "/v1/commerce/stream-customer-memory-disabled": true,
+      "P4-offset-queue": true,
+      "P4-admin-stats": true,
+      "P4-staff-stats-forbidden": true,
+      "P4-real-P2-websocket-auth-and-cursor": true,
+      "logout-33": true,
+      "logout-34": true,
+      "logout-35": true,
+      "logout-36": true,
+      "logout-37": true,
+      "logout-38": true,
+      "no-credentials-in-server-log": true,
+      "no-bearer-in-server-log": true
+    },
+    "passed": 41,
+    "total": 41,
+    "business_writes": 0,
+    "database": "agent_ops_p2_seed42",
+    "processes": 2,
+    "source_head": "89009744cb5772203a64a0acb3bb05c4a321b7c3",
+    "dirty": true
+  },
+  "maintenance": {
+    "hostname": "VM-0-15-ubuntu",
+    "started_at": "2026-10-27T01:03:52.881690+00:00",
+    "base_commit": "89009744cb5772203a64a0acb3bb05c4a321b7c3",
+    "dirty": true,
+    "databases": {
+      "agent_ops": {
+        "preflight_sessions": [],
+        "before": {
+          "commerce.users": 0,
+          "commerce.orders": 0,
+          "support.tickets": 1,
+          "support.ticket_events": 2,
+          "seed_sender_counts": {}
+        },
+        "backup": {
+          "path": "/home/ubuntu/project/WorkPlan/agent-ops-platform/.local/backups/agent_ops-pre-0005-20261027T010353Z.dump",
+          "bytes": 61157,
+          "mode": "0o600",
+          "seconds": 0.5160798251163214,
+          "archive_readable": true,
+          "restoration_exercised": false
+        },
+        "migration_seconds": 0.0896777210291475,
+        "version": "0005_workbench",
+        "after": {
+          "commerce.users": 0,
+          "commerce.orders": 0,
+          "support.tickets": 1,
+          "support.ticket_events": 2,
+          "seed_sender_counts": {}
+        },
+        "new_live_messages": 0,
+        "push_sequence": 0,
+        "complete": true,
+        "connections_restored": true
+      },
+      "agent_ops_p2_seed42": {
+        "preflight_sessions": [],
+        "before": {
+          "commerce.users": 1000000,
+          "commerce.orders": 2000000,
+          "support.tickets": 1000000,
+          "support.ticket_events": 1000000,
+          "seed_sender_counts": {
+            "source": 10000000
+          }
+        },
+        "backup": {
+          "path": "/home/ubuntu/project/WorkPlan/agent-ops-platform/.local/backups/agent_ops_p2_seed42-pre-0005-20261027T010401Z.dump",
+          "bytes": 301169049,
+          "mode": "0o600",
+          "seconds": 88.13712784601375,
+          "archive_readable": true,
+          "restoration_exercised": false
+        },
+        "migration_seconds": 5.22947701998055,
+        "version": "0005_workbench",
+        "after": {
+          "commerce.users": 1000000,
+          "commerce.orders": 2000000,
+          "support.tickets": 1000000,
+          "support.ticket_events": 1000000,
+          "seed_sender_counts": {
+            "source": 10000000
+          }
+        },
+        "new_live_messages": 0,
+        "push_sequence": 0,
+        "complete": true,
+        "connections_restored": true
+      }
+    },
+    "complete": true
+  },
+  "old_baseline_tags": {
+    "baseline-v0": "b59ea2cfb7509de3eab20fd1f5f447b0b692de8b",
+    "baseline-b0": "01066a86b931767fbf3a8c1fd8592ad6117c23ef",
+    "baseline-b1": "6fd64601594262123d469502e13bd4231007be16"
+  },
+  "S1_executed": false,
+  "P5_started": false,
+  "backup_full_restore_verified": false,
+  "performance_claim": false
+}

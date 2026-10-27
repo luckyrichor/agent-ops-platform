@@ -1,6 +1,6 @@
 # P3 认证与权限
 
-最后更新：2026-10-26。设计取舍见 [design-decisions.md](design-decisions.md) 的 P3 节。
+最后更新：2026-10-27。设计取舍见 [design-decisions.md](design-decisions.md) 的 P3 节。
 
 ## 登录
 
@@ -71,3 +71,8 @@ uv run python scripts/serve.py --backend postgres --env-file .local/p2-applicati
 ```
 
 此命令显式使用 P2 验收库，绑定 127.0.0.1；默认 `.local/application.env` 仍指向 P0 主库。密码从私有名单本机读取，不发送到群、仓库或日志。`scripts/verify-p3-persistent.py` 已用同一配置起两个临时 TCP 进程验证，结束后停止，不增加常驻 API。
+
+
+## P4 已实现的客服闭环（2026-10-27）
+
+本节更新前文 P3 阶段的未实现状态。当前产品 PG 工单列表使用 OFFSET；/workbench/tickets/{id}/resolve 及旧 /support 别名均必须先 claim、仅领取者未过期可操作，带 Idempotency-Key。staff 直接订单接口继续 403；仅工单内 GET /workbench/tickets/{id}/order 查看该单已关联且顾客归属一致的订单，逐次审计并返回新版本。队列、回复、退回、租约、SLA、WebSocket 和 admin/support-stats 已实现，接口明细在 [P4](p4-support.md)。P5 页面、P6 退款和 P12 登录限流仍未实现，记忆 P7 前缺口未变。P3 旧基准行为仅在 memory/legacy_support 显式模式保留，不代表产品跳过 claimed 状态。

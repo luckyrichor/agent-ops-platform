@@ -1,6 +1,6 @@
 # AGENTS.md
 
-最后更新：2026-10-26（北京时间）
+最后更新：2026-10-27（北京时间）
 
 本文件为在本仓库工作的编码 agent 提供指引（Claude Code 读 `CLAUDE.md`、Codex 读 `AGENTS.md`，两者都指向这里）。
 
@@ -10,7 +10,7 @@ Agent 应用与可观测评测平台。电商场景的多 Agent 任务拆解、�
 
 三个月求职计划六项目之一（原编号 ③），对应岗位 **05、07、10、11、14**，另含 **08** 作为子方向。总计划见 [workplan-docs](https://github.com/luckyrichor/workplan-docs)，岗位原文以那里的 `岗位要求原文.md` 为唯一依据。
 
-**当前状态：P2 已由负责人验收；P3 已由负责人验收，授权提交推送后只做 P4，禁止进入 P5。两个持久库均已到 0004；P2 建有 6 个演示账号、种子工单按确定会话关联补归属；P0 历史测试工单保持无归属。导购两个 HTTP 入口必须 customer 登录，平台 JWT 不转发到 agent-memory；现有 memory 无服务凭据加平台用户 ID 协议，HTTP 记忆状态为 not_configured（P7 前缺口）。完整证据见 [P3 收尾交付](docs/reports/p3-followup-2026-10-26/delivery.md)，135 项测试通过、0 跳过。业务 API 未常驻；Jaeger 六组件栈已运行。**
+**当前状态：P2 已由负责人验收；P3 已验收并于 8900974 提交推送；P4 后端及两库 0005 迁移已完成，最终 163 项测试通过，等待 P4 验收，禁止进入 P5。两个持久库均已到 0004；P2 建有 6 个演示账号、种子工单按确定会话关联补归属；P0 历史测试工单保持无归属。导购两个 HTTP 入口必须 customer 登录，平台 JWT 不转发到 agent-memory；现有 memory 无服务凭据加平台用户 ID 协议，HTTP 记忆状态为 not_configured（P7 前缺口）。完整证据见 [P3 收尾交付](docs/reports/p3-followup-2026-10-26/delivery.md)，135 项测试通过、0 跳过。业务 API 未常驻；Jaeger 六组件栈已运行。**
 
 ## 分工模式：偏产出
 
@@ -183,7 +183,7 @@ B0入口docs/baselines/b0/README.md；HTTP脚本scripts/benchmark-b0.py必须离
 
 ### 已知问题、返工与下一步
 
-1. 先等待负责人验收 P3，不进入 P4。无进行中的开发进程/迁移。P4 尚未实现；未来客服只能通过工单详情查看该工单关联订单，每次审计，不能扩展为任意顾客订单查询。P3 客服直接订单仍 403。
+1. 本条原为 P3 等待验收状态，现已获 P4 授权；当前进度以下方 2026-10-27 P4 节为准。客服直接订单访问仍 403，只在工单内查看本单关联订单并逐次审计。
 2. P7 前缺口：双方确定服务身份、平台用户 ID 映射与权限协议；当前继续 not_configured。如需改 agent-memory 接口，必须先汇报、批准后同步两边文档，不直接在 sibling 仓库改 API。
 3. 原迁移 SQL 注释有分号，拆语句计时首次误分导致事务回滚，已修正并验证；主库未到 commerce 的检查假设已按实际 0001 起点修正。不要只按旧报告猜迁移版本。
 4. 种子 UPDATE 已提交后的初版只读核验为低效关联查询，已取消且改集合 JOIN 只读复核；没有重复更新。原 UPDATE 耗时没落盘，记录 null，不估算；单条加列/索引计时均完整。本轮实际回填记录见 ownership 字段；脚本已改提交后立即保存数量/耗时。
@@ -203,3 +203,33 @@ B0入口docs/baselines/b0/README.md；HTTP脚本scripts/benchmark-b0.py必须离
 ## 2026-10-26 P3 验收与 P4 授权
 
 负责人消息 om_x100b62cb07c708acce85125f2d6e7ab 已验收 P3，明确授权将全部 P3 改动提交推送，然后只做 P4。此前“不提交/等待 P3 验收/不进入 P4”均为历史阶段状态，由本条更新。P4 按本轮用户约束执行：单条条件更新加版本号领取、偏移量列表、不提前做 S1；两步领取仅实验入口，部分索引/游标/SKIP LOCKED 留 P10；10 分钟续期租约、持久序号 WebSocket 补发、真实角色新消息、ECD source 保持原样；P6 才退款，P5 前停止。
+
+
+## 2026-10-27 P4 客服闭环（Codex）
+
+P3 全部改动已按负责人第一步要求提交推送 main：`89009744cb5772203a64a0acb3bb05c4a321b7c3`（实际提交时间北京时间 2026-10-27 08:47；此前授权段沿用了会话环境日期 2026-10-26，执行日期以本条与 Git 时间为准）。P4 本轮实现基于此提交的工作区修改，P4 尚未提交推送，完成后等待验收，不进入 P5。
+
+已完成：src/agent_ops/workbench.py / workbench_api.py、0005_workbench 迁移及真实 PG/TCP WebSocket 测试。P0/P2 已在无其他连接、备份后从 0004 升级至 0005，两库准入已恢复；关键业务行数和 P2 1000 万 sender=source 消息不变。备份与维护记录 `.local/p4-2026-10-27/databases.json`。最终 pytest 163 passed / 0 skipped / 65.867 秒；ruff、strict mypy 23 文件、规则回归 47/47 通过。15 项 P4 真实 PG/TCP 用例包括两个 uvicorn OS 进程的 WS 创建→领取→断线→回复/解决→跨进程补发、审计版本连续、后台任务自动回收与 SLA、领取后补单号保留租约、迁移往返/claimed 降级拒绝。兼容 TCP 27/27、真实 P2 只读联调与 WS 41/41。设计和运行约定见 docs/p4-support.md；最终公开证据 docs/reports/p4-2026-10-27/，私有原件 .local/p4-*。
+
+实现边界：单条 CAS 领取、10 分钟租约及自动续期/回收、SLA 警告与到期、退货 waiting_human、缺物流订单 needs_information、真实订单归属查询、工单内订单查看每次审计；持久全局序号 WebSocket 在两个 OS 进程间按 after 补发。产品 P4 队列/消息/事件/顾客工单列表 OFFSET，既有 P3 订单等游标接口保留。未增加 S1 队列部分索引/游标/SKIP LOCKED，原 P3 顾客归属索引保留；危险两步领取只在 scripts/experiments/s1-naive-claim.py，必须显式开关且库名 agent_ops_s1_*，产品不导入。P5+、退款/审批资金动作和 S1 测量未做。
+
+
+### P4 运行、已知限制及下一步
+
+- 数据流：support/requests 仍是顾客入口，PG 默认 WorkbenchService；workbench_api 提供领取/回复/退回/解决、详情/工单内订单和 /ws；workbench.py 在同一事务写 tickets/messages/operations/ticket_events/push_events。push_clock 事务行锁保证可见序号按提交顺序，客户端 last_processed/after 严格补发；两个进程轮询同一 PG，未来 Pub/Sub 只唤醒，不代替持久历史。sender=source 的种子只读，不猜角色。
+- 业务写带 Idempotency-Key 和 expected_revision。产品 claim 一条 state/revision 条件 UPDATE，claimed 仅持有者未过期可写。领取者查看详情/消息/审计/订单也续租及增版本，前端 P5 必须采用返回 ticket_revision。顾客补缺订单可在 claimed 中进行但不续租、不改领取者；订单已关联不得替换。退货永远 waiting_human，P4 不提供资金批准/退款。
+- 新队列/消息/事件/PG 顾客工单列表 OFFSET；已有 P3 订单等游标/归属索引仅保留，不当 S1 优化。危险两步基线脚本必须 --enable-unsafe-s1-baseline 且 AGENT_OPS_S1_DATABASE_URL 库名 agent_ops_s1_*，安全门已测拒绝正常库；S1 领取实验本身未运行。
+- 实库备份（均 600、目录可读；完整恢复未验证）：P0 `.local/backups/agent_ops-pre-0005-20261027T010353Z.dump` 61,157 字节；P2 `.local/backups/agent_ops_p2_seed42-pre-0005-20261027T010401Z.dump` 301,169,049 字节。迁移约 0.090/5.229 秒，行数和 1000 万 source 消息角色不变。历史合成工单 SLA 从迁移时刻 normal +24h 初始化，不作为历史真实 SLA；旧订单关联不猜测回填。
+- 启动：uv sync；`uv run python scripts/serve.py --backend postgres --env-file .local/p2-application.env --port 8003`，仅 localhost，未常驻。真实库只读烟雾：`uv run python scripts/verify-p3-persistent.py --output-dir .local/p4-new-smoke --workbench`（只新增认证会话，输出路径必须新建）。完整写入闭环用一次性 PG 测试，不污染百万库。新增 websockets 锁定 16.1.1，uv.lock 是版本依据。
+- 后台每秒批量条件检查，多个进程避免重复释放/SLA事件；大规模到期吞吐、提交序号门性能、WS 容量、完整备份恢复均未验证。没有清理持久推送历史，未来保留期限须配套游标过期协议。0005 降级会移除 P4 数据，先备份并释放 claimed，测试库往返通过，服务器未降级。
+- 已知失败已修：两项旧 PG HTTP 用例跳过领取被拒绝，改为 claim 后 resolve 且带幂等键，保留权限/归属/审计断言；补齐 mypy 查询类型、异步测试子进程启动和显式 check、后台测试缺失导入。最终四道门通过，无进行中的迁移/API进程。P4 原始较早 162 项日志留作返工历史，不替代最终 163 项。
+- 下一步：等负责人验收 P4；本轮 P4 工作区修改未提交推送，不自行进入 P5/P6/P10。无新技术决策待定。P7 memory 服务身份协议缺口仍 not_configured，若改接口先报告再同步双方文档。
+- 飞书已同步：2026-10-27 P4 交付和完整接口/运行说明已追加既有《agent-ops-platform 开发记录》：https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf。父节点/正文回读通过，确认 P3 正文完整保留（导出标题标记归一后核对）；用户身份 codex profile / --as user。核验见 docs/reports/p4-2026-10-27/publication.json。
+
+### 更新日志（P4）
+
+- 2026-10-27：Codex 完成 P3 提交推送及上述 P4 实现、两库备份迁移、163 项回归和真实双进程 WS 验证；P5 等待 P4 验收。
+
+## 2026-10-27 P4 验收与 P5 授权
+
+负责人消息 om_x100b61333a019caccf035b587c1094e 已验收 P4，要求先提交推送全部 P4 改动，再只做 P5 React/TypeScript 前端。此前等待 P4 验收/不进入 P5 为历史阶段状态，由本条更新。P5 只绑定回环，SSH 转发访问；支付与 P7 依赖部分明确“尚未开通”，不冒充真实能力；Playwright 主流程/双标签隔离/私有截图、前后端检查后停在 P6 前。Codex 本轮独立主导执行，适用独立任务安排。

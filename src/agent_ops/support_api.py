@@ -12,6 +12,7 @@ from agent_ops.support import (
     SupportRequest,
     Ticket,
 )
+from agent_ops.workbench import WorkbenchService
 
 Guard = Callable[..., Awaitable[Principal]]
 BIGINT = 2**63 - 1
@@ -25,6 +26,12 @@ class ResolveRequest(BaseModel):
 class Page(BaseModel):
     items: list[Any]
     next_cursor: str | None
+
+
+class OffsetPage(BaseModel):
+    items: list[Any]
+    offset: int
+    limit: int
 
 
 class SupportBackend(Protocol):
@@ -49,7 +56,7 @@ def commerce_required(commerce: CommerceBackend | None) -> CommerceBackend:
 
 
 def support_router(service: SupportBackend, commerce: CommerceBackend | None, *,
-                   customer: Guard, staff: Guard, signed_in: Guard) -> APIRouter:
+                   customer: Guard, staff: Guard, signed_in: Guard, enable_resolve: bool = True) -> APIRouter:
     """Customer-facing /support plus the staff-only resolve action (/workbench and legacy path)."""
     router = APIRouter()
     Customer = Annotated[Principal, Depends(customer)]
@@ -67,9 +74,14 @@ def support_router(service: SupportBackend, commerce: CommerceBackend | None, *,
         except SupportCapacity as error:
             raise HTTPException(503, str(error)) from error
 
-    @router.get("/support/tickets", response_model=Page)
+    @router.get("/support/tickets", response_model=Page | OffsetPage)
     async def own_tickets(principal: Customer, limit: Limit = 20,
-                          cursor: Annotated[str | None, Query(max_length=64)] = None) -> Page:
+                          cursor: Annotated[str | None, Query(max_length=64)] = None,
+                          offset: Annotated[int, Query(ge=0, le=2**31-1)] = 0) -> Page | OffsetPage:
+        if isinstance(service, WorkbenchService):
+            if cursor is not None:
+                raise HTTPException(422, "P4_USES_OFFSET")
+            return OffsetPage(items=await service.customer_page(owner_id(principal), limit, offset), offset=offset, limit=limit)
         items = await service.customer_tickets(owner_id(principal), cursor, limit)
         return Page(items=items, next_cursor=items[-1].ticket_id if len(items) == limit else None)
 
@@ -92,11 +104,9 @@ def support_router(service: SupportBackend, commerce: CommerceBackend | None, *,
         except SupportConflict as error:
             raise HTTPException(409, str(error)) from error
 
-    @router.post("/workbench/tickets/{ticket_id}/resolve", response_model=Ticket)
     async def workbench_resolve(ticket_id: str, body: ResolveRequest, principal: Staff) -> Ticket:
         return await resolve(ticket_id, body, principal)
 
-    @router.post("/support/tickets/{ticket_id}/resolve", response_model=Ticket)
     async def legacy_resolve(ticket_id: str, body: ResolveRequest, principal: Staff) -> Ticket:
         # Pre-P3 path kept for compatibility; now an agent/admin access token, not a shared secret.
         return await resolve(ticket_id, body, principal)
@@ -121,4 +131,7 @@ def support_router(service: SupportBackend, commerce: CommerceBackend | None, *,
             raise HTTPException(404, "CONVERSATION_NOT_FOUND") from error
         return Page(items=items, next_cursor=str(items[-1]["seq"]) if len(items) == limit else None)
 
+    if enable_resolve:
+        router.add_api_route("/workbench/tickets/{ticket_id}/resolve", workbench_resolve, methods=["POST"], response_model=Ticket)
+        router.add_api_route("/support/tickets/{ticket_id}/resolve", legacy_resolve, methods=["POST"], response_model=Ticket)
     return router

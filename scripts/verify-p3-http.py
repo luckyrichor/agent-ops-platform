@@ -132,9 +132,12 @@ async def exercise(bases: list[str], roster: dict) -> None:
             headers=auth(c1))).status_code == 403)
         check("customer cannot use admin (403)",
               (await client.get(one + "/admin/accounts", headers=auth(c1))).status_code == 403)
+        check("agent claims before resolving", (await client.post(
+            two + f"/workbench/tickets/{tid}/claim", json={"expected_revision": 1},
+            headers={**auth(agent), "Idempotency-Key": "p4-http-claim"})).status_code == 200)
         check("agent resolves on the other process", (await client.post(
-            two + f"/workbench/tickets/{tid}/resolve", json={"expected_revision": 1},
-            headers=auth(agent))).status_code == 200)
+            two + f"/workbench/tickets/{tid}/resolve", json={"expected_revision": 2},
+            headers={**auth(agent), "Idempotency-Key": "p4-http-resolve"})).status_code == 200)
         anonymous = [await client.request(m, one + path, json=body) for m, path, body in [
             ("GET", "/orders", None), ("GET", f"/support/tickets/{tid}", None),
             ("POST", "/support/requests", {"message": "x"}), ("GET", "/admin/accounts", None),

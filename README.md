@@ -1,8 +1,8 @@
 # agent-ops-platform
 
-最后更新：2026-10-26；Codex；当前能力以本仓库提交及下列验收记录为准。
+最后更新：2026-10-27；Codex；当前能力以本仓库提交及下列验收记录为准。
 
-当前：P2 已验收，P3 收尾完成等待验收；135 项测试通过，P4 尚未开始。两个持久库已迁移到 0004；导购需要顾客登录，记忆暂为 not_configured（P7 前缺口）。本轮改动尚未提交/推送。见 [P3 收尾交付](docs/reports/p3-followup-2026-10-26/delivery.md) 与 [认证运行指南](docs/auth.md)。
+当前：P3 已验收并提交推送 `8900974`。P4 客服闭环已实现，两库已到 0005，最终验收证据见 [P4 交付](docs/reports/p4-2026-10-27/delivery.md)，接口与取舍见 [P4 文档](docs/p4-support.md)。P4 等待负责人验收，P5 尚未开始；本轮 P4 工作区修改尚未提交推送。导购记忆继续 not_configured（P7 前缺口）。
 
 W4 M1 骨架与电商多 Agent 编排最小闭环已实现。Python 3.12 + FastAPI；确定性规划器将请求分为 catalog、pricing、shipping、recommendation 四个角色任务，依赖校验后分派，pricing/shipping 并发，最终汇总预算内推荐。不同角色是代码中的独立 handler。现已增加可选真实 LLM 规划器，已使用用户开通的 Doubao-Seed-2.1-lite 完成初验及30次重复规划工程评测，详见 [接入与验收](docs/llm-planner.md)。
 
