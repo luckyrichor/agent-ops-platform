@@ -4,6 +4,7 @@ import socket
 import httpx
 import pytest
 import uvicorn
+from http_login import login_customer
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import SimpleSpanProcessor
 from opentelemetry.sdk.trace.export.in_memory_span_exporter import InMemorySpanExporter
@@ -35,7 +36,8 @@ async def test_real_http_disconnect_propagates_and_other_requests_finish():
     sock.bind(("127.0.0.1", 0))
     sock.listen()
     address = f"http://127.0.0.1:{sock.getsockname()[1]}"
-    server = uvicorn.Server(uvicorn.Config(create_app(Dispatcher(handlers, provider.get_tracer("test"))), log_level="error"))
+    app = create_app(Dispatcher(handlers, provider.get_tracer("test")))
+    server = uvicorn.Server(uvicorn.Config(app, log_level="error"))
     serving = asyncio.create_task(server.serve(sockets=[sock]))
     try:
         async with asyncio.timeout(3):
@@ -43,6 +45,8 @@ async def test_real_http_disconnect_propagates_and_other_requests_finish():
                 await asyncio.sleep(0.005)
         body = {"request": "wait", "category": "kettle", "budget_cent": 5000, "region": "上海"}
         async with httpx.AsyncClient(base_url=address, timeout=3, trust_env=False) as client:
+            await login_customer(client, app)
+            exporter.clear()
             async with client.stream("POST", "/v1/commerce/stream", json=body) as response:
                 assert response.status_code == 200
                 trace_id = response.headers["x-trace-id"]

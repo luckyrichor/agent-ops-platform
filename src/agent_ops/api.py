@@ -3,9 +3,8 @@ import secrets
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
 
-import httpx
-from agent_memory.sdk import MemoryAPIError, MemoryClient
-from fastapi import FastAPI, HTTPException, Request
+from agent_memory.sdk import MemoryAPIError
+from fastapi import Depends, FastAPI, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
 from fastapi.responses import JSONResponse, StreamingResponse
 from opentelemetry.trace import SpanKind, Status, StatusCode
@@ -20,6 +19,7 @@ from agent_ops.auth import (
     AccountStore,
     AuthService,
     InMemoryAccountStore,
+    Principal,
     TokenCodec,
     principal_dependency,
     role_guard,
@@ -88,7 +88,8 @@ class RequestTraceMiddleware:
                 await response(scope, receive, traced_send)
 
 
-def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = None) -> FastAPI:
+def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = None,
+               *, baseline_without_auth: bool = False) -> FastAPI:
     plan = planner or planner_from_env()
 
     @asynccontextmanager
@@ -132,6 +133,11 @@ def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = N
         raise ValueError("unknown support backend")
     auth = AuthService(store, TokenCodec(secret))
     signed_in = principal_dependency(auth.codec)
+    if baseline_without_auth:
+        # Only the explicit loopback benchmark factory opts in; normal API always authenticates.
+        async def benchmark_customer() -> Principal:
+            return Principal(1, "customer", 1, "benchmark-only")
+        signed_in = benchmark_customer
     customer = role_guard(signed_in, "customer")
     staff = role_guard(signed_in, *STAFF)
     app.state.support, app.state.auth, app.state.commerce = support, auth, commerce
@@ -160,20 +166,14 @@ def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = N
                                      "trace_sampled": request.state.trace_sampled})
 
     async def execute(body: CommerceRequest, request: Request) -> RunResult:
-        url = os.environ.get("AGENT_MEMORY_URL")
-        if not url:
+        # agent-memory only accepts its own RS256 user JWT (UUID sub/tenant), not a
+        # service credential + platform bigint user ID. P7 gap: never forward platform tokens.
+        try:
             return await MemoryCommerce(dispatch, None, plan).run(body)
-        authorization = request.headers.get("authorization", "")
-        if not authorization.startswith("Bearer "):
-            raise HTTPException(401, "memory integration requires caller bearer token")
-        async with httpx.AsyncClient(base_url=url, timeout=2, trust_env=False) as client:
-            try:
-                return await MemoryCommerce(dispatch, MemoryClient(
-                    client, token=authorization[7:]), plan).run(body)
-            except MemoryAPIError as error:
-                raise HTTPException(error.status_code, error.code) from error
+        except MemoryAPIError as error:
+            raise HTTPException(error.status_code, error.code) from error
 
-    @app.post("/v1/commerce/stream")
+    @app.post("/v1/commerce/stream", dependencies=[Depends(customer)])
     async def stream(body: CommerceRequest, request: Request) -> StreamingResponse:
         async def events() -> AsyncIterator[str]:
             async for event in stream_run(lambda: execute(body, request),
@@ -183,7 +183,7 @@ def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = N
         return StreamingResponse(events(), media_type="text/event-stream",
                                  headers={"Cache-Control": "no-cache"})
 
-    @app.post("/v1/commerce/runs", response_model=RunResult)
+    @app.post("/v1/commerce/runs", response_model=RunResult, dependencies=[Depends(customer)])
     async def run(body: CommerceRequest, request: Request) -> RunResult:
         try:
             return await execute(body, request)

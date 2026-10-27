@@ -1,6 +1,6 @@
 # AGENTS.md
 
-最后更新：2026-10-08（北京时间）
+最后更新：2026-10-26（北京时间）
 
 本文件为在本仓库工作的编码 agent 提供指引（Claude Code 读 `CLAUDE.md`、Codex 读 `AGENTS.md`，两者都指向这里）。
 
@@ -10,7 +10,7 @@ Agent 应用与可观测评测平台。电商场景的多 Agent 任务拆解、�
 
 三个月求职计划六项目之一（原编号 ③），对应岗位 **05、07、10、11、14**，另含 **08** 作为子方向。总计划见 [workplan-docs](https://github.com/luckyrichor/workplan-docs)，岗位原文以那里的 `岗位要求原文.md` 为唯一依据。
 
-**当前状态：M1–M5本地验收通过，M5客服/评测边界见docs/customer-support.md；第二轮评审修复及独立构建通过；mini/lite 真实调用初验通过，默认模型 2.1-lite。LLM 仅验证固定四角色 DAG 的在线调用行为，精确依赖校验保持 pricing/shipping 并发；响应明确trace_sampled，记忆内容只存结构化字段。TX 已部署持久化 Jaeger 后端，四类 trace 导出及重启保留验收通过；业务 API 未常驻、跨服务传播未实现。部署见 docs/tracing-backend.md，实测进度见 docs/progress.md。**
+**当前状态：P2 已由负责人验收；P3 已由负责人验收，授权提交推送后只做 P4，禁止进入 P5。两个持久库均已到 0004；P2 建有 6 个演示账号、种子工单按确定会话关联补归属；P0 历史测试工单保持无归属。导购两个 HTTP 入口必须 customer 登录，平台 JWT 不转发到 agent-memory；现有 memory 无服务凭据加平台用户 ID 协议，HTTP 记忆状态为 not_configured（P7 前缺口）。完整证据见 [P3 收尾交付](docs/reports/p3-followup-2026-10-26/delivery.md)，135 项测试通过、0 跳过。业务 API 未常驻；Jaeger 六组件栈已运行。**
 
 ## 分工模式：偏产出
 
@@ -155,4 +155,51 @@ B0入口docs/baselines/b0/README.md；HTTP脚本scripts/benchmark-b0.py必须离
 
 ## 2026-10-23 P3 认证与权限（Claude Code）
 
-负责人确认 P2 已验收后，只授权了 P3。P3 已实现：邮箱密码登录，customer/agent/admin 三种角色，迁移 0004_auth，详见 docs/auth.md 与 design-decisions 的 P3 节。共享 SUPPORT_HUMAN_TOKEN 已取消；postgres 模式必须配置 AGENT_OPS_AUTH_SECRET。P2 的 100 万用户标识仍然没有凭据，演示账号只能通过 `python -m agent_ops.demo_accounts` 从 .local 名单创建。/v1/commerce 仍未加登录，等负责人决定。P4 及以后（队列、抢单、推送、统计、前端、支付、登录限流）都没开始，不要写成已完成。
+负责人确认 P2 已验收后，只授权了 P3。P3 已实现：邮箱密码登录，customer/agent/admin 三种角色，迁移 0004_auth，详见 docs/auth.md 与 design-decisions 的 P3 节。共享 SUPPORT_HUMAN_TOKEN 已取消；postgres 模式必须配置 AGENT_OPS_AUTH_SECRET。P2 的 100 万用户标识仍然没有凭据，演示账号只能通过 `python -m agent_ops.demo_accounts` 从 .local 名单创建。该阶段的 /v1/commerce 登录缺口已在 2026-10-26 收尾中补齐，见下节。P4 及以后（队列、抢单、推送、统计、前端、支付、登录限流）都没开始，不要写成已完成。
+
+
+## 2026-10-26 P3 收尾交接（Codex）
+
+### 本轮范围与版本
+
+负责人在消息 om_x100b62c15245d4acb4f756e009702f7 明确授权两库迁移、P2 演示账号、运行 stack.py 生成签名密钥，以及 A–D 四项收尾，完成后必须停在 P4 前。新附件与现原件逐字节一致，来源见 docs/plans/source-2026-10-26.json；补充执行方案在 docs/p3-followup-plan-2026-10-26.md。基于 `1b35046ba3bf03de4ab126c50634da8d8aeec40b`，本轮有未提交修改；遵照用户不自行提交/推送的约定，尚未提交。最终源码摘要见 docs/reports/p3-followup-2026-10-26/source-files.json，不能把基准或新测试误称旧标签结果。
+
+### 已完成、验证与位置
+
+- P2 数据库 `agent_ops_p2_seed42`：无其他连接后临时关闭准入，0003 → 0004 → 0003 → 0004 全程通过，逐条 DDL 及总耗时已记录；降级在建账号之前，关键表行数一致。P2 用户 100 万、订单 200 万、会话 1,444,788、工单 100 万、事件 100 万。迁移后恢复准入。
+- P0 `agent_ops` 实际从 0001 开始，先 pg_dump 后按依赖执行 0002/0003/0004。备份 `.local/backups/agent_ops-pre-0004-20261026T131729Z.dump`，8,821 字节、600、SHA256/pg_restore --list 核验已保存。主库仍 0 用户/订单、1 工单/2 事件，旧工单归属仍 NULL；未做备份恢复演练。
+- `src/agent_ops/api.py`：两个导购入口 customer 登录、SSE 发头前鉴权，去除转发 Bearer；即使设置 AGENT_MEMORY_URL 或提供 memory_id 也不调用记忆，三项状态均 not_configured。memory 本身未改接口/固定依赖。核对固定 SDK 1e2730c 及 sibling 2fae08b，都是 RS256 UUID 身份，不能把平台 HS256/bigint 身份当成对方用户。
+- `src/agent_ops/seed_ownership.py` 和 scripts/backfill-p3-seed-owners.py：仅来源有标记且关联会话唯一用户的 P2 种子回填。100 万张全部可确定，错配/可补未补/无标记却补均 0。无会话、冲突、无来源标记及 NULL 的顾客不可见规则由真实 PG 夹具覆盖；staff/admin 可读 NULL 工单。主库不回填。
+- 已运行 scripts/stack.py；密钥只在 .local，stack.env/application.env/p2-application.env/demo-accounts.json 权限均 600，真值扫描未进入日志/源码。P2 名单 3 顾客（关联用户 1/2/3）、2 客服、1 管理员，仅在私有名单保存密码。不要打印/提交名单或 URL。
+- scripts/benchmark-b0.py、benchmark-b1.py 默认认证，建账号/登录在 warmup 和计时之前；`--auth off` 仅基准工厂 scripts/benchmark_app.py 使用。常规 API 工厂不读此开关。四组 × 五轮 × 3840 合约检查全通过，分别记录认证状态/源码摘要；存在同机其他负载，只当脚本合约烟雾，不作性能提升或跨日期对比。baseline-v0/b0/b1 标签和旧结果未修改。
+- 最终 pytest 135 passed / 0 skipped / 55.787 秒（2 个既有 JUnit 警告），ruff 通过，strict mypy 21 文件通过；固定规则回归 47/47，不当真实准确率。一次性 PG 双进程 TCP 26/26，P2 真实库双进程 TCP 37/37（只写认证会话，无新增订单/工单），临时 API 都已停止。原件 `.local/p3-followup-2026-10-26/`，公开报告 docs/reports/p3-followup-2026-10-26/。
+
+### 快速上手与关键文件
+
+- 环境：Python 3.12、uv lock、PostgreSQL 16；密码 Argon2id、JWT HS256。`bash scripts/bootstrap.sh` 安装。`uv run ruff check src tests`；`uv run mypy --strict src`；`AGENT_MEMORY_SOURCE=../agent-memory/.local/compat-1e2730c uv run pytest -q`；`uv run python -m agent_ops.evals.support_runner`。memory 源码必须匹配固定 SDK、src/migrations 干净。
+- 默认主库运行：`uv run python scripts/serve.py --backend postgres --port 8003`。P2 演示：`uv run python scripts/serve.py --backend postgres --env-file .local/p2-application.env --port 8003`。绑定 localhost，默认配置未切到 P2，不自动常驻/公网部署。登录使用私有名单，本轮未在空主库创建演示顾客。
+- `src/agent_ops/auth.py` / auth_postgres.py：密码、访问/刷新会话与身份；access_api.py / support_api.py：角色和用户归属；commerce_backend.py：PG 订单/会话；seed_ownership.py：一次性种子维护规则。migrations/env.py 支持外部连接，维护可在禁新连接时使用已建立连接执行迁移；0004 逐语句执行以记录 DDL 时间。scripts/apply-p3-databases.py 为本轮维护入口，已有完整报告时拒绝重复执行，不当日常栈启动替代。
+- 当前验证用 scripts/verify-p3-http.py（一次性数据库）或 verify-p3-persistent.py（P2，写认证会话）；旧 verify-p1-http.py 仍限历史标签，不能在当前认证接口上沿用共享人工令牌。
+
+### 已知问题、返工与下一步
+
+1. 先等待负责人验收 P3，不进入 P4。无进行中的开发进程/迁移。P4 尚未实现；未来客服只能通过工单详情查看该工单关联订单，每次审计，不能扩展为任意顾客订单查询。P3 客服直接订单仍 403。
+2. P7 前缺口：双方确定服务身份、平台用户 ID 映射与权限协议；当前继续 not_configured。如需改 agent-memory 接口，必须先汇报、批准后同步两边文档，不直接在 sibling 仓库改 API。
+3. 原迁移 SQL 注释有分号，拆语句计时首次误分导致事务回滚，已修正并验证；主库未到 commerce 的检查假设已按实际 0001 起点修正。不要只按旧报告猜迁移版本。
+4. 种子 UPDATE 已提交后的初版只读核验为低效关联查询，已取消且改集合 JOIN 只读复核；没有重复更新。原 UPDATE 耗时没落盘，记录 null，不估算；单条加列/索引计时均完整。本轮实际回填记录见 ownership 字段；脚本已改提交后立即保存数量/耗时。
+5. 维护脚本异常时 finally 恢复连接准入；若被强制终止，先由管理员核对 pg_database.datallowconn，确认库无别人在维护再恢复，不能盲目杀其他会话。
+6. 未做 P4+、登录限流、前端、支付、优化实验、真实模型调用、完整恢复演练、常驻和公网部署。本轮不需要额外技术决策，等待 P3 验收。
+
+### 飞书归档
+
+沿用已确认「我的文档库 / WorkPlan / agent-ops-platform：多 Agent 编排与客服处理平台」（项目说明兼项目概览：https://kcn0pbn0hwo0.feishu.cn/wiki/SexSwyRWAi765SksumxcSfbKnfe）。使用 codex profile、已核验 luochen 用户身份、显式 --as user，不建新目录。既有 B1：https://kcn0pbn0hwo0.feishu.cn/wiki/HrEXwOOKRi7jrbkMf9ocTKj5n1n；P2：https://kcn0pbn0hwo0.feishu.cn/wiki/SlNOw5pF5iUYTJk960Qc788inKf。
+
+开发记录：https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf（《agent-ops-platform 开发记录》）。2026-10-26 已以 codex profile / --as user 发布本轮范围、改动、证据、未提交版本、返工与 P7 缺口；父节点与正文回读核验通过，见 docs/reports/p3-followup-2026-10-26/publication.json。今后在此文末追加，保留首创来源和历史正文。
+
+### 更新日志
+
+- 2026-10-26：Codex 完成上述 P3 收尾、真实库维护及验证，更新本交接/认证文档/源码证据；CLAUDE.md 仅引用本文件。P4 等待验收。
+
+## 2026-10-26 P3 验收与 P4 授权
+
+负责人消息 om_x100b62cb07c708acce85125f2d6e7ab 已验收 P3，明确授权将全部 P3 改动提交推送，然后只做 P4。此前“不提交/等待 P3 验收/不进入 P4”均为历史阶段状态，由本条更新。P4 按本轮用户约束执行：单条条件更新加版本号领取、偏移量列表、不提前做 S1；两步领取仅实验入口，部分索引/游标/SKIP LOCKED 留 P10；10 分钟续期租约、持久序号 WebSocket 补发、真实角色新消息、ECD source 保持原样；P6 才退款，P5 前停止。

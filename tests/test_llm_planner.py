@@ -3,6 +3,7 @@ import json
 
 import httpx
 import pytest
+from http_login import login_customer
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import SimpleSpanProcessor
 from opentelemetry.sdk.trace.export.in_memory_span_exporter import InMemorySpanExporter
@@ -52,6 +53,7 @@ async def test_real_api_path_uses_llm_and_tool_results_without_sending_identity(
         async with httpx.AsyncClient(
             transport=httpx.ASGITransport(app=create_app(planner=planner)), base_url="http://test"
         ) as api:
+            await login_customer(api)
             result = await api.post("/v1/commerce/runs", json=request().model_dump(mode="json"))
             assert result.status_code == 200
             data = result.json()
@@ -126,6 +128,7 @@ async def test_permanent_provider_errors_are_redacted_and_never_fallback(status,
         async with httpx.AsyncClient(
             transport=httpx.ASGITransport(app=create_app(planner=planner)), base_url="http://test"
         ) as api:
+            await login_customer(api)
             reply = await api.post("/v1/commerce/runs", json=request().model_dump(mode="json"))
             assert reply.status_code == 503 and reply.json()["detail"] == code
             assert "private" not in reply.text
@@ -249,6 +252,7 @@ async def test_sse_model_failure_exposes_safe_code():
         async with httpx.AsyncClient(
             transport=httpx.ASGITransport(app=create_app(planner=planner)), base_url="http://test"
         ) as api:
+            await login_customer(api)
             reply = await api.post("/v1/commerce/stream", json=request().model_dump(mode="json"))
             assert "event: error" in reply.text and "LLM_MODEL_UNAVAILABLE" in reply.text
             assert "event: result" not in reply.text

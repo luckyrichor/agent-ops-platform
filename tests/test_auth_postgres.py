@@ -298,3 +298,39 @@ def test_auth_migration_downgrade_and_reupgrade():
         with engine.connect() as c:
             assert c.scalar(text("SELECT version_num FROM alembic_version")) == "0004_auth"
         engine.dispose()
+
+
+async def test_seed_ownership_requires_certain_conversation_and_preserves_unowned_access(database, client):
+    import psycopg
+
+    from agent_ops.seed_ownership import backfill_seed_owners
+
+    _, engine, _ = database
+    ids = [str(uuid4()) for _ in range(5)]
+    with engine.begin() as c:
+        for index, tid in enumerate(ids):
+            c.execute(text("""INSERT INTO support.tickets(ticket_id,route,state,revision,reason_code,history,
+                synthetic_distribution_note) VALUES (:id,'human','waiting_human',1,'FIXTURE','[]',:note)"""),
+                {'id': tid, 'note': 'fixture-proxy' if index != 4 else None})
+        # Certain; several agreeing conversations; conflicting users; no conversation; unmarked old row.
+        for cid, tid, uid in [(991,ids[0],1),(992,ids[1],1),(993,ids[1],1),
+                              (994,ids[2],1),(995,ids[2],2),(996,ids[4],1)]:
+            c.execute(text('INSERT INTO commerce.conversations(id,user_id,ticket_id) VALUES (:c,:u,:t)'),
+                      {'c': cid, 'u': uid, 't': tid})
+    dsn = engine.url.set(drivername='postgresql').render_as_string(hide_password=False)
+    with psycopg.connect(dsn) as connection:
+        assert backfill_seed_owners(connection) == 2
+        assert backfill_seed_owners(connection) == 0
+    customer = await bearer(client, 'customer1@demo.invalid')
+    other = await bearer(client, 'customer2@demo.invalid')
+    staff = await bearer(client, 'agent1@demo.invalid')
+    admin = await bearer(client, 'admin1@demo.invalid')
+    for index, tid in enumerate(ids):
+        response = await client.get('/support/tickets/' + tid, headers=customer)
+        assert response.status_code == (200 if index < 2 else 404)
+        assert (await client.get('/support/tickets/' + tid, headers=other)).status_code == 404
+        assert (await client.get('/support/tickets/' + tid, headers=staff)).status_code == 200
+        assert (await client.get('/support/tickets/' + tid, headers=admin)).status_code == 200
+    listed = (await client.get('/support/tickets', headers=customer)).json()['items']
+    returned = {row['ticket_id'] for row in listed}
+    assert set(ids[:2]) <= returned and not set(ids[2:]) & returned

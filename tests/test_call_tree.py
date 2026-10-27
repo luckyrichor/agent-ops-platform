@@ -4,6 +4,7 @@ import json
 import httpx
 import pytest
 from agent_memory.sdk import MemoryClient
+from http_login import login_customer
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import SimpleSpanProcessor
 from opentelemetry.sdk.trace.export.in_memory_span_exporter import InMemorySpanExporter
@@ -29,6 +30,8 @@ async def test_request_agent_tool_tree_and_redacted_failure(fail: bool) -> None:
     dispatcher = Dispatcher(handlers, provider.get_tracer("test"))
     async with httpx.AsyncClient(transport=httpx.ASGITransport(app=create_app(dispatcher)),
                                  base_url="http://test") as client:
+        await login_customer(client)
+        exporter.clear()
         response = await client.post("/v1/commerce/runs", json={
             "request": "secret-request-payload", "category": "kettle",
             "budget_cent": 5000, "region": "北京",

@@ -1,3 +1,5 @@
+> 当前状态（2026-10-26）：本文保留底层 SDK 设计说明。平台 HTTP 导购现要求 customer 登录，禁止转发平台 JWT；因 agent-memory 尚无服务凭据加平台用户 ID 协议，当前 HTTP 不调用记忆，状态为 not_configured。P7 前缺口见 [auth.md](auth.md)。
+
 # W5–W7 记忆工具与 SSE
 
 最后更新：2026-10-08（北京时间）；Codex；本次代码基线 agent-ops-platform@caa453f + 本轮修改。W5–W7 原始来源 ed6f887 + 当时工作树；历史测量保留原版本。

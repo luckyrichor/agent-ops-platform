@@ -1,4 +1,4 @@
-"""Run the unchanged B0 harness with the P1 PostgreSQL backend and isolated databases."""
+"""Run the current B0 harness (explicit authentication on/off) with the P1 PostgreSQL backend and isolated databases."""
 import argparse
 import asyncio
 import importlib.util
@@ -16,6 +16,7 @@ from testcontainers.community.postgres import PostgresContainer
 
 p=argparse.ArgumentParser()
 p.add_argument('--output',type=Path,required=True)
+p.add_argument('--auth',choices=['on','off'],default='on')
 a=p.parse_args()
 if a.output.exists():p.error('new output required; do not overwrite frozen baselines')
 spec=importlib.util.spec_from_file_location('b0_harness',Path('scripts/benchmark-b0.py'))
@@ -39,18 +40,20 @@ with PostgresContainer('pgvector/pgvector:pg16',driver='psycopg') as pg:
         command.upgrade(config,'head')
         with psycopg.connect(root_dsn,autocommit=True) as conn:
             conn.execute('GRANT agent_ops_app TO b1_runtime')
+        with psycopg.connect(url.set(drivername='postgresql').render_as_string(hide_password=False)) as conn:
+            conn.execute('INSERT INTO commerce.users(id) VALUES (1)')
         os.environ['AGENT_OPS_SUPPORT_BACKEND']='postgres'
         os.environ['AGENT_OPS_DATABASE_URL']=url.set(username='b1_runtime',password='isolated-fixture-only').render_as_string(hide_password=False)
         return await original(args,repeat,server_cpus)
     b0.iteration=iteration
-    sys.argv=['benchmark-b0.py','--output',str(a.output),'--repeats','5','--requests','128','--concurrency','8','--warmup','10']
+    sys.argv=['benchmark-b0.py','--output',str(a.output),'--repeats','5','--requests','128','--concurrency','8','--warmup','10','--auth',a.auth]
     asyncio.run(b0.main())
     metadata=json.loads((a.output/'environment.json').read_text())
     metadata['original_harness_mode_literal']=metadata['mode']
     metadata['mode']='deterministic / local tools / memory integration disabled / PostgreSQL support / one worker / trace ratio1 exporter none'
     metadata['postgres']={'image':'pgvector/pgvector:pg16','version':pg.exec('postgres --version')[1].decode().strip(),
         'cpus':cpus[1:],'fresh_database_each_repeat':True,'runtime_schema_owner':False,
-        'api_db_cpu_overlap':True,'note':'unchanged B0 API placement; database shares non-client cores; DB CPU not included in server_cpu_seconds'}
+        'api_db_cpu_overlap':True,'note':'original B0 API placement; database shares non-client cores; DB CPU not included in server_cpu_seconds'}
     metadata['wrapper_sha256']=b0.digest(Path(__file__))
     metadata['baseline_difference']='B0 in-memory tickets evict at256; PostgreSQL has no such capacity cap. 128 measured creates + one warmup key per fresh database stays below256.'
     (a.output/'environment.json').write_text(json.dumps(metadata,indent=2))

@@ -32,6 +32,10 @@ TICKET = "00000000-0000-0000-0000-000000000000"
 
 # (method, path, json body, extra headers, roles allowed). Every non-public route must appear.
 MATRIX = [
+    ("POST", "/v1/commerce/runs", {"request": "fixture", "category": "kettle",
+      "budget_cent": 5000, "region": "上海"}, {}, {"customer"}),
+    ("POST", "/v1/commerce/stream", {"request": "fixture", "category": "kettle",
+      "budget_cent": 5000, "region": "上海"}, {}, {"customer"}),
     ("POST", "/auth/logout", None, {}, {"customer", "agent", "admin"}),
     ("GET", "/auth/me", None, {}, {"customer", "agent", "admin"}),
     ("POST", "/support/requests", {"message": "转人工"}, {"Idempotency-Key": "matrix"},
@@ -52,9 +56,7 @@ MATRIX = [
     ("GET", "/admin/accounts", None, {}, {"admin"}),
     ("POST", "/admin/accounts/999/status", {"status": "active"}, {}, {"admin"}),
 ]
-# Public by design (B6), or not yet given an identity (导购 left for the owner to decide).
-PUBLIC = {("POST", "/auth/login"), ("POST", "/auth/refresh"),
-          ("POST", "/v1/commerce/runs"), ("POST", "/v1/commerce/stream")}
+PUBLIC = {("POST", "/auth/login"), ("POST", "/auth/refresh")}
 
 
 @pytest.fixture
@@ -361,3 +363,26 @@ async def test_account_creation_rules(env, monkeypatch):
     monkeypatch.setenv("AGENT_OPS_AUTH_SECRET", "too-short")
     with pytest.raises(ValueError, match="32 bytes"):
         create_app()
+
+
+@pytest.mark.parametrize('path', ['/v1/commerce/runs', '/v1/commerce/stream'])
+async def test_platform_token_never_reaches_memory_even_when_url_is_configured(env, monkeypatch, path):
+    from agent_memory.sdk import MemoryClient
+
+    _, client, _ = env
+    monkeypatch.setenv('AGENT_MEMORY_URL', 'http://memory.invalid')
+    def forbidden(*args, **kwargs):
+        pytest.fail('platform HTTP path must not construct an agent-memory client')
+    monkeypatch.setattr(MemoryClient, '__init__', forbidden)
+    response = await client.post(path, headers=await bearer(client, 'c1'), json={
+        'request': 'fixture', 'category': 'kettle', 'budget_cent': 5000, 'region': '上海',
+        'memory_id': '00000000-0000-0000-0000-000000000001'})
+    assert response.status_code == 200
+    if path.endswith('stream'):
+        frames = [json.loads(line[6:]) for line in response.text.splitlines() if line.startswith('data: ')]
+        result = frames[-1]
+    else:
+        result = response.json()
+    assert result['outcome'] == 'succeeded'
+    assert result['memory_status'] == result['memory_read_status'] == result['memory_write_status'] == 'not_configured'
+    assert result['memory_id'] is None

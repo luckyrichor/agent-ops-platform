@@ -1,0 +1,356 @@
+{
+  "generated_beijing": "2026-10-26T21:32:42.449888+08:00",
+  "base_commit": "1b35046ba3bf03de4ab126c50634da8d8aeec40b",
+  "uncommitted_changes": true,
+  "pytest": {
+    "tests": "135",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "55.787"
+  },
+  "ruff": "passed",
+  "strict_mypy": "passed (21 files)",
+  "rules_regression": {
+    "passed": 47,
+    "cases": 47,
+    "quality_claim": false
+  },
+  "disposable_tcp": {
+    "passed": 26,
+    "total": 26
+  },
+  "persistent_P2_tcp": {
+    "checks": {
+      "login-customer1@demo.invalid": true,
+      "cross-worker-customer1@demo.invalid": true,
+      "login-customer2@demo.invalid": true,
+      "cross-worker-customer2@demo.invalid": true,
+      "login-customer3@demo.invalid": true,
+      "cross-worker-customer3@demo.invalid": true,
+      "login-agent1@demo.invalid": true,
+      "cross-worker-agent1@demo.invalid": true,
+      "login-agent2@demo.invalid": true,
+      "cross-worker-agent2@demo.invalid": true,
+      "login-admin1@demo.invalid": true,
+      "cross-worker-admin1@demo.invalid": true,
+      "own-orders-customer1@demo.invalid": true,
+      "own-seed-tickets-customer1@demo.invalid": true,
+      "own-orders-customer2@demo.invalid": true,
+      "own-seed-tickets-customer2@demo.invalid": true,
+      "own-orders-customer3@demo.invalid": true,
+      "own-seed-tickets-customer3@demo.invalid": true,
+      "staff-orders-forbidden-agent1@demo.invalid": true,
+      "staff-orders-forbidden-agent2@demo.invalid": true,
+      "staff-orders-forbidden-admin1@demo.invalid": true,
+      "other-customer-order-404": true,
+      "other-customer-ticket-404": true,
+      "/v1/commerce/runs-anonymous-401": true,
+      "/v1/commerce/runs-staff-403": true,
+      "/v1/commerce/runs-customer-memory-disabled": true,
+      "/v1/commerce/stream-anonymous-401": true,
+      "/v1/commerce/stream-staff-403": true,
+      "/v1/commerce/stream-customer-memory-disabled": true,
+      "logout-29": true,
+      "logout-30": true,
+      "logout-31": true,
+      "logout-32": true,
+      "logout-33": true,
+      "logout-34": true,
+      "no-credentials-in-server-log": true,
+      "no-bearer-in-server-log": true
+    },
+    "passed": 37,
+    "total": 37,
+    "business_writes": 0,
+    "database": "agent_ops_p2_seed42",
+    "processes": 2,
+    "source_head": "1b35046ba3bf03de4ab126c50634da8d8aeec40b",
+    "dirty": true
+  },
+  "benchmarks": {
+    "memory-auth": {
+      "requests": 3840,
+      "valid": 3840,
+      "rounds": 5,
+      "authentication": {
+        "enabled": true,
+        "login_in_timing": false,
+        "label": "P3-authenticated",
+        "historical_results_comparable": false
+      },
+      "inputs_sha256": "a205d714fd6b7ea5700e52544c6c434615aac139549b7c0de072dac344c58f24",
+      "source_head": "1b35046ba3bf03de4ab126c50634da8d8aeec40b",
+      "harness_sha256": "c1eb8cf0b72cf5640fd8b33bd71de4f84e92f8e5226e57ee167a4ae69ea5c5e7",
+      "role": "contract smoke only; shared-host concurrent workload; no performance comparison"
+    },
+    "memory-noauth": {
+      "requests": 3840,
+      "valid": 3840,
+      "rounds": 5,
+      "authentication": {
+        "enabled": false,
+        "login_in_timing": false,
+        "label": "P3-auth-disabled-compatibility",
+        "historical_results_comparable": false
+      },
+      "inputs_sha256": "a205d714fd6b7ea5700e52544c6c434615aac139549b7c0de072dac344c58f24",
+      "source_head": "1b35046ba3bf03de4ab126c50634da8d8aeec40b",
+      "harness_sha256": "c1eb8cf0b72cf5640fd8b33bd71de4f84e92f8e5226e57ee167a4ae69ea5c5e7",
+      "role": "contract smoke only; shared-host concurrent workload; no performance comparison"
+    },
+    "pg-auth": {
+      "requests": 3840,
+      "valid": 3840,
+      "rounds": 5,
+      "authentication": {
+        "enabled": true,
+        "login_in_timing": false,
+        "label": "P3-authenticated",
+        "historical_results_comparable": false
+      },
+      "inputs_sha256": "a205d714fd6b7ea5700e52544c6c434615aac139549b7c0de072dac344c58f24",
+      "source_head": "1b35046ba3bf03de4ab126c50634da8d8aeec40b",
+      "harness_sha256": "c1eb8cf0b72cf5640fd8b33bd71de4f84e92f8e5226e57ee167a4ae69ea5c5e7",
+      "role": "contract smoke only; shared-host concurrent workload; no performance comparison"
+    },
+    "pg-noauth": {
+      "requests": 3840,
+      "valid": 3840,
+      "rounds": 5,
+      "authentication": {
+        "enabled": false,
+        "login_in_timing": false,
+        "label": "P3-auth-disabled-compatibility",
+        "historical_results_comparable": false
+      },
+      "inputs_sha256": "a205d714fd6b7ea5700e52544c6c434615aac139549b7c0de072dac344c58f24",
+      "source_head": "1b35046ba3bf03de4ab126c50634da8d8aeec40b",
+      "harness_sha256": "c1eb8cf0b72cf5640fd8b33bd71de4f84e92f8e5226e57ee167a4ae69ea5c5e7",
+      "role": "contract smoke only; shared-host concurrent workload; no performance comparison"
+    }
+  },
+  "frozen_tags": {
+    "baseline-v0": "b59ea2cfb7509de3eab20fd1f5f447b0b692de8b",
+    "baseline-b0": "01066a86b931767fbf3a8c1fd8592ad6117c23ef",
+    "baseline-b1": "6fd64601594262123d469502e13bd4231007be16"
+  },
+  "credentials_in_logs": false,
+  "private_file_modes_600": true,
+  "P4_started": false,
+  "agent_memory_interface_changed": false,
+  "ownership": {
+    "database": "agent_ops_p2_seed42",
+    "before_null_and_total": [
+      1000000,
+      1000000
+    ],
+    "before_source": "0004 added nullable column with no default; all 1M preexisting P2 tickets initially NULL",
+    "after_null_and_total": [
+      0,
+      1000000
+    ],
+    "updated": 1000000,
+    "seconds_including_commit": null,
+    "timing_note": "initial UPDATE committed; subsequent correlated read-only validation was cancelled for poor query plan; original UPDATE timing was not persisted, not reconstructed",
+    "set_based_validation_seconds": 8.653089740080759,
+    "ownership_mismatches": 0,
+    "eligible_but_unfilled": 0,
+    "unmarked_but_owned": 0,
+    "P0_untouched": true,
+    "P0_total_and_owned": [
+      1,
+      0
+    ],
+    "recovery_did_not_repeat_update": true
+  },
+  "databases": {
+    "started_at": "2026-10-26T13:16:26.476596+00:00",
+    "source_head": "1b35046ba3bf03de4ab126c50634da8d8aeec40b",
+    "dirty": true,
+    "databases": {
+      "agent_ops_p2_seed42": {
+        "ddl": [
+          {
+            "phase": "upgrade",
+            "sql": "CREATE UNIQUE INDEX accounts_email ON auth.accounts(email)",
+            "seconds": 0.0019790700171142817
+          },
+          {
+            "phase": "upgrade",
+            "sql": "CREATE INDEX refresh_tokens_family ON auth.refresh_tokens(family_id)",
+            "seconds": 0.0023392268922179937
+          },
+          {
+            "phase": "upgrade",
+            "sql": "CREATE INDEX refresh_tokens_account ON auth.refresh_tokens(account_id)",
+            "seconds": 0.001773082884028554
+          },
+          {
+            "phase": "upgrade",
+            "sql": "-- Existing P1/P2 tickets keep NULL owner: only agents/admins can read them.\n    ALTER TABLE support.tickets ADD COLUMN customer_user_id bigint REFERENCES commerce.users(id)",
+            "seconds": 0.004730161977931857
+          },
+          {
+            "phase": "upgrade",
+            "sql": "CREATE INDEX tickets_customer_created ON support.tickets(customer_user_id,created_at DESC,ticket_id DESC)\n      WHERE customer_user_id IS NOT NULL",
+            "seconds": 1.3307014929596335
+          },
+          {
+            "phase": "upgrade",
+            "sql": "CREATE INDEX conversations_user ON commerce.conversations(user_id,id)",
+            "seconds": 0.9575456220190972
+          },
+          {
+            "phase": "downgrade",
+            "sql": "DROP INDEX commerce.conversations_user",
+            "seconds": 0.001876017078757286
+          },
+          {
+            "phase": "downgrade",
+            "sql": "DROP INDEX support.tickets_customer_created",
+            "seconds": 0.00048309890553355217
+          },
+          {
+            "phase": "downgrade",
+            "sql": "ALTER TABLE support.tickets DROP COLUMN customer_user_id",
+            "seconds": 0.0015487109776586294
+          },
+          {
+            "phase": "upgrade_again",
+            "sql": "CREATE UNIQUE INDEX accounts_email ON auth.accounts(email)",
+            "seconds": 0.001702380832284689
+          },
+          {
+            "phase": "upgrade_again",
+            "sql": "CREATE INDEX refresh_tokens_family ON auth.refresh_tokens(family_id)",
+            "seconds": 0.0017318259924650192
+          },
+          {
+            "phase": "upgrade_again",
+            "sql": "CREATE INDEX refresh_tokens_account ON auth.refresh_tokens(account_id)",
+            "seconds": 0.0017920678947120905
+          },
+          {
+            "phase": "upgrade_again",
+            "sql": "-- Existing P1/P2 tickets keep NULL owner: only agents/admins can read them.\n    ALTER TABLE support.tickets ADD COLUMN customer_user_id bigint REFERENCES commerce.users(id)",
+            "seconds": 0.001094728009775281
+          },
+          {
+            "phase": "upgrade_again",
+            "sql": "CREATE INDEX tickets_customer_created ON support.tickets(customer_user_id,created_at DESC,ticket_id DESC)\n      WHERE customer_user_id IS NOT NULL",
+            "seconds": 0.615117876091972
+          },
+          {
+            "phase": "upgrade_again",
+            "sql": "CREATE INDEX conversations_user ON commerce.conversations(user_id,id)",
+            "seconds": 0.9025351698510349
+          }
+        ],
+        "preflight_sessions": [],
+        "sessions_after_admission_closed": [],
+        "before_counts": {
+          "users": 1000000,
+          "orders": 2000000,
+          "conversations": 1444788,
+          "tickets": 1000000,
+          "ticket_events": 1000000
+        },
+        "phase": "upgrade_again",
+        "upgrade": {
+          "seconds": 2.3964283999521285,
+          "version": "0004_auth"
+        },
+        "downgrade": {
+          "seconds": 0.020258472999557853,
+          "version": "0003_proxy_provenance"
+        },
+        "upgrade_again": {
+          "seconds": 1.552646507974714,
+          "version": "0004_auth"
+        },
+        "after_counts": {
+          "users": 1000000,
+          "orders": 2000000,
+          "conversations": 1444788,
+          "tickets": 1000000,
+          "ticket_events": 1000000
+        },
+        "complete": true,
+        "connections_restored": true
+      },
+      "agent_ops": {
+        "ddl": [
+          {
+            "phase": "upgrade",
+            "sql": "CREATE SCHEMA commerce;\n    CREATE TABLE commerce.users(id bigint PRIMARY KEY, activity_events bigint CHECK(activity_events>=0));\n    CREATE TABLE commerce.categories(id bigint PRIMARY KEY,name text NOT NULL UNIQUE);\n    CREATE TABLE commerce.products(\n      id bigint PRIMARY KEY,sku text NOT NULL UNIQUE,title text NOT NULL,\n      category_id bigint NOT NULL REFERENCES commerce.categories(id),price_cents bigint NOT NULL CHECK(price_cents>=0),\n      freight_cents bigint NOT NULL CHECK(freight_cents>=0),attrs jsonb NOT NULL DEFAULT '{}',\n      status text NOT NULL CHECK(status IN ('active','inactive')));\n    CREATE INDEX products_category_price ON commerce.products(category_id,price_cents,id);\n    CREATE TABLE commerce.inventory(product_id bigint PRIMARY KEY REFERENCES commerce.products(id),\n      stock bigint NOT NULL CHECK(stock>=0),reserved bigint NOT NULL DEFAULT 0 CHECK(reserved>=0),\n      version bigint NOT NULL DEFAULT 1 CHECK(version>0),CHECK(stock>=reserved));\n    CREATE TABLE commerce.orders(id bigint GENERATED BY DEFAULT AS IDENTITY PRIMARY KEY,\n      user_id bigint NOT NULL REFERENCES commerce.users(id),status text NOT NULL,\n      total_cents bigint NOT NULL CHECK(total_cents>=0),created_at timestamptz NOT NULL,\n      revision bigint NOT NULL DEFAULT 1 CHECK(revision>0));\n    CREATE INDEX orders_user_created ON commerce.orders(user_id,created_at DESC,id DESC);\n    CREATE TABLE commerce.order_items(order_id bigint NOT NULL REFERENCES commerce.orders(id),\n      line_no integer NOT NULL CHECK(line_no>0),product_id bigint NOT NULL REFERENCES commerce.products(id),\n      quantity integer NOT NULL CHECK(quantity>0),unit_price_cents bigint NOT NULL CHECK(unit_price_cents>=0),\n      freight_cents bigint NOT NULL CHECK(freight_cents>=0),PRIMARY KEY(order_id,line_no));\n    CREATE TABLE commerce.shipments(order_id bigint PRIMARY KEY REFERENCES commerce.orders(id),\n      carrier text NOT NULL,tracking_no text NOT NULL UNIQUE,status text NOT NULL);\n    CREATE TABLE commerce.idempotency_keys(scope text NOT NULL,key text NOT NULL CHECK(length(key) BETWEEN 1 AND 128),\n      request_hash char(64) NOT NULL,response_snapshot jsonb,PRIMARY KEY(scope,key));\n    CREATE TABLE commerce.conversations(id bigint PRIMARY KEY,user_id bigint NOT NULL REFERENCES commerce.users(id),\n      ticket_id uuid REFERENCES support.tickets(ticket_id));\n    -- PostgreSQL partition keys must be in unique constraints. A registry enforces global (conversation,seq).\n    CREATE TABLE commerce.message_keys(conversation_id bigint NOT NULL REFERENCES commerce.conversations(id),\n      seq integer NOT NULL CHECK(seq>0),created_at timestamptz NOT NULL,\n      PRIMARY KEY(conversation_id,seq),UNIQUE(conversation_id,seq,created_at));\n    CREATE TABLE commerce.messages(conversation_id bigint NOT NULL,seq integer NOT NULL,\n      created_at timestamptz NOT NULL,sender text NOT NULL CHECK(sender IN ('customer','agent','source')),\n      content text NOT NULL,PRIMARY KEY(created_at,conversation_id,seq),\n      FOREIGN KEY(conversation_id,seq,created_at) REFERENCES commerce.message_keys(conversation_id,seq,created_at))\n      PARTITION BY RANGE(created_at);\n    CREATE TABLE commerce.messages_default PARTITION OF commerce.messages DEFAULT;\n    GRANT USAGE ON SCHEMA commerce TO agent_ops_app;\n    GRANT SELECT,INSERT,UPDATE ON ALL TABLES IN SCHEMA commerce TO agent_ops_app;\n    GRANT USAGE,SELECT ON ALL SEQUENCES IN SCHEMA commerce TO agent_ops_app;",
+            "seconds": 0.07020213082432747
+          },
+          {
+            "phase": "upgrade",
+            "sql": "CREATE UNIQUE INDEX accounts_email ON auth.accounts(email)",
+            "seconds": 0.0017955549992620945
+          },
+          {
+            "phase": "upgrade",
+            "sql": "CREATE INDEX refresh_tokens_family ON auth.refresh_tokens(family_id)",
+            "seconds": 0.0022821100428700447
+          },
+          {
+            "phase": "upgrade",
+            "sql": "CREATE INDEX refresh_tokens_account ON auth.refresh_tokens(account_id)",
+            "seconds": 0.0016898170579224825
+          },
+          {
+            "phase": "upgrade",
+            "sql": "-- Existing P1/P2 tickets keep NULL owner: only agents/admins can read them.\n    ALTER TABLE support.tickets ADD COLUMN customer_user_id bigint REFERENCES commerce.users(id)",
+            "seconds": 0.0011392910964787006
+          },
+          {
+            "phase": "upgrade",
+            "sql": "CREATE INDEX tickets_customer_created ON support.tickets(customer_user_id,created_at DESC,ticket_id DESC)\n      WHERE customer_user_id IS NOT NULL",
+            "seconds": 0.0020648520439863205
+          },
+          {
+            "phase": "upgrade",
+            "sql": "CREATE INDEX conversations_user ON commerce.conversations(user_id,id)",
+            "seconds": 0.001663606846705079
+          }
+        ],
+        "preflight_sessions": [],
+        "sessions_after_admission_closed": [],
+        "starting_version": "0001_support",
+        "before_counts": {
+          "users": null,
+          "orders": null,
+          "conversations": null,
+          "tickets": 1,
+          "ticket_events": 2
+        },
+        "backup": {
+          "path": "/home/ubuntu/project/WorkPlan/agent-ops-platform/.local/backups/agent_ops-pre-0004-20261026T131729Z.dump",
+          "bytes": 8821,
+          "mode": "0o600",
+          "seconds": 0.3410027779173106,
+          "sha256": "051c876dc341d58e4434f7db0865c39f3d5a6aa4d56954e20bc3e4f74f674915",
+          "archive_list_verified": true
+        },
+        "phase": "upgrade",
+        "upgrade": {
+          "seconds": 0.18146848608739674,
+          "version": "0004_auth"
+        },
+        "after_counts": {
+          "users": 0,
+          "orders": 0,
+          "conversations": 0,
+          "tickets": 1,
+          "ticket_events": 2
+        },
+        "complete": true,
+        "connections_restored": true
+      }
+    },
+    "complete": true
+  }
+}

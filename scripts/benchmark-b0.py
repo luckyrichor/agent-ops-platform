@@ -7,6 +7,7 @@ import json
 import math
 import os
 import platform
+import secrets
 import socket
 import statistics
 import subprocess
@@ -104,9 +105,18 @@ async def iteration(args, repeat, server_cpus):
         env.pop(key, None)
     env.update(AGENT_OPS_PLANNER='deterministic', AGENT_OPS_TRACE_EXPORTER='none',
                AGENT_OPS_TRACE_SAMPLE_RATIO='1')
+    env['AGENT_OPS_BENCHMARK_AUTH'] = args.auth
+    env.setdefault('AGENT_OPS_AUTH_SECRET', secrets.token_urlsafe(48))
+    # File path alone is inherited; passwords never appear in argv or logs.
+    roster = {'email': 'benchmark@fixture.invalid', 'password': secrets.token_urlsafe(24)}
+    roster_path = args.output / f'credentials-{repeat}.json'
+    fd = os.open(roster_path, os.O_WRONLY | os.O_CREAT | os.O_EXCL, 0o600)
+    with os.fdopen(fd, 'w') as stream:
+        json.dump(roster, stream)
+    env['AGENT_OPS_BENCHMARK_ROSTER'] = str(roster_path.resolve())
     log = args.output / f'server-{repeat}.log'
     with log.open('w') as file:
-        process = await asyncio.create_subprocess_exec(*[sys.executable, '-m', 'uvicorn', 'agent_ops.api:create_app',
+        process = await asyncio.create_subprocess_exec(*[sys.executable, '-m', 'uvicorn', 'benchmark_app:create_app', '--app-dir', 'scripts',
             '--factory', '--host', '127.0.0.1', '--port', str(port), '--workers', '1',
             '--no-access-log', '--log-level', 'warning'], cwd=ROOT, env=env, stdout=file, stderr=file)
         try:
@@ -126,6 +136,12 @@ async def iteration(args, repeat, server_cpus):
                     await asyncio.sleep(.05)
                 else:
                     raise RuntimeError('B0 server startup timeout')
+                # Account setup and login happen before warmup and every measurement clock.
+                if args.auth == 'on':
+                    login = await client.post('/auth/login', json=roster)
+                    if login.status_code != 200:
+                        raise RuntimeError('benchmark login failed')
+                    client.headers['Authorization'] = 'Bearer ' + login.json()['access_token']
                 tickets = {}
                 # Each mode warmed separately; support warmups use a reserved key.
                 for _ in range(args.warmup):
@@ -162,6 +178,7 @@ async def iteration(args, repeat, server_cpus):
                         break
                 return raw, summaries
         finally:
+            roster_path.unlink(missing_ok=True)
             if process.returncode is None:
                 process.terminate()
             try:
@@ -173,6 +190,8 @@ async def iteration(args, repeat, server_cpus):
 
 async def main():
     p = argparse.ArgumentParser(description=__doc__)
+    p.add_argument('--auth', choices=['on', 'off'], default='on',
+                   help='login outside timing (default on); off is explicit historical compatibility')
     p.add_argument('--output', type=Path, default=Path('.local/b0-http'))
     p.add_argument('--repeats', type=int, default=5)
     p.add_argument('--requests', type=int, default=128)
@@ -188,10 +207,12 @@ async def main():
     cpus = sorted(os.sched_getaffinity(0))
     if len(cpus) < 2:
         p.error('need >=2 available logical CPUs for separate client/server affinity')
-    args.output.mkdir(parents=True)
+    if '.local' not in args.output.resolve().parts:
+        p.error('private output under .local required')
+    args.output.mkdir(parents=True, mode=0o700)
     os.sched_setaffinity(0, {cpus[0]})
     raw, summary = [], []
-    sources = [*ROOT.joinpath('src').rglob('*.py'), Path(__file__), ROOT/'uv.lock', ROOT/'pyproject.toml']
+    sources = [*ROOT.joinpath('src').rglob('*.py'), Path(__file__), ROOT/'uv.lock', ROOT/'pyproject.toml', ROOT/'scripts/benchmark_app.py']
     metadata = {'generated_at': datetime.now(UTC).isoformat(), 'source_head': (await asyncio.to_thread(subprocess.check_output,
         ['git', 'rev-parse', 'HEAD'], cwd=ROOT, text=True)).strip(),
         'source_dirty': await asyncio.to_thread(subprocess.check_output, ['git', 'status', '--porcelain'], cwd=ROOT, text=True),
@@ -202,6 +223,9 @@ async def main():
         'meminfo': {k: v.strip() for k, v in (line.split(':',1) for line in Path('/proc/meminfo').read_text().splitlines()) if k in ('MemTotal','MemAvailable')},
         'versions': {name: importlib.metadata.version(name) for name in ('fastapi','starlette','uvicorn','httpx','agent-memory','opentelemetry-sdk')},
         'load_before': os.getloadavg(), 'config': vars(args) | {'output': str(args.output)},
+        'authentication': {'enabled': args.auth == 'on', 'login_in_timing': False,
+                           'label': 'P3-authenticated' if args.auth == 'on' else 'P3-auth-disabled-compatibility',
+                           'historical_results_comparable': False},
         'mode': 'deterministic planner / local demo tools / memory disabled / in-memory support / trace ratio1 exporter none / one uvicorn worker',
         'method': 'closed-loop bounded client; real loopback TCP; latency begins after generator semaphore; includes HTTP pool and parsing, not generator backlog. New server per repeat; fixed scenario order (not randomized), warmup each commerce/SSE/support; service CPU and VmHWM via /proc, process peak cumulative; no allocator attribution; first SSE event is started, not first model token; no live model, stub or paid call; local credentials removed; no capacity claims'}
     (args.output/'inputs.json').write_text(json.dumps({'commerce': BODY, 'support': SUPPORT, 'conflict': {'message':'我要退款'}, 'scenarios': SCENARIOS}, ensure_ascii=False, indent=2))

@@ -2,6 +2,7 @@ import json
 
 import httpx
 import pytest
+from http_login import login_customer
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import SimpleSpanProcessor
 from opentelemetry.sdk.trace.export.in_memory_span_exporter import InMemorySpanExporter
@@ -23,6 +24,8 @@ async def test_sampling_flag_matches_exported_trace_for_success_rejection_and_ss
     async with app.router.lifespan_context(app), httpx.AsyncClient(
         transport=httpx.ASGITransport(app=app), base_url='http://test'
     ) as api:
+        await login_customer(api)
+        exporter.clear()
         for endpoint, budget in [('/v1/commerce/runs', 5000),
                                  ('/v1/commerce/runs', -1),
                                  ('/v1/commerce/stream', 5000)]:
@@ -69,9 +72,11 @@ async def test_sampling_flag_on_error_response(monkeypatch, status):
     async with app.router.lifespan_context(app), httpx.AsyncClient(
         transport=httpx.ASGITransport(app=app), base_url='http://test'
     ) as api:
+        await login_customer(api)
+        exporter.clear()
         response = await api.post('/v1/commerce/runs', json={
             'request': 'fixture', 'category': 'kettle', 'budget_cent': 5000,
-            'region': '上海'}, headers={'authorization': 'Bearer fixture'})
+            'region': '上海'}, headers={})
     assert response.status_code == status
     assert response.json()['trace_sampled'] is False
     assert response.headers['x-trace-sampled'] == 'false'

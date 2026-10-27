@@ -1,0 +1,13 @@
+{
+  "recorded_beijing": "2026-10-26T21:22:56.945490+08:00",
+  "source_message_id": "om_x100b62c154e6a4a8df2d2f016152ce1",
+  "owner_instruction_message": "om_x100b62c15245d4acb4f756e009702f7",
+  "source_filename": "agent-ops-platform面试级完善方案.md",
+  "latest": "docs/agent-ops-platform面试级完善方案.md",
+  "sha256": "0553d3da1027d9f826742d3dd5c1a1705e5b200b881aa7c20ee677887940aad3",
+  "bytes": 46589,
+  "byte_identical_to_existing": true,
+  "original_bytes_and_author_preserved": true,
+  "additional_requirements": "docs/p3-followup-plan-2026-10-26.md",
+  "scope": "P3 followup only; stop before P4"
+}

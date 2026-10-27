@@ -1,4 +1,4 @@
-"""Memory is an optional HTTP tool, with the caller's own bearer identity."""
+"""Memory is an optional HTTP tool, with an explicitly supplied agent-memory identity (never a platform JWT)."""
 import json
 
 import httpx

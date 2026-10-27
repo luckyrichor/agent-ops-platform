@@ -9,7 +9,7 @@ depends_on = None
 
 
 def upgrade():
-    op.execute("""
+    statements = """
     CREATE SCHEMA auth;
     -- Credentials live apart from the 1M commerce.users placeholders: only a customer account
     -- explicitly linked to one placeholder can log in as that user.
@@ -25,7 +25,7 @@ def upgrade():
       CHECK((role = 'customer') = (customer_user_id IS NOT NULL))
     );
     CREATE UNIQUE INDEX accounts_email ON auth.accounts(email);
-    -- Only SHA-256 digests of opaque refresh tokens are stored; family = one login session.
+    -- Only SHA-256 digests of opaque refresh tokens are stored, family = one login session.
     CREATE TABLE auth.refresh_tokens (
       token_hash char(64) PRIMARY KEY,
       family_id uuid NOT NULL,
@@ -47,13 +47,19 @@ def upgrade():
     CREATE INDEX tickets_customer_created ON support.tickets(customer_user_id,created_at DESC,ticket_id DESC)
       WHERE customer_user_id IS NOT NULL;
     CREATE INDEX conversations_user ON commerce.conversations(user_id,id);
-    """)
+    """
+    for statement in statements.split(";"):
+        if statement.strip():
+            op.execute(statement)
 
 
 def downgrade():
-    op.execute("""
+    statements = """
     DROP INDEX commerce.conversations_user;
     DROP INDEX support.tickets_customer_created;
     ALTER TABLE support.tickets DROP COLUMN customer_user_id;
     DROP SCHEMA auth CASCADE;
-    """)
+    """
+    for statement in statements.split(";"):
+        if statement.strip():
+            op.execute(statement)

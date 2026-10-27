@@ -1,3 +1,5 @@
+from http_login import login_customer
+
 """Regressions fixed before B0; no paid providers or network calls."""
 import httpx
 import pytest
@@ -19,7 +21,7 @@ def test_explicit_english_handoff_is_preserved(message):
     assert route_message(message) == 'human'
 
 
-async def test_internal_memory_client_ignores_shell_proxy(monkeypatch):
+async def test_disabled_memory_never_constructs_client_despite_shell_proxy(monkeypatch):
     # A broken shell proxy must not prevent constructing the internal HTTP client.
     monkeypatch.setenv('AGENT_MEMORY_URL', 'http://memory.invalid')
     for name in ('ALL_PROXY', 'all_proxy', 'HTTP_PROXY', 'http_proxy'):
@@ -36,12 +38,13 @@ async def test_internal_memory_client_ignores_shell_proxy(monkeypatch):
     try:
         async with httpx.AsyncClient(transport=httpx.ASGITransport(app=create_app(dispatch)),
                                     base_url='http://test', trust_env=False) as client:
+            await login_customer(client)
             response = await client.post('/v1/commerce/runs',
-                headers={'Authorization': 'Bearer fixture'}, json={
+                headers={}, json={
                     'request': 'fixture', 'category': 'kettle',
                     'budget_cent': 5000, 'region': '上海'})
         assert response.status_code == 200
-        assert response.json()['memory_status'] == 'read_write_degraded'
+        assert response.json()['memory_status'] == 'not_configured'
         assert response.json()['recommendation']['selected']['id'] == 'kettle-basic'
     finally:
         await dispatch.aclose()

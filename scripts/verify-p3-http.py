@@ -100,6 +100,19 @@ async def exercise(bases: list[str], roster: dict) -> None:
         admin = await login(two, by_role["admin"][0])
         check("token issued by process A is accepted by process B",
               (await client.get(two + "/auth/me", headers=auth(c1))).json()["role"] == "customer")
+        body = {'request': 'fixture', 'category': 'kettle', 'budget_cent': 5000, 'region': '上海'}
+        for endpoint in ['/v1/commerce/runs', '/v1/commerce/stream']:
+            check(endpoint + ' rejects anonymous before SSE starts',
+                  (await client.post(two + endpoint, json=body)).status_code == 401)
+            check(endpoint + ' rejects agent',
+                  (await client.post(two + endpoint, json=body, headers=auth(agent))).status_code == 403)
+            response = await client.post(two + endpoint, json=body, headers=auth(c1))
+            if endpoint.endswith('stream'):
+                payload = [json.loads(l[6:]) for l in response.text.splitlines() if l.startswith('data: ')][-1]
+            else:
+                payload = response.json()
+            check(endpoint + ' accepts customer with memory not_configured', response.status_code == 200
+                  and payload['outcome'] == 'succeeded' and payload['memory_status'] == 'not_configured')
         own = await client.get(two + "/orders", headers=auth(c1))
         check("customer sees only own orders over TCP",
               [o["order_id"] for o in own.json()["items"]] == [101])
@@ -166,7 +179,8 @@ def main() -> None:
               not any(pw in cli.stdout + cli.stderr for pw in passwords))
         server_env = {**env, "AGENT_OPS_SUPPORT_BACKEND": "postgres",
                       "AGENT_OPS_AUTH_SECRET": secrets.token_urlsafe(48),
-                      "AGENT_OPS_PLANNER": "deterministic", "AGENT_OPS_TRACE_EXPORTER": "none"}
+                      "AGENT_OPS_PLANNER": "deterministic", "AGENT_OPS_TRACE_EXPORTER": "none",
+                      "AGENT_MEMORY_URL": "http://127.0.0.1:9"}
         server_env.pop("ARK_API_KEY", None)
         ports = [free_port(), free_port()]
         processes = []

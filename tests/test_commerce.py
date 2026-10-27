@@ -2,6 +2,7 @@ import asyncio
 
 import httpx
 import pytest
+from http_login import login_customer
 
 from agent_ops.agents import demo_agents
 from agent_ops.api import create_app
@@ -17,6 +18,7 @@ def request() -> CommerceRequest:
 async def test_asgi_e2e_decomposes_dispatches_and_recommends() -> None:
     async with httpx.AsyncClient(transport=httpx.ASGITransport(app=create_app()),
                                  base_url="http://test") as client:
+        await login_customer(client)
         response = await client.post("/v1/commerce/runs", json=request().model_dump(mode="json"))
         assert response.status_code == 200
         result = response.json()

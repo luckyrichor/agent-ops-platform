@@ -1,13 +1,16 @@
 # agent-ops-platform
 
-最后更新：2026-10-08；Codex；当前能力以本仓库提交及下列验收记录为准。
+最后更新：2026-10-26；Codex；当前能力以本仓库提交及下列验收记录为准。
+
+当前：P2 已验收，P3 收尾完成等待验收；135 项测试通过，P4 尚未开始。两个持久库已迁移到 0004；导购需要顾客登录，记忆暂为 not_configured（P7 前缺口）。本轮改动尚未提交/推送。见 [P3 收尾交付](docs/reports/p3-followup-2026-10-26/delivery.md) 与 [认证运行指南](docs/auth.md)。
 
 W4 M1 骨架与电商多 Agent 编排最小闭环已实现。Python 3.12 + FastAPI；确定性规划器将请求分为 catalog、pricing、shipping、recommendation 四个角色任务，依赖校验后分派，pricing/shipping 并发，最终汇总预算内推荐。不同角色是代码中的独立 handler。现已增加可选真实 LLM 规划器，已使用用户开通的 Doubao-Seed-2.1-lite 完成初验及30次重复规划工程评测，详见 [接入与验收](docs/llm-planner.md)。
 
 ```bash
 bash scripts/bootstrap.sh
 uv run python -m agent_ops
-uv run uvicorn agent_ops.api:create_app --factory --host 127.0.0.1 --port 8087
+# PostgreSQL 默认运行方式（先完成栈初始化与演示账号配置）
+uv run python scripts/serve.py --backend postgres --port 8087
 uv run pytest -q
 uv run ruff check src tests
 uv run mypy --strict src
@@ -17,7 +20,7 @@ HTTP：POST /v1/commerce/runs，JSON 输入 `request`、`category`、`budget_cen
 
 任务失败以错误码报告，下游 blocked，其他独立角色保留结果；角色 5 秒超时，调用者取消向正在执行的 handler 传播。没有符合预算商品时成功返回 selected=null 与明确 reason_code。
 
-M2 官方 memory SDK 集成与 M3 SSE/背压/取消已通过本地自动验收；W6 维护接入检索 SDK。配置 AGENT_MEMORY_URL 后转发调用者 Bearer 身份；客户端重试复用 run_id，写记忆使用稳定幂等键。SSE 入口 POST /v1/commerce/stream。完整协议、运行与验证见 [docs/memory-streaming.md](docs/memory-streaming.md)。
+M2 官方 memory SDK 集成与 M3 SSE/背压/取消已通过本地自动验收；W6 维护接入检索 SDK。P3 后 HTTP 导购必须先以 customer 登录；平台令牌不会转发到 agent-memory。现有 memory 协议不支持服务凭据加平台用户 ID，因此 HTTP 入口暂不调用记忆，状态为 not_configured；P7 前需解决，详见 docs/auth.md。底层独立 SDK 集成测试仍保留。SSE 入口 POST /v1/commerce/stream。完整协议、运行与验证见 [docs/memory-streaming.md](docs/memory-streaming.md)。
 
 覆盖边界：本地固定商品/运费工具；支持确定性及受约束 LLM 计划，Doubao-Seed-2.1-lite 已通过 3 项真实调用初验，不声称自由规划或生产目录/订单能力。没有持久 run 存储、生产身份服务或分布式 worker；M4 trace调用树本地验收通过，见 [调用树](docs/call-tree.md)，TX 已部署持久化 Jaeger/OTLP 后端，见 [部署与访问](docs/tracing-backend.md)；跨服务传播未部署。M5评测/客服子方向尚未完成。写幂等仅覆盖 memory 写入，不保证所有工具 exactly-once。
 
@@ -77,7 +80,7 @@ worktree已存在时复用，不重复创建；运行前核对HEAD为完整固�
 
 [P2 交付与缺口](docs/reports/p2-2026-10-21/delivery.md) · [数据来源、许可与校验](docs/datasets.md)。商品/库存/订单/物流本地应用服务和全量合成导入已验证，同种子重跑按数据校验和核对；公开统计不含数据正文。代理仅为“规则代理，非人工真实意图分布，首片段说话人未确认”，等待人工比例独立可配，不进路由质量指标；人工权重待 P8 替换。
 
-**P2 仍缺 UserBehavior 完整文件，未全部验收。** 用户活跃度留空，未猜测热度分布；当前数据仅独立验收库，主 HTTP 应用未切库，不宣称客户认证已做。P3及以后与 S1–S7 优化实验均未执行。测试与磁盘/导入耗时见自动报告。
+P2 的 UserBehavior 完整文件、增量拟合与核验已完成，负责人已验收并授权 P3。数据仍在独立 P2 库，主 HTTP 默认配置仍使用 P0 主库。P3 认证、角色和归属隔离已实现；2026-10-26 两个持久库均已到 0004，P2 演示账号已创建。导购暂不调用记忆，状态 not_configured；P4 和 S1–S7 均未开始。详见 [认证与运行](docs/auth.md) 和 [本轮执行口径](docs/p3-followup-plan-2026-10-26.md)。
 
 
 ## P3 认证与权限（2026-10-23）

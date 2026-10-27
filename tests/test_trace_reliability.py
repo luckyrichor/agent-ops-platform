@@ -4,6 +4,7 @@ import json
 import httpx
 import pytest
 from agent_memory.sdk import MemoryAPIError, MemoryClient
+from http_login import login_customer
 from opentelemetry.sdk.trace import TracerProvider
 from opentelemetry.sdk.trace.export import SimpleSpanProcessor
 from opentelemetry.sdk.trace.export.in_memory_span_exporter import InMemorySpanExporter
@@ -51,8 +52,10 @@ async def test_http_errors_return_trace_header_and_body(monkeypatch, code, statu
     monkeypatch.setattr(MemoryCommerce, '_run', fail)
     async with httpx.AsyncClient(transport=httpx.ASGITransport(app=create_app(dispatcher)),
                                  base_url='http://test') as client:
+        await login_customer(client)
+        exporter.clear()
         response = await client.post('/v1/commerce/runs', json=body().model_dump(mode='json'),
-                                     headers={'authorization': 'Bearer fixture'})
+                                     headers={})
     spans = exporter.get_finished_spans()
     trace_id = response.headers['x-trace-id']
     assert response.status_code == status
@@ -75,15 +78,21 @@ async def test_actual_memory_write_conflict_stream_has_trace(monkeypatch):
     async def degraded(self, *args, **kwargs):
         raise MemoryAPIError(503, 'UNAVAILABLE')
     monkeypatch.setattr(MemoryClient, 'search', degraded)
-    async with httpx.AsyncClient(transport=httpx.ASGITransport(app=create_app(dispatcher)),
-                                 base_url='http://test') as client:
-        response = await client.post('/v1/commerce/stream', json=body().model_dump(mode='json'),
-                                     headers={'authorization': 'Bearer fixture'})
-    frames = [json.loads(part.split('data: ', 1)[1]) for part in response.text.strip().split('\n\n')]
-    assert frames[0]['trace_id'] == response.headers['x-trace-id']
-    assert frames[-1] == {'code': 'IDEMPOTENCY_CONFLICT', 'trace_id': response.headers['x-trace-id'],
-                          'trace_sampled': True}
-    assert 'event: error' in response.text
+    async with httpx.AsyncClient(base_url='http://memory.test') as client:
+        service = MemoryCommerce(dispatcher, MemoryClient(client, token='memory-fixture'))
+        async def connected():
+            return False
+        async def execute():
+            from fastapi import HTTPException
+            try:
+                return await service.run(body())
+            except MemoryAPIError as error:
+                raise HTTPException(error.status_code, error.code) from error
+        frames = [event async for event in stream_run(execute, connected,
+                                                       trace_id='fixture-trace')]
+    assert 'event: started' in frames[0]
+    assert 'event: error' in frames[-1]
+    assert json.loads(frames[-1].split('data: ', 1)[1])['code'] == 'IDEMPOTENCY_CONFLICT'
     assert any(s.name == 'tool.memory.remember' for s in exporter.get_finished_spans())
     provider.shutdown()
 
@@ -171,6 +180,8 @@ async def test_validation_body_trace_and_server_4xx_status(path):
     payload['budget_cent'] = -1
     async with httpx.AsyncClient(transport=httpx.ASGITransport(app=create_app(dispatcher)),
                                  base_url='http://test') as client:
+        await login_customer(client)
+        exporter.clear()
         response = await client.post(path, json=payload)
     assert response.status_code == 422
     assert response.json()['trace_id'] == response.headers['x-trace-id']
@@ -192,6 +203,8 @@ async def test_http_server_status_semantics(monkeypatch, status):
     monkeypatch.setattr(MemoryCommerce, '_run', rejected)
     async with httpx.AsyncClient(transport=httpx.ASGITransport(app=create_app(dispatcher)),
                                  base_url='http://test') as client:
+        await login_customer(client)
+        exporter.clear()
         response = await client.post('/v1/commerce/runs', json=body().model_dump(mode='json'))
     assert response.status_code == status
     server = next(s for s in exporter.get_finished_spans() if s.name == 'commerce.http')
