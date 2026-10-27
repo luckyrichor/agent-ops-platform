@@ -86,11 +86,21 @@ test("顾客提问到实时人工回复和解决，含重连及完整操作记�
   await expect(
     agent.getByRole("heading", { name: "会话历史", exact: true }),
   ).toBeVisible();
+  const otherAgent = await context.newPage();
+  await login(otherAgent, roster.filter((a) => a.role === "agent")[1], true);
+  await otherAgent.getByTestId("queue-ticket").first().click();
   await agent.getByRole("button", { name: "领取工单", exact: true }).click();
   await expect(agent.getByLabel("回复顾客", { exact: true })).toBeEnabled();
+  await expect(agent.getByRole("button", { name: "领取工单", exact: true })).toHaveCount(0);
+  await expect(agent.getByRole("button", { name: "已由我领取", exact: true })).toBeDisabled();
   await expect(
     customer.getByText("客服处理中", { exact: true }).first(),
   ).toBeVisible();
+  const heldByOther = otherAgent.getByRole("button", { name: /客服 #\d+ 持有/ });
+  await expect(heldByOther).toBeVisible();
+  await expect(heldByOther).toBeDisabled();
+  await expect(otherAgent.getByLabel("回复顾客", { exact: true })).toBeDisabled();
+  await otherAgent.close();
   // Disconnect only this customer page's WebSocket; API and the second tab stay connected.
   await sockets.at(-1)!.close();
   await agent

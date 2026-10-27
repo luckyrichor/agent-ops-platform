@@ -271,7 +271,7 @@ async def test_lease_renew_expiry_and_concurrent_reaper(api, database):
             {"id": tid},
         )
     detail = await api[0].get(f"/workbench/tickets/{tid}", headers=api[1]["a1"])
-    assert detail.json()["ticket"]["revision"] == 4  # holder read also renews/audits
+    assert detail.json()["ticket"]["revision"] == 3  # renewal is operational, not a business revision
     with database[1].begin() as c:
         c.execute(
             text(
@@ -279,7 +279,7 @@ async def test_lease_renew_expiry_and_concurrent_reaper(api, database):
             ),
             {"id": tid},
         )
-    assert (await post(api, tid, "reply", 4, message="late")).status_code == 409
+    assert (await post(api, tid, "reply", 3, message="late")).status_code == 409
     other = WorkbenchService(database[0], get_tracer("reaper-two"))
     try:
         await asyncio.gather(service.maintain(), other.maintain())
@@ -287,10 +287,10 @@ async def test_lease_renew_expiry_and_concurrent_reaper(api, database):
         await other.aclose()
     freed = await service.get(tid)
     assert (
-        freed.state == "waiting_human" and freed.revision == 5 and freed.assigned_account_id is None
+        freed.state == "waiting_human" and freed.revision == 4 and freed.assigned_account_id is None
     )
     assert len([r for r in await service.audit(tid, 100, 0) if r["type"] == "released"]) == 1
-    assert (await post(api, tid, "claim", 5, "a2")).status_code == 200
+    assert (await post(api, tid, "claim", 4, "a2")).status_code == 200
 
 
 async def test_sla_warning_overdue_only_once_and_stats(api, database):
@@ -832,7 +832,7 @@ async def test_customer_can_supply_missing_order_after_seat_has_claimed(api):
     assert (await post(api, tid, "reply", 3, message="已核对您补充的订单")).status_code == 200
 
 
-async def test_p5_claimed_queue_is_scoped_and_push_identifies_lease_echo(api):
+async def test_p5_claimed_queue_is_scoped_and_renewal_is_silent(api):
     client, headers, service = api
     t = await create(api)
     assert (await post(api, t['ticket_id'], 'claim', 1)).status_code == 200
@@ -845,5 +845,24 @@ async def test_p5_claimed_queue_is_scoped_and_push_identifies_lease_echo(api):
     after = await service.last_sequence()
     assert (await client.get('/workbench/tickets/'+t['ticket_id'],headers=headers['a1'])).status_code == 200
     events = await service.events(Principal(3,'agent',None,'fixture'),after)
-    assert len(events) == 1 and events[0]['kind'] == 'ticket_updated'
-    assert events[0]['payload']['change'] == 'lease_renewed'
+    assert events == []
+
+
+async def test_five_lease_renewals_preserve_revision_and_audit(api, database):
+    client, headers, service = api
+    ticket = await create(api)
+    tid = ticket["ticket_id"]
+    assert (await post(api, tid, "claim", 1)).status_code == 200
+    before = await service.get(tid)
+    audit = await service.audit(tid, 100, 0)
+    sequence = await service.last_sequence()
+    with database[1].begin() as c:
+        c.execute(text("UPDATE support.tickets SET lease_expires_at=now()+interval '1 minute' WHERE ticket_id=:id"), {"id": tid})
+    for _ in range(5):
+        response = await client.get(f"/workbench/tickets/{tid}", headers=headers["a1"])
+        assert response.status_code == 200
+        assert response.json()["ticket"]["revision"] == before.revision
+    assert await service.audit(tid, 100, 0) == audit
+    assert await service.last_sequence() == sequence
+    with database[1].connect() as c:
+        assert c.scalar(text("SELECT lease_expires_at>now()+interval '9 minutes' FROM support.tickets WHERE ticket_id=:id"), {"id": tid})

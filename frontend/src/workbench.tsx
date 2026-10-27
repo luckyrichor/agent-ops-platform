@@ -371,7 +371,11 @@ export function Workbench({ account }: { account: Account }) {
                         }
                         onClick={() => action("claim")}
                       >
-                        领取工单
+                        {owned
+                          ? "已由我领取"
+                          : t.state === "claimed"
+                            ? `客服 #${t.assigned_account_id} 持有`
+                            : "领取工单"}
                       </button>
                       <button
                         className="secondary"

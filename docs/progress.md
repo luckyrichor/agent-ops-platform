@@ -249,3 +249,17 @@ B1 只整理既有证据：核对两组各3840有效样本、B0输入逐字节�
 完整交付、截图路径/哈希及源码摘要：docs/reports/p5-2026-10-27/；接口取舍进 docs/design-decisions.md。React19.3.1/TS7.0.2/Vite8.3.5/Playwright1.64.1 以 package-lock 为准。P5 基于 1b344ab + 工作区修改，尚未提交推送；未做 P6+、公网常驻/S1优化，其他浏览器/真实手机/用户SSH实连/百万库浏览器写入联调未验证。无新技术取舍待定，停在 P6 前等 P5 验收。
 
 本轮交付、15 张截图绝对路径与完整 SSH/接口说明已以 codex profile / --as user 追加飞书开发记录：https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf，既有项目目录归属及正文回查通过、旧文保留，见本轮 publication.json。
+
+
+## 2026-10-27 P5 验收、两项修复与 P6 前置暂停（Codex）
+
+- 用户验收 P5；全部 P5 37 文件已提交推送 main：`26d4a831432b59ecac6d49ee6c6e02be055a0722`。提交前检查 .local、node_modules、dist 不在暂存区，已知本地凭据和私钥标记均未命中。
+- 新附件完整更新 `docs/agent-ops-platform面试级完善方案.md`，保留作者、原始字节和旧版归档，来源见 `docs/plans/source-2026-10-27.json`。主要差异是 S1 产品领取/实验基线边界；P6 门槛未变。
+- `WorkbenchService.inspect` 续租仅改 lease_expires_at；不增 revision、不改业务 updated_at、不追加审计或推送。业务回复、领取、退回、解决、查看关联订单仍保留业务版本与审计。连续五次续租测试确认 revision、完整审计、push sequence 不变，租期确实延长到九分钟以上。旧 P4/P5 描述的“读续租增版本”由本节纠正。
+- 工作台领取按钮：本人持有显示“已由我领取”并禁用；他人持有显示“客服 #账号ID 持有”并禁用，回复也禁用。Playwright 实际登录第二座席、打开同一张工单，验证 WS 更新后的两种状态；不暴露邮箱或凭据。
+- 最终后端 pytest 166 passed，2 个既有 JUnit 警告；ruff check src tests、strict mypy src（23 文件）、固定规则评测 47/47 通过。前端类型检查/生产构建通过，Playwright 5/5、0 skipped、0 flaky（25.337 秒），仍是 Chromium 153 和一次性真实 PG。日志 `.local/p5-followup-*`；截图 `.local/p5-followup-20261027/browser/screenshots/`。P0/P2 没有本轮业务写入。
+- 返工：定向测试首轮 16 passed/1 failed，是批量调整测试版本误改了无关领取断言，修正后完整 166 通过；误用全仓 `ruff check .` 触及历史 scripts/migrations 的 25 个已有问题，未扩大修改，按既有门禁 src/tests 全过。没有将全仓 lint 宣称为通过。
+- P6 A 尚未完成：官方沙箱入口跳转登录，缺本人账号会话与沙箱文件；本服务器公网 IP+端口真实支付宝通知未验证，不等于判定不可行。详见 `docs/p6-feasibility.md` 的执行方法、来源、结果、必要文件与下一步。没有支付代码、模拟器、新迁移、退款、对账或 S2 性能实验；不进入 P7。
+- 需要用户：本人确认个人账号能进入沙箱，将配置与沙箱 RSA2 密钥私下放到 `.local/payments/alipay/`（目录700、文件600），不要放聊天或日志。不收真实支付宝密码/cookie。收到资料后先验证真实回调，再决定是否开始 P6 实现。
+
+飞书开发记录已追加且父节点/正文/旧内容保留回查通过：https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf。

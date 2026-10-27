@@ -542,8 +542,8 @@ class WorkbenchService(PostgresSupportService):
                 row = (
                     (
                         await c.execute(
-                            text(f"""UPDATE support.tickets SET revision=revision+1,
-                    lease_expires_at=now()+interval '10 minutes',updated_at=now() WHERE ticket_id=:id RETURNING {FIELDS}"""),
+                            text(f"""UPDATE support.tickets SET
+                    lease_expires_at=now()+interval '10 minutes' WHERE ticket_id=:id RETURNING {FIELDS}"""),
                             {"id": ticket_id},
                         )
                     )
@@ -551,7 +551,6 @@ class WorkbenchService(PostgresSupportService):
                     .one()
                 )
                 ticket = Ticket.model_validate(dict(row))
-                await self._event(c, ticket, "lease_renewed", principal.actor)
             return ticket
 
     async def stats(self) -> dict[str, Any]:
