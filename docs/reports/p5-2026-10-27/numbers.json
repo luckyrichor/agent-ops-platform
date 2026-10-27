@@ -1,0 +1,139 @@
+{
+  "generated_beijing": "2026-10-27T18:43:08.071937+08:00",
+  "P4_pushed_commit": "1b344abfc78a62f48ed226df297ccc5f92ff4856",
+  "P5_uncommitted": true,
+  "backend": {
+    "tests": "165",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "78.439"
+  },
+  "ruff": "passed",
+  "strict_mypy": {
+    "passed": true,
+    "files": 23
+  },
+  "fixed_rules": {
+    "cases": 47,
+    "passed": 47,
+    "quality_accuracy_claim": false
+  },
+  "frontend_typecheck": "passed",
+  "production_build": "passed",
+  "playwright": {
+    "startTime": "2026-10-27T10:32:45.798Z",
+    "duration": 27334.277000000002,
+    "expected": 5,
+    "skipped": 0,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "browser": "Google Chrome for Testing 153.0.8010.12",
+  "versions": {
+    "react": "19.3.1",
+    "react-dom": "19.3.1",
+    "typescript": "7.0.2",
+    "vite": "8.3.5",
+    "@playwright/test": "1.64.1"
+  },
+  "screenshots": [
+    {
+      "page": "客户登录（遮罩）",
+      "path": "/home/ubuntu/project/WorkPlan/agent-ops-platform/.local/p5-2026-10-27/final/screenshots/01-customer-login.png",
+      "bytes": 56908,
+      "sha256": "254047479bbec38078c9fda6e5ea28153dc07deb457df3d64cbb39a8692b6a09"
+    },
+    {
+      "page": "顾客排队",
+      "path": "/home/ubuntu/project/WorkPlan/agent-ops-platform/.local/p5-2026-10-27/final/screenshots/02-customer-queued.png",
+      "bytes": 93934,
+      "sha256": "82892cff6b87e69392d8af660adc92e6addc3ad140c3efd1c8525f53ab689735"
+    },
+    {
+      "page": "工作台队列",
+      "path": "/home/ubuntu/project/WorkPlan/agent-ops-platform/.local/p5-2026-10-27/final/screenshots/03-workbench-queue.png",
+      "bytes": 51779,
+      "sha256": "24da21194d59e96b27a25c867993fd0ba53c9c265c797061151a3be276fb8609"
+    },
+    {
+      "page": "工作台详情及订单面板",
+      "path": "/home/ubuntu/project/WorkPlan/agent-ops-platform/.local/p5-2026-10-27/final/screenshots/04-workbench-ticket.png",
+      "bytes": 145215,
+      "sha256": "f3686d2f7f760fd23972ad87e21c6e410aed3372cedbee6d5b48d3f83e61fde7"
+    },
+    {
+      "page": "顾客收到实时回复",
+      "path": "/home/ubuntu/project/WorkPlan/agent-ops-platform/.local/p5-2026-10-27/final/screenshots/05-customer-reply.png",
+      "bytes": 98852,
+      "sha256": "27ec850970f6e3b21f78d3355e83a347dc4d115b91f41322e0d4c2fbadde7a81"
+    },
+    {
+      "page": "已解决与审计",
+      "path": "/home/ubuntu/project/WorkPlan/agent-ops-platform/.local/p5-2026-10-27/final/screenshots/06-workbench-resolved.png",
+      "bytes": 152408,
+      "sha256": "11244a89dcfab56f6b76ff95ed42b0ebd6ee616f9406e2fc055ef15208055df4"
+    },
+    {
+      "page": "双标签隔离",
+      "path": "/home/ubuntu/project/WorkPlan/agent-ops-platform/.local/p5-2026-10-27/final/screenshots/07-customer-isolated.png",
+      "bytes": 93894,
+      "sha256": "1d25dfbed4fc70f3724fe079021058d9bea81bc0ee8ee579d011d602e958f702"
+    },
+    {
+      "page": "商品浏览",
+      "path": "/home/ubuntu/project/WorkPlan/agent-ops-platform/.local/p5-2026-10-27/final/screenshots/08-products.png",
+      "bytes": 198889,
+      "sha256": "beaefc6f2e286e3a354389c5b9939efddd1eb55a9c53ec5997f8a85699618ee4"
+    },
+    {
+      "page": "商品详情",
+      "path": "/home/ubuntu/project/WorkPlan/agent-ops-platform/.local/p5-2026-10-27/final/screenshots/09-product-detail.png",
+      "bytes": 164579,
+      "sha256": "aeae90956189787ddffed441509fd7c5ab2e90590f53266608efcd615ea8d6fb"
+    },
+    {
+      "page": "真实下单及我的订单",
+      "path": "/home/ubuntu/project/WorkPlan/agent-ops-platform/.local/p5-2026-10-27/final/screenshots/10-orders.png",
+      "bytes": 68650,
+      "sha256": "dd191d4401bb6e6515613964498dfc39fd57754d96c7f92785c3451d968fb168"
+    },
+    {
+      "page": "支付尚未开通",
+      "path": "/home/ubuntu/project/WorkPlan/agent-ops-platform/.local/p5-2026-10-27/final/screenshots/11-payment-not-enabled.png",
+      "bytes": 43904,
+      "sha256": "1fef0b90d068458c8d6dabce62e451ec2a0fe00381cead7658df36ef11022b3e"
+    },
+    {
+      "page": "SSE 演示及能力边界",
+      "path": "/home/ubuntu/project/WorkPlan/agent-ops-platform/.local/p5-2026-10-27/final/screenshots/12-streaming-demo.png",
+      "bytes": 100897,
+      "sha256": "03e75fd026e48036d4c73d4a0ef56d5ec48b19d060a2f14c01f14852afa506dc"
+    },
+    {
+      "page": "管理员统计",
+      "path": "/home/ubuntu/project/WorkPlan/agent-ops-platform/.local/p5-2026-10-27/final/screenshots/13-admin-stats.png",
+      "bytes": 40442,
+      "sha256": "14cb4517e89538c01fca4dd69a15f7701917dfbcbf7d5c97ef43f367ccc4b959"
+    },
+    {
+      "page": "移动端登录",
+      "path": "/home/ubuntu/project/WorkPlan/agent-ops-platform/.local/p5-2026-10-27/final/screenshots/14-mobile-login.png",
+      "bytes": 35318,
+      "sha256": "206aa7b8e3635924fbfbb8b4a522bcf3e396a51db8ac5c034dcb305ca495c149"
+    },
+    {
+      "page": "移动端商品浏览",
+      "path": "/home/ubuntu/project/WorkPlan/agent-ops-platform/.local/p5-2026-10-27/final/screenshots/15-mobile-products.png",
+      "bytes": 177163,
+      "sha256": "60234a02a3a6ed53abec447fe1244be692d15077180e4ed6164fcca0d8638988"
+    }
+  ],
+  "screenshots_are_fixture_database": true,
+  "P0_P2_business_writes": false,
+  "public_exposure": false,
+  "user_computer_SSH_connection_verified": false,
+  "P6_started": false,
+  "semantic_product_search_enabled": false,
+  "payment_enabled": false
+}

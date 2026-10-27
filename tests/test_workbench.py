@@ -830,3 +830,20 @@ async def test_customer_can_supply_missing_order_after_seat_has_claimed(api):
         supplied["lease_expires_at"] == claimed["lease_expires_at"]
     )  # customer does not renew seat lease
     assert (await post(api, tid, "reply", 3, message="已核对您补充的订单")).status_code == 200
+
+
+async def test_p5_claimed_queue_is_scoped_and_push_identifies_lease_echo(api):
+    client, headers, service = api
+    t = await create(api)
+    assert (await post(api, t['ticket_id'], 'claim', 1)).status_code == 200
+    mine = await client.get('/workbench/tickets?state=claimed&mine=true', headers=headers['a1'])
+    assert mine.status_code == 200 and any(row['ticket_id'] == t['ticket_id'] for row in mine.json()['items'])
+    assert all(row['assigned_account_id'] == 3 for row in mine.json()['items'])
+    others = await client.get('/workbench/tickets?state=claimed&mine=true', headers=headers['a2'])
+    assert all(row['assigned_account_id'] == 4 for row in others.json()['items'])
+    assert (await client.get('/workbench/tickets?state=resolved',headers=headers['a1'])).status_code == 422
+    after = await service.last_sequence()
+    assert (await client.get('/workbench/tickets/'+t['ticket_id'],headers=headers['a1'])).status_code == 200
+    events = await service.events(Principal(3,'agent',None,'fixture'),after)
+    assert len(events) == 1 and events[0]['kind'] == 'ticket_updated'
+    assert events[0]['payload']['change'] == 'lease_renewed'

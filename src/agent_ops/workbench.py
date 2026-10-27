@@ -169,7 +169,7 @@ class WorkbenchService(PostgresSupportService):
             names.get(kind, "ticket_updated"),
             staff=True,
             customer=t.customer_user_id if kind == "message_created" else None,
-            extra=extra,
+            extra={"change": kind, **(extra or {})},
         )
         if (
             kind in {"created", "claimed", "released", "resolved", "information_supplied"}
@@ -425,13 +425,14 @@ class WorkbenchService(PostgresSupportService):
             ).mappings()
             return [Ticket.model_validate(dict(r)) for r in rows]
 
-    async def queue(self, limit: int, offset: int) -> list[Ticket]:
+    async def queue(self, limit: int, offset: int, *, state: str = "waiting_human", assigned: int | None = None) -> list[Ticket]:
         async with self.engine.connect() as c:
             rows = (
                 await c.execute(
-                    text(f"""SELECT {FIELDS} FROM support.tickets WHERE state='waiting_human'
+                    text(f"""SELECT {FIELDS} FROM support.tickets WHERE state=:state
+                AND (CAST(:assigned AS bigint) IS NULL OR assigned_account_id=:assigned)
                 ORDER BY priority DESC,created_at,ticket_id LIMIT :limit OFFSET :offset"""),
-                    {"limit": limit, "offset": offset},
+                    {"limit": limit, "offset": offset, "state": state, "assigned": assigned},
                 )
             ).mappings()
             return [Ticket.model_validate(dict(r)) for r in rows]

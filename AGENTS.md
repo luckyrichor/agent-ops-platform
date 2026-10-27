@@ -10,7 +10,7 @@ Agent 应用与可观测评测平台。电商场景的多 Agent 任务拆解、�
 
 三个月求职计划六项目之一（原编号 ③），对应岗位 **05、07、10、11、14**，另含 **08** 作为子方向。总计划见 [workplan-docs](https://github.com/luckyrichor/workplan-docs)，岗位原文以那里的 `岗位要求原文.md` 为唯一依据。
 
-**当前状态：P2 已由负责人验收；P3 已验收并于 8900974 提交推送；P4 后端及两库 0005 迁移已完成，最终 163 项测试通过，等待 P4 验收，禁止进入 P5。两个持久库均已到 0004；P2 建有 6 个演示账号、种子工单按确定会话关联补归属；P0 历史测试工单保持无归属。导购两个 HTTP 入口必须 customer 登录，平台 JWT 不转发到 agent-memory；现有 memory 无服务凭据加平台用户 ID 协议，HTTP 记忆状态为 not_configured（P7 前缺口）。完整证据见 [P3 收尾交付](docs/reports/p3-followup-2026-10-26/delivery.md)，135 项测试通过、0 跳过。业务 API 未常驻；Jaeger 六组件栈已运行。**
+**当前状态：P4 已验收并提交推送 `1b344abfc78a62f48ed226df297ccc5f92ff4856`；P5 React/TypeScript 客户页与工作台已完成，165 项后端测试、前端类型/构建和 5 项 Playwright 通过，15 张私有截图已保存，等待 P5 验收，禁止进入 P6。两库仍为 0005，无本轮业务写入或新迁移；API/前端未常驻，只绑定回环，SSH 访问见 docs/p5-frontend.md。支付与真实导购检索/记忆明确尚未开通，P7 身份缺口保留。最终证据 docs/reports/p5-2026-10-27/，本轮 P5 修改尚未提交推送。**
 
 ## 分工模式：偏产出
 
@@ -223,7 +223,7 @@ P3 全部改动已按负责人第一步要求提交推送 main：`89009744cb5772
 - 启动：uv sync；`uv run python scripts/serve.py --backend postgres --env-file .local/p2-application.env --port 8003`，仅 localhost，未常驻。真实库只读烟雾：`uv run python scripts/verify-p3-persistent.py --output-dir .local/p4-new-smoke --workbench`（只新增认证会话，输出路径必须新建）。完整写入闭环用一次性 PG 测试，不污染百万库。新增 websockets 锁定 16.1.1，uv.lock 是版本依据。
 - 后台每秒批量条件检查，多个进程避免重复释放/SLA事件；大规模到期吞吐、提交序号门性能、WS 容量、完整备份恢复均未验证。没有清理持久推送历史，未来保留期限须配套游标过期协议。0005 降级会移除 P4 数据，先备份并释放 claimed，测试库往返通过，服务器未降级。
 - 已知失败已修：两项旧 PG HTTP 用例跳过领取被拒绝，改为 claim 后 resolve 且带幂等键，保留权限/归属/审计断言；补齐 mypy 查询类型、异步测试子进程启动和显式 check、后台测试缺失导入。最终四道门通过，无进行中的迁移/API进程。P4 原始较早 162 项日志留作返工历史，不替代最终 163 项。
-- 下一步：等负责人验收 P4；本轮 P4 工作区修改未提交推送，不自行进入 P5/P6/P10。无新技术决策待定。P7 memory 服务身份协议缺口仍 not_configured，若改接口先报告再同步双方文档。
+- P4 已于本轮获验收并提交推送；此前等待 P4/禁止 P5 是历史状态，当前下一步以下方 P5 节为准。P7 memory 身份缺口仍保留。
 - 飞书已同步：2026-10-27 P4 交付和完整接口/运行说明已追加既有《agent-ops-platform 开发记录》：https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf。父节点/正文回读通过，确认 P3 正文完整保留（导出标题标记归一后核对）；用户身份 codex profile / --as user。核验见 docs/reports/p4-2026-10-27/publication.json。
 
 ### 更新日志（P4）
@@ -233,3 +233,41 @@ P3 全部改动已按负责人第一步要求提交推送 main：`89009744cb5772
 ## 2026-10-27 P4 验收与 P5 授权
 
 负责人消息 om_x100b61333a019caccf035b587c1094e 已验收 P4，要求先提交推送全部 P4 改动，再只做 P5 React/TypeScript 前端。此前等待 P4 验收/不进入 P5 为历史阶段状态，由本条更新。P5 只绑定回环，SSH 转发访问；支付与 P7 依赖部分明确“尚未开通”，不冒充真实能力；Playwright 主流程/双标签隔离/私有截图、前后端检查后停在 P6 前。Codex 本轮独立主导执行，适用独立任务安排。
+
+
+## 2026-10-27 P5 两个前端交接（Codex）
+
+### 范围、代码版本与进度
+
+负责人消息 om_x100b61333a019caccf035b587c1094e 已验收 P4，要求先提交推送再只做 P5。P4 全部 28 个文件改动已提交推送 main：`1b344abfc78a62f48ed226df297ccc5f92ff4856`。本轮 P5 基于该 HEAD 的工作区修改，尚未提交推送；源码 SHA256 在 docs/reports/p5-2026-10-27/source-files.json。P5 已完成并验证，等待负责人验收，不进入 P6。Codex 独立主导执行，未转交其他助手。
+
+### 实现与关键文件
+
+- `frontend/` 一个 React/TypeScript 包提供 /customer 与 /workbench 两个独立角色入口，复用 API/组件/样式；入口 main.tsx，客户 customer.tsx，工作台 workbench.tsx，公共 api.ts/push.ts/components.tsx/types.ts/style.css。React 19.3.1、TypeScript 7.0.2、Vite 8.3.5、Playwright 1.64.1，package-lock.json 为实际锁定依据，Node 本机 24.21.0。
+- 客户：登录、导购/客服同窗、排队/人工接入/实时回复、补订单、历史工单、商品浏览与详情、真实下单/库存预留、我的订单/物流/退货、支付骨架。导购仅真实 SSE 编排状态演示，明确固定工具而非真实商品推荐；真实检索/记忆和支付均“尚未开通”，无假成功、无假检索到下单入口。注册尚未开通。
+- 工作台：登录、实时待领取/我领取的、OFFSET 翻页、详情/会话/路由理由/关联订单/审计、领取/回复/解决/退回，管理员统计；关联订单只经工单查询并沿用 P4 逐次审计。详情刷新与业务写串行，版本冲突提示并保留草稿；纯 lease_renewed/order_viewed 事件不触发读取回声循环。
+- api.ts 每标签内存保存访问/刷新令牌；无 localStorage/sessionStorage/跨标签广播。刷新令牌串行，401 重试和网络重试保持幂等键；退出清空页面数据、WS 和会话。刷新页面重登是明确取舍。密码/令牌不写前端源码、URL、日志或截图。
+- push.ts 在处理业务事件成功后推进 after，重连补发；HTTP/WS 都走同源 /api 代理，平台令牌只到平台 API。Vite target 只接受 127.0.0.1，不发送到 agent-memory/外部服务。
+- P5 必需薄后端适配：access_api.products_router / CommerceBackend.product 暴露现有 PG 商品 list/detail；workbench queue 新增 state=claimed&mine=true 过滤；push payload.change 区分纯读回声。未改领取算法或加索引，未运行 S1/P6/P7。契约/取舍见 docs/design-decisions.md 和 docs/p5-frontend.md。
+
+### 快速上手与访问
+
+服务器终端一：`AGENT_OPS_PLANNER=deterministic uv run python scripts/serve.py --backend postgres --env-file .local/p2-application.env --port 8003`。终端二进入 frontend：`npm ci && npm run build`，再 `npx vite preview --host 127.0.0.1 --port 5173 --strictPort`。用户电脑 `ssh -N -L 127.0.0.1:5173:127.0.0.1:5173 tx`，浏览器 http://127.0.0.1:5173/customer 或 /workbench。仅回环，不开公网/不常驻；完整备用端口、停止和截图 scp 步骤见 docs/p5-frontend.md。账号只从 .local/demo-accounts.json 私下读取，不复制到源码、群或截图。
+
+### 验证、截图和失败记录
+
+- 最终后端 pytest 165 passed / 0 skipped / 78.439 秒（2 个既有 JUnit 警告）；ruff、strict mypy 23 文件、固定规则回归 47/47 通过（非真实路由准确率）。前端 `npm run typecheck`、`npm run build` 通过。
+- 最终 Playwright 5/5 / 0 skipped / 0 flaky，27.334 秒，真实一次性 PG + API + 生产构建；客户提问→建工单→座席收到 WS→领取→断线→回复补发→解决及审计；同浏览器上下文两标签不同账号、跨顾客订单 404、退出不影响另一标签；真实商品下单/库存与订单、未开通支付/SSE边界、退回重领/我的领取/统计、移动无横向溢出。未改 P0/P2 业务数据，测试容器/服务均已停止。
+- 配套 Chromium 156 下载未推进，停止该次下载，复用现有 Chrome for Testing 153.0.8010.12（路径 /home/ubuntu/.cache/ms-playwright/chromium-1243/chrome-linux64/chrome），不是冒称验证了配套新版。`scripts/verify-p5.py --output 新.local目录 --browser 已有浏览器路径` 自动建测试库和私有随机账号、起服务、跑 Playwright、过滤凭据日志并清理。账号文件 600。
+- 首次 TS 缺 CSS 类型引用，补 vite/client；Playwright 首轮 4/5，支付按钮名称含“尚未开通”导致测试定位超时，修正定位后通过。中文化系统消息/准确队列空态后再次完整执行类型/构建/Playwright，最终 final 目录为准。trial1/trial2 留历史，不混用较早截图与最终源码。
+- 最终截图 15 张：`.local/p5-2026-10-27/final/screenshots/`，绝对路径/哈希见 docs/reports/p5-2026-10-27/screenshots.json。关键 01-customer-login、04-workbench-ticket、05-customer-reply、08-products、10-orders、11-payment-not-enabled、15-mobile-products（均 .png）。邮箱/密码/data-private 全遮罩，trace/video/自动失败截图关闭；已抽查界面，未见凭据。截图数据为一次性库夹具，不冒称 P2 全量商品或真实语义检索结果。
+
+### 当前限制与下一步
+
+仅验证 Chromium 桌面/移动视口；Firefox/Safari、真实手机、用户电脑 SSH 实连、百万库浏览器写入联调未验证。P6 支付/退款、P7 商品/记忆接入、公网/常驻、S1 容量优化未开始。无新增技术取舍待定；先等待 P5 验收，P5 修改尚未提交，不进入 P6。
+
+飞书已同步：P5 交付、全部截图路径与完整 SSH/接口说明已追加既有《agent-ops-platform 开发记录》：https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf；codex profile / --as user，旧正文完整保留，父节点和正文回读通过，见本轮 publication.json。
+
+### 更新日志（P5）
+
+- 2026-10-27：Codex 提交推送已验收 P4，实现上述 P5 两前端和接口适配，165 后端/5 浏览器测试通过、15 私有截图保留；P6 等待 P5 验收。

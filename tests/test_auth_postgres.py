@@ -337,3 +337,15 @@ async def test_seed_ownership_requires_certain_conversation_and_preserves_unowne
     listed = (await client.get('/support/tickets', headers=customer)).json()['items']
     returned = {row['ticket_id'] for row in listed}
     assert set(ids[:2]) <= returned and not set(ids[2:]) & returned
+
+
+async def test_public_real_catalog_and_detail_do_not_expose_other_resources(client):
+    listed = await client.get('/products?limit=1')
+    assert listed.status_code == 200 and listed.json()['items'][0]['id'] == 1
+    assert listed.headers['x-trace-id']
+    detail = await client.get('/products/1')
+    assert detail.status_code == 200 and detail.json()['sku'] == 'fx1'
+    assert detail.json()['available'] >= 0
+    assert (await client.get('/products/99999999')).status_code == 404
+    assert (await client.get('/products?limit=101')).status_code == 422
+    assert (await client.get('/orders')).status_code == 401

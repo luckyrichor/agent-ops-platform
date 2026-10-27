@@ -69,7 +69,8 @@ MATRIX = [
     ("GET", "/admin/accounts", None, {}, {"admin"}),
     ("POST", "/admin/accounts/999/status", {"status": "active"}, {}, {"admin"}),
 ]
-PUBLIC = {("POST", "/auth/login"), ("POST", "/auth/refresh")}
+PUBLIC = {("POST", "/auth/login"), ("POST", "/auth/refresh"),
+          ("GET", "/products"), ("GET", "/products/{product_id}")}
 
 
 @pytest.fixture

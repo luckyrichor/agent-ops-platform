@@ -2,7 +2,7 @@
 
 最后更新：2026-10-27；Codex；当前能力以本仓库提交及下列验收记录为准。
 
-当前：P3 已验收并提交推送 `8900974`。P4 客服闭环已实现，两库已到 0005，最终验收证据见 [P4 交付](docs/reports/p4-2026-10-27/delivery.md)，接口与取舍见 [P4 文档](docs/p4-support.md)。P4 等待负责人验收，P5 尚未开始；本轮 P4 工作区修改尚未提交推送。导购记忆继续 not_configured（P7 前缺口）。
+当前：P4 已验收并提交推送 `1b344ab`。P5 客户网页与人工工作台已完成，165 项后端测试、前端类型/构建及 5 项 Playwright 通过；等待 P5 验收，P6 未开始。本轮 P5 改动尚未提交推送。见 [P5 交付](docs/reports/p5-2026-10-27/delivery.md) 与 [本机启动、SSH 转发和截图](docs/p5-frontend.md)。
 
 W4 M1 骨架与电商多 Agent 编排最小闭环已实现。Python 3.12 + FastAPI；确定性规划器将请求分为 catalog、pricing、shipping、recommendation 四个角色任务，依赖校验后分派，pricing/shipping 并发，最终汇总预算内推荐。不同角色是代码中的独立 handler。现已增加可选真实 LLM 规划器，已使用用户开通的 Doubao-Seed-2.1-lite 完成初验及30次重复规划工程评测，详见 [接入与验收](docs/llm-planner.md)。
 

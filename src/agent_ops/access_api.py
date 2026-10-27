@@ -133,3 +133,23 @@ def orders_router(commerce: CommerceBackend | None, *, customer: Guard) -> APIRo
             raise HTTPException(409, str(error)) from error
 
     return router
+
+
+def products_router(commerce: CommerceBackend | None) -> APIRouter:
+    """P5 read-only exposure of the existing real PG catalog; no semantic search."""
+    router = APIRouter(prefix="/products")
+
+    @router.get("", response_model=Page)
+    async def products(limit: Annotated[int, Query(ge=1, le=100)] = 24,
+                       cursor: Annotated[int, Query(ge=0, le=BIGINT)] = 0) -> Page:
+        items = await commerce_required(commerce).products(after=cursor, limit=limit)
+        return Page(items=items, next_cursor=str(items[-1]["id"]) if len(items) == limit else None)
+
+    @router.get("/{product_id}")
+    async def product(product_id: Annotated[int, Path(gt=0, le=BIGINT)]) -> dict[str, Any]:
+        try:
+            return await commerce_required(commerce).product(product_id)
+        except KeyError:
+            raise HTTPException(404, "PRODUCT_NOT_FOUND") from None
+
+    return router

@@ -15,7 +15,7 @@ from starlette.exceptions import HTTPException as StarletteHTTPException
 from starlette.requests import ClientDisconnect
 from starlette.types import ASGIApp, Message, Receive, Scope, Send
 
-from agent_ops.access_api import admin_router, auth_router, orders_router
+from agent_ops.access_api import admin_router, auth_router, orders_router, products_router
 from agent_ops.agents import demo_agents
 from agent_ops.auth import (
     STAFF,
@@ -167,6 +167,7 @@ def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = N
                                       customer=customer, staff=staff, admin=role_guard(signed_in, "admin"),
                                       signed_in=signed_in))
     app.include_router(orders_router(commerce, customer=customer))
+    app.include_router(products_router(commerce))
     app.include_router(admin_router(auth, admin=role_guard(signed_in, "admin")))
 
     app.add_middleware(RequestTraceMiddleware, dispatcher=dispatch)

@@ -52,6 +52,15 @@ class CommerceBackend:
             )
             return [dict(r) for r in rows.mappings()]
 
+    async def product(self, product_id: int) -> dict[str, Any]:
+        async with self.engine.connect() as c:
+            row = (await c.execute(text("""SELECT p.*,i.stock-i.reserved AS available
+                FROM commerce.products p JOIN commerce.inventory i ON i.product_id=p.id
+                WHERE p.id=:id AND p.status='active'"""), {"id": product_id})).mappings().first()
+            if row is None:
+                raise KeyError("PRODUCT_NOT_FOUND")
+            return dict(row)
+
     async def reserve(self, product_id: int, quantity: int, expected_version: int) -> int:
         if min(product_id, quantity, expected_version) <= 0:
             raise ValueError("positive values required")

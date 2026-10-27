@@ -2,7 +2,7 @@
 
 import asyncio
 import json
-from typing import Annotated, Any
+from typing import Annotated, Any, Literal
 
 from fastapi import APIRouter, Depends, Header, HTTPException, Query, WebSocket, WebSocketDisconnect
 from fastapi.encoders import jsonable_encoder
@@ -69,8 +69,10 @@ def workbench_router(
             raise HTTPException(409, str(error)) from None
 
     @router.get("/workbench/tickets")
-    async def queue(_: Staff, limit: Limit = 20, offset: Offset = 0) -> Any:
-        return {"items": await required().queue(limit, offset), "offset": offset, "limit": limit}
+    async def queue(principal: Staff, limit: Limit = 20, offset: Offset = 0,
+                    state: Literal["waiting_human", "claimed"] = "waiting_human", mine: bool = False) -> Any:
+        return {"items": await required().queue(limit, offset, state=state,
+                assigned=principal.account_id if mine else None), "offset": offset, "limit": limit}
 
     @router.get("/workbench/tickets/{ticket_id}")
     async def detail(ticket_id: str, principal: Staff) -> Any:
