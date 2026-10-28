@@ -1,31 +1,6 @@
 {
-  "started_utc": "2026-10-28T07:20:05.506865+00:00",
-  "ended_utc": "2026-10-28T07:21:17.817262+00:00",
-  "reason": "notification_received",
-  "count": 1,
-  "notifications": [
-    {
-      "at_utc": "2026-10-28T07:21:17.316462+00:00",
-      "source_ip": "119.42.228.162",
-      "headers_summary": {
-        "content_type": "application/x-www-form-urlencoded; charset=utf-8",
-        "content_length": 1043,
-        "user_agent_present": true
-      },
-      "count": 1
-    }
-  ],
-  "body_saved": false,
-  "business_processing": false,
-  "response": "success (probe only; not verified payment processing)",
-  "source_commit": "92ca46d30def6210599b03d90723b0450bf9974c",
-  "probe_only": true,
-  "user_reported_sandbox_payment_success": true,
-  "provider_signature_verified": false,
-  "public_notify_url": "http://43.142.37.199:18080/payments/notify",
-  "gateway_read_from_supplied_file": true,
-  "ports_18080_18081_closed_verified": true,
-  "cloud_rule_removal": "user must remove temporary inbound TCP 18080 allow rule",
-  "probe_source_sha256": "7e84bb81248577087af5d736724a4b8ded59eb72454d6c780e775c981e2ce0b5",
-  "signed_url_and_credentials_excluded": true
+  "conclusion": "sandbox notification arrived; no signature verification or business processing",
+  "received_beijing": "2026-10-28T15:21:17+08:00",
+  "temporary_listener_closed_beijing": "2026-10-28T15:21:17+08:00",
+  "cloud_rule_removed": "user confirmed 2026-10-28"
 }
