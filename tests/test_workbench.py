@@ -155,9 +155,11 @@ async def test_real_orders_missing_information_and_returns(api):
         )
     ).json()
     assert direct["state"] == "waiting_human" and direct["route"] == "return_request"
-    assert not any(
-        "payment" in path or "refund" in path for path in client._transport.app.openapi()["paths"]
-    )
+    # P6 exposes gated payment APIs; an unconfigured P4 fixture cannot move money.
+    denied = await client.post(f"/workbench/tickets/{direct['ticket_id']}/refund",
+        json={"expected_revision": direct["revision"]},
+        headers={**headers["a1"], "Idempotency-Key": str(uuid4())})
+    assert denied.status_code == 503 and denied.json()["detail"] == "PAYMENTS_NOT_CONFIGURED"
 
 
 async def test_claim_one_winner_across_connections_and_operation_replay(api, database):
@@ -785,7 +787,7 @@ def test_workbench_migration_roundtrip_and_claimed_downgrade_guard():
             with pytest.raises(DBAPIError, match="release claimed tickets"):
                 command.downgrade(cfg, "0004_auth")
             with engine.begin() as c:
-                assert c.scalar(text("SELECT version_num FROM alembic_version")) == "0005_workbench"
+                assert c.scalar(text("SELECT version_num FROM alembic_version")) == "0006_payments"
                 c.execute(
                     text(
                         "UPDATE support.tickets SET state='waiting_human',assigned_account_id=NULL,lease_expires_at=NULL WHERE ticket_id=:id"
@@ -804,7 +806,7 @@ def test_workbench_migration_roundtrip_and_claimed_downgrade_guard():
                 )
             command.upgrade(cfg, "head")
             with engine.connect() as c:
-                assert c.scalar(text("SELECT version_num FROM alembic_version")) == "0005_workbench"
+                assert c.scalar(text("SELECT version_num FROM alembic_version")) == "0006_payments"
                 assert (
                     c.scalar(
                         text("SELECT state FROM support.tickets WHERE ticket_id=:id"), {"id": tid}

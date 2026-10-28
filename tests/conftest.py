@@ -9,3 +9,4 @@ def offline_planner_default(monkeypatch):
     monkeypatch.setenv("AGENT_OPS_SUPPORT_BACKEND", "memory")
     monkeypatch.setenv("AGENT_OPS_TRACE_EXPORTER", "none")
     monkeypatch.delenv("ARK_API_KEY", raising=False)
+    monkeypatch.delenv("AGENT_OPS_PAYMENT_DIR", raising=False)

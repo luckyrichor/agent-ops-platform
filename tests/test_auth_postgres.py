@@ -299,7 +299,7 @@ def test_auth_migration_downgrade_and_reupgrade():
                 WHERE table_schema='support' AND column_name='customer_user_id'""")) == 0
         command.upgrade(config, "head")
         with engine.connect() as c:
-            assert c.scalar(text("SELECT version_num FROM alembic_version")) == "0005_workbench"
+            assert c.scalar(text("SELECT version_num FROM alembic_version")) == "0006_payments"
         engine.dispose()
 
 

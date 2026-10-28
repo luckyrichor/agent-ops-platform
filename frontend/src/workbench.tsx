@@ -37,6 +37,9 @@ const actionName: Record<string, string> = {
   sla_overdue: "SLA 已到期",
 };
 export function Workbench({ account }: { account: Account }) {
+  const [paymentsEnabled, setPaymentsEnabled] = useState(false);
+  const [refundMessage, setRefundMessage] = useState("");
+  useEffect(() => { void api.get<{enabled: boolean}>("/workbench/payments/availability").then(r => setPaymentsEnabled(r.enabled)).catch(() => {}); }, []);
   const [tab, setTab] = useState<"queue" | "stats">("queue"),
     [mine, setMine] = useState(false),
     [offset, setOffset] = useState(0),
@@ -182,6 +185,20 @@ export function Workbench({ account }: { account: Account }) {
           : d,
       );
     }).catch((e) => setError(errorText(e)));
+  }
+  async function approveRefund() {
+    const currentTicket = current.current;
+    if (!currentTicket || busy) return;
+    await enqueue(async () => {
+      setBusy(true); setError("");
+      try {
+        const result = await api.mutate<{state: string}>(`/workbench/tickets/${currentTicket.ticket_id}/refund`, {expected_revision: currentTicket.revision});
+        setRefundMessage(result.state === "succeeded" ? "沙箱退款已确认。" : "退款结果待确认，系统会使用原退款单号查询，请勿另行重复退款。");
+        await loadDetail(currentTicket.ticket_id);
+        await loadQueue();
+      } catch (e) { setError(errorText(e)); }
+      finally { setBusy(false); }
+    });
   }
   const t = detail?.ticket;
   const owned = t?.state === "claimed" && t.assigned_account_id === account.id;
@@ -364,6 +381,7 @@ export function Workbench({ account }: { account: Account }) {
                       </div>
                     </div>
                     <div className="button-row">
+                      {refundMessage && <p role="status">{refundMessage}</p>}
                       <button
                         className="primary"
                         disabled={
@@ -391,6 +409,7 @@ export function Workbench({ account }: { account: Account }) {
                       >
                         退回队列
                       </button>
+                      {paymentsEnabled && t.route === "return_request" && <button className="secondary" disabled={busy || loading || !validLease} onClick={() => void approveRefund()}>批准沙箱全额退款</button>}
                       <small className="muted">
                         版本 {t.revision}
                         {owned && !validLease ? " · 租约已过期，等待回收" : ""}

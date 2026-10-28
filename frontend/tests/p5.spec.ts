@@ -279,3 +279,29 @@ test("移动端布局和登录遮罩截图", async ({ page }) => {
   ).toBeTruthy();
   await shot(page, "15-mobile-products");
 });
+
+test("P6 支付页契约：真实夹具订单生成链接，平台令牌不发送到网关", async ({ browser }) => {
+  const context = await browser.newContext();
+  const page = await context.newPage();
+  await page.route("**/api/payments/availability", route => route.fulfill({json:{enabled:true}}));
+  await page.route("**/api/orders/*/payment", route => route.fulfill({json:{payment_url:"https://fixture.alipaydev.com/test-payment"}}));
+  let leaked = false;
+  await context.route("https://fixture.alipaydev.com/**", route => {
+    leaked = Boolean(route.request().headers()["authorization"]);
+    return route.fulfill({contentType:"text/html",body:"<p>UI contract fixture only</p>"});
+  });
+  await login(page, customers[2]);
+  await navigate(page, "商品浏览");
+  await page.getByRole("button", {name:"查看商品 #101",exact:true}).click();
+  await page.getByRole("button", {name:"确认下单",exact:true}).click();
+  await expect(page.getByRole("heading", {name:/订单详情 #/})).toBeVisible();
+  await navigate(page, "支付沙箱");
+  await page.getByRole("button", {name:"生成沙箱支付链接",exact:true}).click();
+  const popup = context.waitForEvent("page");
+  await page.getByRole("link", {name:"打开沙箱收银台",exact:true}).click();
+  const external = await popup;
+  await expect(external.getByText("UI contract fixture only")).toBeVisible();
+  expect(leaked).toBe(false);
+  await expect(page.getByText(/跳转成功不代表已付款/)).toBeVisible();
+  await context.close();
+});

@@ -272,5 +272,5 @@ def test_migration_downgrade_and_reupgrade():
                 command.upgrade(config, target)
         engine = create_engine(pg.get_connection_url())
         with engine.connect() as conn:
-            assert conn.scalar(text("SELECT version_num FROM alembic_version")) == "0005_workbench"
+            assert conn.scalar(text("SELECT version_num FROM alembic_version")) == "0006_payments"
         engine.dispose()

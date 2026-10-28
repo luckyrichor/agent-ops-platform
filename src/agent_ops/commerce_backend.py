@@ -159,6 +159,12 @@ class CommerceBackend:
         self, order_id: int, user_id: int, expected_revision: int
     ) -> dict[str, Any]:
         async with self.engine.begin() as c:
+            # Serialize with link creation and capture; a submitted payment must be
+            # closed at the provider before its stock reservation can be released.
+            owned = await c.scalar(text("SELECT id FROM commerce.orders WHERE id=:id AND user_id=:user FOR UPDATE"),
+                                   {"id": order_id, "user": user_id})
+            if owned is not None and await c.scalar(text("SELECT EXISTS(SELECT 1 FROM payments.payments WHERE order_id=:id AND state='pending')"), {"id": order_id}):
+                raise CommerceConflict("PAYMENT_ALREADY_STARTED")
             row = (
                 await c.execute(
                     text("""UPDATE commerce.orders SET status='canceled',revision=revision+1

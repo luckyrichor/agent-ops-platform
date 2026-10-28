@@ -32,6 +32,10 @@ TICKET = "00000000-0000-0000-0000-000000000000"
 
 # (method, path, json body, extra headers, roles allowed). Every non-public route must appear.
 MATRIX = [
+    ("GET", "/workbench/payments/availability", None, {}, {"agent","admin"}),
+    ("GET", "/payments/availability", None, {}, {"customer"}),
+    ("POST", "/orders/1/payment", None, {"Idempotency-Key":"matrix"}, {"customer"}),
+    ("POST", f"/workbench/tickets/{TICKET}/refund", {"expected_revision":1}, {"Idempotency-Key":"matrix"}, {"agent","admin"}),
     ("POST", "/v1/commerce/runs", {"request": "fixture", "category": "kettle",
       "budget_cent": 5000, "region": "上海"}, {}, {"customer"}),
     ("POST", "/v1/commerce/stream", {"request": "fixture", "category": "kettle",

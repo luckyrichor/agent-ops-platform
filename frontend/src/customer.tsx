@@ -24,6 +24,25 @@ export function Customer({ account }: { account: Account }) {
   const [view, setView] = useState<View>(
     ["products", "orders", "payment"].includes(initial) ? initial : "chat",
   );
+  const [paymentsEnabled, setPaymentsEnabled] = useState(false);
+  const [paymentMessage, setPaymentMessage] = useState("");
+  const [paymentLink, setPaymentLink] = useState("");
+  useEffect(() => {
+    void api.get<{enabled: boolean}>("/payments/availability")
+      .then((r) => setPaymentsEnabled(r.enabled)).catch(() => {});
+  }, []);
+  async function pay() {
+    if (!order || busy) return;
+    setBusy(true); setError("");
+    try {
+      const r = await api.mutate<{payment_url: string}>(`/orders/${order.id}/payment`, {});
+      const url = new URL(r.payment_url);
+      if (url.protocol !== "https:" || !url.hostname.endsWith(".alipaydev.com")) throw new Error();
+      setPaymentLink(r.payment_url);
+      setPaymentMessage("请在沙箱收银台完成付款，再刷新我的订单。跳转成功不代表已付款。");
+    } catch (e) { setError(errorText(e)); }
+    finally { setBusy(false); }
+  }
   const [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
   const locked = useRef(false);
@@ -280,7 +299,7 @@ export function Customer({ account }: { account: Account }) {
             onClick={() => navigate(key)}
           >
             {label}
-            {key === "payment" && <small>尚未开通</small>}
+            {key === "payment" && <small>{paymentsEnabled ? "沙箱" : "尚未开通"}</small>}
           </button>
         ))}
       </nav>
@@ -532,7 +551,7 @@ export function Customer({ account }: { account: Account }) {
                     />
                   </label>
                   <Notice>
-                    下单会真实预留库存。支付尚未开通，不会产生支付扣款。
+                    下单会真实预留库存。支付仅在配置沙箱后可用，不涉及真实资金。
                   </Notice>
                   <div className="button-row">
                     <button className="secondary" onClick={() => setItem(null)}>
@@ -710,15 +729,15 @@ export function Customer({ account }: { account: Account }) {
         {view === "payment" && (
           <section className="panel unavailable-page">
             <span className="eyebrow">PAYMENT</span>
-            <div className="round-mark">—</div>
-            <h1>支付尚未开通</h1>
-            <p>支付沙箱、验签、退款与对账将在 P6 接入。</p>
-            <p className="muted">
-              当前页面不创建支付，不跳转收银台，也不会模拟支付成功。
-            </p>
-            <button className="secondary" onClick={() => navigate("orders")}>
-              返回我的订单
-            </button>
+            <h1>{paymentsEnabled ? "订单沙箱支付" : "支付尚未开通"}</h1>
+            {paymentsEnabled ? <>
+              <p>仅使用沙箱买家。请选择自己的待支付订单，付款结果以服务端核对为准。</p>
+              <p>{order ? `当前订单 #${order.id} · ${money(order.total_cents)}` : "请先到我的订单选择一张订单。"}</p>
+              <button className="primary" disabled={busy || !order || order.status !== "pending_payment"} onClick={() => void pay()}>生成沙箱支付链接</button>
+              {paymentLink && <a className="primary" href={paymentLink} target="_blank" rel="noopener noreferrer">打开沙箱收银台</a>}
+              {paymentMessage && <p role="status">{paymentMessage}</p>}
+            </> : <p>当前未配置支付服务，不会创建支付或模拟成功。</p>}
+            <button className="secondary" onClick={() => navigate("orders")}>返回我的订单</button>
           </section>
         )}
       </main>

@@ -32,6 +32,8 @@ from agent_ops.commerce_backend import CommerceBackend
 from agent_ops.memory import MemoryCommerce
 from agent_ops.models import CommerceRequest, RunResult
 from agent_ops.orchestrator import Dispatcher
+from agent_ops.payment_api import from_env, payment_router
+from agent_ops.payments import Payments
 from agent_ops.planner import Planner, PlanningError, planner_from_env
 from agent_ops.streaming import stream_run
 from agent_ops.support import SupportService
@@ -106,6 +108,8 @@ def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = N
                 if isinstance(support, WorkbenchService):
                     try:
                         await support.maintain()
+                        if payments is not None:
+                            await payments.maintain()
                     except SQLAlchemyError:
                         logging.getLogger(__name__).warning('support lifecycle failed; retrying')
         task = asyncio.create_task(lifecycle()) if lifecycle_interval > 0 and isinstance(support, WorkbenchService) else None
@@ -122,6 +126,8 @@ def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = N
                     await support.aclose()
                 if isinstance(store, PostgresAccountStore):
                     await store.aclose()
+                if payments is not None:
+                    await payments.aclose()
                 if commerce is not None:
                     await commerce.aclose()
                 if dispatcher is None:
@@ -133,6 +139,7 @@ def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = N
     support: SupportBackend
     store: AccountStore
     commerce: CommerceBackend | None = None
+    payments: Payments | None = None
     secret = os.environ.get("AGENT_OPS_AUTH_SECRET", "")
     if backend == "postgres":
         if not secret:
@@ -143,6 +150,9 @@ def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = N
                    else WorkbenchService(url, dispatch.tracer))
         store = PostgresAccountStore(url)
         commerce = CommerceBackend(url)
+        payment_config = from_env(url)
+        if payment_config is not None:
+            payments = Payments(url, payment_config, support=support if isinstance(support, WorkbenchService) else None)
     elif backend == "memory":
         # Baseline switch: accounts and tokens live and die with this single process.
         support = SupportService(dispatch.tracer)
@@ -168,6 +178,8 @@ def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = N
                                       signed_in=signed_in))
     app.include_router(orders_router(commerce, customer=customer))
     app.include_router(products_router(commerce))
+    app.include_router(payment_router(payments, customer=customer, staff=staff))
+    app.state.payments = payments
     app.include_router(admin_router(auth, admin=role_guard(signed_in, "admin")))
 
     app.add_middleware(RequestTraceMiddleware, dispatcher=dispatch)
