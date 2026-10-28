@@ -71,3 +71,12 @@ uv run python scripts/reconcile-payments.py --env-file .local/payment-applicatio
 真实沙箱付款、正式回调、退款、平台账单零差异及长期服务上线的结果，见本阶段进展记录；尚无证据的项目必须标为未验证。模拟签名/模拟传输测试只验证正确性与失败边界，不替代真实平台验收。
 
 支付宝官方退款查询约定：查询操作成功并不等于退款成功，应检查 REFUND_SUCCESS，未知时保持待确认：[官方接口说明](https://aipay.alipay.com/docs/vibe-pay/ai-web-app-payment-qianyi/api-list/alipay-trade-fastpay-refund-query.html)。
+
+
+## 当前部署状态更新（2026-10-28）
+
+独立持久沙箱库已从临时联调库的私有备份恢复，使用现有本地 PG 实例的独立数据库；P0/P2 原库仍是迁移 0005，无 payments schema。备份 `.local/p6-live-20261028/before-persistence.dump`，78,828 字节，600。私有 `.local/p6-live-20261028/application.env` 指向持久副本；原一次性容器已停止。
+
+三个用户 unit 已 active/enabled：`agent-ops-p6-sandbox-api.service`（回环18884、含补偿）、`agent-ops-payment-entry.service`、`agent-ops-payment-logrotate.timer`。独立入口不依赖 bridge 会话进程；日志轮转手动执行成功。18884 仅供本轮沙箱联调，未切换用户既有前端代理。初始持久恢复遇到授权表名和目标依赖问题已修复，主库/P2 未删除或重建。
+
+启动器遇到端口占用会拒绝启动，避免把旧监听误认成自身就绪；该拒绝路径已实测。新只读观测显示 Mihomo recovering，出现网关超时降级，未修改透明代理；本次状态不能沿用此前 DIRECT 的可用性结论。实际付款、退款、独立平台账单零差异仍待验证。此部署是持久沙箱，不是主业务库 P6 升级完成。

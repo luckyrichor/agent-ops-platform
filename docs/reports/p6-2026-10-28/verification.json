@@ -35,7 +35,7 @@
   "live_refund": "unverified",
   "external_bill_zero_difference": "unverified",
   "persistent_databases_migrated": false,
-  "long_term_daemon_activated": false,
+  "long_term_daemon_activated": true,
   "source_sha256": {
     "frontend/src/api.ts": "8eedfe27903a4256914fa458c2038a98895d1829276a4f42f597c070490566ca",
     "frontend/src/components.tsx": "d7ccd492fd1e37215b6c4c195afe71f4c419fada05633930681fd76bfb9e03c3",
@@ -54,7 +54,7 @@
     "migrations/versions/0005_workbench.py": "e3bda52db14bf23ec50a498fa2242c1c55ff924a8c6a8bf1fa184c46cf037a9b",
     "migrations/versions/0006_payments.py": "9b0b49855b90b8922f1b52a23c29d19b4776443152fc8ba7b3c9621e9eb0b553",
     "pyproject.toml": "94c38e00b9d8463e82cee6f4a0bf5343e79a70eddc74f7c9ab5d95d695b6314d",
-    "scripts/payment-entry.py": "8f9c97a1509eddf66829e7a504c9bbdfbf12c606bbaf0d3c73da3612baf0c3d7",
+    "scripts/payment-entry.py": "0b382776f3b0ae6f3f51ed0f67a96de2f7499947676eef56cd1976048fff60b4",
     "scripts/payment-service.py": "5604acb9d227dface1768fd6f7b1675acd3d237e565aa51afe92c1ff939a898e",
     "scripts/reconcile-payments.py": "7d84f14046f21878f701347814a46c311d6029b3b4a370e0a16910335b629ec0",
     "src/agent_ops/__init__.py": "790a09b52d965efce6fdde2575c4ba2a7d009cd5a210181548e98fab8f45cdcd",
@@ -107,5 +107,11 @@
     "tests/test_userbehavior_full_source.py": "f7059e29fdd29a8c688558062b9a9edea9532d237392d0e0218db1a7830fc593",
     "tests/test_workbench.py": "62ccf5a1c710ea668bb3a8f77a074f65bb5f8f7be6231dd7da1841f9c6bc5d70",
     "uv.lock": "cd89504b6c4ad46f079ae413c2294a12017a1ce0866950930434f0bc18d9436f"
-  }
+  },
+  "independent_persistent_sandbox_restored": true,
+  "business_databases_still_migration_0005": true,
+  "private_backup_bytes": 78828,
+  "log_rotation_manual_check": "passed",
+  "occupied_port_startup_refused": "passed",
+  "current_egress_state": "Mihomo recovering; outbound failure degraded; configuration unchanged"
 }

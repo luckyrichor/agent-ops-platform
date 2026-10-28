@@ -102,6 +102,13 @@ signal.signal(signal.SIGTERM, stop)
 signal.signal(signal.SIGINT, stop)
 failed = False
 try:
+    import socket
+    # A successful TCP connect can belong to an old worker. Refuse occupied ports
+    # before spawning, instead of interpreting somebody else's listener as readiness.
+    for host, port in [('127.0.0.1', 18081), ('0.0.0.0', 18080)]:
+        with socket.socket() as available:
+            available.setsockopt(socket.SOL_SOCKET, socket.SO_REUSEADDR, 1)
+            available.bind((host, port))
     processes.append(subprocess.Popen([sys.executable, '-m', 'uvicorn',
         'agent_ops.payment_api:create_notification_app', '--factory', '--host', '127.0.0.1',
         '--port', '18081', '--no-access-log', '--log-level', 'critical'], env=env,
