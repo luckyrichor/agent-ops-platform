@@ -340,4 +340,4 @@ GitHub只读查询仓库可见性为PUBLIC。当前探针文档已移除服务�
 - 新增测试 test_signed_query_without_merchant_identity_fails_closed：即使提供方签名有效且状态成功，缺商户号也不得入账，版本/库存资金状态不被强改。完整 pytest 196 passed（2既有警告、88.31秒），支付定向26 passed（6.91秒），ruff 与 strict mypy 27文件通过；前端未改，未重跑浏览器（此前6/6）。证据 `.local/p6-implementation/*20261029*`、公开脱敏元数据 `docs/reports/p6-2026-10-29/verification.json`。
 - 当日账单下载未成功，额外诊断请求得到HTTP404；不能解释为零差异，也不能凭此断言平台永远不支持账单。真实退款、对账零差异、实际通知重复投递仍未验证。
 - 已请求用户在沙箱交易详情尝试重发异步通知，明确不需再次付款；如无重发功能，需要决定取得独立商户身份凭证或补偿身份校验方案，不能静默绕过 seller_id。正式入口与持久库继续运行，资金记录保留。下一步先处理完整通知并验证真实入账，然后才做退款与外部账单对账；不进入 P7。
-- 飞书待同步：本次已付款、主动查单证据、通知缺口与测试结果，追加现有项目开发记录。
+- 飞书已同步：已付款、主动查单证据、通知缺口与测试结果已追加现有项目开发记录 https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf ，codex profile / --as user；父节点及含 a59a9e7 的正文回查通过。
