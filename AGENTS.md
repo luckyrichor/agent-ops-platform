@@ -437,4 +437,4 @@ payments.py 的 compensate 对已退款状态/成功退款记录直接返回 ref
 
 身份只读核对固定SDK1e2730c及相邻2fae08b：RS256 UUID身份，单条记忆路径按租户查，幂等为租户+key/摘要且有效期7天。提出每顾客独立租户与用户UUID映射、后端专用短期memory令牌、现有幂等/跨期防重放方案；不转发平台令牌，不用共享commerce身份。docs/p7-memory-identity-proposal.md 为待确认方案，没有修改agent-memory、配置或P7功能。确认后同步双方契约，先做隔离验收，再接P2二十万商品的全文/结构过滤、编排真实库存与缓存开关一致性；不进入S3优化实验。
 
-最终pytest216通过（2既有警告、91.33秒），ruff/strict mypy28文件通过、固定规则47/47；公开证据reports/p6-2026-10-29/closeout.json。回环API已重启加载保护，入口仍停止。本轮前端未改，Playwright未重跑；容量/限频未压测、当日外部账单未验证、退款后支付查单被拒等限制完整保留。之后报告不得笼统写“对账零差异”。飞书待同步：2026-10-29 P6验收收尾与P7身份待确认方案。
+最终pytest216通过（2既有警告、91.33秒），ruff/strict mypy28文件通过、固定规则47/47；公开证据reports/p6-2026-10-29/closeout.json。回环API已重启加载保护，入口仍停止。本轮前端未改，Playwright未重跑；容量/限频未压测、当日外部账单未验证、退款后支付查单被拒等限制完整保留。之后报告不得笼统写“对账零差异”。飞书已同步：P6验收收尾、216项测试、四项限制与P7身份待确认设计已追加开发记录 https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf ，codex profile / --as user；父节点及含10b58ef的正文回查通过。实现/测试与方案已推送10b58ef。
