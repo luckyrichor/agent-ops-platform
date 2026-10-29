@@ -1,0 +1,750 @@
+{
+  "captured_at": "2026-10-29T13:53:05.909667+00:00",
+  "data": "P2 200000 products",
+  "samples": [
+    {
+      "description": "浏览有库存商品",
+      "filters": {
+        "query": "",
+        "category_id": null,
+        "min_price_cent": 0,
+        "max_price_cent": 9223372036854775807,
+        "attributes": {},
+        "available_only": true,
+        "limit": 5,
+        "offset": 0
+      },
+      "tsquery": "",
+      "top5": [
+        {
+          "id": 701,
+          "sku": "SYN-000000701",
+          "title": "合成商品·beleza_saude·701",
+          "category_id": 12,
+          "price_cents": 120,
+          "freight_cents": 789,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.0,
+          "total_cents": 909
+        },
+        {
+          "id": 5159,
+          "sku": "SYN-000005159",
+          "title": "合成商品·beleza_saude·5159",
+          "category_id": 12,
+          "price_cents": 120,
+          "freight_cents": 789,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.0,
+          "total_cents": 909
+        },
+        {
+          "id": 40862,
+          "sku": "SYN-000040862",
+          "title": "合成商品·beleza_saude·40862",
+          "category_id": 12,
+          "price_cents": 120,
+          "freight_cents": 789,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.0,
+          "total_cents": 909
+        },
+        {
+          "id": 41190,
+          "sku": "SYN-000041190",
+          "title": "合成商品·beleza_saude·41190",
+          "category_id": 12,
+          "price_cents": 120,
+          "freight_cents": 789,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.0,
+          "total_cents": 909
+        },
+        {
+          "id": 50208,
+          "sku": "SYN-000050208",
+          "title": "合成商品·beleza_saude·50208",
+          "category_id": 12,
+          "price_cents": 120,
+          "freight_cents": 789,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.0,
+          "total_cents": 909
+        }
+      ]
+    },
+    {
+      "description": "香水类别",
+      "filters": {
+        "query": "perfumaria",
+        "category_id": null,
+        "min_price_cent": 0,
+        "max_price_cent": 9223372036854775807,
+        "attributes": {},
+        "available_only": true,
+        "limit": 5,
+        "offset": 0
+      },
+      "tsquery": "'perfumaria'",
+      "top5": [
+        {
+          "id": 20865,
+          "sku": "SYN-000020865",
+          "title": "合成商品·perfumaria·20865",
+          "category_id": 63,
+          "price_cents": 700,
+          "freight_cents": 256,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 956
+        },
+        {
+          "id": 36122,
+          "sku": "SYN-000036122",
+          "title": "合成商品·perfumaria·36122",
+          "category_id": 63,
+          "price_cents": 700,
+          "freight_cents": 256,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 956
+        },
+        {
+          "id": 102943,
+          "sku": "SYN-000102943",
+          "title": "合成商品·perfumaria·102943",
+          "category_id": 63,
+          "price_cents": 700,
+          "freight_cents": 256,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 956
+        },
+        {
+          "id": 112606,
+          "sku": "SYN-000112606",
+          "title": "合成商品·perfumaria·112606",
+          "category_id": 63,
+          "price_cents": 700,
+          "freight_cents": 256,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 956
+        },
+        {
+          "id": 188734,
+          "sku": "SYN-000188734",
+          "title": "合成商品·perfumaria·188734",
+          "category_id": 63,
+          "price_cents": 700,
+          "freight_cents": 256,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 956
+        }
+      ]
+    },
+    {
+      "description": "汽车用品",
+      "filters": {
+        "query": "automotivo",
+        "category_id": null,
+        "min_price_cent": 0,
+        "max_price_cent": 9223372036854775807,
+        "attributes": {},
+        "available_only": true,
+        "limit": 5,
+        "offset": 0
+      },
+      "tsquery": "'automotivo'",
+      "top5": [
+        {
+          "id": 20049,
+          "sku": "SYN-000020049",
+          "title": "合成商品·automotivo·20049",
+          "category_id": 9,
+          "price_cents": 690,
+          "freight_cents": 368,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 1058
+        },
+        {
+          "id": 43963,
+          "sku": "SYN-000043963",
+          "title": "合成商品·automotivo·43963",
+          "category_id": 9,
+          "price_cents": 690,
+          "freight_cents": 368,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 1058
+        },
+        {
+          "id": 86663,
+          "sku": "SYN-000086663",
+          "title": "合成商品·automotivo·86663",
+          "category_id": 9,
+          "price_cents": 690,
+          "freight_cents": 368,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 1058
+        },
+        {
+          "id": 106184,
+          "sku": "SYN-000106184",
+          "title": "合成商品·automotivo·106184",
+          "category_id": 9,
+          "price_cents": 690,
+          "freight_cents": 368,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 1058
+        },
+        {
+          "id": 116483,
+          "sku": "SYN-000116483",
+          "title": "合成商品·automotivo·116483",
+          "category_id": 9,
+          "price_cents": 690,
+          "freight_cents": 368,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 1058
+        }
+      ]
+    },
+    {
+      "description": "音响商品",
+      "filters": {
+        "query": "audio",
+        "category_id": null,
+        "min_price_cent": 0,
+        "max_price_cent": 9223372036854775807,
+        "attributes": {},
+        "available_only": true,
+        "limit": 5,
+        "offset": 0
+      },
+      "tsquery": "'audio'",
+      "top5": [
+        {
+          "id": 28932,
+          "sku": "SYN-000028932",
+          "title": "合成商品·audio·28932",
+          "category_id": 8,
+          "price_cents": 1990,
+          "freight_cents": 778,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 2768
+        },
+        {
+          "id": 50443,
+          "sku": "SYN-000050443",
+          "title": "合成商品·audio·50443",
+          "category_id": 8,
+          "price_cents": 1990,
+          "freight_cents": 778,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 2768
+        },
+        {
+          "id": 140011,
+          "sku": "SYN-000140011",
+          "title": "合成商品·audio·140011",
+          "category_id": 8,
+          "price_cents": 1990,
+          "freight_cents": 778,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 2768
+        },
+        {
+          "id": 148861,
+          "sku": "SYN-000148861",
+          "title": "合成商品·audio·148861",
+          "category_id": 8,
+          "price_cents": 1990,
+          "freight_cents": 778,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 2768
+        },
+        {
+          "id": 31063,
+          "sku": "SYN-000031063",
+          "title": "合成商品·audio·31063",
+          "category_id": 8,
+          "price_cents": 1490,
+          "freight_cents": 1291,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 2781
+        }
+      ]
+    },
+    {
+      "description": "玩具",
+      "filters": {
+        "query": "brinquedos",
+        "category_id": null,
+        "min_price_cent": 0,
+        "max_price_cent": 9223372036854775807,
+        "attributes": {},
+        "available_only": true,
+        "limit": 5,
+        "offset": 0
+      },
+      "tsquery": "'brinquedo'",
+      "top5": [
+        {
+          "id": 6769,
+          "sku": "SYN-000006769",
+          "title": "合成商品·brinquedos·6769",
+          "category_id": 13,
+          "price_cents": 690,
+          "freight_cents": 739,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 1429
+        },
+        {
+          "id": 6826,
+          "sku": "SYN-000006826",
+          "title": "合成商品·brinquedos·6826",
+          "category_id": 13,
+          "price_cents": 690,
+          "freight_cents": 739,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 1429
+        },
+        {
+          "id": 80370,
+          "sku": "SYN-000080370",
+          "title": "合成商品·brinquedos·80370",
+          "category_id": 13,
+          "price_cents": 690,
+          "freight_cents": 739,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 1429
+        },
+        {
+          "id": 83987,
+          "sku": "SYN-000083987",
+          "title": "合成商品·brinquedos·83987",
+          "category_id": 13,
+          "price_cents": 690,
+          "freight_cents": 739,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 1429
+        },
+        {
+          "id": 100684,
+          "sku": "SYN-000100684",
+          "title": "合成商品·brinquedos·100684",
+          "category_id": 13,
+          "price_cents": 690,
+          "freight_cents": 739,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 1429
+        }
+      ]
+    },
+    {
+      "description": "美容健康",
+      "filters": {
+        "query": "beleza_saude",
+        "category_id": null,
+        "min_price_cent": 0,
+        "max_price_cent": 9223372036854775807,
+        "attributes": {},
+        "available_only": true,
+        "limit": 5,
+        "offset": 0
+      },
+      "tsquery": "'beleza' & 'saud'",
+      "top5": [
+        {
+          "id": 701,
+          "sku": "SYN-000000701",
+          "title": "合成商品·beleza_saude·701",
+          "category_id": 12,
+          "price_cents": 120,
+          "freight_cents": 789,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 909
+        },
+        {
+          "id": 5159,
+          "sku": "SYN-000005159",
+          "title": "合成商品·beleza_saude·5159",
+          "category_id": 12,
+          "price_cents": 120,
+          "freight_cents": 789,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 909
+        },
+        {
+          "id": 40862,
+          "sku": "SYN-000040862",
+          "title": "合成商品·beleza_saude·40862",
+          "category_id": 12,
+          "price_cents": 120,
+          "freight_cents": 789,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 909
+        },
+        {
+          "id": 41190,
+          "sku": "SYN-000041190",
+          "title": "合成商品·beleza_saude·41190",
+          "category_id": 12,
+          "price_cents": 120,
+          "freight_cents": 789,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 909
+        },
+        {
+          "id": 50208,
+          "sku": "SYN-000050208",
+          "title": "合成商品·beleza_saude·50208",
+          "category_id": 12,
+          "price_cents": 120,
+          "freight_cents": 789,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 909
+        }
+      ]
+    },
+    {
+      "description": "汽车用品不超过100元",
+      "filters": {
+        "query": "automotivo",
+        "category_id": null,
+        "min_price_cent": 0,
+        "max_price_cent": 10000,
+        "attributes": {},
+        "available_only": true,
+        "limit": 5,
+        "offset": 0
+      },
+      "tsquery": "'automotivo'",
+      "top5": [
+        {
+          "id": 20049,
+          "sku": "SYN-000020049",
+          "title": "合成商品·automotivo·20049",
+          "category_id": 9,
+          "price_cents": 690,
+          "freight_cents": 368,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 1058
+        },
+        {
+          "id": 43963,
+          "sku": "SYN-000043963",
+          "title": "合成商品·automotivo·43963",
+          "category_id": 9,
+          "price_cents": 690,
+          "freight_cents": 368,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 1058
+        },
+        {
+          "id": 86663,
+          "sku": "SYN-000086663",
+          "title": "合成商品·automotivo·86663",
+          "category_id": 9,
+          "price_cents": 690,
+          "freight_cents": 368,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 1058
+        },
+        {
+          "id": 106184,
+          "sku": "SYN-000106184",
+          "title": "合成商品·automotivo·106184",
+          "category_id": 9,
+          "price_cents": 690,
+          "freight_cents": 368,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 1058
+        },
+        {
+          "id": 116483,
+          "sku": "SYN-000116483",
+          "title": "合成商品·automotivo·116483",
+          "category_id": 9,
+          "price_cents": 690,
+          "freight_cents": 368,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 1058
+        }
+      ]
+    },
+    {
+      "description": "玩具10到50元",
+      "filters": {
+        "query": "brinquedos",
+        "category_id": null,
+        "min_price_cent": 1000,
+        "max_price_cent": 5000,
+        "attributes": {},
+        "available_only": true,
+        "limit": 5,
+        "offset": 0
+      },
+      "tsquery": "'brinquedo'",
+      "top5": [
+        {
+          "id": 9355,
+          "sku": "SYN-000009355",
+          "title": "合成商品·brinquedos·9355",
+          "category_id": 13,
+          "price_cents": 1049,
+          "freight_cents": 758,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 1807
+        },
+        {
+          "id": 61954,
+          "sku": "SYN-000061954",
+          "title": "合成商品·brinquedos·61954",
+          "category_id": 13,
+          "price_cents": 1049,
+          "freight_cents": 758,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 1807
+        },
+        {
+          "id": 91092,
+          "sku": "SYN-000091092",
+          "title": "合成商品·brinquedos·91092",
+          "category_id": 13,
+          "price_cents": 1049,
+          "freight_cents": 758,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 1807
+        },
+        {
+          "id": 128270,
+          "sku": "SYN-000128270",
+          "title": "合成商品·brinquedos·128270",
+          "category_id": 13,
+          "price_cents": 1049,
+          "freight_cents": 758,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 1807
+        },
+        {
+          "id": 129691,
+          "sku": "SYN-000129691",
+          "title": "合成商品·brinquedos·129691",
+          "category_id": 13,
+          "price_cents": 1049,
+          "freight_cents": 758,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 1807
+        }
+      ]
+    },
+    {
+      "description": "音响限定类目8",
+      "filters": {
+        "query": "audio",
+        "category_id": 8,
+        "min_price_cent": 0,
+        "max_price_cent": 9223372036854775807,
+        "attributes": {},
+        "available_only": true,
+        "limit": 5,
+        "offset": 0
+      },
+      "tsquery": "'audio'",
+      "top5": [
+        {
+          "id": 28932,
+          "sku": "SYN-000028932",
+          "title": "合成商品·audio·28932",
+          "category_id": 8,
+          "price_cents": 1990,
+          "freight_cents": 778,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 2768
+        },
+        {
+          "id": 50443,
+          "sku": "SYN-000050443",
+          "title": "合成商品·audio·50443",
+          "category_id": 8,
+          "price_cents": 1990,
+          "freight_cents": 778,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 2768
+        },
+        {
+          "id": 140011,
+          "sku": "SYN-000140011",
+          "title": "合成商品·audio·140011",
+          "category_id": 8,
+          "price_cents": 1990,
+          "freight_cents": 778,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 2768
+        },
+        {
+          "id": 148861,
+          "sku": "SYN-000148861",
+          "title": "合成商品·audio·148861",
+          "category_id": 8,
+          "price_cents": 1990,
+          "freight_cents": 778,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 2768
+        },
+        {
+          "id": 31063,
+          "sku": "SYN-000031063",
+          "title": "合成商品·audio·31063",
+          "category_id": 8,
+          "price_cents": 1490,
+          "freight_cents": 1291,
+          "attrs": {},
+          "available": 1000,
+          "inventory_version": 1,
+          "rank": 0.1,
+          "total_cents": 2781
+        }
+      ]
+    },
+    {
+      "description": "中文电水壶",
+      "filters": {
+        "query": "电水壶",
+        "category_id": null,
+        "min_price_cent": 0,
+        "max_price_cent": 9223372036854775807,
+        "attributes": {},
+        "available_only": true,
+        "limit": 5,
+        "offset": 0
+      },
+      "tsquery": "'电水壶'",
+      "top5": []
+    }
+  ]
+}

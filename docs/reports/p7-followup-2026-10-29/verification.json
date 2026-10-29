@@ -1,0 +1,25 @@
+{
+  "pytest": {
+    "passed": 237,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 92.734
+  },
+  "ruff": "passed",
+  "strict_mypy_source_files": 32,
+  "frontend_types": "passed",
+  "playwright": {
+    "passed": 2,
+    "seconds": 9.8
+  },
+  "real_p2_runtime": "guide/read isolation/idempotency/SSE/delete passed after role split",
+  "deletion_audit_live": {
+    "started": 3,
+    "completed": 3
+  },
+  "deepseek_tests": "5 offline mocked cases; zero provider calls",
+  "model_calls": 0,
+  "sample_tokens": "unverified; sample approval pending",
+  "capacity": "unverified; P10 S3 deferred"
+}

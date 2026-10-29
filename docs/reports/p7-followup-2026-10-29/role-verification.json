@@ -1,0 +1,245 @@
+{
+  "runtime": {
+    "role": "p7_memory_runtime",
+    "superuser": false,
+    "bypassrls": false,
+    "createdb": false,
+    "createrole": false,
+    "privileges": {
+      "evidence": {
+        "SELECT": true,
+        "INSERT": true,
+        "UPDATE": true,
+        "DELETE": false,
+        "TRUNCATE": false,
+        "TRIGGER": false,
+        "REFERENCES": false
+      },
+      "memory_embeddings": {
+        "SELECT": true,
+        "INSERT": true,
+        "UPDATE": true,
+        "DELETE": false,
+        "TRUNCATE": false,
+        "TRIGGER": false,
+        "REFERENCES": false
+      },
+      "memory_versions": {
+        "SELECT": true,
+        "INSERT": true,
+        "UPDATE": true,
+        "DELETE": false,
+        "TRUNCATE": false,
+        "TRIGGER": false,
+        "REFERENCES": false
+      },
+      "memories": {
+        "SELECT": true,
+        "INSERT": true,
+        "UPDATE": true,
+        "DELETE": false,
+        "TRUNCATE": false,
+        "TRIGGER": false,
+        "REFERENCES": false
+      },
+      "events": {
+        "SELECT": true,
+        "INSERT": true,
+        "UPDATE": true,
+        "DELETE": false,
+        "TRUNCATE": false,
+        "TRIGGER": false,
+        "REFERENCES": false
+      },
+      "outbox_messages": {
+        "SELECT": true,
+        "INSERT": true,
+        "UPDATE": true,
+        "DELETE": false,
+        "TRUNCATE": false,
+        "TRIGGER": false,
+        "REFERENCES": false
+      },
+      "jobs": {
+        "SELECT": true,
+        "INSERT": true,
+        "UPDATE": true,
+        "DELETE": false,
+        "TRUNCATE": false,
+        "TRIGGER": false,
+        "REFERENCES": false
+      },
+      "idempotency_records": {
+        "SELECT": true,
+        "INSERT": true,
+        "UPDATE": true,
+        "DELETE": true,
+        "TRUNCATE": false,
+        "TRIGGER": false,
+        "REFERENCES": false
+      },
+      "audit_logs": {
+        "SELECT": true,
+        "INSERT": true,
+        "UPDATE": true,
+        "DELETE": false,
+        "TRUNCATE": false,
+        "TRIGGER": false,
+        "REFERENCES": false
+      }
+    },
+    "inherits": true,
+    "owns_public_tables": 0,
+    "member_agent_memory_app": false,
+    "update_columns": {
+      "current_version_id": true,
+      "successor_id": true,
+      "revision": true
+    }
+  },
+  "purge": {
+    "role": "p7_memory_purge",
+    "superuser": false,
+    "bypassrls": false,
+    "createdb": false,
+    "createrole": false,
+    "privileges": {
+      "evidence": {
+        "SELECT": true,
+        "INSERT": false,
+        "UPDATE": false,
+        "DELETE": true,
+        "TRUNCATE": false,
+        "TRIGGER": false,
+        "REFERENCES": false
+      },
+      "memory_embeddings": {
+        "SELECT": true,
+        "INSERT": false,
+        "UPDATE": false,
+        "DELETE": true,
+        "TRUNCATE": false,
+        "TRIGGER": false,
+        "REFERENCES": false
+      },
+      "memory_versions": {
+        "SELECT": true,
+        "INSERT": false,
+        "UPDATE": false,
+        "DELETE": true,
+        "TRUNCATE": false,
+        "TRIGGER": false,
+        "REFERENCES": false
+      },
+      "memories": {
+        "SELECT": true,
+        "INSERT": false,
+        "UPDATE": false,
+        "DELETE": true,
+        "TRUNCATE": false,
+        "TRIGGER": false,
+        "REFERENCES": false
+      },
+      "events": {
+        "SELECT": true,
+        "INSERT": false,
+        "UPDATE": false,
+        "DELETE": true,
+        "TRUNCATE": false,
+        "TRIGGER": false,
+        "REFERENCES": false
+      },
+      "outbox_messages": {
+        "SELECT": true,
+        "INSERT": false,
+        "UPDATE": false,
+        "DELETE": true,
+        "TRUNCATE": false,
+        "TRIGGER": false,
+        "REFERENCES": false
+      },
+      "jobs": {
+        "SELECT": true,
+        "INSERT": false,
+        "UPDATE": false,
+        "DELETE": true,
+        "TRUNCATE": false,
+        "TRIGGER": false,
+        "REFERENCES": false
+      },
+      "idempotency_records": {
+        "SELECT": true,
+        "INSERT": false,
+        "UPDATE": false,
+        "DELETE": true,
+        "TRUNCATE": false,
+        "TRIGGER": false,
+        "REFERENCES": false
+      },
+      "audit_logs": {
+        "SELECT": true,
+        "INSERT": false,
+        "UPDATE": false,
+        "DELETE": true,
+        "TRUNCATE": false,
+        "TRIGGER": false,
+        "REFERENCES": false
+      }
+    },
+    "inherits": false,
+    "owns_public_tables": 0,
+    "member_agent_memory_app": false,
+    "update_columns": {
+      "current_version_id": true,
+      "successor_id": true,
+      "revision": false
+    }
+  },
+  "rls": [
+    {
+      "table": "audit_logs",
+      "enabled": true,
+      "forced": true
+    },
+    {
+      "table": "events",
+      "enabled": true,
+      "forced": true
+    },
+    {
+      "table": "evidence",
+      "enabled": true,
+      "forced": true
+    },
+    {
+      "table": "idempotency_records",
+      "enabled": true,
+      "forced": true
+    },
+    {
+      "table": "jobs",
+      "enabled": true,
+      "forced": true
+    },
+    {
+      "table": "memories",
+      "enabled": true,
+      "forced": true
+    },
+    {
+      "table": "memory_embeddings",
+      "enabled": true,
+      "forced": true
+    },
+    {
+      "table": "memory_versions",
+      "enabled": true,
+      "forced": true
+    },
+    {
+      "table": "outbox_messages",
+      "enabled": true,
+      "forced": true
+    }
+  ]
+}

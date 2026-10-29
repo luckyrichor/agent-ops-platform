@@ -10,7 +10,7 @@ Agent 应用与可观测评测平台。电商场景的多 Agent 任务拆解、�
 
 三个月求职计划六项目之一（原编号 ③），对应岗位 **05、07、10、11、14**，另含 **08** 作为子方向。总计划见 [workplan-docs](https://github.com/luckyrichor/workplan-docs)，岗位原文以那里的 `岗位要求原文.md` 为唯一依据。
 
-**当前状态：P7已完成待用户验收。P2二十万商品全文/结构过滤与真实价格库存编排、懒创建顾客memory租户、300秒专用委托身份、整租户删除已实现；先通过5项隔离闸门，再做检索。最终pytest231、ruff、strict mypy31文件、P7 Playwright2项/原P5前端回归通过。仅回环服务；P6公网入口仍停用。租户增长开销/容量未验证，缓存仅透传接口，不进入S3/P8。**
+**当前状态：P7已验收，两项跟进已完成：独立受限删除角色与平台追加审计、十条真实P2检索样本。P8只提交待确认方案及DeepSeek独立传输层离线测试，未实施数据集/三个路由版本、未调用模型。237项pytest、ruff、strict mypy32文件、P7浏览器2项通过。等待P8方案/50条纯P2小样授权，ECD第三方处理未授权，不进入全量评测或P10/S3。**
 
 ## 分工模式：偏产出
 
@@ -460,8 +460,25 @@ agent-ops-p7-memory容器/同名持久卷（回环55435）专属本项目；不�
 
 ### 续接与限制
 
-等待用户验收P7，不进入P8或S3。缓存off直读/on透传，只留接口，无缓存性能结论。实际PG全文词元过滤不等于中文语义理解；只在前100检索候选中选预算内最低总价，订单提交仍再核价/库存。租户数量增长开销、容量/限频、备份恢复均未验证；P6账单/退款后支付查询限制继续保留，报告不写笼统“对账零差异”。
+P7已获用户验收；当前跟进与P8待确认方案以下方最新交接为准，不进入S3。缓存off直读/on透传，只留接口，无缓存性能结论。实际PG全文词元过滤不等于中文语义理解；只在前100检索候选中选预算内最低总价，订单提交仍再核价/库存。租户数量增长开销、容量/限频、备份恢复均未验证；P6账单/退款后支付查询限制继续保留，报告不写笼统“对账零差异”。
 
 双方契约已同步：agent-memory/docs/integrations/agent-ops-customer-memory.md已单独推送53cba0f；该仓库原有大量其他未提交评测内容未纳入提交，未改其API/配置/运行任务。调用方固定SDK与独立实例仍1e2730c，不随邻接仓库HEAD变更升级。
 
 飞书已同步：P7实现、先隔离闸门、最终231项回归、P2真实浏览器验收、部署/删除/轮换与限制已追加开发记录 https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf ，codex profile / --as user；父节点及含6030b63的正文回查通过。主实现已推送6030b63，memory契约文档已推送53cba0f。
+
+
+## 2026-10-29 P7验收跟进 / P8方案待确认（Codex）
+
+P7已验收。删除适配器原共用memory运行角色、继承九表全DML且无独立保留删除审计；已收窄：独立p7_memory_purge非owner/NOBYPASSRLS/NOINHERIT，无agent_memory_app成员资格，九表SELECT/DELETE及memories两外键列UPDATE。memory API运行角色撤销原成员资格，仅九表SELECT/INSERT/UPDATE、幂等表DELETE。详细权限/RLS/入口/风险/凭据位置见docs/p7-memory-purge-review.md及reports/p7-followup-2026-10-29/role-verification.json。
+
+迁移0009_memory_delete_audit已应用P2；平台追加started/completed/failed，不记录正文/令牌/租户UUID，应用只INSERT不能修改/删除。真实删除保留平台审计；跨库非原子，完全故障时结束审计可能缺失。新角色仍是可信后端管理能力，不声称RLS可防已攻陷平台。memory API私有环境仍.local/p7/application.env；平台API单位改读.local/p7/application-with-purge.env，删除URL另存.local/p7/purge.env，均600；不能把删除凭据配置进memory API。重建单位须指定 --memory-env-file .local/p7/application.env，命令见更新后P7手册；不要重跑首次准备脚本。P6入口仍inactive，未改云规则/代理/其他数据库。
+
+十条检索样本见docs/p7-search-samples.md和公开JSON；九条各前5项，中文电水壶0命中如实保留。当前合成商品名使用葡语Olist类目，english词元排序，非中文语义检索；P10/S3性能基线未做。
+
+新src/agent_ops/deepseek.py独立接入层，原火山方舟代码未改；模型/地址显式配置、temperature=0、默认拒绝网络、ECD源硬拒绝、.local响应/摘要缓存、共享并发槽与429退避计数。Key仅定位/home/ubuntu/.config/llm/deepseek.env且600，未打印/提交/测试有效性。未改变运行导购的deterministic模式。真实模型调用0；已询问50条小样授权，尚未收到，不得默认同意。
+
+P8方案docs/p8-routing-evaluation-proposal.md待负责人确认：四类动作边界；拟1200ECD/800合成；角色未知ECD排除；300条人与DeepSeek独立标注（不是两位人类），未审样本是silver；最终600条封存、90条人工子集的限制；负责人持最终解密口令；模型/规则/混合调用与缓存复用、标注另计费用。ECD尚无全面脱敏验证、无明确数据许可或第三方处理授权，不外发、不公开原文。正式数据集、规则/模型/混合路由、最终集封存、50条/全量调用均未实施，先等确认。token均值/总价、容量与租户增长开销均未验证，不预设收益。
+
+最终pytest237 passed（2既有警告、92.73秒）、ruff通过、strict mypy32源文件、前端类型通过、P7真实浏览器2 passed/9.8秒；实际P2导购/读取隔离/幂等/SSE/删除复验通过，平台实时审计started/completed各3条。失败返工见progress，证据reports/p7-followup-2026-10-29。前端未改，不重复旧P5六用例；没有执行模型或性能实验。
+
+飞书待同步：2026-10-29 P7权限/检索样本、P8待确认方案及本轮验证；目标复用既有项目目录/开发记录。

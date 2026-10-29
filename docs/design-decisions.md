@@ -212,3 +212,10 @@ P7 前置身份方案见 [待确认设计](p7-memory-identity-proposal.md)：每
 删除采用平台管理适配器清专用库九表，未变更memory业务HTTP接口；先持久deleting门控、成功清正文并拒旧操作，失败阻断可重试。跨库事务和版本耦合代价在p7-shopping.md说明。独立提交幂等操作原先与身份唯一键/FK锁发生自阻塞，已将操作FK绑定稳定commerce.users，并将身份分配先提交、业务调用持NO KEY UPDATE锁；补删除后导购及并发/响应丢失回归。
 
 PostgreSQL FTS+结构过滤读P2二十万商品，编排读真实价格/运费/可用库存。缓存开关只是直读/透传两路径，无S3缓存实现或性能声明。完整接口、运行命令、轮换和限制见[p7-shopping.md](p7-shopping.md)。
+
+
+## 2026-10-29 P7验收后：最小删除权限及P8模型准备
+
+删除管理能力与memory API运行凭据分离，受限九表DELETE和两外键列UPDATE，保留FORCE RLS；运行角色只给幂等过期清理DELETE。平台只追加删除审计，避免租户物理清理把本次管理行为的记录也抹去。两库非原子、相同OS账户及后端可设置tenant GUC的信任前提公开说明，不把独立角色夸大为完全隔离。见p7-memory-purge-review.md。
+
+新增DeepSeek独立传输层而非改写Ark历史接入，默认无网络授权，P8方案审批前只mock；复用既有LLM并发配置，允许共享同一Semaphore，缓存键绑定数据摘要/精确消息/模型/地址/生成参数。ECD第三方授权待定，源类型先硬拒绝。P8采集/路由尚未实现；方案承认同源模型标注偏差、人机kappa与人工双标不同、最终测试须用户掌管解密权限。见p8-routing-evaluation-proposal.md。

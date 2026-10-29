@@ -14,7 +14,7 @@ memory 记忆使用 user_global scope，subject_user_id 等于映射用户；JWT
 
 默认有效期300秒，可配置60至600秒。令牌有 iss/aud/tenant_id/sub/iat/nbf/exp/jti，purpose=commerce-memory；用途通过专用 audience 和专用服务公钥校验绑定。只授 memory:read、memory:write。令牌仅在后端内存，不出浏览器、仓库、报告或日志。
 
-实际签发私钥 `.local/p7/memory-signing.pem`，公钥 `.local/p7/memory-public.pem`，文件600、目录700；独立密钥不复用平台 HS256 或现有 memory 评测密钥。配置 `.local/p7/application.env` 600；仅通过已有受限私有环境加载。
+实际签发私钥 `.local/p7/memory-signing.pem`，公钥 `.local/p7/memory-public.pem`，文件600、目录700；独立密钥不复用平台 HS256 或现有 memory 评测密钥。运行配置拆分为 memory API 的 `.local/p7/application.env` 与平台 API 的 `.local/p7/application-with-purge.env`（均600）。删除角色与审计收窄详情见 [删除权限核查](p7-memory-purge-review.md)。
 
 轮换采用维护窗口（固定版单公钥，无假装多key热切换）：停止 P7 业务 API 和专用 memory API，等待在途请求结束；生成新的 RSA 至少2048位密钥到临时600文件，原子替换私钥/公钥；先启动 memory API，再启动业务 API。旧令牌不再通过新公钥验证；映射、现有记忆和幂等操作保持不变。验证新令牌成功、旧签名失败。不要改正在运行的其他 memory 服务公钥。异常时只恢复本次备份密钥对并重启这两个服务。
 
@@ -53,7 +53,7 @@ DELETE /v1/commerce/memory，只允许登录顾客，顾客不能指定目标租
 - GET /v1/commerce/availability：登录顾客可见 catalog_enabled、memory_enabled。
 - DELETE /v1/commerce/memory：上述整租户删除。
 
-配置名：AGENT_OPS_CUSTOMER_MEMORY_URL（回环HTTP）、AGENT_OPS_CUSTOMER_MEMORY_DATABASE_URL（专用库非owner管理连接）、AGENT_OPS_CUSTOMER_MEMORY_KEY/PUBLIC_KEY（私有文件路径）、ISSUER、AUDIENCE、TTL；这些名称均带 AGENT_OPS_CUSTOMER_MEMORY_ 前缀。平台 PG、认证配置沿用P2私有环境；AGENT_OPS_CATALOG_CACHE 控制接口路径。
+配置名：AGENT_OPS_CUSTOMER_MEMORY_URL（回环HTTP）、AGENT_OPS_CUSTOMER_MEMORY_DATABASE_URL（memory API运行连接）、AGENT_OPS_CUSTOMER_MEMORY_PURGE_DATABASE_URL（仅平台删除适配器使用的独立受限角色）、AGENT_OPS_CUSTOMER_MEMORY_KEY/PUBLIC_KEY（私有文件路径）、ISSUER、AUDIENCE、TTL；这些名称均带 AGENT_OPS_CUSTOMER_MEMORY_ 前缀。平台 PG、认证配置沿用P2私有环境；AGENT_OPS_CATALOG_CACHE 控制接口路径。
 
 ## 运行、访问与验证
 
@@ -61,7 +61,7 @@ DELETE /v1/commerce/memory，只允许登录顾客，顾客不能指定目标租
 
 ```bash
 # 已准备好私有配置及对应迁移后安装/激活本轮独立服务
-uv run python scripts/p7-services.py --env-file .local/p7/application.env --activate
+uv run python scripts/p7-services.py --env-file .local/p7/application-with-purge.env --memory-env-file .local/p7/application.env --activate
 systemctl --user status agent-ops-customer-memory agent-ops-p7-api agent-ops-p7-web
 systemctl --user stop agent-ops-p7-web agent-ops-p7-api agent-ops-customer-memory
 # 停止后重启：先memory，再API，最后网页

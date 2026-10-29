@@ -38,6 +38,11 @@ def memory_database():
         with engine.begin() as c:
             c.execute(text("CREATE ROLE customer_runtime LOGIN PASSWORD 'fixture-only' NOSUPERUSER NOBYPASSRLS"))
             c.execute(text('GRANT agent_memory_app TO customer_runtime'))
+            c.execute(text("CREATE ROLE customer_purge LOGIN PASSWORD 'fixture-only' NOSUPERUSER NOBYPASSRLS"))
+            c.execute(text('GRANT USAGE ON SCHEMA public TO customer_purge'))
+            for table in CustomerMemory.TABLES:
+                c.execute(text(f'GRANT SELECT,DELETE ON {table} TO customer_purge'))
+            c.execute(text('GRANT UPDATE(current_version_id,successor_id) ON memories TO customer_purge'))
         url = make_url(pg.get_connection_url()).set(drivername='postgresql+psycopg_async', username='customer_runtime', password='fixture-only').render_as_string(hide_password=False)
         yield url, engine
         engine.dispose()
@@ -51,7 +56,7 @@ async def bridge(database, memory_database):
     app = create_app(Settings(database_url=memory_database[0], jwt_public_key=public,
         jwt_issuer=signer.issuer, jwt_audience=signer.audience, trace_sample_ratio=0))
     client = httpx.AsyncClient(transport=httpx.ASGITransport(app=app), base_url='http://memory')
-    bridge = CustomerMemory(database[0], memory_database[0], signer, client)
+    bridge = CustomerMemory(database[0], make_url(memory_database[0]).set(username='customer_purge').render_as_string(hide_password=False), signer, client)
     yield bridge, app, client
     await bridge.aclose()
     await app.state.engine.dispose()
@@ -301,3 +306,31 @@ def test_signer_private_file_policy_and_key_rotation(tmp_path, monkeypatch):
     replacement = rsa.generate_private_key(public_exponent=65537,key_size=2048)
     with pytest.raises(InvalidSignatureError):
         jwt.decode(token,replacement.public_key(),algorithms=['RS256'],issuer='fixture',audience='memory-fixture')
+
+
+async def test_purge_role_is_separate_minimal_and_audit_survives_erasure(bridge, memory_database, database):
+    from sqlalchemy.exc import DBAPIError
+    service, _, _ = bridge
+    async with service.session(1) as a:
+        await a.sdk.remember('fixture audited delete', MemoryType.SEMANTIC,
+            MemoryScope(ScopeKind.USER_GLOBAL, None, a.user), idempotency_key=uuid4().hex)
+    async with service.memory_engine.connect() as c:
+        assert await c.scalar(text('SELECT current_user')) == 'customer_purge'
+        assert not await c.scalar(text("SELECT pg_has_role(current_user,'agent_memory_app','MEMBER')"))
+        assert await c.scalar(text('SELECT count(*) FROM memories')) == 0  # No tenant context.
+        for statement in ["UPDATE memories SET revision=revision+1", 'TRUNCATE memories',
+                          'DELETE FROM alembic_version', 'INSERT INTO memories DEFAULT VALUES']:
+            with pytest.raises(DBAPIError):
+                await c.execute(text(statement))
+            await c.rollback()
+    assert (await service.delete_all(1))['deleted_tenants'] == 1
+    # Append-only app privilege: only owner reads; erasure never deletes the audit.
+    with database[1].connect() as c:
+        rows = c.execute(text("SELECT outcome FROM customer_memory.deletion_audit WHERE request_id=(SELECT request_id FROM customer_memory.deletion_audit WHERE user_id=1 ORDER BY id DESC LIMIT 1) ORDER BY id")).scalars().all()
+        assert rows == ['started','completed']
+    for statement in ['DELETE FROM customer_memory.deletion_audit',
+                      "UPDATE customer_memory.deletion_audit SET outcome='completed'"]:
+        async with service.engine.connect() as c:
+            with pytest.raises(DBAPIError):
+                await c.execute(text(statement))
+            await c.rollback()

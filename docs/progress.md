@@ -394,3 +394,14 @@ Mihomo 新只读状态为 recovering，出现一次网关出站失败降级，�
 - 双方契约文档同步：调用方docs/p7-shopping.md及原提案更新；agent-memory只新增docs/integrations/agent-ops-customer-memory.md，已推送53cba0f，未改其API、现有评测/配置/未提交工作。飞书本项目开发记录待本轮提交后同步。
 
 P7发布同步完成：实现/验证/运行手册已推送6030b63，开发记录以该提交署名追加，并回查项目父节点和正文版本通过；链接 https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf 。仅记录进展，无新增代码或测试结论。
+
+
+## 2026-10-29 P7验收跟进与P8待确认方案（Codex）
+
+- 收到P7验收。只读发现删除适配器与memory API共用角色、继承agent_memory_app九表全DML，无独立保留删除审计。先11项memory定向验证（首轮失败后修正，见下），拆出独立NOINHERIT删除角色，九表SELECT/DELETE及两列UPDATE；运行角色撤销广泛角色继承，只有幂等表保留DELETE。专属库撤销PUBLIC CREATE；未改相邻memory API或未提交评测工作区。
+- 增0009平台删除审计表，应用仅追加。P2升级0009；独立私有API/memory配置与单位更新，目录700/文件600。实际P2导购、跨顾客读取隔离、幂等、SSE、删除成功；随后浏览器2项通过。平台真实started/completed各3条，owner只读确认，审计不随租户删。权限与已知跨库/OS身份/可信GUC边界见docs/p7-memory-purge-review.md。
+- 输出docs/p7-search-samples.md及十条查询/过滤/tsquery/前5结果/rank/命中依据JSON，直接查P2二十万商品。九条各5项，中文电水壶0项，不伪造补齐。说明葡语类目合成标题、english分词、rank/总价/ID排序，不做P10/S3性能测量。
+- 新独立DeepSeek传输层及5项离线mock测试，不改Ark源码。温度0、配置模型/地址、默认拒绝联网、仅P2合成来源、700/600本地摘要/返回缓存、共享并发限制、限流退避计数/重试上限。只定位现有Key文件及600权限，未展示或调用。询问50条小样是否获授权，未收到确认，实际0次；ECD默认禁止外发。
+- P8待确认方案详细列四类/边界、1200ECD+800合成配额、角色未知排除、300条人机kappa而非人工双标、silver偏差、1400开发/600封存及最终90条人工子集、负责人持密钥的隔离方式、DeepSeek模型与官方价目、逻辑6000判定不等于6000API调用，机器标注另计。真实小样token/费用未验证，未编造提升数字。未生成正式评测集/修改产品路由/调用模型，等待确认。
+- 失败与返工：第一次新增角色检查SQL引号嵌套导致测试收集SyntaxError，修正为双引号SQL字符串；定向首个有效运行10过1失败，原因是模块共享平台夹具里存在前序删除审计，改按最新request_id核对本次started/completed，随后16项定向通过。首轮ruff发现异常类型和dict写法，修正后全通过。Key搜索范围初次过宽耗时，中断后确认已发现的专用600文件，不输出匹配行。部署/真实浏览器没有失败。
+- 最终完整pytest237 passed、0跳过/失败、2既有JUnit警告、92.73秒；ruff与strict mypy32源文件通过；前端类型检查通过；P7 Playwright2 passed/9.8秒。公开报告reports/p7-followup-2026-10-29；原件.local/p7-followup。首次已有runtime辅助脚本写回的私有P7运行证据反映本次复验，不据此覆盖此前公开P7统计。容量/限频、租户增长、性能、小样/全量模型均未验证。本轮前端未改，旧P5六项未重跑。

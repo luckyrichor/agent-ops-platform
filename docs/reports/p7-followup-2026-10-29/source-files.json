@@ -1,0 +1,8 @@
+{
+  "migrations/versions/0009_memory_delete_audit.py": "3d91760c492ba9b63d818354284db47df063fb8267b9725cd54efba03532502f",
+  "scripts/p7-services.py": "22b1e1757bab095e48df2ca06ea42f43f50319e484e69c8b5530bbeadc89605f",
+  "src/agent_ops/customer_memory.py": "8785e50c2ca9b28146f4b5986f14845306fdcfbec36e7831b1647da2860865f3",
+  "src/agent_ops/deepseek.py": "aaa763e8874f311e0a0a3a8df1e5ffb9b2c7c5a4fb3a6ff9002af1d764b89839",
+  "tests/test_customer_memory.py": "914438254574e225250679e8e07e962702912ff4862bbd3f0f97b0fa04019935",
+  "tests/test_deepseek.py": "0384eed3b42204e35b74492016d7def0a200780a6440a2ba5dbe80a86cf5032b"
+}

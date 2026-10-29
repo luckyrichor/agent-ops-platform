@@ -75,7 +75,7 @@ class CustomerMemory:
 
     @classmethod
     def from_env(cls, platform_url: str) -> 'CustomerMemory | None':
-        names = ('AGENT_OPS_CUSTOMER_MEMORY_URL', 'AGENT_OPS_CUSTOMER_MEMORY_DATABASE_URL',
+        names = ('AGENT_OPS_CUSTOMER_MEMORY_URL', 'AGENT_OPS_CUSTOMER_MEMORY_PURGE_DATABASE_URL',
                  'AGENT_OPS_CUSTOMER_MEMORY_KEY', 'AGENT_OPS_CUSTOMER_MEMORY_ISSUER',
                  'AGENT_OPS_CUSTOMER_MEMORY_AUDIENCE')
         values = [os.environ.get(name, '') for name in names]
@@ -126,6 +126,26 @@ class CustomerMemory:
                 return
 
     async def delete_all(self, user_id: int) -> dict[str, Any]:
+        if user_id <= 0:
+            raise CustomerMemoryError('MEMORY_USER_REQUIRED')
+        request_id = uuid4()
+        await self._audit_delete(user_id, request_id, 'started')
+        try:
+            result = await self._delete_all(user_id)
+        except Exception:
+            await self._audit_delete(user_id, request_id, 'failed')
+            raise
+        await self._audit_delete(user_id, request_id, 'completed')
+        return result
+
+    async def _audit_delete(self, user_id: int, request_id: UUID, outcome: str) -> None:
+        # Survives tenant erasure; contains no memory body, token or tenant UUID.
+        async with self.engine.begin() as c:
+            await c.execute(text("""INSERT INTO customer_memory.deletion_audit
+                (request_id,user_id,outcome) VALUES(:request,:user,:outcome)"""),
+                {'request':request_id,'user':user_id,'outcome':outcome})
+
+    async def _delete_all(self, user_id: int) -> dict[str, Any]:
         # Commit the gate before touching a different database. A crash is retryable
         # and cannot report success while leaving old tenant data accessible.
         async with self.engine.begin() as c:
@@ -135,8 +155,8 @@ class CustomerMemory:
             tenant = row['tenant_id']
             await c.execute(text("UPDATE customer_memory.identities SET state='deleting' WHERE user_id=:id"), {'id':user_id})
         async with self.memory_engine.begin() as c:
-            role = (await c.execute(text('SELECT rolsuper,rolbypassrls FROM pg_roles WHERE rolname=current_user'))).one()
-            if role.rolsuper or role.rolbypassrls:
+            role = (await c.execute(text("SELECT rolsuper,rolbypassrls,rolcreaterole,rolcreatedb, pg_has_role(current_user,'agent_memory_app','MEMBER') AS runtime_member FROM pg_roles WHERE rolname=current_user"))).one()
+            if role.rolsuper or role.rolbypassrls or role.rolcreaterole or role.rolcreatedb or role.runtime_member:
                 raise CustomerMemoryError('MEMORY_PURGE_ROLE_UNSAFE')
             await c.execute(text("SELECT set_config('app.current_tenant_id',:tenant,true)"), {'tenant':str(tenant)})
             # Deferrable current-version FK; successor references are within tenant.
