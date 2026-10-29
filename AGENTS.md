@@ -464,4 +464,4 @@ agent-ops-p7-memory容器/同名持久卷（回环55435）专属本项目；不�
 
 双方契约已同步：agent-memory/docs/integrations/agent-ops-customer-memory.md已单独推送53cba0f；该仓库原有大量其他未提交评测内容未纳入提交，未改其API/配置/运行任务。调用方固定SDK与独立实例仍1e2730c，不随邻接仓库HEAD变更升级。
 
-飞书待同步：2026-10-29 P7实现、测试、部署与限制（本轮提交后追加本项目开发记录）。
+飞书已同步：P7实现、先隔离闸门、最终231项回归、P2真实浏览器验收、部署/删除/轮换与限制已追加开发记录 https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf ，codex profile / --as user；父节点及含6030b63的正文回查通过。主实现已推送6030b63，memory契约文档已推送53cba0f。
