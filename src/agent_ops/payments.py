@@ -158,7 +158,8 @@ class Payments:
             await self.reject(str(error))
             return {'order_id': order_id, 'status': 'pending_confirmation', 'reason': str(error)}
 
-    async def approve_refund(self, ticket_id: str, revision: int, principal: Principal) -> dict[str, Any]:
+    async def approve_refund(self, ticket_id: str, revision: int, principal: Principal, *,
+                             requested_amount_cents: int | None = None) -> dict[str, Any]:
         if self.support is None or principal.role not in {'agent', 'admin'}:
             raise PaymentError('REFUND_FORBIDDEN')
         async with self.engine.begin() as c:
@@ -168,6 +169,10 @@ class Payments:
             order = (await c.execute(text('SELECT * FROM commerce.orders WHERE id=:id FOR UPDATE'), {'id': oid})).mappings().one()
             payment = (await c.execute(text('SELECT * FROM payments.payments WHERE order_id=:id FOR UPDATE'), {'id': oid})).mappings().first()
             ticket = await self.support._row(c, ticket_id, lock=True)
+            if requested_amount_cents is not None and requested_amount_cents > order['total_cents']:
+                raise PaymentError('REFUND_AMOUNT_EXCEEDS_PAID')
+            if requested_amount_cents is not None and requested_amount_cents != order['total_cents']:
+                raise PaymentError('PARTIAL_REFUND_UNSUPPORTED')
             existing = (await c.execute(text('SELECT * FROM payments.refunds WHERE order_id=:id'), {'id': oid})).mappings().first()
             if existing:
                 if str(existing['ticket_id']) != ticket_id or existing['approved_by'] != principal.account_id:

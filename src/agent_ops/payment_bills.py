@@ -17,7 +17,15 @@ def normalize_bill(data: bytes) -> list[dict[str, Any]]:
     if data.startswith(b'PK'):
         try:
             with zipfile.ZipFile(io.BytesIO(data)) as archive:
-                files = [f for f in archive.infolist() if f.filename.endswith('.csv') and '业务明细' in f.filename]
+                def detail_name(filename: str) -> bool:
+                    names = [filename]
+                    for encoding in ('utf-8', 'gb18030'):
+                        try:
+                            names.append(filename.encode('cp437').decode(encoding))
+                        except UnicodeError:
+                            pass
+                    return any(n.endswith('.csv') and '业务明细' in n and '汇总' not in n for n in names)
+                files = [f for f in archive.infolist() if detail_name(f.filename)]
                 if not files or sum(f.file_size for f in files) > 10 * 1024 * 1024:
                     raise PaymentError('BILL_FORMAT_UNSUPPORTED')
                 chunks = [archive.read(f) for f in files]
@@ -52,7 +60,7 @@ def normalize_bill(data: bytes) -> list[dict[str, Any]]:
                 kind, reference, amount = 'payment', row['商户订单号'], cents(row['订单金额（元）'])
             elif row['业务类型'] == '退款':
                 # Fail closed when the bill cannot identify our unique refund request.
-                reference = row.get('商户退款请求号', '')
+                reference = row.get('商户退款请求号') or row.get('退款批次号/请求号', '')
                 if not reference:
                     raise PaymentError('BILL_REFUND_REFERENCE_MISSING')
                 kind, amount = 'refund', cents(row['订单金额（元）'].lstrip('-'))
@@ -64,13 +72,23 @@ def normalize_bill(data: bytes) -> list[dict[str, Any]]:
     return records
 
 
+def secure_bill_url(url: str) -> str:
+    parsed = urlsplit(url)
+    if not parsed.hostname or not parsed.hostname.endswith(('.alipay.com', '.alipaydev.com')) or parsed.username or parsed.fragment:
+        raise PaymentError('BILL_DOWNLOAD_HOST_REJECTED')
+    # Some signed sandbox responses provide HTTP links. Try the same provider's
+    # resource over TLS; never send a bill request over plaintext or disable TLS.
+    if parsed.scheme == 'http' and parsed.port in {None, 80}:
+        parsed = parsed._replace(scheme='https', netloc=parsed.hostname)
+    if parsed.scheme != 'https':
+        raise PaymentError('BILL_DOWNLOAD_HOST_REJECTED')
+    return parsed.geturl()
+
+
 async def download_bill(gateway: Gateway, date: str) -> bytes:
     result = await gateway.call('alipay.data.dataservice.bill.downloadurl.query',
                                 {'bill_type': 'trade', 'bill_date': date})
-    url = result.get('bill_download_url', '')
-    parsed = urlsplit(url)
-    if parsed.scheme != 'https' or not parsed.hostname or not parsed.hostname.endswith(('.alipay.com', '.alipaydev.com')) or parsed.username or parsed.fragment:
-        raise PaymentError('BILL_DOWNLOAD_HOST_REJECTED')
+    url = secure_bill_url(result.get('bill_download_url', ''))
     for attempt in range(gateway.config.retries + 1):
         try:
             async with httpx.AsyncClient(trust_env=False, timeout=gateway.config.timeout,

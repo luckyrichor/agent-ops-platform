@@ -1,0 +1,118 @@
+{
+  "recorded_at": "2026-10-29T19:57:07.247483+08:00",
+  "scope": "P6 real notification acceptance preparation; awaiting new cloud-rule confirmation",
+  "pytest": {
+    "tests": "214",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "92.277"
+  },
+  "ruff": "passed",
+  "strict_mypy": {
+    "status": "passed",
+    "source_files": 28
+  },
+  "browser": "not rerun; frontend unchanged",
+  "entry": "stopped and temporarily disabled; preflight passed",
+  "new_order": "not created; awaiting cloud confirmation",
+  "real_notification": "not yet verified for new acceptance run",
+  "real_notice_replay": "not yet verified; tools tested with ephemeral signing keys",
+  "capacity_and_rate_limits": "unverified",
+  "refund_replay": {
+    "uses_previously_refunded_order": true,
+    "new_refund_request_created": false,
+    "provider_request_count": 5,
+    "responses": [
+      {
+        "signed_success": true,
+        "fund_change": "N",
+        "amount_matches": true,
+        "order_matches": true,
+        "trade_matches": true
+      },
+      {
+        "signed_success": true,
+        "fund_change": "N",
+        "amount_matches": true,
+        "order_matches": true,
+        "trade_matches": true
+      },
+      {
+        "signed_success": true,
+        "fund_change": "N",
+        "amount_matches": true,
+        "order_matches": true,
+        "trade_matches": true
+      },
+      {
+        "signed_success": true,
+        "fund_change": "N",
+        "amount_matches": true,
+        "order_matches": true,
+        "trade_matches": true
+      },
+      {
+        "signed_success": true,
+        "fund_change": "N",
+        "amount_matches": true,
+        "order_matches": true,
+        "trade_matches": true
+      }
+    ],
+    "verified_refund_query": {
+      "status": "REFUND_SUCCESS",
+      "amount_matches": true,
+      "request_matches": true,
+      "order_matches": true,
+      "trade_matches": true
+    },
+    "excess_refund_rejected": true,
+    "excess_refund_code": "REFUND_AMOUNT_EXCEEDS_PAID",
+    "refund_records_before": 1,
+    "refund_records_after": 1,
+    "successful_refund_events": 1
+  },
+  "bill_capability": {
+    "checked_at": "2026-10-29T19:46:29.465951+08:00",
+    "tests": [
+      {
+        "check": "control_trade_query",
+        "signed_success": true,
+        "download_url_present": false,
+        "http_statuses": [
+          200
+        ]
+      },
+      {
+        "check": "previous_day_bill",
+        "signed_success": true,
+        "download_url_present": true,
+        "http_statuses": [
+          200
+        ]
+      },
+      {
+        "check": "current_day_bill",
+        "signed_success": false,
+        "fixed_failure_code": "PAYMENT_GATEWAY_REJECTED",
+        "http_statuses": [
+          404
+        ]
+      }
+    ],
+    "external_bill_available": true,
+    "scope": "Configured sandbox application and gateway; not a global claim about all sandbox products"
+  },
+  "bill_comparison": {
+    "bill_date": "2026-10-28",
+    "external_download_capability": true,
+    "tls_downloaded": true,
+    "downloaded_bytes": 1017,
+    "external_detail_rows": 0,
+    "difference_count": 0,
+    "empty_bill_smoke_only": true,
+    "current_paid_transaction_covered": false,
+    "current_day_bill_available": false
+  }
+}

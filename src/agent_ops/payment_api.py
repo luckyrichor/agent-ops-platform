@@ -13,6 +13,7 @@ from pydantic import BaseModel, ConfigDict, Field
 
 from agent_ops.auth import Principal
 from agent_ops.payment_gateway import PaymentConfig, PaymentError
+from agent_ops.payment_notices import NoticeArchive
 from agent_ops.payments import Payments
 from agent_ops.support_api import BIGINT, Guard, owner_id
 
@@ -62,7 +63,8 @@ def payment_router(service: Payments | None, *, customer: Guard, staff: Guard) -
     @router.post('/workbench/tickets/{ticket_id}/refund')
     async def approve(ticket_id: str, body: 'Approval', principal: Staff, idempotency_key: Key) -> dict[str, Any]:
         try:
-            result = await required().approve_refund(ticket_id, body.expected_revision, principal)
+            result = await required().approve_refund(ticket_id, body.expected_revision, principal,
+                                                    requested_amount_cents=body.amount_cents)
             return await required().execute_refund(result['refund_no'])
         except PaymentError as error:
             raise HTTPException(403 if 'FORBIDDEN' in str(error) or 'CLAIMED' in str(error) else 409, str(error)) from None
@@ -73,9 +75,11 @@ def payment_router(service: Payments | None, *, customer: Guard, staff: Guard) -
 class Approval(BaseModel):
     model_config = ConfigDict(extra='forbid')
     expected_revision: int = Field(ge=1, le=BIGINT)
+    amount_cents: int | None = Field(default=None, ge=1, le=BIGINT)
 
 
-def notification_app(service: Payments, *, manage_lifecycle: bool = False) -> FastAPI:
+def notification_app(service: Payments, *, manage_lifecycle: bool = False,
+                     archive: NoticeArchive | None = None) -> FastAPI:
     @asynccontextmanager
     async def lifespan(_: FastAPI) -> AsyncIterator[None]:
         try:
@@ -109,11 +113,16 @@ def notification_app(service: Payments, *, manage_lifecycle: bool = False) -> Fa
             if len(params) != len(pairs) or any(len(k) > 128 or len(v) > 8192 for k, v in pairs):
                 raise PaymentError('PAYMENT_DUPLICATE_OR_OVERSIZE_FIELDS')
             await service.notify(params)
+            if archive is not None:
+                archive.capture(params)
             return PlainTextResponse('success', headers={'Cache-Control': 'no-store'})
         except (ValueError, UnicodeError):
             await service.reject('PAYMENT_FORM_INVALID')
             return PlainTextResponse('failure', status_code=400)
         except PaymentError as error:
+            if str(error) == 'PAYMENT_NOTICE_ARCHIVE_UNAVAILABLE':
+                await service.reject(str(error))
+                return PlainTextResponse('failure', status_code=503)
             # notify already audits validation failures; framing failures are audited here.
             if str(error) in {'PAYMENT_CONTENT_TYPE', 'PAYMENT_BODY_TOO_LARGE', 'PAYMENT_DUPLICATE_OR_OVERSIZE_FIELDS'}:
                 await service.reject(str(error))
@@ -129,4 +138,6 @@ def create_notification_app() -> FastAPI:
     config = from_env(url)
     if config is None:
         raise PaymentError('PAYMENTS_NOT_CONFIGURED')
-    return notification_app(Payments(url, config), manage_lifecycle=True)
+    archive = os.environ.get('AGENT_OPS_PAYMENT_NOTICE_ARCHIVE')
+    return notification_app(Payments(url, config), manage_lifecycle=True,
+                            archive=NoticeArchive(Path(archive)) if archive else None)

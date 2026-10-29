@@ -28,6 +28,7 @@ from agent_ops.payment_gateway import (
     canonical,
     cents,
 )
+from agent_ops.payment_notices import NoticeArchive
 from agent_ops.payments import Payments
 from agent_ops.support import SupportRequest
 from agent_ops.workbench import WorkbenchService
@@ -480,3 +481,89 @@ async def test_manual_binding_never_bypasses_provider_signature(payment):
     service.gateway = Gateway(service.config, httpx.MockTransport(response))
     assert (await service.compensate(row['order_id']))['reason'] == 'PAYMENT_SIGNATURE_INVALID'
     assert (await commerce.order(row['order_id'], 1))['status'] == 'pending_payment'
+
+
+async def test_encrypted_real_notice_replay_and_tamper_rejection(payment, tmp_path, monkeypatch):
+    service, commerce, row, _ = payment
+    monkeypatch.chdir(tmp_path)
+    archive = NoticeArchive(tmp_path/'.local'/'notices')
+    params = notice(payment, buyer_logon_id='private-buyer@fixture.invalid')
+    async with httpx.AsyncClient(transport=httpx.ASGITransport(app=notification_app(service, archive=archive)), base_url='http://fixture') as client:
+        for _ in range(6):
+            response = await client.post('/payments/notify', data=params)
+            assert response.status_code == 200 and response.text == 'success'
+        paths = list(archive.folder.glob('notice-*.json'))
+        assert len(paths) == 1
+        serialized = paths[0].read_text()
+        assert params['buyer_logon_id'] not in serialized
+        assert params['sign'] not in serialized
+        assert params['notify_id'] not in serialized
+        assert set(json.loads(serialized)['fields'].values()) == {'<redacted>'}
+        replay = archive.load(paths[0])
+        assert replay == params
+        service.config.notification(replay)
+        assert paths[0].stat().st_mode & 0o777 == 0o600
+        assert (archive.folder/'archive.key').stat().st_mode & 0o777 == 0o600
+        response = await client.post('/payments/notify', data={**replay, 'total_amount':'9.99'})
+        assert response.status_code == 400
+        async with service.engine.connect() as c:
+            assert await c.scalar(text("SELECT count(*) FROM payments.audit WHERE code='PAYMENT_SIGNATURE_INVALID'")) >= 1
+            assert await c.scalar(text("SELECT count(*) FROM payments.audit WHERE order_id=:id AND code='PAYMENT_CAPTURED'"), {'id':row['order_id']}) == 1
+        assert (await commerce.order(row['order_id'],1))['status'] == 'paid'
+        # Never claim evidence was saved when a valid notification could not be archived.
+        (archive.folder/'archive.key').chmod(0o644)
+        assert (await client.post('/payments/notify', data=params)).status_code == 503
+
+
+async def test_refund_above_paid_amount_rejected_before_submission(payment):
+    service, _, row, _ = payment
+    await service.notify(notice(payment))
+    support = service.support
+    ticket = await support.create(SupportRequest(message='申请退货',order_id=str(row['order_id'])),uuid4().hex,1)
+    actor = Principal(3,'agent',None,'fixture')
+    ticket = await support.change(ticket.ticket_id,'claim',ticket.revision,actor,uuid4().hex)
+    with pytest.raises(PaymentError, match='REFUND_AMOUNT_EXCEEDS_PAID'):
+        await service.approve_refund(ticket.ticket_id,ticket.revision,actor,requested_amount_cents=201)
+    async with service.engine.connect() as c:
+        assert await c.scalar(text('SELECT count(*) FROM payments.refunds WHERE order_id=:id'), {'id':row['order_id']}) == 0
+    assert (await support.get(ticket.ticket_id)).state == 'claimed'
+
+
+def test_notice_archive_rejects_non_private_path_and_tampered_ciphertext(tmp_path, monkeypatch):
+    monkeypatch.chdir(tmp_path)
+    with pytest.raises(PaymentError, match='ARCHIVE_UNAVAILABLE'):
+        NoticeArchive(tmp_path/'public')
+    archive = NoticeArchive(tmp_path/'.local'/'notices')
+    archive.capture({'sign':'fixture-signature', 'trade_status':'TRADE_SUCCESS'})
+    path = next(archive.folder.glob('notice-*.json'))
+    record = json.loads(path.read_text())
+    record['ciphertext'] = base64.b64encode(b'tampered').decode()
+    path.write_text(json.dumps(record))
+    with pytest.raises(PaymentError, match='ARCHIVE_UNAVAILABLE'):
+        archive.load(path)
+
+
+def test_signed_bill_http_url_is_upgraded_without_weakening_host_or_tls_policy():
+    from agent_ops.payment_bills import secure_bill_url
+    assert secure_bill_url('http://fixture.alipay.com:80/bill?fixture=1') == 'https://fixture.alipay.com/bill?fixture=1'
+    for value in ['http://fixture.invalid/bill', 'http://fixture.alipay.com:8080/bill',
+                  'http://user@fixture.alipay.com/bill', 'https://fixture.alipay.com.evil.invalid/bill',
+                  'https://fixture.alipay.com/bill#fragment', 'file:///bill']:
+        with pytest.raises(PaymentError, match='BILL_DOWNLOAD_HOST_REJECTED'):
+            secure_bill_url(value)
+
+
+def test_legacy_zip_bill_names_decode_and_summary_is_not_treated_as_a_trade():
+    import io
+    import zipfile
+
+    from agent_ops.payment_bills import normalize_bill
+
+    payload = io.BytesIO()
+    with zipfile.ZipFile(payload, 'w') as archive:
+        archive.writestr('业务明细.csv'.encode('gb18030').decode('cp437'),
+                         '# sandbox fixture\n商户订单号,业务类型,订单金额（元）,退款批次号/请求号\nfixture,交易,2.00,\nfixture,退款,-2.00,fixture-refund\n'.encode('gb18030'))
+        archive.writestr('业务明细(汇总).csv'.encode('gb18030').decode('cp437'), b'unrelated,summary\n1,2\n')
+    assert normalize_bill(payload.getvalue()) == [
+        {'kind':'payment', 'reference':'fixture', 'amount_cents':200},
+        {'kind':'refund', 'reference':'fixture-refund', 'amount_cents':200}]
