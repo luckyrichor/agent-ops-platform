@@ -481,4 +481,4 @@ P8方案docs/p8-routing-evaluation-proposal.md待负责人确认：四类动作�
 
 最终pytest237 passed（2既有警告、92.73秒）、ruff通过、strict mypy32源文件、前端类型通过、P7真实浏览器2 passed/9.8秒；实际P2导购/读取隔离/幂等/SSE/删除复验通过，平台实时审计started/completed各3条。失败返工见progress，证据reports/p7-followup-2026-10-29。前端未改，不重复旧P5六用例；没有执行模型或性能实验。
 
-飞书待同步：2026-10-29 P7权限/检索样本、P8待确认方案及本轮验证；目标复用既有项目目录/开发记录。
+飞书已同步：2026-10-29 P7权限/检索样本、P8待确认方案和237项验证已追加既有开发记录 https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf ；新增方案 https://kcn0pbn0hwo0.feishu.cn/wiki/OLdWww6VbiZZIwkKTcHcQFlMnZb 。两篇均在我的文档库/WorkPlan/agent-ops-platform下，codex profile/--as user；父节点及含5aff9c0的正文回查通过。实现/测试/方案已推送5aff9c0。50条小样仍未调用、待授权。
