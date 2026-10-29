@@ -1,0 +1,18 @@
+{
+  "observed_at": "2026-10-29T20:08:03.977825+08:00",
+  "user_confirmed_current_cloud_rule": true,
+  "entry": "active and enabled",
+  "sandbox_api": "active",
+  "local_readiness": {
+    "anonymous_orders": 401,
+    "get_notification": 405
+  },
+  "new_order_created": true,
+  "sandbox_amount_cents": 1,
+  "automatic_compensation_deferred": true,
+  "payment_link_sent_to_current_chat": true,
+  "payment_state": "pending",
+  "accepted_notifications": 0,
+  "capacity_and_rate_limits": "unverified",
+  "verification_status": "waiting for user payment and real notification; not P6 acceptance"
+}
