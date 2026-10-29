@@ -337,3 +337,18 @@ async def test_gateway_verifies_original_encoded_response_bytes(keys):
     def transport(request):
         return httpx.Response(200, content=body)
     assert (await Gateway(config, httpx.MockTransport(transport)).query('fixture'))['msg'] == '成功'
+
+
+async def test_signed_query_without_merchant_identity_fails_closed(payment):
+    service, commerce, row, key = payment
+    def response(request):
+        return signed_response('alipay.trade.query', {
+            'code':'10000', 'out_trade_no':row['merchant_no'],
+            'trade_no':'T'+str(row['order_id']), 'trade_status':'TRADE_SUCCESS',
+            'total_amount':'2.00'}, key)
+    service.gateway = Gateway(service.config, httpx.MockTransport(response))
+    result = await service.compensate(row['order_id'])
+    assert result['reason'] == 'PAYMENT_QUERY_IDENTITY_MISMATCH'
+    assert (await commerce.order(row['order_id'], 1))['status'] == 'pending_payment'
+    async with service.engine.connect() as c:
+        assert await c.scalar(text("SELECT count(*) FROM payments.audit WHERE order_id=:id AND code='PAYMENT_CAPTURED'"), {'id':row['order_id']}) == 0

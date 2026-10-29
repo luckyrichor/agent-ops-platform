@@ -37,7 +37,11 @@ worker_processes 1;
 daemon off;
 events {{ worker_connections 256; }}
 http {{
- log_format safe escape=json '{{"time":"$time_iso8601","path":"$uri","method":"$request_method","status":$status,"bytes":$body_bytes_sent,"seconds":$request_time,"trace_id":"$request_id"}}';
+ map $http_content_type $body_type {{
+  default "other";
+  ~*^application/x-www-form-urlencoded "form";
+ }}
+ log_format safe escape=json '{{"time":"$time_iso8601","path":"$uri","method":"$request_method","status":$status,"bytes":$body_bytes_sent,"seconds":$request_time,"trace_id":"$request_id","request_bytes":$request_length,"body_type":"$body_type","upstream_status":"$upstream_status"}}';
  access_log {runtime}/access.jsonl safe;
  client_body_temp_path {runtime}/body-temp;
  proxy_temp_path {runtime}/proxy-temp;

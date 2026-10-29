@@ -1,0 +1,23 @@
+{
+  "checked_at": "2026-10-29T03:26:23.681426+00:00",
+  "provider_signature_verified": true,
+  "provider_state": "TRADE_SUCCESS",
+  "own_merchant_order_matches": true,
+  "own_amount_matches": true,
+  "seller_id_in_query_response": false,
+  "local_state": "pending",
+  "real_notification_verified": false,
+  "refund_executed": false,
+  "pytest_passed": 196,
+  "payment_targeted_passed": 26,
+  "strict_mypy_source_files": 27,
+  "ruff": "passed",
+  "external_unsigned_request": "HTTP 400; connectivity only; not a genuine provider notification",
+  "latest_bill_download_attempt": "HTTP 404; unavailable, not zero differences",
+  "callback_replay_live": "unverified; existing fixture coverage retained",
+  "notification_request_body_logged": false,
+  "source_sha256": {
+    "scripts/payment-entry.py": "299ce0d6a8899cf08d0e2d9679543d331803905df7f3ff84409af99afe53e5ce",
+    "tests/test_payments.py": "6e555b2d6bb985223b91e56c8b452bea866db92e3554fab0b86e15feaf61e08d"
+  }
+}
