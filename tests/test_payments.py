@@ -2,6 +2,8 @@
 import asyncio
 import base64
 import json
+from dataclasses import replace
+from datetime import UTC, datetime, timedelta
 from urllib.parse import parse_qs, urlencode, urlsplit
 from uuid import uuid4
 
@@ -18,7 +20,14 @@ database = workbench_database  # Register the shared actual-PG fixture without i
 from agent_ops.auth import Principal
 from agent_ops.commerce_backend import CommerceBackend, PlaceOrder
 from agent_ops.payment_api import notification_app
-from agent_ops.payment_gateway import Gateway, PaymentConfig, PaymentError, canonical, cents
+from agent_ops.payment_gateway import (
+    Gateway,
+    MerchantBinding,
+    PaymentConfig,
+    PaymentError,
+    canonical,
+    cents,
+)
 from agent_ops.payments import Payments
 from agent_ops.support import SupportRequest
 from agent_ops.workbench import WorkbenchService
@@ -268,6 +277,22 @@ def test_private_file_permissions_raw_key_conversion_and_provider_public_key(tmp
         p=tmp_path/name;p.write_text(value);p.chmod(0o600)
     loaded=PaymentConfig.load(tmp_path,'http://notify.invalid/payments/notify')
     assert loaded.gateway==values['gateway_url.txt']
+    assert not loaded.merchant_binding_verified()
+    binding = MerchantBinding.confirmed(loaded.app_id, loaded.seller_id, datetime.now(UTC).date())
+    record = {'verified':True, 'verified_on':binding.verified_on.isoformat(),
+              'app_digest':binding.app_digest, 'seller_digest':binding.seller_digest}
+    path = tmp_path/'merchant_binding.json'
+    path.write_text(json.dumps(record)); path.chmod(0o600)
+    assert PaymentConfig.load(tmp_path,'http://notify.invalid/payments/notify').merchant_binding_verified()
+    for change in [{'app_digest':'changed'}, {'seller_digest':'changed'},
+                   {'verified_on':(datetime.now(UTC).date()+timedelta(days=2)).isoformat()}, {'verified':'true'}]:
+        path.write_text(json.dumps({**record, **change}))
+        with pytest.raises(PaymentError,match='CONFIGURATION_INVALID'):
+            PaymentConfig.load(tmp_path,'http://notify.invalid/payments/notify')
+    path.write_text(json.dumps(record)); path.chmod(0o644)
+    with pytest.raises(PaymentError,match='PERMISSIONS'):
+        PaymentConfig.load(tmp_path,'http://notify.invalid/payments/notify')
+    path.unlink()
     signature=provider.sign(b'fixture',padding.PKCS1v15(),hashes.SHA256())
     loaded.verify(b'fixture',base64.b64encode(signature).decode())
     wrong=config.private_key.sign(b'fixture',padding.PKCS1v15(),hashes.SHA256())
@@ -342,6 +367,7 @@ async def test_gateway_verifies_original_encoded_response_bytes(keys):
 @pytest.mark.parametrize('seller,reason', [
     (None, 'PAYMENT_QUERY_IDENTITY_UNAVAILABLE'),
     ('', 'PAYMENT_QUERY_IDENTITY_UNAVAILABLE'),
+    ('fixture-merchant', 'PAYMENT_QUERY_IDENTITY_UNAVAILABLE'),
     ('different', 'PAYMENT_QUERY_IDENTITY_MISMATCH'),
 ])
 async def test_signed_query_without_verified_merchant_identity_fails_closed(payment, seller, reason):
@@ -374,3 +400,83 @@ async def test_signed_query_without_verified_merchant_identity_fails_closed(paym
     assert (await commerce.order(row['order_id'], 1))['status'] == 'paid'
     async with service.engine.connect() as c:
         assert await c.scalar(text("SELECT count(*) FROM payments.audit WHERE order_id=:id AND code='PAYMENT_CAPTURED'"), {'id':row['order_id']}) == 1
+
+
+async def test_manual_binding_compensation_and_repeated_queries_capture_once(payment):
+    service, commerce, row, key = payment
+    original = service.config
+    service.config = replace(original, merchant_binding=MerchantBinding.confirmed(
+        original.app_id, original.seller_id, datetime.now(UTC).date()))
+    def response(request):
+        return signed_response('alipay.trade.query', {
+            'code':'10000', 'out_trade_no':row['merchant_no'],
+            'trade_no':'T'+str(row['order_id']), 'trade_status':'TRADE_SUCCESS',
+            'total_amount':'2.00'}, key)
+    service.gateway = Gateway(service.config, httpx.MockTransport(response))
+    async with service.engine.connect() as c:
+        before = (await c.execute(text('SELECT stock,reserved FROM commerce.inventory WHERE product_id=801'))).one()
+    for _ in range(5):
+        assert (await service.compensate(row['order_id']))['status'] == 'confirmed'
+    await asyncio.gather(service.compensate(row['order_id']), service.compensate(row['order_id']))
+    assert (await commerce.order(row['order_id'], 1))['status'] == 'paid'
+    async with service.engine.connect() as c:
+        after = (await c.execute(text('SELECT stock,reserved FROM commerce.inventory WHERE product_id=801'))).one()
+        assert before.stock-after.stock == 2 and before.reserved-after.reserved == 2
+        for code in ['PAYMENT_CAPTURED', 'PAYMENT_CAPTURED_MANUAL_BINDING']:
+            assert await c.scalar(text('SELECT count(*) FROM payments.audit WHERE order_id=:id AND code=:code'), {'id':row['order_id'], 'code':code}) == 1
+    assert not replace(service.config, app_id='changed').merchant_binding_verified()
+    assert not replace(service.config, seller_id='changed').merchant_binding_verified()
+
+
+@pytest.mark.parametrize('change,reason', [
+    ({'total_amount':'2.01'}, 'PAYMENT_AMOUNT_MISMATCH'),
+    ({'out_trade_no':'different'}, 'PAYMENT_QUERY_IDENTITY_MISMATCH'),
+    ({'seller_id':'different'}, 'PAYMENT_QUERY_IDENTITY_MISMATCH'),
+    ({'trade_status':'WAIT_BUYER_PAY'}, 'PAYMENT_QUERY_STATUS_UNCONFIRMED'),
+    ({'trade_status':'TRADE_CLOSED'}, 'PAYMENT_QUERY_STATUS_UNCONFIRMED'),
+])
+async def test_manual_binding_does_not_bypass_query_checks(payment, change, reason):
+    service, commerce, row, key = payment
+    original = service.config
+    service.config = replace(original, merchant_binding=MerchantBinding.confirmed(
+        original.app_id, original.seller_id, datetime.now(UTC).date()))
+    def response(request):
+        return signed_response('alipay.trade.query', {
+            'code':'10000', 'out_trade_no':row['merchant_no'],
+            'trade_no':'T'+str(row['order_id']), 'trade_status':'TRADE_SUCCESS',
+            'total_amount':'2.00', **change}, key)
+    service.gateway = Gateway(service.config, httpx.MockTransport(response))
+    assert (await service.compensate(row['order_id']))['reason'] == reason
+    assert (await commerce.order(row['order_id'], 1))['status'] == 'pending_payment'
+
+
+@pytest.mark.parametrize('seller,reason', [
+    (None, 'PAYMENT_MERCHANT_UNAVAILABLE'),
+    ('', 'PAYMENT_MERCHANT_UNAVAILABLE'), ('different', 'PAYMENT_MERCHANT_MISMATCH'),
+])
+async def test_manual_binding_never_relaxes_notification_merchant_check(payment, seller, reason):
+    service, commerce, row, _ = payment
+    service.config = replace(service.config, merchant_binding=MerchantBinding.confirmed(
+        service.config.app_id, service.config.seller_id, datetime.now(UTC).date()))
+    params = notice(payment, seller_id=seller or '')
+    if seller is None:
+        params.pop('seller_id')
+    with pytest.raises(PaymentError, match=reason):
+        await service.notify(params)
+    assert (await commerce.order(row['order_id'], 1))['status'] == 'pending_payment'
+
+
+async def test_manual_binding_never_bypasses_provider_signature(payment):
+    service, commerce, row, key = payment
+    original = service.config
+    service.config = replace(original, merchant_binding=MerchantBinding.confirmed(
+        original.app_id, original.seller_id, datetime.now(UTC).date()))
+    def response(request):
+        signed = signed_response('alipay.trade.query', {
+            'code':'10000', 'out_trade_no':row['merchant_no'],
+            'trade_no':'T'+str(row['order_id']), 'trade_status':'TRADE_SUCCESS',
+            'total_amount':'2.00'}, key)
+        return httpx.Response(200, content=signed.content.replace(b'2.00', b'3.00'))
+    service.gateway = Gateway(service.config, httpx.MockTransport(response))
+    assert (await service.compensate(row['order_id']))['reason'] == 'PAYMENT_SIGNATURE_INVALID'
+    assert (await commerce.order(row['order_id'], 1))['status'] == 'pending_payment'

@@ -75,7 +75,8 @@ class Payments:
             await self.reject(str(error))
             raise
 
-    async def apply(self, params: dict[str, str], *, notification: bool) -> None:
+    async def apply(self, params: dict[str, str], *, notification: bool,
+                    manual_binding: bool = False) -> None:
         merchant = params.get('out_trade_no', '')
         status = params.get('trade_status', '')
         if status not in {'WAIT_BUYER_PAY', 'TRADE_SUCCESS', 'TRADE_FINISHED', 'TRADE_CLOSED'}:
@@ -116,6 +117,8 @@ class Payments:
                     await c.execute(text("UPDATE commerce.orders SET status='paid',revision=revision+1 WHERE id=:id"), {'id': oid})
                     await c.execute(text("UPDATE payments.payments SET state='paid',provider_trade=:trade,paid_at=now() WHERE order_id=:id"), {'id': oid, 'trade': trade})
                     await self.audit(c, 'PAYMENT_CAPTURED', oid)
+                    if manual_binding:
+                        await self.audit(c, 'PAYMENT_CAPTURED_MANUAL_BINDING', oid)
                 elif payment['state'] == 'closed':
                     raise PaymentError('PAYMENT_LATE_SUCCESS_REVIEW_REQUIRED')
                 # Repeated success after refund/finish never regresses the ledger or inventory.
@@ -137,16 +140,19 @@ class Payments:
             data = await self.gateway.query(row['merchant_no'])
             if data.get('out_trade_no') != row['merchant_no']:
                 raise PaymentError('PAYMENT_QUERY_IDENTITY_MISMATCH')
-            if not data.get('seller_id'):
-                raise PaymentError('PAYMENT_QUERY_IDENTITY_UNAVAILABLE')
-            if data['seller_id'] != self.config.seller_id:
+            if data.get('seller_id') and data['seller_id'] != self.config.seller_id:
                 raise PaymentError('PAYMENT_QUERY_IDENTITY_MISMATCH')
+            if not self.config.merchant_binding_verified():
+                raise PaymentError('PAYMENT_QUERY_IDENTITY_UNAVAILABLE')
+            if not data.get('seller_id') and data.get('trade_status') not in {'TRADE_SUCCESS', 'TRADE_FINISHED'}:
+                raise PaymentError('PAYMENT_QUERY_STATUS_UNCONFIRMED')
             if data.get('trade_status') == 'WAIT_BUYER_PAY' and (datetime.now(UTC) - row['created_at']).total_seconds() >= 1800:
                 closed = await self.gateway.call('alipay.trade.close', {'out_trade_no': row['merchant_no']})
                 if closed.get('out_trade_no') != row['merchant_no'] or closed.get('trade_no') != data.get('trade_no'):
                     raise PaymentError('PAYMENT_QUERY_IDENTITY_MISMATCH')
                 data['trade_status'] = 'TRADE_CLOSED'
-            await self.apply({k: str(v) for k, v in data.items()}, notification=False)
+            await self.apply({k: str(v) for k, v in data.items()}, notification=False,
+                             manual_binding=True)
             return {'order_id': order_id, 'status': 'confirmed'}
         except PaymentError as error:
             await self.reject(str(error))

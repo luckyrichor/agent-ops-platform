@@ -4,13 +4,14 @@ Never log provider payloads, URLs, signatures or exception text. A timeout means
 """
 import asyncio
 import base64
+import hashlib
 import json
 import logging
 import os
 import re
 import stat
 from dataclasses import dataclass, field
-from datetime import datetime, timedelta, timezone
+from datetime import date, datetime, timedelta, timezone
 from decimal import Decimal, InvalidOperation
 from pathlib import Path
 from typing import Any
@@ -51,6 +52,24 @@ def canonical(params: dict[str, str], *, notification: bool = False) -> bytes:
     return '&'.join(f'{k}={v}' for k, v in sorted(params.items()) if k not in excluded and v != '').encode()
 
 
+@dataclass(frozen=True, repr=False)
+class MerchantBinding:
+    """Operator attestation, never a provider-signed proof of merchant identity."""
+
+    verified_on: date
+    app_digest: str
+    seller_digest: str
+
+    @classmethod
+    def confirmed(cls, app: str, seller: str, verified_on: date) -> 'MerchantBinding':
+        return cls(verified_on, hashlib.sha256(app.encode()).hexdigest(),
+                   hashlib.sha256(seller.encode()).hexdigest())
+
+    def matches(self, app: str, seller: str) -> bool:
+        today = datetime.now(timezone(timedelta(hours=8))).date()
+        return self == self.confirmed(app, seller, self.verified_on) and self.verified_on <= today
+
+
 @dataclass(repr=False)
 class PaymentConfig:
     app_id: str
@@ -61,6 +80,10 @@ class PaymentConfig:
     public_key: rsa.RSAPublicKey
     timeout: float = 5
     retries: int = 2
+    merchant_binding: MerchantBinding | None = None
+
+    def merchant_binding_verified(self) -> bool:
+        return self.merchant_binding is not None and self.merchant_binding.matches(self.app_id, self.seller_id)
 
     @classmethod
     def load(cls, folder: Path, notify_url: str) -> 'PaymentConfig':
@@ -90,7 +113,19 @@ class PaymentConfig:
             retries = int(os.environ.get('AGENT_OPS_PAYMENT_RETRIES', '2'))
             if not 0 < timeout <= 30 or not 0 <= retries <= 3:
                 raise ValueError
-            return cls(app, seller, gateway, notify_url, key, verify, timeout, retries)
+            binding = None
+            binding_file = folder / 'merchant_binding.json'
+            if binding_file.exists() or binding_file.is_symlink():
+                record = json.loads(read('merchant_binding.json'))
+                if not isinstance(record, dict) or set(record) != {'verified', 'verified_on', 'app_digest', 'seller_digest'} or record['verified'] is not True:
+                    raise ValueError
+                checked = date.fromisoformat(record['verified_on'])
+                if checked.isoformat() != record['verified_on']:
+                    raise ValueError
+                binding = MerchantBinding(checked, record['app_digest'], record['seller_digest'])
+                if not binding.matches(app, seller):
+                    raise ValueError
+            return cls(app, seller, gateway, notify_url, key, verify, timeout, retries, binding)
         except PaymentError:
             raise
         except (OSError, ValueError, TypeError):
@@ -108,6 +143,8 @@ class PaymentConfig:
         self.verify(canonical(params, notification=True), params.get('sign', ''))
         if params.get('app_id') != self.app_id:
             raise PaymentError('PAYMENT_APP_MISMATCH')
+        if not params.get('seller_id'):
+            raise PaymentError('PAYMENT_MERCHANT_UNAVAILABLE')
         if params.get('seller_id') != self.seller_id:
             raise PaymentError('PAYMENT_MERCHANT_MISMATCH')
 

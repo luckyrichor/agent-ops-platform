@@ -1,0 +1,83 @@
+{
+  "recorded_at": "2026-10-29T19:25:15.823991+08:00",
+  "trust_premise": "Operator confirmed application-to-seller binding; not provider-signed merchant proof",
+  "binding_date": "2026-10-29",
+  "binding_file_mode": "600",
+  "pytest": {
+    "tests": "209",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "77.036"
+  },
+  "ruff": "passed",
+  "strict_mypy": {
+    "status": "passed",
+    "source_files": 27
+  },
+  "browser": "not rerun; frontend unchanged",
+  "capacity": "unverified",
+  "reconciliation": "external bill download unavailable; zero differences unverified",
+  "live_compensation": {
+    "recorded_at": "2026-10-29T19:21:34.197518+08:00",
+    "uses_original_paid_order": true,
+    "binding_verified": true,
+    "verified_on": "2026-10-29",
+    "before": {
+      "order_state": "pending_payment",
+      "payment_state": "pending",
+      "amount_matches": true,
+      "stock": 10,
+      "reserved": 1,
+      "quantity": 1,
+      "capture_events": 0,
+      "manual_binding_events": 0
+    },
+    "after": {
+      "order_state": "paid",
+      "payment_state": "paid",
+      "amount_matches": true,
+      "stock": 9,
+      "reserved": 0,
+      "quantity": 1,
+      "capture_events": 1,
+      "manual_binding_events": 1
+    },
+    "compensation_statuses": [
+      "confirmed",
+      "confirmed",
+      "confirmed",
+      "confirmed",
+      "confirmed"
+    ],
+    "failure_codes": [],
+    "stock_decrement": 1,
+    "reserved_decrement": 1
+  },
+  "live_refund": {
+    "recorded_at": "2026-10-29T19:22:31.763191+08:00",
+    "uses_original_paid_order": true,
+    "refund_state": "succeeded",
+    "repeat_state": "succeeded",
+    "failure_code": null,
+    "order_state": "refunded",
+    "ticket_state": "resolved",
+    "refund_records": 1,
+    "audit_counts": {
+      "PAYMENT_CAPTURED": 1,
+      "PAYMENT_CAPTURED_MANUAL_BINDING": 1,
+      "PAYMENT_CREATED": 1,
+      "REFUND_APPROVED": 1,
+      "REFUND_SUCCEEDED": 1
+    }
+  },
+  "independent_refund_query": {
+    "provider_signature_verified": true,
+    "refund_status": "REFUND_SUCCESS",
+    "amount_matches": true,
+    "order_matches": true,
+    "trade_matches": true,
+    "refund_request_matches": true,
+    "accepted_notification_count": 0
+  }
+}
