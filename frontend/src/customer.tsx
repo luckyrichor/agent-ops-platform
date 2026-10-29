@@ -24,24 +24,71 @@ export function Customer({ account }: { account: Account }) {
   const [view, setView] = useState<View>(
     ["products", "orders", "payment"].includes(initial) ? initial : "chat",
   );
+  const [catalogKeyword, setCatalogKeyword] = useState("");
+  const [productSearch, setProductSearch] = useState("");
+  const [shoppingEnabled, setShoppingEnabled] = useState(false);
+  const [memoryEnabled, setMemoryEnabled] = useState(false);
+  const [guideBudget, setGuideBudget] = useState("2000");
+  const [guideProduct, setGuideProduct] = useState<string | null>(null);
+  useEffect(() => {
+    void api
+      .get<{ catalog_enabled: boolean; memory_enabled: boolean }>(
+        "/v1/commerce/availability",
+      )
+      .then((r) => {
+        setShoppingEnabled(r.catalog_enabled);
+        setMemoryEnabled(r.memory_enabled);
+      })
+      .catch(() => {});
+  }, []);
+  async function forgetMemory() {
+    if (
+      !window.confirm(
+        "删除全部导购记忆？此操作无法撤销。订单和客服记录会保留。",
+      )
+    )
+      return;
+    await run(async () => {
+      const result = await api.raw("/v1/commerce/memory", { method: "DELETE" });
+      const data = (await result.json()) as { status: string };
+      setGuide([
+        data.status === "deleted"
+          ? "全部导购记忆已删除。"
+          : "记忆服务尚未开通。",
+      ]);
+      setGuideProduct(null);
+    });
+  }
   const [paymentsEnabled, setPaymentsEnabled] = useState(false);
   const [paymentMessage, setPaymentMessage] = useState("");
   const [paymentLink, setPaymentLink] = useState("");
   useEffect(() => {
-    void api.get<{enabled: boolean}>("/payments/availability")
-      .then((r) => setPaymentsEnabled(r.enabled)).catch(() => {});
+    void api
+      .get<{ enabled: boolean }>("/payments/availability")
+      .then((r) => setPaymentsEnabled(r.enabled))
+      .catch(() => {});
   }, []);
   async function pay() {
     if (!order || busy) return;
-    setBusy(true); setError("");
+    setBusy(true);
+    setError("");
     try {
-      const r = await api.mutate<{payment_url: string}>(`/orders/${order.id}/payment`, {});
+      const r = await api.mutate<{ payment_url: string }>(
+        `/orders/${order.id}/payment`,
+        {},
+      );
       const url = new URL(r.payment_url);
-      if (url.protocol !== "https:" || !url.hostname.endsWith(".alipaydev.com")) throw new Error();
+      if (url.protocol !== "https:" || !url.hostname.endsWith(".alipaydev.com"))
+        throw new Error();
       setPaymentLink(r.payment_url);
-      setPaymentMessage("请在沙箱收银台完成付款，再刷新我的订单。跳转成功不代表已付款。");
-    } catch (e) { setError(errorText(e)); }
-    finally { setBusy(false); }
+      setPaymentMessage(
+        "请在沙箱收银台完成付款，再刷新我的订单。跳转成功不代表已付款。",
+      );
+    } catch (e) {
+      setError(errorText(e));
+    } finally {
+      setBusy(false);
+    }
   }
   const [error, setError] = useState(""),
     [busy, setBusy] = useState(false);
@@ -136,7 +183,8 @@ export function Customer({ account }: { account: Account }) {
   useEffect(() => {
     if (view === "orders")
       void loadOrders().catch((e) => setError(errorText(e)));
-    if (view === "products")
+    if (view === "products") {
+      setProductSearch("");
       void api
         .get<Page<Product>>("/products?limit=12")
         .then((r) => {
@@ -144,6 +192,7 @@ export function Customer({ account }: { account: Account }) {
           setProductCursor(r.next_cursor || null);
         })
         .catch((e) => setError(errorText(e)));
+    }
   }, [view, loadOrders]);
   async function run(action: () => Promise<void>) {
     if (locked.current) return;
@@ -216,10 +265,11 @@ export function Customer({ account }: { account: Account }) {
     });
   }
   async function guideStream() {
-    if (streaming) return;
+    if (streaming || !draft.trim()) return;
     setStreaming(true);
     setError("");
     setGuide([]);
+    setGuideProduct(null);
     const control = new AbortController();
     streamAbort.current = control;
     try {
@@ -227,9 +277,9 @@ export function Customer({ account }: { account: Account }) {
         method: "POST",
         signal: control.signal,
         body: JSON.stringify({
-          request: draft || "查看流式编排演示",
+          request: draft.trim(),
           category: "kettle",
-          budget_cent: 5000,
+          budget_cent: Math.round(Number(guideBudget) * 100),
           region: "上海",
           run_id: crypto.randomUUID(),
         }),
@@ -250,12 +300,38 @@ export function Customer({ account }: { account: Account }) {
             ?.slice(6)
             .trim();
           if (event === "started")
-            setGuide((x) => [...x, "已建立流式连接，编排演示开始。"]);
-          if (event === "result")
+            setGuide((x) => [...x, "已连接，正在查询商品与库存。"]);
+          if (event === "result") {
+            const data = JSON.parse(
+              frame
+                .split("\n")
+                .filter((x) => x.startsWith("data:"))
+                .map((x) => x.slice(5))
+                .join("\n"),
+            ) as {
+              outcome: string;
+              recommendation: {
+                selected: {
+                  id: string;
+                  title: string;
+                  total_cent: number;
+                } | null;
+              } | null;
+              memory_write_status: string;
+            };
+            if (data.outcome !== "succeeded") throw new Error();
+            const chosen = data.recommendation?.selected;
             setGuide((x) => [
               ...x,
-              "演示执行完成。真实商品检索尚未开通，请到商品浏览自主选购。",
+              chosen
+                ? `${chosen.title} · 含运费 ${money(chosen.total_cent)}`
+                : "未找到符合预算且有库存的商品，请调整关键词或预算。",
+              data.memory_write_status === "succeeded"
+                ? "本次导购偏好已保存。"
+                : "本次未保存导购记忆。",
             ]);
+            if (chosen) setGuideProduct(chosen.id);
+          }
           if (event === "error" || event === "aborted") throw new Error();
         }
         if (chunk.done) break;
@@ -299,7 +375,9 @@ export function Customer({ account }: { account: Account }) {
             onClick={() => navigate(key)}
           >
             {label}
-            {key === "payment" && <small>{paymentsEnabled ? "沙箱" : "尚未开通"}</small>}
+            {key === "payment" && (
+              <small>{paymentsEnabled ? "沙箱" : "尚未开通"}</small>
+            )}
           </button>
         ))}
       </nav>
@@ -352,7 +430,7 @@ export function Customer({ account }: { account: Account }) {
                   )}
                   {guide.length > 0 && (
                     <section className="guide-result" aria-label="流式演示结果">
-                      <b>流式编排演示</b>
+                      <b>导购结果</b>
                       {guide.map((line, i) => (
                         <p key={i}>{line}</p>
                       ))}
@@ -410,17 +488,62 @@ export function Customer({ account }: { account: Account }) {
                 <section className="panel aside-card">
                   <span className="eyebrow">能力状态</span>
                   <h3>导购功能</h3>
-                  <p>真实商品检索、记忆个性化</p>
-                  <span className="badge badge-unavailable">尚未开通</span>
+                  <p>按关键词和预算查询商品，核对当前可用库存与运费。</p>
+                  <span
+                    className={
+                      shoppingEnabled ? "badge" : "badge badge-unavailable"
+                    }
+                  >
+                    {shoppingEnabled ? "已开通" : "尚未开通"}
+                  </span>
                   <p className="muted small">
-                    可查看流式编排演示。演示使用固定工具，不生成可购买的真实商品推荐。
+                    在问题输入框填写商品关键词。推荐时的价格和库存以下单时再次核对为准。
                   </p>
+                  <label>
+                    导购预算（元）
+                    <input
+                      aria-label="导购预算（元）"
+                      type="number"
+                      min="1"
+                      max="1000000"
+                      value={guideBudget}
+                      onChange={(e) => setGuideBudget(e.target.value)}
+                    />
+                  </label>
                   <button
                     className="secondary full"
                     onClick={() => void guideStream()}
-                    disabled={streaming}
+                    disabled={
+                      streaming ||
+                      !shoppingEnabled ||
+                      !Number.isFinite(Number(guideBudget)) ||
+                      Number(guideBudget) <= 0
+                    }
                   >
-                    {streaming ? "流式输出中…" : "查看流式演示"}
+                    {streaming ? "正在查询…" : "开始导购"}
+                  </button>
+                  {guideProduct && (
+                    <button
+                      className="secondary full"
+                      onClick={() =>
+                        void run(async () => {
+                          setItem(
+                            await api.get<Product>("/products/" + guideProduct),
+                          );
+                          setQuantity(1);
+                          navigate("products");
+                        })
+                      }
+                    >
+                      查看推荐商品
+                    </button>
+                  )}
+                  <button
+                    className="secondary full"
+                    disabled={!memoryEnabled || streaming || busy}
+                    onClick={() => void forgetMemory()}
+                  >
+                    删除全部导购记忆
                   </button>
                 </section>
                 <section className="panel aside-card">
@@ -461,9 +584,34 @@ export function Customer({ account }: { account: Account }) {
                 <p className="muted">读取商品库中的实时价格与可用库存。</p>
               </div>
             </div>
-            <Notice>
-              智能商品检索尚未开通。您可以浏览商品、查看详情并下单。
-            </Notice>
+            <form
+              className="panel"
+              onSubmit={(event) => {
+                event.preventDefault();
+                void run(async () => {
+                  const search =
+                    "/products/search?limit=12&available_only=true&query=" +
+                    encodeURIComponent(catalogKeyword.trim());
+                  const result = await api.get<Page<Product>>(search);
+                  setProducts(result.items);
+                  setProductCursor(result.next_cursor || null);
+                  setProductSearch(search);
+                });
+              }}
+            >
+              <label>
+                商品关键词
+                <input
+                  aria-label="商品关键词"
+                  maxLength={2000}
+                  value={catalogKeyword}
+                  onChange={(event) => setCatalogKeyword(event.target.value)}
+                />
+              </label>
+              <button className="secondary" disabled={busy}>
+                搜索有货商品
+              </button>
+            </form>
             <div className="product-grid">
               {products.map((p) => (
                 <article className="panel product-card" key={p.id}>
@@ -505,7 +653,9 @@ export function Customer({ account }: { account: Account }) {
                 onClick={() =>
                   void run(async () => {
                     const r = await api.get<Page<Product>>(
-                      "/products?limit=12&cursor=" + productCursor,
+                      (productSearch
+                        ? productSearch + "&offset="
+                        : "/products?limit=12&cursor=") + productCursor,
                     );
                     setProducts((x) => [...x, ...r.items]);
                     setProductCursor(r.next_cursor || null);
@@ -730,14 +880,43 @@ export function Customer({ account }: { account: Account }) {
           <section className="panel unavailable-page">
             <span className="eyebrow">PAYMENT</span>
             <h1>{paymentsEnabled ? "订单沙箱支付" : "支付尚未开通"}</h1>
-            {paymentsEnabled ? <>
-              <p>仅使用沙箱买家。请选择自己的待支付订单，付款结果以服务端核对为准。</p>
-              <p>{order ? `当前订单 #${order.id} · ${money(order.total_cents)}` : "请先到我的订单选择一张订单。"}</p>
-              <button className="primary" disabled={busy || !order || order.status !== "pending_payment"} onClick={() => void pay()}>生成沙箱支付链接</button>
-              {paymentLink && <a className="primary" href={paymentLink} target="_blank" rel="noopener noreferrer">打开沙箱收银台</a>}
-              {paymentMessage && <p role="status">{paymentMessage}</p>}
-            </> : <p>当前未配置支付服务，不会创建支付或模拟成功。</p>}
-            <button className="secondary" onClick={() => navigate("orders")}>返回我的订单</button>
+            {paymentsEnabled ? (
+              <>
+                <p>
+                  仅使用沙箱买家。请选择自己的待支付订单，付款结果以服务端核对为准。
+                </p>
+                <p>
+                  {order
+                    ? `当前订单 #${order.id} · ${money(order.total_cents)}`
+                    : "请先到我的订单选择一张订单。"}
+                </p>
+                <button
+                  className="primary"
+                  disabled={
+                    busy || !order || order.status !== "pending_payment"
+                  }
+                  onClick={() => void pay()}
+                >
+                  生成沙箱支付链接
+                </button>
+                {paymentLink && (
+                  <a
+                    className="primary"
+                    href={paymentLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                  >
+                    打开沙箱收银台
+                  </a>
+                )}
+                {paymentMessage && <p role="status">{paymentMessage}</p>}
+              </>
+            ) : (
+              <p>当前未配置支付服务，不会创建支付或模拟成功。</p>
+            )}
+            <button className="secondary" onClick={() => navigate("orders")}>
+              返回我的订单
+            </button>
           </section>
         )}
       </main>

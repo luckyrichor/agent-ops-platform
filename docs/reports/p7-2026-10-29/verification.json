@@ -1,0 +1,88 @@
+{
+  "date": "2026-10-29",
+  "stage": "P7 implemented, awaiting user acceptance",
+  "identity_gate": {
+    "passed_before_search_implementation": 5,
+    "seconds": 10.28,
+    "source": "fixed SDK/API + non-owner RLS PostgreSQL"
+  },
+  "tests": {
+    "pytest_passed": 231,
+    "pytest_warnings": 2,
+    "pytest_seconds": 110.86,
+    "ruff": "passed",
+    "strict_mypy_source_files": 31,
+    "route_fixture_passed": 47,
+    "frontend_typecheck_and_build": "passed",
+    "p7_playwright_passed": 2,
+    "p7_playwright_seconds": 7.8,
+    "p5_regression": "passed; isolated fixture, not P7 data acceptance"
+  },
+  "data": {
+    "users": 1000000,
+    "products": 200000,
+    "identities": 2,
+    "active_tenants": 1
+  },
+  "migration": "0008_catalog_search",
+  "cache": {
+    "dataset_products": 200000,
+    "modes": [
+      "off",
+      "on"
+    ],
+    "same_business_results": true,
+    "search_page_items": 24,
+    "adapter": "passthrough only; no S3 caching or performance claim"
+  },
+  "runtime": {
+    "product_count": 200000,
+    "identities_before": 0,
+    "real_catalog_source": "postgresql-catalog",
+    "matching_products_in_page": 10,
+    "guide_succeeded": true,
+    "memory_write_succeeded": true,
+    "replay_same_memory": true,
+    "other_customer_cannot_read": true,
+    "stream_result": true,
+    "delete_and_old_operation_rejected": true,
+    "identity_rows_after": 2,
+    "active_tenants_after": 1
+  },
+  "backup": {
+    "p2_products": 200000,
+    "backup_path": ".local/p7/p2-before-p7.dump",
+    "backup_bytes": 301445708,
+    "backup_mode": "600",
+    "keys_mode": "600",
+    "initial_customer_tenants": 0,
+    "tenant_growth_cost": "unverified"
+  },
+  "deployment": {
+    "web": "127.0.0.1:5175",
+    "api": "127.0.0.1:18885",
+    "memory_api": "127.0.0.1:18886",
+    "memory_db": "127.0.0.1:55435",
+    "payment_entry": "inactive/disabled; no listeners",
+    "public_ports_opened": false
+  },
+  "memory_contract_document_commit": "53cba0f",
+  "limits": {
+    "tenant_count_growth_cost": "unverified",
+    "cache": "passthrough interface only; S3 unimplemented",
+    "capacity_and_rate_limits": "unverified",
+    "backup_restore": "unverified",
+    "chinese_semantic_search": "not implemented; PostgreSQL lexical tokens only",
+    "later_stages": "not started"
+  },
+  "screenshots": [
+    ".local/p7/playwright-final/screenshots/p7-guide.png",
+    ".local/p7/playwright-final/screenshots/p7-real-product.png",
+    ".local/p7/playwright-final/screenshots/p7-forgotten.png"
+  ],
+  "privacy": {
+    "private_files_mode": "600",
+    "private_dirs_mode": "700",
+    "credential_log_matches": 0
+  }
+}

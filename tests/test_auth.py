@@ -70,11 +70,13 @@ MATRIX = [
     ("POST", "/orders", {"lines": [{"product_id": 1, "quantity": 1}]},
      {"Idempotency-Key": "matrix"}, {"customer"}),
     ("POST", "/orders/1/cancel", {"expected_revision": 1}, {}, {"customer"}),
+    ("DELETE", "/v1/commerce/memory", None, {}, {"customer"}),
+    ("GET", "/v1/commerce/availability", None, {}, {"customer"}),
     ("GET", "/admin/accounts", None, {}, {"admin"}),
     ("POST", "/admin/accounts/999/status", {"status": "active"}, {}, {"admin"}),
 ]
 PUBLIC = {("POST", "/auth/login"), ("POST", "/auth/refresh"),
-          ("GET", "/products"), ("GET", "/products/{product_id}")}
+          ("GET", "/products"), ("GET", "/products/search"), ("GET", "/products/{product_id}")}
 
 
 @pytest.fixture

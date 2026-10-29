@@ -16,6 +16,7 @@ from agent_ops.auth import (
     TokenPair,
     unauthorized,
 )
+from agent_ops.catalog_search import CatalogQuery, CatalogSearch
 from agent_ops.commerce_backend import CommerceBackend, CommerceConflict, OrderLine, PlaceOrder
 from agent_ops.support_api import BIGINT, Guard, Page, commerce_required, owner_id
 
@@ -135,7 +136,7 @@ def orders_router(commerce: CommerceBackend | None, *, customer: Guard) -> APIRo
     return router
 
 
-def products_router(commerce: CommerceBackend | None) -> APIRouter:
+def products_router(commerce: CommerceBackend | None, catalog: CatalogSearch | None = None) -> APIRouter:
     """P5 read-only exposure of the existing real PG catalog; no semantic search."""
     router = APIRouter(prefix="/products")
 
@@ -144,6 +145,21 @@ def products_router(commerce: CommerceBackend | None) -> APIRouter:
                        cursor: Annotated[int, Query(ge=0, le=BIGINT)] = 0) -> Page:
         items = await commerce_required(commerce).products(after=cursor, limit=limit)
         return Page(items=items, next_cursor=str(items[-1]["id"]) if len(items) == limit else None)
+
+    @router.get("/search", response_model=Page)
+    async def search(query: str = "", category_id: int | None = None,
+                     min_price_cent: int = 0, max_price_cent: int = 2**63-1,
+                     available_only: bool = True, limit: int = 24, offset: int = 0) -> Page:
+        from pydantic import ValidationError
+        if catalog is None:
+            raise HTTPException(503, "CATALOG_NOT_CONFIGURED")
+        try:
+            filters = CatalogQuery(query=query, category_id=category_id, min_price_cent=min_price_cent,
+                max_price_cent=max_price_cent, available_only=available_only, limit=limit, offset=offset)
+        except ValidationError:
+            raise HTTPException(422, "INVALID_SEARCH_FILTERS") from None
+        items = await catalog.search(filters)
+        return Page(items=items, next_cursor=str(offset+limit) if len(items)==limit else None)
 
     @router.get("/{product_id}")
     async def product(product_id: Annotated[int, Path(gt=0, le=BIGINT)]) -> dict[str, Any]:

@@ -1,8 +1,9 @@
 # agent-ops-platform
 
-最后更新：2026-10-27；Codex；当前能力以本仓库提交及下列验收记录为准。
+最后更新：2026-10-29；Codex；当前能力以本仓库提交及验收证据为准。
 
-当前：P4 已验收并提交推送 `1b344ab`。P5 客户网页与人工工作台已完成，165 项后端测试、前端类型/构建及 5 项 Playwright 通过；等待 P5 验收，P6 未开始。本轮 P5 改动尚未提交推送。见 [P5 交付](docs/reports/p5-2026-10-27/delivery.md) 与 [本机启动、SSH 转发和截图](docs/p5-frontend.md)。
+当前：P6已验收并停用公网支付入口。P7已实现P2二十万商品的PostgreSQL全文/结构过滤、真实价格库存导购、顾客独立memory身份和整租户删除，待用户验收。pytest231项通过，前端类型/构建及P2浏览器验收见[运行与限制](docs/p7-shopping.md)和[交付证据](docs/reports/p7-2026-10-29/verification.json)。缓存只预留开关及透传适配器，租户数量增长开销未验证。
+
 
 W4 M1 骨架与电商多 Agent 编排最小闭环已实现。Python 3.12 + FastAPI；确定性规划器将请求分为 catalog、pricing、shipping、recommendation 四个角色任务，依赖校验后分派，pricing/shipping 并发，最终汇总预算内推荐。不同角色是代码中的独立 handler。现已增加可选真实 LLM 规划器，已使用用户开通的 Doubao-Seed-2.1-lite 完成初验及30次重复规划工程评测，详见 [接入与验收](docs/llm-planner.md)。
 
@@ -20,9 +21,10 @@ HTTP：POST /v1/commerce/runs，JSON 输入 `request`、`category`、`budget_cen
 
 任务失败以错误码报告，下游 blocked，其他独立角色保留结果；角色 5 秒超时，调用者取消向正在执行的 handler 传播。没有符合预算商品时成功返回 selected=null 与明确 reason_code。
 
-M2 官方 memory SDK 集成与 M3 SSE/背压/取消已通过本地自动验收；W6 维护接入检索 SDK。P3 后 HTTP 导购必须先以 customer 登录；平台令牌不会转发到 agent-memory。现有 memory 协议不支持服务凭据加平台用户 ID，因此 HTTP 入口暂不调用记忆，状态为 not_configured；P7 前需解决，详见 docs/auth.md。底层独立 SDK 集成测试仍保留。SSE 入口 POST /v1/commerce/stream。完整协议、运行与验证见 [docs/memory-streaming.md](docs/memory-streaming.md)。
+M2 memory SDK、M3 SSE/背压/取消与后续认证、人工工作台和支付阶段已实现。PG模式HTTP导购从顾客登录身份映射专用memory租户，使用专用RS256短期令牌，平台JWT不外传；缺配置时not_configured。SSE入口POST /v1/commerce/stream，真实导购范围和删除语义以[P7手册](docs/p7-shopping.md)为准；历史流式协议见[原始说明](docs/memory-streaming.md)。
 
-覆盖边界：本地固定商品/运费工具；支持确定性及受约束 LLM 计划，Doubao-Seed-2.1-lite 已通过 3 项真实调用初验，不声称自由规划或生产目录/订单能力。没有持久 run 存储、生产身份服务或分布式 worker；M4 trace调用树本地验收通过，见 [调用树](docs/call-tree.md)，TX 已部署持久化 Jaeger/OTLP 后端，见 [部署与访问](docs/tracing-backend.md)；跨服务传播未部署。M5评测/客服子方向尚未完成。写幂等仅覆盖 memory 写入，不保证所有工具 exactly-once。
+覆盖边界：PG导购读取真实业务表中的P2合成商品/库存，不冒称真实商家分布；固定四角色图可选受约束规划器，不声称自由规划或模型语义搜索。记忆写入操作/结果有持久幂等，未实现分布式worker或P8评测集；跨服务追踪传播未部署。历史CLI/内存基线保留固定商品演示，冻结B0/B1结果不改写。
+
 
 对应岗位 05/07/10/11/14，另含 08 客服子方向；这些是目标关联，不代表单次演示覆盖完整岗位要求。memory 通过独立 HTTP API 集成，仅安装/导入其 SDK、契约与领域类型。
 

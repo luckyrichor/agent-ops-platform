@@ -7,6 +7,7 @@ import httpx
 import pytest
 from alembic import command
 from alembic.config import Config
+from alembic.script import ScriptDirectory
 from opentelemetry.trace import get_tracer
 from sqlalchemy import create_engine, text
 from sqlalchemy.engine import make_url
@@ -787,7 +788,7 @@ def test_workbench_migration_roundtrip_and_claimed_downgrade_guard():
             with pytest.raises(DBAPIError, match="release claimed tickets"):
                 command.downgrade(cfg, "0004_auth")
             with engine.begin() as c:
-                assert c.scalar(text("SELECT version_num FROM alembic_version")) == "0006_payments"
+                assert c.scalar(text("SELECT version_num FROM alembic_version")) == ScriptDirectory.from_config(cfg).get_current_head()
                 c.execute(
                     text(
                         "UPDATE support.tickets SET state='waiting_human',assigned_account_id=NULL,lease_expires_at=NULL WHERE ticket_id=:id"
@@ -806,7 +807,7 @@ def test_workbench_migration_roundtrip_and_claimed_downgrade_guard():
                 )
             command.upgrade(cfg, "head")
             with engine.connect() as c:
-                assert c.scalar(text("SELECT version_num FROM alembic_version")) == "0006_payments"
+                assert c.scalar(text("SELECT version_num FROM alembic_version")) == ScriptDirectory.from_config(cfg).get_current_head()
                 assert (
                     c.scalar(
                         text("SELECT state FROM support.tickets WHERE ticket_id=:id"), {"id": tid}

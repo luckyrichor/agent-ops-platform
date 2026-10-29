@@ -10,7 +10,7 @@ Agent 应用与可观测评测平台。电商场景的多 Agent 任务拆解、�
 
 三个月求职计划六项目之一（原编号 ③），对应岗位 **05、07、10、11、14**，另含 **08** 作为子方向。总计划见 [workplan-docs](https://github.com/luckyrichor/workplan-docs)，岗位原文以那里的 `岗位要求原文.md` 为唯一依据。
 
-**当前状态：P6 已获用户验收，用户确认删除本轮云端 TCP 18080 规则。独立入口已 inactive/disabled、18080/18081 无监听；退款后补偿不依赖支付查单的保护及测试已补。P7 已授权但有前置闸门：docs/p7-memory-identity-proposal.md 仅身份方案，等待确认后才实现；使用 P2 的20万商品，不用六商品演示集。**
+**当前状态：P7已完成待用户验收。P2二十万商品全文/结构过滤与真实价格库存编排、懒创建顾客memory租户、300秒专用委托身份、整租户删除已实现；先通过5项隔离闸门，再做检索。最终pytest231、ruff、strict mypy31文件、P7 Playwright2项/原P5前端回归通过。仅回环服务；P6公网入口仍停用。租户增长开销/容量未验证，缓存仅透传接口，不进入S3/P8。**
 
 ## 分工模式：偏产出
 
@@ -438,3 +438,30 @@ payments.py 的 compensate 对已退款状态/成功退款记录直接返回 ref
 身份只读核对固定SDK1e2730c及相邻2fae08b：RS256 UUID身份，单条记忆路径按租户查，幂等为租户+key/摘要且有效期7天。提出每顾客独立租户与用户UUID映射、后端专用短期memory令牌、现有幂等/跨期防重放方案；不转发平台令牌，不用共享commerce身份。docs/p7-memory-identity-proposal.md 为待确认方案，没有修改agent-memory、配置或P7功能。确认后同步双方契约，先做隔离验收，再接P2二十万商品的全文/结构过滤、编排真实库存与缓存开关一致性；不进入S3优化实验。
 
 最终pytest216通过（2既有警告、91.33秒），ruff/strict mypy28文件通过、固定规则47/47；公开证据reports/p6-2026-10-29/closeout.json。回环API已重启加载保护，入口仍停止。本轮前端未改，Playwright未重跑；容量/限频未压测、当日外部账单未验证、退款后支付查单被拒等限制完整保留。之后报告不得笼统写“对账零差异”。飞书已同步：P6验收收尾、216项测试、四项限制与P7身份待确认设计已追加开发记录 https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf ，codex profile / --as user；父节点及含10b58ef的正文回查通过。实现/测试与方案已推送10b58ef。
+
+
+## 2026-10-29 P7 交接（Codex）
+
+### 已完成与依据
+
+依据§6 P7、已批准docs/p7-memory-identity-proposal.md及用户补充懒创建、先隔离测试、分钟级令牌、整租户删除和P2二十万商品要求实现。先5项隔离/删除闸门通过，才写检索；最终pytest231通过（2既有JUnit警告、110.86秒）、ruff、strict mypy31源文件通过、固定规则47/47；P7真实数据Playwright2项（7.8秒）、原P5夹具回归通过，前端类型/构建通过。证据docs/reports/p7-2026-10-29，原件.local/p7；失败返工见progress本轮条目。
+
+关键文件：customer_memory.py（身份、令牌、独立提交幂等、删除管理适配器）；catalog_search.py（FTS/结构过滤及缓存透传接口）；shopping.py（真实四角色与记忆读写）；0007_customer_memory、0008_catalog_search；customer.tsx、p7.spec.ts。新增接口/运行/删除/轮换细节见docs/p7-shopping.md。CLAUDE.md继续只引用本文件。
+
+P2库现0008，百万用户/二十万商品保留；备份.local/p7/p2-before-p7.dump 301445708字节/600、pg_restore --list可读，恢复未验证。身份只按实际顾客使用创建，删除后不预建新租户。不能运行旧P6临时恢复脚本或重导P2来重建本阶段。
+
+### 服务与安全
+
+agent-ops-p7-memory容器/同名持久卷（回环55435）专属本项目；不要删除卷或连到memory评测库。agent-ops-customer-memory.service回环18886、agent-ops-p7-api.service回环18885、agent-ops-p7-web.service回环5175已运行，均仅127.0.0.1。scripts/p7-services.py可安装/激活，其他启停命令和用户电脑SSH转发见P7手册。P6入口仍inactive/disabled，18080/18081无监听，不推断或改变云规则。
+
+私有环境.local/p7/application.env、签发密钥memory-signing.pem、公钥memory-public.pem、DB准备元数据runtime-private.json，目录700/文件600，不打印/提交。默认JWT300秒，仅memory受众和用户/租户read/write权限，不转发平台令牌。轮换需维护窗口停止这两个API、更换专用密钥对、先起memory再起业务API，保留映射；不修改其他memory服务公钥。未登录导购/删除401，缺配置not_configured，配置不全拒启动。
+
+删除管理适配器仅固定1e2730c schema/专用库，非owner/NOBYPASSRLS清九表，不改memory业务API。先deleting门控，失败阻断可重试；成功清平台操作正文/结果/摘要，保留无正文旧run_id拒绝标记，下次新导购才分配新UUID。并发调用持身份行NO KEY UPDATE锁，操作FK指commerce.users以避免独立提交自阻塞。升级schema/加入后台worker前必须重验删除覆盖与并发。
+
+### 续接与限制
+
+等待用户验收P7，不进入P8或S3。缓存off直读/on透传，只留接口，无缓存性能结论。实际PG全文词元过滤不等于中文语义理解；只在前100检索候选中选预算内最低总价，订单提交仍再核价/库存。租户数量增长开销、容量/限频、备份恢复均未验证；P6账单/退款后支付查询限制继续保留，报告不写笼统“对账零差异”。
+
+双方契约已同步：agent-memory/docs/integrations/agent-ops-customer-memory.md已单独推送53cba0f；该仓库原有大量其他未提交评测内容未纳入提交，未改其API/配置/运行任务。调用方固定SDK与独立实例仍1e2730c，不随邻接仓库HEAD变更升级。
+
+飞书待同步：2026-10-29 P7实现、测试、部署与限制（本轮提交后追加本项目开发记录）。

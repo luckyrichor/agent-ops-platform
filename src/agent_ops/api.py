@@ -4,6 +4,7 @@ import os
 import secrets
 from collections.abc import AsyncIterator
 from contextlib import asynccontextmanager
+from typing import Annotated
 
 from agent_memory.sdk import MemoryAPIError
 from fastapi import Depends, FastAPI, HTTPException, Request
@@ -28,13 +29,16 @@ from agent_ops.auth import (
     role_guard,
 )
 from agent_ops.auth_postgres import PostgresAccountStore
+from agent_ops.catalog_search import CatalogSearch
 from agent_ops.commerce_backend import CommerceBackend
+from agent_ops.customer_memory import CustomerMemory, CustomerMemoryError, memory_router
 from agent_ops.memory import MemoryCommerce
 from agent_ops.models import CommerceRequest, RunResult
 from agent_ops.orchestrator import Dispatcher
 from agent_ops.payment_api import from_env, payment_router
 from agent_ops.payments import Payments
 from agent_ops.planner import Planner, PlanningError, planner_from_env
+from agent_ops.shopping import Shopping
 from agent_ops.streaming import stream_run
 from agent_ops.support import SupportService
 from agent_ops.support_api import SupportBackend, support_router
@@ -130,6 +134,10 @@ def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = N
                     await payments.aclose()
                 if commerce is not None:
                     await commerce.aclose()
+                if customer_memory is not None:
+                    await customer_memory.aclose()
+                if catalog is not None:
+                    await catalog.aclose()
                 if dispatcher is None:
                     await dispatch.aclose()
 
@@ -160,6 +168,9 @@ def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = N
         secret = secret or secrets.token_urlsafe(48)
     else:
         raise ValueError("unknown support backend")
+    customer_memory = CustomerMemory.from_env(url) if commerce is not None else None
+    catalog = CatalogSearch(url, os.environ.get("AGENT_OPS_CATALOG_CACHE", "off") == "on") if commerce is not None else None
+    shopping = Shopping(catalog, dispatch, plan, customer_memory) if catalog is not None else None
     auth = AuthService(store, TokenCodec(secret))
     signed_in = principal_dependency(auth.codec)
     if baseline_without_auth:
@@ -177,8 +188,14 @@ def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = N
                                       customer=customer, staff=staff, admin=role_guard(signed_in, "admin"),
                                       signed_in=signed_in))
     app.include_router(orders_router(commerce, customer=customer))
-    app.include_router(products_router(commerce))
+    app.include_router(products_router(commerce, catalog))
     app.include_router(payment_router(payments, customer=customer, staff=staff))
+    @app.get("/v1/commerce/availability")
+    async def shopping_availability(_: Annotated[Principal, Depends(customer)]) -> dict[str, bool]:
+        return {"catalog_enabled": shopping is not None, "memory_enabled": customer_memory is not None}
+
+    app.state.customer_memory = customer_memory
+    app.include_router(memory_router(customer_memory, customer=customer))
     app.state.payments = payments
     app.include_router(admin_router(auth, admin=role_guard(signed_in, "admin")))
 
@@ -200,28 +217,38 @@ def create_app(dispatcher: Dispatcher | None = None, planner: Planner | None = N
                             "trace_id": request.state.trace_id,
                                      "trace_sampled": request.state.trace_sampled})
 
-    async def execute(body: CommerceRequest, request: Request) -> RunResult:
-        # agent-memory only accepts its own RS256 user JWT (UUID sub/tenant), not a
-        # service credential + platform bigint user ID. P7 gap: never forward platform tokens.
+    async def execute(body: CommerceRequest, request: Request, principal: Principal) -> RunResult:
         try:
-            return await MemoryCommerce(dispatch, None, plan).run(body)
+            if shopping is None:
+                return await MemoryCommerce(dispatch, None, plan).run(body)
+            assert principal.customer_user_id is not None
+            with hop(dispatch.tracer, "commerce.request") as current:
+                result = await shopping.run(body, principal.customer_user_id)
+                context = current.get_span_context()
+                result.trace_id = f"{context.trace_id:032x}" if context.is_valid else None
+                result.trace_sampled = context.trace_flags.sampled
+                return result
         except MemoryAPIError as error:
-            raise HTTPException(error.status_code, error.code) from error
+            raise HTTPException(error.status_code, error.code) from None
+        except CustomerMemoryError as error:
+            raise HTTPException(503 if str(error)=='MEMORY_DELETION_IN_PROGRESS' else 409, str(error)) from None
 
-    @app.post("/v1/commerce/stream", dependencies=[Depends(customer)])
-    async def stream(body: CommerceRequest, request: Request) -> StreamingResponse:
+    @app.post("/v1/commerce/stream")
+    async def stream(body: CommerceRequest, request: Request,
+                     principal: Annotated[Principal, Depends(customer)]) -> StreamingResponse:
         async def events() -> AsyncIterator[str]:
-            async for event in stream_run(lambda: execute(body, request),
+            async for event in stream_run(lambda: execute(body, request, principal),
                                           request.is_disconnected,
                                           trace_id=request.state.trace_id):
                 yield event
         return StreamingResponse(events(), media_type="text/event-stream",
                                  headers={"Cache-Control": "no-cache"})
 
-    @app.post("/v1/commerce/runs", response_model=RunResult, dependencies=[Depends(customer)])
-    async def run(body: CommerceRequest, request: Request) -> RunResult:
+    @app.post("/v1/commerce/runs", response_model=RunResult)
+    async def run(body: CommerceRequest, request: Request,
+                  principal: Annotated[Principal, Depends(customer)]) -> RunResult:
         try:
-            return await execute(body, request)
+            return await execute(body, request, principal)
         except PlanningError as error:
             raise HTTPException(503, error.code) from None
 

@@ -48,7 +48,7 @@ uv run python -m agent_ops.demo_accounts          # 按名单建账号；数据�
 
 注册接口；登录失败限流（P12）；/ws；工作台队列、抢单、回复（P4）；管理员统计（P4）；客服按工单查看关联订单（P4）；前端令牌存放方式（P5）。support 的“查订单”路由仍用 demo-100/demo-200 固定夹具，不校验订单归属，由 P4 改读真实订单表并按归属过滤。
 
-## P3 导购与记忆边界（P7 前缺口）
+## P3 导购与记忆边界（历史，P7 已更新）
 
 已核对安装 SDK 固定提交 `1e2730c0a0b6a25f2ee9f102dadcd3ca8288a474` 和相邻仓库提交 `2fae08bdb524497070b6cd8ab5cdbaabfff5ced1` 的 `src/agent_memory/api/auth.py`：均只由 RS256 JWT 的 tenant_id/sub 提取 UUID，未提供服务凭据加平台 bigint 用户 ID 的协议。平台 HS256 访问令牌的受众和签发方属于平台，禁止发给其他服务，也不自行把 bigint 填进 UUID 或用共享用户规避隔离。
 
@@ -76,3 +76,8 @@ uv run python scripts/serve.py --backend postgres --env-file .local/p2-applicati
 ## P4 已实现的客服闭环（2026-10-27）
 
 本节更新前文 P3 阶段的未实现状态。当前产品 PG 工单列表使用 OFFSET；/workbench/tickets/{id}/resolve 及旧 /support 别名均必须先 claim、仅领取者未过期可操作，带 Idempotency-Key。staff 直接订单接口继续 403；仅工单内 GET /workbench/tickets/{id}/order 查看该单已关联且顾客归属一致的订单，逐次审计并返回新版本。队列、回复、退回、租约、SLA、WebSocket 和 admin/support-stats 已实现，接口明细在 [P4](p4-support.md)。P5 页面、P6 退款和 P12 登录限流仍未实现，记忆 P7 前缺口未变。P3 旧基准行为仅在 memory/legacy_support 显式模式保留，不代表产品跳过 claimed 状态。
+
+
+## 2026-10-29 P7 顾客专用 memory 身份
+
+用户已批准原P7缺口方案。PG产品导购现按顾客实际使用懒创建独立memory租户/用户UUID，后端专用RS256令牌默认300秒、独立issuer/audience，不发送平台JWT。固定API的单条/版本/生命周期、search/context跨顾客均由真实RLS测试验证。未登录401，缺配置not_configured；DELETE /v1/commerce/memory仅删除登录顾客自己的租户，未登录401、缺配置返回not_configured。配置、删除门控/重试、密钥轮换和代价见[p7-shopping.md](p7-shopping.md)。原P3/P4段落中的“未实现”均为各阶段历史，不覆盖本更新。

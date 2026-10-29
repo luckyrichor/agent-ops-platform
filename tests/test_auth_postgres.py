@@ -9,6 +9,7 @@ import httpx
 import pytest
 from alembic import command
 from alembic.config import Config
+from alembic.script import ScriptDirectory
 from sqlalchemy import create_engine, text
 from sqlalchemy.engine import make_url
 from testcontainers.community.postgres import PostgresContainer
@@ -299,7 +300,7 @@ def test_auth_migration_downgrade_and_reupgrade():
                 WHERE table_schema='support' AND column_name='customer_user_id'""")) == 0
         command.upgrade(config, "head")
         with engine.connect() as c:
-            assert c.scalar(text("SELECT version_num FROM alembic_version")) == "0006_payments"
+            assert c.scalar(text("SELECT version_num FROM alembic_version")) == ScriptDirectory.from_config(config).get_current_head()
         engine.dispose()
 
 

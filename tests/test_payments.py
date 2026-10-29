@@ -9,6 +9,7 @@ from uuid import uuid4
 
 import httpx
 import pytest
+from alembic.script import ScriptDirectory
 from cryptography.hazmat.primitives import hashes, serialization
 from cryptography.hazmat.primitives.asymmetric import padding, rsa
 from opentelemetry.trace import get_tracer
@@ -352,7 +353,7 @@ async def test_downgrade_refuses_financial_records(payment, database):
     def revision():
         with database[1].connect() as c:
             return c.scalar(text('SELECT version_num FROM alembic_version'))
-    assert await asyncio.to_thread(revision) == '0006_payments'
+    assert await asyncio.to_thread(revision) == ScriptDirectory.from_config(cfg).get_current_head()
 
 
 async def test_gateway_verifies_original_encoded_response_bytes(keys):

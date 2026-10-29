@@ -9,6 +9,7 @@ import httpx
 import pytest
 from alembic import command
 from alembic.config import Config
+from alembic.script import ScriptDirectory
 from opentelemetry.trace import get_tracer
 from sqlalchemy import create_engine, text
 from sqlalchemy.engine import make_url
@@ -272,5 +273,5 @@ def test_migration_downgrade_and_reupgrade():
                 command.upgrade(config, target)
         engine = create_engine(pg.get_connection_url())
         with engine.connect() as conn:
-            assert conn.scalar(text("SELECT version_num FROM alembic_version")) == "0006_payments"
+            assert conn.scalar(text("SELECT version_num FROM alembic_version")) == ScriptDirectory.from_config(config).get_current_head()
         engine.dispose()

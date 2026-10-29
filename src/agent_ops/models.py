@@ -12,6 +12,9 @@ class CommerceRequest(BaseModel):
     region: str = Field(min_length=1, max_length=100)
     run_id: UUID = Field(default_factory=uuid4)
     memory_id: UUID | None = None
+    category_id: int | None = Field(default=None, gt=0, le=2**63-1)
+    min_price_cent: int = Field(default=0, ge=0, le=2**63-1)
+    attributes: dict[str, str] = Field(default_factory=dict, max_length=20)
 
 
 class Task(BaseModel):

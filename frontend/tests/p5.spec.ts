@@ -91,15 +91,23 @@ test("顾客提问到实时人工回复和解决，含重连及完整操作记�
   await otherAgent.getByTestId("queue-ticket").first().click();
   await agent.getByRole("button", { name: "领取工单", exact: true }).click();
   await expect(agent.getByLabel("回复顾客", { exact: true })).toBeEnabled();
-  await expect(agent.getByRole("button", { name: "领取工单", exact: true })).toHaveCount(0);
-  await expect(agent.getByRole("button", { name: "已由我领取", exact: true })).toBeDisabled();
+  await expect(
+    agent.getByRole("button", { name: "领取工单", exact: true }),
+  ).toHaveCount(0);
+  await expect(
+    agent.getByRole("button", { name: "已由我领取", exact: true }),
+  ).toBeDisabled();
   await expect(
     customer.getByText("客服处理中", { exact: true }).first(),
   ).toBeVisible();
-  const heldByOther = otherAgent.getByRole("button", { name: /客服 #\d+ 持有/ });
+  const heldByOther = otherAgent.getByRole("button", {
+    name: /客服 #\d+ 持有/,
+  });
   await expect(heldByOther).toBeVisible();
   await expect(heldByOther).toBeDisabled();
-  await expect(otherAgent.getByLabel("回复顾客", { exact: true })).toBeDisabled();
+  await expect(
+    otherAgent.getByLabel("回复顾客", { exact: true }),
+  ).toBeDisabled();
   await otherAgent.close();
   // Disconnect only this customer page's WebSocket; API and the second tab stay connected.
   await sockets.at(-1)!.close();
@@ -199,7 +207,7 @@ test("同一浏览器两个标签页登录不同顾客，订单与工单数据�
   await context.close();
 });
 
-test("真实商品浏览下单、订单详情、支付骨架及明确标识的 SSE 演示", async ({
+test("真实商品浏览下单、订单详情、支付骨架及商品库 SSE 导购", async ({
   page,
 }) => {
   await login(page, customers[2]);
@@ -222,15 +230,13 @@ test("真实商品浏览下单、订单详情、支付骨架及明确标识的 S
   ).toBeVisible();
   await shot(page, "11-payment-not-enabled");
   await navigate(page, "导购与客服");
-  await page.getByRole("button", { name: "查看流式演示" }).click();
+  await page.getByLabel("您的问题").fill("办公保温杯");
+  await page.getByRole("button", { name: "开始导购" }).click();
   await expect(
-    page.getByText("已建立流式连接，编排演示开始。", { exact: true }),
+    page.getByText("已连接，正在查询商品与库存。", { exact: true }),
   ).toBeVisible();
   await expect(
-    page.getByText(
-      "演示执行完成。真实商品检索尚未开通，请到商品浏览自主选购。",
-      { exact: true },
-    ),
+    page.getByText("本次未保存导购记忆。", { exact: true }),
   ).toBeVisible();
   await shot(page, "12-streaming-demo");
 });
@@ -280,25 +286,40 @@ test("移动端布局和登录遮罩截图", async ({ page }) => {
   await shot(page, "15-mobile-products");
 });
 
-test("P6 支付页契约：真实夹具订单生成链接，平台令牌不发送到网关", async ({ browser }) => {
+test("P6 支付页契约：真实夹具订单生成链接，平台令牌不发送到网关", async ({
+  browser,
+}) => {
   const context = await browser.newContext();
   const page = await context.newPage();
-  await page.route("**/api/payments/availability", route => route.fulfill({json:{enabled:true}}));
-  await page.route("**/api/orders/*/payment", route => route.fulfill({json:{payment_url:"https://fixture.alipaydev.com/test-payment"}}));
+  await page.route("**/api/payments/availability", (route) =>
+    route.fulfill({ json: { enabled: true } }),
+  );
+  await page.route("**/api/orders/*/payment", (route) =>
+    route.fulfill({
+      json: { payment_url: "https://fixture.alipaydev.com/test-payment" },
+    }),
+  );
   let leaked = false;
-  await context.route("https://fixture.alipaydev.com/**", route => {
+  await context.route("https://fixture.alipaydev.com/**", (route) => {
     leaked = Boolean(route.request().headers()["authorization"]);
-    return route.fulfill({contentType:"text/html",body:"<p>UI contract fixture only</p>"});
+    return route.fulfill({
+      contentType: "text/html",
+      body: "<p>UI contract fixture only</p>",
+    });
   });
   await login(page, customers[2]);
   await navigate(page, "商品浏览");
-  await page.getByRole("button", {name:"查看商品 #101",exact:true}).click();
-  await page.getByRole("button", {name:"确认下单",exact:true}).click();
-  await expect(page.getByRole("heading", {name:/订单详情 #/})).toBeVisible();
+  await page
+    .getByRole("button", { name: "查看商品 #101", exact: true })
+    .click();
+  await page.getByRole("button", { name: "确认下单", exact: true }).click();
+  await expect(page.getByRole("heading", { name: /订单详情 #/ })).toBeVisible();
   await navigate(page, "支付沙箱");
-  await page.getByRole("button", {name:"生成沙箱支付链接",exact:true}).click();
+  await page
+    .getByRole("button", { name: "生成沙箱支付链接", exact: true })
+    .click();
   const popup = context.waitForEvent("page");
-  await page.getByRole("link", {name:"打开沙箱收银台",exact:true}).click();
+  await page.getByRole("link", { name: "打开沙箱收银台", exact: true }).click();
   const external = await popup;
   await expect(external.getByText("UI contract fixture only")).toBeVisible();
   expect(leaked).toBe(false);
