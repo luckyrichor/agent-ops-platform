@@ -1,0 +1,27 @@
+{
+  "recorded_at": "2026-10-29T19:09:43.980510+08:00",
+  "scope": "P6 compensation identity diagnostics; no weaker identity acceptance",
+  "pytest": {
+    "tests": "198",
+    "failures": "0",
+    "errors": "0",
+    "skipped": "0",
+    "time": "79.318"
+  },
+  "payment_targeted": {
+    "passed": 28,
+    "seconds": 7.82
+  },
+  "ruff": "passed",
+  "strict_mypy": {
+    "status": "passed",
+    "source_files": 27
+  },
+  "browser": "not rerun; frontend unchanged",
+  "live_notification": "unverified; no accepted notification",
+  "live_capture": "not performed; pending confirmation",
+  "live_refund": "unverified",
+  "external_reconciliation": "unverified",
+  "merchant_binding_proposal": "awaiting user decision; not implemented",
+  "capacity": "unverified"
+}

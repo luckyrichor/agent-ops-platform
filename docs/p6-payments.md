@@ -84,6 +84,15 @@ uv run python scripts/reconcile-payments.py --env-file .local/payment-applicatio
 
 ## 正式付款后的未解决缺口（2026-10-29）
 
-实际签名查询返回交易成功且自己的订单/金额匹配，但不含 seller_id；查询结算字段也未补出商户身份。当前补偿实现严格要求该字段，因而仍不入账。异步通知中商户号校验保持必需。不能悄悄把缺失字段当成匹配；后续应取得完整平台通知或另行确认可验证的商户身份绑定方式。用户已被告知不需再次付款，并请求从沙箱详情重发通知。
+实际签名查询返回交易成功且自己的订单/金额匹配，但不含 seller_id；查询结算字段也未补出商户身份。当前补偿实现严格要求该字段，因而仍不入账。异步通知中商户号校验保持必需。不能悄悄把缺失字段当成匹配；后续应取得完整平台通知或另行确认可验证的商户身份绑定方式。用户已确认沙箱交易详情没有通知重发功能，不应再把人工重发作为可执行的下一步；不需再次付款。
 
 公开入口外部无效签名请求可达并拒绝400；这不是实际支付通知证据。请求499也不能识别其来源或证明业务处理。诊断新增仅请求长度、form/other正文类型分类和上游状态，不保存原始头/正文。当天账单下载尚不可用，额外请求HTTP404，实际退款和独立账单零差异未验证。
+
+
+## 补偿身份缺口的处理边界（2026-10-29 继续开发）
+
+查单的订单号不符仍为 `PAYMENT_QUERY_IDENTITY_MISMATCH`；订单号匹配但商户字段缺失或为空时，改为 `PAYMENT_QUERY_IDENTITY_UNAVAILABLE`，不与真实商户不匹配混为一谈。两种情况继续保持待确认，不扣库存、不关闭提供方交易、不发退款。收到合法异步通知后仍走原有严格校验和幂等事务，不受此前失败查询影响。
+
+官方 SDK 的交易查询响应模型没有商户号字段；应用授权查询的响应虽有用户标识，其请求需要额外的 `app_auth_token`，现有私有配置不包含该授权令牌，不能假装接口已可用。依据：[交易查询响应模型](https://github.com/alipay/alipay-sdk-python-all/blob/master/alipay/aop/api/response/AlipayTradeQueryResponse.py)、[授权查询请求模型](https://github.com/alipay/alipay-sdk-python-all/blob/master/alipay/aop/api/domain/AlipayOpenAuthTokenAppQueryModel.py)、[授权查询响应模型](https://github.com/alipay/alipay-sdk-python-all/blob/master/alipay/aop/api/response/AlipayOpenAuthTokenAppQueryResponse.py)。这不等于断言所有官方接口都无法证明商户身份。
+
+候选方案（尚未批准、未实现）：由用户在沙箱后台核对应用与商户的绑定，确认与私有配置一致后，建立仅保存在忽略目录中的人工绑定证明。查询补偿仍要求提供方公钥验签、自己的订单号/金额匹配；异步通知仍逐次核对商户号。该方案将部分商户证明来源改为人工核对，不能称为提供方签名的商户证明，须由用户明确接受这个取舍后才能实施，并在实际入账前确认绑定。另一选择是保留待确认，继续排查通知。未擅自增加绑定文件、跳过检查或强改财务状态。

@@ -339,16 +339,38 @@ async def test_gateway_verifies_original_encoded_response_bytes(keys):
     assert (await Gateway(config, httpx.MockTransport(transport)).query('fixture'))['msg'] == '成功'
 
 
-async def test_signed_query_without_merchant_identity_fails_closed(payment):
+@pytest.mark.parametrize('seller,reason', [
+    (None, 'PAYMENT_QUERY_IDENTITY_UNAVAILABLE'),
+    ('', 'PAYMENT_QUERY_IDENTITY_UNAVAILABLE'),
+    ('different', 'PAYMENT_QUERY_IDENTITY_MISMATCH'),
+])
+async def test_signed_query_without_verified_merchant_identity_fails_closed(payment, seller, reason):
     service, commerce, row, key = payment
+    calls = []
     def response(request):
-        return signed_response('alipay.trade.query', {
+        calls.append(parse_qs(request.content.decode())['method'][0])
+        data = {
             'code':'10000', 'out_trade_no':row['merchant_no'],
             'trade_no':'T'+str(row['order_id']), 'trade_status':'TRADE_SUCCESS',
-            'total_amount':'2.00'}, key)
+            'total_amount':'2.00'}
+        if seller is not None:
+            data['seller_id'] = seller
+        return signed_response('alipay.trade.query', data, key)
     service.gateway = Gateway(service.config, httpx.MockTransport(response))
-    result = await service.compensate(row['order_id'])
-    assert result['reason'] == 'PAYMENT_QUERY_IDENTITY_MISMATCH'
-    assert (await commerce.order(row['order_id'], 1))['status'] == 'pending_payment'
     async with service.engine.connect() as c:
+        before = (await c.execute(text('SELECT stock,reserved FROM commerce.inventory WHERE product_id=801'))).one()
+    result = await service.compensate(row['order_id'])
+    assert result['reason'] == reason
+    assert (await commerce.order(row['order_id'], 1))['status'] == 'pending_payment'
+    assert calls == ['alipay.trade.query']
+    async with service.engine.connect() as c:
+        assert (await c.execute(text('SELECT stock,reserved FROM commerce.inventory WHERE product_id=801'))).one() == before
         assert await c.scalar(text("SELECT count(*) FROM payments.audit WHERE order_id=:id AND code='PAYMENT_CAPTURED'"), {'id':row['order_id']}) == 0
+
+    # A blocked query must not poison later authenticated notification processing.
+    params = notice(payment)
+    await service.notify(params)
+    await service.notify(params)
+    assert (await commerce.order(row['order_id'], 1))['status'] == 'paid'
+    async with service.engine.connect() as c:
+        assert await c.scalar(text("SELECT count(*) FROM payments.audit WHERE order_id=:id AND code='PAYMENT_CAPTURED'"), {'id':row['order_id']}) == 1

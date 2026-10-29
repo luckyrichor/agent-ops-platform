@@ -135,7 +135,11 @@ class Payments:
             raise PaymentError('PAYMENT_ORDER_UNKNOWN')
         try:
             data = await self.gateway.query(row['merchant_no'])
-            if data.get('out_trade_no') != row['merchant_no'] or data.get('seller_id') != self.config.seller_id:
+            if data.get('out_trade_no') != row['merchant_no']:
+                raise PaymentError('PAYMENT_QUERY_IDENTITY_MISMATCH')
+            if not data.get('seller_id'):
+                raise PaymentError('PAYMENT_QUERY_IDENTITY_UNAVAILABLE')
+            if data['seller_id'] != self.config.seller_id:
                 raise PaymentError('PAYMENT_QUERY_IDENTITY_MISMATCH')
             if data.get('trade_status') == 'WAIT_BUYER_PAY' and (datetime.now(UTC) - row['created_at']).total_seconds() >= 1800:
                 closed = await self.gateway.call('alipay.trade.close', {'out_trade_no': row['merchant_no']})

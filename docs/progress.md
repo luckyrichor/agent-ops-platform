@@ -305,3 +305,12 @@ Mihomo 新只读状态为 recovering，出现一次网关出站失败降级，�
 新增缺商户身份查询必须不入账的测试；完整pytest196 passed、2既有警告（88.31秒），支付定向26 passed（6.91秒），ruff、strict mypy27文件通过。前端未修改，浏览器未重跑，原6/6证据保留。入口增加不含地址、原始头或正文的字节数/正文类型分类/上游状态诊断，实际检查任意敏感头不入日志。服务保持运行。
 
 实际当日账单仍不可用，额外请求返回HTTP404，未宣称零差异。当前偏差：主动查单实际不含实现最初假定的商户号，因此补偿入账受阻；未放宽安全要求。退款、完整回调、真实重复投递与对账未验证。后续须取得有效通知或确认等效独立商户证明方案，不能以此宣布P6完成，不进入P7。原始证据仅.local，脱敏验证见 reports/p6-2026-10-29/verification.json。
+
+
+## 2026-10-29 P6 补偿身份诊断与通知恢复回归（Codex）
+
+用户确认沙箱详情没有通知重发功能后继续开发。缺失/空商户号的已签名查询现在明确返回 PAYMENT_QUERY_IDENTITY_UNAVAILABLE，真实不匹配仍为 PAYMENT_QUERY_IDENTITY_MISMATCH；两者都不入账、不扣库存、不发关闭或退款请求。新增三组实际 PG + 临时签名密钥测试，验证查询失败后合法异步通知仍能恢复处理，重复通知仅入账一次。文件：src/agent_ops/payments.py、tests/test_payments.py、docs/p6-payments.md。
+
+定向28 passed（7.82秒）；完整198 passed、2个既有JUnit警告（79.32秒），ruff、strict mypy27源文件通过。首次辅助检查使用未安装的 python 命令失败，改为项目 uv run python 后正常；不涉及代码测试失败。前端未修改，Playwright本轮未重跑。证据 docs/reports/p6-2026-10-29/continuation.json；原件仅.local/p6-implementation/*continuation*。
+
+官方 SDK 核对：交易查询响应模型没有 seller_id，应用授权查询需要额外 app_auth_token；现有配置不包含该授权令牌。人工后台核对应用与商户绑定作为补偿前置的候选方案已提交用户决定，尚未实施，不冒充提供方签名商户证明。私有商户文件存在且600；有效通知仍0、原付款本地仍pending。真实入账/退款/外部账单对账、容量验证仍未验证。继续保留现有严格校验，不进入P7。
