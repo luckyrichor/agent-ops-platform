@@ -1,0 +1,122 @@
+{
+  "observed_at": "2026-10-29T20:20:29.200954+08:00",
+  "scope": "P6 new real sandbox notification, replay, refund and reconciliation evidence",
+  "new_order_flow": "HTTP customer login -> order -> payment URL -> user sandbox payment -> signed async notice",
+  "notification_checks": {
+    "signature_and_app_and_seller": true,
+    "own_order": true,
+    "amount": true,
+    "success_state": true,
+    "file_mode_600": true
+  },
+  "capture_events": 1,
+  "manual_binding_capture_events": 0,
+  "automatic_query_compensation_deferred": true,
+  "accepted_notifications": 1,
+  "inventory_stock_decrement": 1,
+  "inventory_reservation_decrement": 1,
+  "notice_replay": {
+    "replay_count": 5,
+    "replay_http_statuses": [
+      200,
+      200,
+      200,
+      200,
+      200
+    ],
+    "capture_events_before": 1,
+    "capture_events_after": 1,
+    "tampered_http_status": 400,
+    "signature_invalid_audit_increment": 1,
+    "passed": true
+  },
+  "refund": {
+    "uses_new_notification_paid_order": true,
+    "new_refund_request_created": false,
+    "provider_request_count": 5,
+    "responses": [
+      {
+        "signed_success": true,
+        "fund_change": "N",
+        "amount_matches": true,
+        "order_matches": true,
+        "trade_matches": true
+      },
+      {
+        "signed_success": true,
+        "fund_change": "N",
+        "amount_matches": true,
+        "order_matches": true,
+        "trade_matches": true
+      },
+      {
+        "signed_success": true,
+        "fund_change": "N",
+        "amount_matches": true,
+        "order_matches": true,
+        "trade_matches": true
+      },
+      {
+        "signed_success": true,
+        "fund_change": "N",
+        "amount_matches": true,
+        "order_matches": true,
+        "trade_matches": true
+      },
+      {
+        "signed_success": true,
+        "fund_change": "N",
+        "amount_matches": true,
+        "order_matches": true,
+        "trade_matches": true
+      }
+    ],
+    "verification_failure_code": "PAYMENT_GATEWAY_REJECTED",
+    "excess_refund_rejected": true,
+    "excess_refund_code": "REFUND_AMOUNT_EXCEEDS_PAID",
+    "refund_records_after": 1,
+    "successful_refund_events": 1,
+    "local_payment_state": "refunded",
+    "trade_number_readback": {
+      "payment": {
+        "signed_success": false,
+        "fixed_failure_code": "PAYMENT_GATEWAY_REJECTED"
+      },
+      "refund": {
+        "signed_success": true,
+        "order_matches": true,
+        "trade_matches": true,
+        "state": "REFUND_SUCCESS",
+        "request_matches": true,
+        "amount_matches": true
+      }
+    }
+  },
+  "excess_refund_http": {
+    "http_status": 409,
+    "excess_amount_rejected": true,
+    "refund_records_after": 1
+  },
+  "external_bill": {
+    "bill_date": "2026-10-28",
+    "external_download_capability": true,
+    "tls_downloaded": true,
+    "downloaded_bytes": 1017,
+    "external_detail_rows": 0,
+    "difference_count": 0,
+    "empty_bill_smoke_only": true,
+    "current_paid_transaction_covered": false,
+    "current_day_bill_available": false
+  },
+  "current_transaction_external_bill_reconciled": false,
+  "capacity_and_rate_limits": "unverified",
+  "source_code_unchanged_since_tested_commit": "f3d33db",
+  "pytest_passed": 214,
+  "ruff": "passed",
+  "strict_mypy_source_files": 28,
+  "browser": "not rerun; frontend unchanged",
+  "notification_archive_directory": ".local/payment-notices/",
+  "private_live_evidence_directory": ".local/p6-notify-acceptance-20261029",
+  "cloud_rule_cleanup": "operator instructed to remove current inbound TCP 18080 allow rule; deletion not confirmed",
+  "entry_service": "remains active and enabled as approved long-term deployment"
+}
