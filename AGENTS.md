@@ -388,4 +388,4 @@ GitHub只读查询仓库可见性为PUBLIC。当前探针文档已移除服务�
 - 真实退款五次和账单能力私有证据在 `.local/p6-live-20261028/`；公开报告为 notify-acceptance-preparation.json。前一日账单原件 `.local/payment-bills/2026-10-28.bin`，仅空账单，当前交易外账仍未验证。
 - 联调结束应告知用户删除本轮入站TCP 18080允许规则；用户未确认删除前不得记录为已删除。
 
-飞书待同步：2026-10-29 本轮真实通知补验准备、214项测试、真实退款5次与账单能力结果、入口等待重新开放确认。
+飞书已同步：2026-10-29 真实通知补验准备、214项测试、真实退款5次、账单能力和等待本轮开放确认已追加开发记录 https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf ，codex profile / --as user；父节点和含 f3d33db 的正文回查通过。代码已推送 f3d33db。
