@@ -136,6 +136,12 @@ class Payments:
             row = (await c.execute(text('SELECT * FROM payments.payments WHERE order_id=:id'), {'id': order_id})).mappings().first()
         if row is None:
             raise PaymentError('PAYMENT_ORDER_UNKNOWN')
+        # Completed refunds are authoritative. A payment-query rejection after
+        # refund is not an ambiguous payment and must not create failure audits.
+        async with self.engine.connect() as c:
+            refunded = await c.scalar(text("SELECT 1 FROM payments.refunds WHERE order_id=:id AND state='succeeded'"), {'id': order_id})
+        if row['state'] == 'refunded' or refunded:
+            return {'order_id': order_id, 'status': 'refunded'}
         try:
             data = await self.gateway.query(row['merchant_no'])
             if data.get('out_trade_no') != row['merchant_no']:
@@ -155,7 +161,13 @@ class Payments:
                              manual_binding=True)
             return {'order_id': order_id, 'status': 'confirmed'}
         except PaymentError as error:
-            await self.reject(str(error))
+            # A refund may have completed while the external query was in flight.
+            # Serialize with finish_refund before declaring a payment failure.
+            async with self.engine.begin() as c:
+                state = await c.scalar(text('SELECT status FROM commerce.orders WHERE id=:id FOR UPDATE'), {'id': order_id})
+                if state == 'refunded':
+                    return {'order_id': order_id, 'status': 'refunded'}
+                await self.audit(c, str(error))
             return {'order_id': order_id, 'status': 'pending_confirmation', 'reason': str(error)}
 
     async def approve_refund(self, ticket_id: str, revision: int, principal: Principal, *,

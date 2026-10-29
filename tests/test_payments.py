@@ -567,3 +567,44 @@ def test_legacy_zip_bill_names_decode_and_summary_is_not_treated_as_a_trade():
     assert normalize_bill(payload.getvalue()) == [
         {'kind':'payment', 'reference':'fixture', 'amount_cents':200},
         {'kind':'refund', 'reference':'fixture-refund', 'amount_cents':200}]
+
+
+@pytest.mark.parametrize('refund_during_query', [False, True])
+async def test_refunded_order_ignores_payment_query_rejection(payment, refund_during_query):
+    service, commerce, row, provider = payment
+    await service.notify(notice(payment))
+    support = service.support
+    ticket = await support.create(SupportRequest(message='申请退货', order_id=str(row['order_id'])), uuid4().hex, 1)
+    actor = Principal(3, 'agent', None, 'fixture')
+    ticket = await support.change(ticket.ticket_id, 'claim', ticket.revision, actor, uuid4().hex)
+    result = await service.approve_refund(ticket.ticket_id, ticket.revision, actor)
+    # An ambiguous refund is resolved by the signed refund query, not payment query.
+    async with service.engine.begin() as c:
+        await c.execute(text("UPDATE payments.refunds SET state='unknown' WHERE refund_no=:no"), {'no': result['refund_no']})
+    methods = []
+    async with service.engine.connect() as c:
+        rejected_before = await c.scalar(text("SELECT count(*) FROM payments.audit WHERE code='PAYMENT_GATEWAY_REJECTED'"))
+
+    async def transport(request):
+        method = parse_qs(request.content.decode())['method'][0]
+        methods.append(method)
+        if method == 'alipay.trade.fastpay.refund.query':
+            return signed_response(method, {'code': '10000', 'out_trade_no': row['merchant_no'],
+                'trade_no': 'T' + str(row['order_id']), 'out_request_no': result['refund_no'],
+                'refund_amount': '2.00', 'refund_status': 'REFUND_SUCCESS'}, provider)
+        assert method == 'alipay.trade.query'
+        if refund_during_query:
+            assert (await service.execute_refund(result['refund_no']))['state'] == 'succeeded'
+        return signed_response(method, {'code': '40004'}, provider)
+
+    service.gateway = Gateway(service.config, httpx.MockTransport(transport))
+    if not refund_during_query:
+        assert (await service.execute_refund(result['refund_no']))['state'] == 'succeeded'
+    assert (await service.compensate(row['order_id']))['status'] == 'refunded'
+    assert (await commerce.order(row['order_id'], 1))['status'] == 'refunded'
+    assert methods.count('alipay.trade.query') == int(refund_during_query)
+    assert methods.count('alipay.trade.fastpay.refund.query') == 1
+    async with service.engine.connect() as c:
+        assert await c.scalar(text('SELECT state FROM payments.payments WHERE order_id=:id'), {'id': row['order_id']}) == 'refunded'
+        assert await c.scalar(text("SELECT count(*) FROM payments.audit WHERE code='PAYMENT_GATEWAY_REJECTED'")) == rejected_before
+        assert await c.scalar(text("SELECT count(*) FROM payments.audit WHERE order_id=:id AND code='REFUND_SUCCEEDED'"), {'id': row['order_id']}) == 1

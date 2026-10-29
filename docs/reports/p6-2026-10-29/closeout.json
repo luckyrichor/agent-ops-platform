@@ -1,0 +1,27 @@
+{
+  "date": "2026-10-29",
+  "p6_accepted": true,
+  "cloud_rule_deleted": "confirmed_by_user",
+  "entry": {
+    "ActiveState": "inactive",
+    "SubState": "dead",
+    "UnitFileState": "disabled",
+    "listeners_18080_18081": false
+  },
+  "tests": {
+    "pytest_passed": 216,
+    "pytest_warnings": 2,
+    "pytest_seconds": 91.33,
+    "ruff": "passed",
+    "strict_mypy_source_files": 28,
+    "routing_fixture_passed": 47,
+    "playwright": "not_rerun_frontend_unchanged"
+  },
+  "limits": {
+    "external_bill": "2026-10-28 empty bill only; external rows 0, same-scope local rows 0, differences 0; excludes actual 2026-10-29 trades",
+    "current_day_bill": "unverified",
+    "post_refund_payment_query": "gateway_rejected; not authoritative for refund",
+    "capacity_and_rate_limits": "unverified"
+  },
+  "p7": "identity proposal only, awaiting approval; P2 200000-product dataset required"
+}

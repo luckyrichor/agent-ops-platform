@@ -10,7 +10,7 @@ Agent 应用与可观测评测平台。电商场景的多 Agent 任务拆解、�
 
 三个月求职计划六项目之一（原编号 ③），对应岗位 **05、07、10、11、14**，另含 **08** 作为子方向。总计划见 [workplan-docs](https://github.com/luckyrichor/workplan-docs)，岗位原文以那里的 `岗位要求原文.md` 为唯一依据。
 
-**当前状态：P6 新单真实通知补验通过：公钥验签/商户/库内订单金额核对入账，真实通知重放5次只入账1次、改金额验签失败；新单真实退款及同退款号5次N、HTTP超额拒绝通过。当前订单refunded、工单resolved。当天外部账单不可取、退款后支付查单被拒，限制已报告；容量/限频未验证。等待P6验收，不进入P7。已告知删除本轮入站TCP 18080规则，删除尚未确认；长期入口仍active/enabled。**
+**当前状态：P6 已获用户验收，用户确认删除本轮云端 TCP 18080 规则。独立入口已 inactive/disabled、18080/18081 无监听；退款后补偿不依赖支付查单的保护及测试已补。P7 已授权但有前置闸门：docs/p7-memory-identity-proposal.md 仅身份方案，等待确认后才实现；使用 P2 的20万商品，不用六商品演示集。**
 
 ## 分工模式：偏产出
 
@@ -423,7 +423,18 @@ GitHub只读查询仓库可见性为PUBLIC。当前探针文档已移除服务�
 - 本轮用户已付款、真实通知和重放已完成，**不要再要求开放端口、创建订单或再次付款**。新单记录仍在.local/p6-notify-acceptance-20261029/order.json，当前已退款，不能重复新建退款请求。
 - 真实原通知加密文件：.local/payment-notices/notice-fd8308b586b2a4778b5646a42074844b290c3ca701bb9d791fd99186e9ff0f0f.json。展示字段全脱敏，精确字段需用同目录archive.key在内存解密，仅600；不得打印原件或密钥。
 - 本次独立退款查询成功证据位于refund-five-requests-final.json的trade_number_readback.refund；旧的查询失败证据也保留。退款后的支付查单仍失败，不可把两者混称全通过。
-- 尚需当前交易对应日期的外部账单可取后核对；前一日空账单0差异不是本笔外账对账完成。P6验收由用户决定，未获P7授权。
-- 已告知删除云端入站TCP 18080规则，只有用户明确确认或云端只读核验后才能记录已删除。未要求停掉长期服务，服务仍active/enabled；不要把已告知删除写成实际已关闭。
+- P6 已获用户验收；外部账单限制继续保留，见 docs/p6-payments.md。P7 须先取得 memory 身份方案确认。
+- 用户已确认删除本轮云规则，入口现已停止并取消自启。当前启动、停止、状态命令见 docs/p6-payments.md；启动必须重新取得当轮开放确认，不凭服务状态推断云规则。
 
 飞书已同步：2026-10-29 本轮上线、新单真实通知/重放、真实退款与HTTP超额拒绝、账单/查单限制、云规则待删除确认已追加开发记录 https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf ，codex profile / --as user；父节点和含 f49dedf 的正文回查通过。证据已推送 f49dedf，代码与已测f3d33db一致。
+
+
+## 2026-10-29 P6 验收收尾 / P7 memory 身份待确认（Codex）
+
+用户确认 P6 通过、云端 TCP 18080 规则已删除。已执行 systemctl --user disable --now agent-ops-payment-entry.service，核验 inactive/dead/disabled，ss 确认18080/18081无监听。回环业务API与日志轮转保留，未改云规则、系统Nginx、代理或原始财务证据。入口操作与限制见 docs/p6-payments.md。
+
+payments.py 的 compensate 对已退款状态/成功退款记录直接返回 refunded；查询途中发生退款则持订单锁复核，拒绝支付查询不会记成支付异常或回退订单。test_payments.py 新增两个实际PG用例，经签名退款查询完成退款，覆盖完成后与查询中并发退款；订单/支付仍refunded，成功审计1，无新增网关拒绝审计。退款未确认仍不能据支付查询失败认定成功。
+
+身份只读核对固定SDK1e2730c及相邻2fae08b：RS256 UUID身份，单条记忆路径按租户查，幂等为租户+key/摘要且有效期7天。提出每顾客独立租户与用户UUID映射、后端专用短期memory令牌、现有幂等/跨期防重放方案；不转发平台令牌，不用共享commerce身份。docs/p7-memory-identity-proposal.md 为待确认方案，没有修改agent-memory、配置或P7功能。确认后同步双方契约，先做隔离验收，再接P2二十万商品的全文/结构过滤、编排真实库存与缓存开关一致性；不进入S3优化实验。
+
+最终pytest216通过（2既有警告、91.33秒），ruff/strict mypy28文件通过、固定规则47/47；公开证据reports/p6-2026-10-29/closeout.json。回环API已重启加载保护，入口仍停止。本轮前端未改，Playwright未重跑；容量/限频未压测、当日外部账单未验证、退款后支付查单被拒等限制完整保留。之后报告不得笼统写“对账零差异”。飞书待同步：2026-10-29 P6验收收尾与P7身份待确认方案。
