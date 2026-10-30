@@ -1,0 +1,89 @@
+{
+  "freeze_tag": "p8-routing-freeze-20261030",
+  "freeze_commit": "b90c20188a3202fa5f4ee81d42e9312bd088f66f",
+  "seed": 20261030,
+  "pool": {
+    "counts": {
+      "rows_scanned": 1000000,
+      "duplicate_or_near_excluded": 60
+    },
+    "redaction": {
+      "long_number": 57,
+      "address_labeled": 24,
+      "address_region": 1
+    },
+    "eligible_pool": 600
+  },
+  "ecd_silver_counts": {
+    "clarify": 497,
+    "return_request": 21,
+    "order_status": 72,
+    "human": 10
+  },
+  "selected_sources": {
+    "synthetic_rewrite": 69,
+    "ecd_redacted": 131
+  },
+  "silver_layers": {
+    "order_status": {
+      "ECD_N_h": 72,
+      "ECD_n_h": 50,
+      "ECD_weight": 1.44,
+      "synthetic_fill": 0,
+      "total": 50
+    },
+    "return_request": {
+      "ECD_N_h": 21,
+      "ECD_n_h": 21,
+      "ECD_weight": 1.0,
+      "synthetic_fill": 29,
+      "total": 50
+    },
+    "human": {
+      "ECD_N_h": 10,
+      "ECD_n_h": 10,
+      "ECD_weight": 1.0,
+      "synthetic_fill": 40,
+      "total": 50
+    },
+    "clarify": {
+      "ECD_N_h": 497,
+      "ECD_n_h": 50,
+      "ECD_weight": 9.94,
+      "synthetic_fill": 0,
+      "total": 50
+    }
+  },
+  "network_requests": 691,
+  "retries": 0,
+  "rate_limits": 0,
+  "model": "deepseek-flash",
+  "endpoint": "https://api.deepseek.com/chat/completions",
+  "temperature": 0,
+  "reported_at": "2026-10-30T05:34:25.744737+00:00",
+  "pool_silver_failed": 0,
+  "http_statuses": {
+    "200": 691
+  },
+  "generation_batches": 20,
+  "blind_rows": 200,
+  "predictions_exported": false,
+  "human_gold_distribution": "unknown; awaiting blind annotation",
+  "synthetic_weight": "not applicable; not natural ECD",
+  "dataset_sha256": "9c76a8ed6ca0b3db0013c55cf465d5d05be7eb5133ab2ad60c54e193da2b9980",
+  "workbook_sha256": "a35bb61bb0df5c30909bf6e999f21bb0c50e24c55207d63500e57984b802aef9",
+  "clarify_report_taxonomy": {
+    "insufficient_or_ambiguous": {
+      "name": "信息不足",
+      "expected_behavior": "应追问"
+    },
+    "out_of_scope": {
+      "name": "超范围咨询",
+      "expected_behavior": "应转售前或告知不处理"
+    },
+    "no_action": {
+      "name": "无需处理",
+      "expected_behavior": "致谢/确认/下单或购买计划告知，无需系统动作"
+    }
+  }
+}

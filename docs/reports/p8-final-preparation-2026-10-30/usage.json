@@ -1,0 +1,24 @@
+{
+  "date": "2026-10-30",
+  "model": "deepseek-flash",
+  "temperature": 0,
+  "unique_successful_responses": 691,
+  "usage": {
+    "prompt_tokens": 235538,
+    "completion_tokens": 14743,
+    "total_tokens": 250281,
+    "prompt_cache_hit_tokens": 87296,
+    "prompt_cache_miss_tokens": 148242
+  },
+  "peak_usage_estimate_usd": 0.06268797599999999,
+  "invoice_verified": false,
+  "calls": 691,
+  "retries": 0,
+  "rate_limits": 0,
+  "billable_categories": {
+    "ECD_candidate_silver": 600,
+    "generation_batches": 20,
+    "synthetic_silver_validation": 71
+  },
+  "final_classifier_evaluation_calls": 0
+}
