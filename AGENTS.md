@@ -10,7 +10,7 @@ Agent 应用与可观测评测平台。电商场景的多 Agent 任务拆解、�
 
 三个月求职计划六项目之一（原编号 ③），对应岗位 **05、07、10、11、14**，另含 **08** 作为子方向。总计划见 [workplan-docs](https://github.com/luckyrichor/workplan-docs)，岗位原文以那里的 `岗位要求原文.md` 为唯一依据。
 
-**当前状态：P8第1轮开发改进与最终盲表准备完成。冻结提交b90c201/tag p8-routing-freeze-20261030已推送，之后才抽200条，131 ECD+69合成改写。盲表已发负责人（无预测/隐藏答案/公式），等待人工回传；不得提前跑最终评测或改冻结的规则/提示/阈值/工具。最终成绩未测。开发按P2/ECD分报，ECD模型宏F1退步保留，合并97整体准确率不得作对外成绩。pytest265/针对性25/ruff/mypy38通过。新增选样691请求、250281 token/高峰usage估价0.062687976美元，账单未核验；开发失败/限流与中断未知用量见报告。P9/P10未开始。**
+**当前状态：P8唯一一次最终评测完成（198有效/2弃权），冻结b90c201/tag p8-routing-freeze-20261030未改。ECD129有效：规则一致率72.87%/macroF1 .4922，模型65.89%/.6038，混合63.57%/.5898；多数类67.44%，不能声称模型/混合一致率超过基线。合成69模型94.20%但固定四类macroF1 .4815，缺order_status且clarify 0/3命中；不合并成绩。human稀有样本2条、人工覆盖未达到每类约30。198请求/0失败重试限流、84534 token/高峰usage估价0.020364036美元、账单未核验。报告docs/reports/p8-final含完整P/R/F1、Wilson分母、矩阵、kappa。用户表600只.local；一次性台账completed，禁止重跑或改策略追分。冻结前265测试，本次离线19通过；等待负责人验收P8，P9/P10未开始。**
 
 ## 分工模式：偏产出
 
@@ -577,3 +577,13 @@ clarify待确认提案60条：信息不足/意图未定15（P2 9/ECD6），超�
 下一步只接收负责人标完的200行xlsx，保存.local，核对原表来源/文本和数据摘要；先验证角色与标签完整（允许明确弃权），再用冻结tag和配置执行scripts/evaluate-p8-final.py一次。正式执行需要显式设置AGENT_OPS_DEEPSEEK_ENDPOINT/MODEL/LLM_CONCURRENCY=2，私有key通过--key-file传入路径，值不入命令/日志；max_attempts3/timeout30与清单一致。canonical一次性状态.local/p8-final-evaluations/<datasetsha>.json，已有状态不得擅自重跑。ECD/合成分别报、Wilson附n，不改已固定子类，不用银标作成绩。
 
 飞书已同步：2026-10-30 最终盲表交付、131/69组成、691次/250281 token与未验证项已追加开发记录 https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf ，codex profile/--as user；项目父节点和正文含d1a3556/250281/131 ECD+69的回查通过。代码冻结b90c201、交付统计d1a3556均已推送；等待用户最终人工标注，未评最终质量。
+
+## 2026-10-30 P8唯一一次最终评测完成
+
+负责人回传标注表后仅保存.local/p8-final-release/annotated.xlsx（权限600），SHA256 6b5d28f68728523b145258747db14cd86cefed661dcd24e229922c794d16f431。离线核对200行前5列与原表完全相同、冻结12源文件摘要和数据/原表SHA均一致；198顾客有效/2明确弃权（final-111客服、final-127无法确认），不补标不静默删除。冻结执行器scripts/evaluate-p8-final.py只启动一次，198请求成功，最终状态.local/p8-final-evaluations/9c76a8ed6ca0b3db0013c55cf465d5d05be7eb5133ab2ad60c54e193da2b9980.json为completed，metrics.json SHA匹配；重复占位调用被拒绝，无重复模型评测。
+
+模型deepseek-flash/温度0/并发2/最多3尝试/超时30秒，198请求/0预测失败/0重试/0限流。输入81639/输出2895/总84534 token，高峰usage估价0.020364036美元，实际账单未核验；不要和选样250281或开发调用费用混算。模型/混合共享响应。ECD外发129个冻结脱敏视图、合成69；2弃权不调用。原文/缓存/人工备注只.local，公开evals/p8/final-ecd-human.csv只有131个编号→人工标签（2空），final-synthetic.jsonl为69合成全文与人工标签，不含ECD原文。
+
+最终指标按ECD/合成分报，不报合并分。ECD金标order26/return14/human2/clarify87；合成order0/return26/human40/clarify3。ECD多数类67.44%，模型/混合一致率低于该基线；模型macroF1高于规则，但不能说全面提升。合成模型clarify 0/3，固定四类macroF1与有金标类macro分列。每类P/R附Wilson95%成功数/分母，NA不造0，human2/2召回下界仅.3424，不称可靠。600候选池权重不代表完整ECD或真实总体，同源合成/银标选择偏差保留。
+
+新增scripts/report-p8-final.py仅离线读取completed结果/核对冻结与报告摘要，生成多数类基线、费用元数据和可读报告，不重跑规则或调用模型。本次离线保护/指标19测试通过、报告脚本ruff通过；冻结前完整265/ruff/mypy38保持原证据。最终报告docs/reports/p8-final/README.md、metrics.json与summary.json；不根据最终错例改冻结策略/提示/阈值，不追加样本重评，不进入P9。下一步等待负责人P8验收/后续决定。飞书待同步：2026-10-30 P8最终单次成绩、失败与覆盖限制。

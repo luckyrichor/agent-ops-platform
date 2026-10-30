@@ -1,0 +1,1095 @@
+{
+  "stage": "offline_summary_of_single_completed_run",
+  "freeze_commit": "b90c20188a3202fa5f4ee81d42e9312bd088f66f",
+  "annotation_sha256": "6b5d28f68728523b145258747db14cd86cefed661dcd24e229922c794d16f431",
+  "groups": {
+    "ecd_redacted": {
+      "gold_counts": {
+        "order_status": 26,
+        "return_request": 14,
+        "human": 2,
+        "clarify": 87
+      },
+      "abstention_ids": [
+        "final-111",
+        "final-127"
+      ],
+      "abstention_roles": {
+        "客服": 1,
+        "无法确认": 1
+      },
+      "majority_class": "clarify",
+      "majority_metrics": {
+        "n": 129,
+        "prediction_failures": 0,
+        "prediction_label_order": [
+          "order_status",
+          "return_request",
+          "human",
+          "clarify"
+        ],
+        "label_order": [
+          "order_status",
+          "return_request",
+          "human",
+          "clarify"
+        ],
+        "accuracy": 0.6744186046511628,
+        "cohen_kappa": 0.0,
+        "kappa_kind": "human versus router/model; not two human annotators",
+        "per_class": {
+          "order_status": {
+            "support": 26,
+            "predicted": 0,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0,
+            "precision_wilson": {
+              "successes": 0,
+              "n": 0,
+              "confidence": 0.95,
+              "low": null,
+              "high": null
+            },
+            "recall_wilson": {
+              "successes": 0,
+              "n": 26,
+              "confidence": 0.95,
+              "low": 0,
+              "high": 0.1287289218592153
+            }
+          },
+          "return_request": {
+            "support": 14,
+            "predicted": 0,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0,
+            "precision_wilson": {
+              "successes": 0,
+              "n": 0,
+              "confidence": 0.95,
+              "low": null,
+              "high": null
+            },
+            "recall_wilson": {
+              "successes": 0,
+              "n": 14,
+              "confidence": 0.95,
+              "low": 1.3877787807814457e-17,
+              "high": 0.2153108027376358
+            }
+          },
+          "human": {
+            "support": 2,
+            "predicted": 0,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0,
+            "precision_wilson": {
+              "successes": 0,
+              "n": 0,
+              "confidence": 0.95,
+              "low": null,
+              "high": null
+            },
+            "recall_wilson": {
+              "successes": 0,
+              "n": 2,
+              "confidence": 0.95,
+              "low": 0,
+              "high": 0.6576197724933469
+            }
+          },
+          "clarify": {
+            "support": 87,
+            "predicted": 129,
+            "precision": 0.6744186046511628,
+            "recall": 1.0,
+            "f1": 0.8055555555555556,
+            "precision_wilson": {
+              "successes": 87,
+              "n": 129,
+              "confidence": 0.95,
+              "low": 0.5895305031355975,
+              "high": 0.7492191643213053
+            },
+            "recall_wilson": {
+              "successes": 87,
+              "n": 87,
+              "confidence": 0.95,
+              "low": 0.9577124930558795,
+              "high": 0.9999999999999999
+            }
+          }
+        },
+        "macro_f1_fixed_four": 0.2013888888888889,
+        "macro_f1_present_gold": 0.2013888888888889,
+        "confusion_matrix_rows_gold_cols_prediction": [
+          [
+            0,
+            0,
+            0,
+            26
+          ],
+          [
+            0,
+            0,
+            0,
+            14
+          ],
+          [
+            0,
+            0,
+            0,
+            2
+          ],
+          [
+            0,
+            0,
+            0,
+            87
+          ]
+        ],
+        "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+      },
+      "clarify_subtypes": {
+        "信息不足": 25,
+        "超范围咨询": 47,
+        "无需处理": 15
+      },
+      "disagreements": [
+        {
+          "id": "final-002",
+          "label": "clarify",
+          "rule": "return_request",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-009",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-010",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-014",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-021",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-029",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-033",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "human",
+          "hybrid": "human",
+          "model_failure": null
+        },
+        {
+          "id": "final-036",
+          "label": "return_request",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-038",
+          "label": "clarify",
+          "rule": "order_status",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-037",
+          "label": "return_request",
+          "rule": "return_request",
+          "model": "clarify",
+          "hybrid": "clarify",
+          "model_failure": null
+        },
+        {
+          "id": "final-047",
+          "label": "clarify",
+          "rule": "order_status",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-050",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-054",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "human",
+          "hybrid": "human",
+          "model_failure": null
+        },
+        {
+          "id": "final-056",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-058",
+          "label": "clarify",
+          "rule": "order_status",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-059",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-061",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-063",
+          "label": "clarify",
+          "rule": "order_status",
+          "model": "human",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-064",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-065",
+          "label": "clarify",
+          "rule": "order_status",
+          "model": "clarify",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-066",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-068",
+          "label": "order_status",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-072",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-076",
+          "label": "human",
+          "rule": "clarify",
+          "model": "human",
+          "hybrid": "human",
+          "model_failure": null
+        },
+        {
+          "id": "final-084",
+          "label": "order_status",
+          "rule": "clarify",
+          "model": "human",
+          "hybrid": "human",
+          "model_failure": null
+        },
+        {
+          "id": "final-089",
+          "label": "return_request",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-090",
+          "label": "order_status",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-091",
+          "label": "order_status",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "clarify",
+          "model_failure": null
+        },
+        {
+          "id": "final-094",
+          "label": "order_status",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "clarify",
+          "model_failure": null
+        },
+        {
+          "id": "final-096",
+          "label": "order_status",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-098",
+          "label": "human",
+          "rule": "clarify",
+          "model": "human",
+          "hybrid": "human",
+          "model_failure": null
+        },
+        {
+          "id": "final-100",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-102",
+          "label": "clarify",
+          "rule": "order_status",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-106",
+          "label": "return_request",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-108",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "human",
+          "hybrid": "human",
+          "model_failure": null
+        },
+        {
+          "id": "final-113",
+          "label": "return_request",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-115",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "human",
+          "hybrid": "human",
+          "model_failure": null
+        },
+        {
+          "id": "final-117",
+          "label": "clarify",
+          "rule": "order_status",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-122",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-129",
+          "label": "return_request",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-135",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-138",
+          "label": "order_status",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-140",
+          "label": "clarify",
+          "rule": "order_status",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-142",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-144",
+          "label": "clarify",
+          "rule": "return_request",
+          "model": "clarify",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-152",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-154",
+          "label": "clarify",
+          "rule": "order_status",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-155",
+          "label": "clarify",
+          "rule": "order_status",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-157",
+          "label": "order_status",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-158",
+          "label": "return_request",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-159",
+          "label": "order_status",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-164",
+          "label": "order_status",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-166",
+          "label": "order_status",
+          "rule": "order_status",
+          "model": "human",
+          "hybrid": "human",
+          "model_failure": null
+        },
+        {
+          "id": "final-168",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-167",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-170",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-171",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-175",
+          "label": "clarify",
+          "rule": "order_status",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-182",
+          "label": "return_request",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-184",
+          "label": "order_status",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-183",
+          "label": "clarify",
+          "rule": "order_status",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-187",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-193",
+          "label": "clarify",
+          "rule": "order_status",
+          "model": "order_status",
+          "hybrid": "order_status",
+          "model_failure": null
+        },
+        {
+          "id": "final-195",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "human",
+          "hybrid": "human",
+          "model_failure": null
+        },
+        {
+          "id": "final-199",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "order_status",
+          "hybrid": "clarify",
+          "model_failure": null
+        }
+      ]
+    },
+    "synthetic_rewrite": {
+      "gold_counts": {
+        "order_status": 0,
+        "return_request": 26,
+        "human": 40,
+        "clarify": 3
+      },
+      "abstention_ids": [],
+      "abstention_roles": {},
+      "majority_class": "human",
+      "majority_metrics": {
+        "n": 69,
+        "prediction_failures": 0,
+        "prediction_label_order": [
+          "order_status",
+          "return_request",
+          "human",
+          "clarify"
+        ],
+        "label_order": [
+          "order_status",
+          "return_request",
+          "human",
+          "clarify"
+        ],
+        "accuracy": 0.5797101449275363,
+        "cohen_kappa": 0.0,
+        "kappa_kind": "human versus router/model; not two human annotators",
+        "per_class": {
+          "order_status": {
+            "support": 0,
+            "predicted": 0,
+            "precision": null,
+            "recall": null,
+            "f1": null,
+            "precision_wilson": {
+              "successes": 0,
+              "n": 0,
+              "confidence": 0.95,
+              "low": null,
+              "high": null
+            },
+            "recall_wilson": {
+              "successes": 0,
+              "n": 0,
+              "confidence": 0.95,
+              "low": null,
+              "high": null
+            }
+          },
+          "return_request": {
+            "support": 26,
+            "predicted": 0,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0,
+            "precision_wilson": {
+              "successes": 0,
+              "n": 0,
+              "confidence": 0.95,
+              "low": null,
+              "high": null
+            },
+            "recall_wilson": {
+              "successes": 0,
+              "n": 26,
+              "confidence": 0.95,
+              "low": 0,
+              "high": 0.1287289218592153
+            }
+          },
+          "human": {
+            "support": 40,
+            "predicted": 69,
+            "precision": 0.5797101449275363,
+            "recall": 1.0,
+            "f1": 0.7339449541284404,
+            "precision_wilson": {
+              "successes": 40,
+              "n": 69,
+              "confidence": 0.95,
+              "low": 0.46207405427966053,
+              "high": 0.6889388465887515
+            },
+            "recall_wilson": {
+              "successes": 40,
+              "n": 40,
+              "confidence": 0.95,
+              "low": 0.9123783988027135,
+              "high": 1
+            }
+          },
+          "clarify": {
+            "support": 3,
+            "predicted": 0,
+            "precision": null,
+            "recall": 0.0,
+            "f1": 0.0,
+            "precision_wilson": {
+              "successes": 0,
+              "n": 0,
+              "confidence": 0.95,
+              "low": null,
+              "high": null
+            },
+            "recall_wilson": {
+              "successes": 0,
+              "n": 3,
+              "confidence": 0.95,
+              "low": 5.551115123125783e-17,
+              "high": 0.5614970317550454
+            }
+          }
+        },
+        "macro_f1_fixed_four": 0.1834862385321101,
+        "macro_f1_present_gold": 0.24464831804281348,
+        "confusion_matrix_rows_gold_cols_prediction": [
+          [
+            0,
+            0,
+            0,
+            0
+          ],
+          [
+            0,
+            0,
+            26,
+            0
+          ],
+          [
+            0,
+            0,
+            40,
+            0
+          ],
+          [
+            0,
+            0,
+            3,
+            0
+          ]
+        ],
+        "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+      },
+      "clarify_subtypes": {
+        "信息不足": 3
+      },
+      "disagreements": [
+        {
+          "id": "final-003",
+          "label": "human",
+          "rule": "clarify",
+          "model": "human",
+          "hybrid": "human",
+          "model_failure": null
+        },
+        {
+          "id": "final-006",
+          "label": "human",
+          "rule": "clarify",
+          "model": "human",
+          "hybrid": "human",
+          "model_failure": null
+        },
+        {
+          "id": "final-013",
+          "label": "return_request",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-017",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-031",
+          "label": "human",
+          "rule": "clarify",
+          "model": "human",
+          "hybrid": "human",
+          "model_failure": null
+        },
+        {
+          "id": "final-032",
+          "label": "return_request",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-040",
+          "label": "return_request",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-044",
+          "label": "return_request",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-049",
+          "label": "human",
+          "rule": "clarify",
+          "model": "human",
+          "hybrid": "human",
+          "model_failure": null
+        },
+        {
+          "id": "final-057",
+          "label": "return_request",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-075",
+          "label": "return_request",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-081",
+          "label": "human",
+          "rule": "clarify",
+          "model": "human",
+          "hybrid": "human",
+          "model_failure": null
+        },
+        {
+          "id": "final-087",
+          "label": "human",
+          "rule": "clarify",
+          "model": "human",
+          "hybrid": "human",
+          "model_failure": null
+        },
+        {
+          "id": "final-092",
+          "label": "human",
+          "rule": "clarify",
+          "model": "human",
+          "hybrid": "human",
+          "model_failure": null
+        },
+        {
+          "id": "final-093",
+          "label": "return_request",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-104",
+          "label": "return_request",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-112",
+          "label": "return_request",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-120",
+          "label": "human",
+          "rule": "clarify",
+          "model": "human",
+          "hybrid": "human",
+          "model_failure": null
+        },
+        {
+          "id": "final-121",
+          "label": "return_request",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-126",
+          "label": "return_request",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-132",
+          "label": "return_request",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-143",
+          "label": "human",
+          "rule": "clarify",
+          "model": "human",
+          "hybrid": "human",
+          "model_failure": null
+        },
+        {
+          "id": "final-147",
+          "label": "human",
+          "rule": "clarify",
+          "model": "human",
+          "hybrid": "human",
+          "model_failure": null
+        },
+        {
+          "id": "final-162",
+          "label": "return_request",
+          "rule": "clarify",
+          "model": "clarify",
+          "hybrid": "clarify",
+          "model_failure": null
+        },
+        {
+          "id": "final-161",
+          "label": "return_request",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-163",
+          "label": "human",
+          "rule": "clarify",
+          "model": "human",
+          "hybrid": "human",
+          "model_failure": null
+        },
+        {
+          "id": "final-172",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-178",
+          "label": "clarify",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-191",
+          "label": "return_request",
+          "rule": "clarify",
+          "model": "return_request",
+          "hybrid": "return_request",
+          "model_failure": null
+        },
+        {
+          "id": "final-194",
+          "label": "human",
+          "rule": "clarify",
+          "model": "human",
+          "hybrid": "human",
+          "model_failure": null
+        }
+      ]
+    }
+  },
+  "usage": {
+    "prompt_tokens": 81639,
+    "completion_tokens": 2895,
+    "total_tokens": 84534,
+    "prompt_cache_hit_tokens": 25856,
+    "prompt_cache_miss_tokens": 55783
+  },
+  "observed_unique_successful_responses": 198,
+  "peak_usage_estimate_usd": 0.020364035999999995,
+  "price_basis": "USD per million input hit .006 / miss .3 / output 1.2; upper peak estimate, invoice unverified",
+  "returned_models": [
+    "deepseek-flash"
+  ],
+  "called_at_range": [
+    "2026-10-30T06:31:42.780945+00:00",
+    "2026-10-30T06:32:57.642416+00:00"
+  ],
+  "final_run_network_requests": 198,
+  "retries": 0,
+  "rate_limits": 0
+}

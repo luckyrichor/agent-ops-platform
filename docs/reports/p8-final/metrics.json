@@ -1,0 +1,847 @@
+{
+  "stage": "single_final_evaluation",
+  "freeze_tag": "p8-routing-freeze-20261030",
+  "freeze_commit": "b90c20188a3202fa5f4ee81d42e9312bd088f66f",
+  "model": "deepseek-flash",
+  "endpoint": "https://api.deepseek.com/chat/completions",
+  "temperature": 0,
+  "reported_at": "2026-10-30T06:32:57.647108+00:00",
+  "samples": 200,
+  "network_requests": 198,
+  "retries": 0,
+  "rate_limits": 0,
+  "groups": {
+    "ecd_redacted": {
+      "rows": 131,
+      "labeled": 129,
+      "abstentions": 2,
+      "versions": {
+        "rule": {
+          "n": 129,
+          "prediction_failures": 0,
+          "prediction_label_order": [
+            "order_status",
+            "return_request",
+            "human",
+            "clarify"
+          ],
+          "label_order": [
+            "order_status",
+            "return_request",
+            "human",
+            "clarify"
+          ],
+          "accuracy": 0.7286821705426356,
+          "cohen_kappa": 0.41988950276243087,
+          "kappa_kind": "human versus router/model; not two human annotators",
+          "per_class": {
+            "order_status": {
+              "support": 26,
+              "predicted": 28,
+              "precision": 0.5357142857142857,
+              "recall": 0.5769230769230769,
+              "f1": 0.5555555555555556,
+              "precision_wilson": {
+                "successes": 15,
+                "n": 28,
+                "confidence": 0.95,
+                "low": 0.358126892344679,
+                "high": 0.7046843001720462
+              },
+              "recall_wilson": {
+                "successes": 15,
+                "n": 26,
+                "confidence": 0.95,
+                "low": 0.3894861374659171,
+                "high": 0.7445555668634343
+              }
+            },
+            "return_request": {
+              "support": 14,
+              "predicted": 9,
+              "precision": 0.7777777777777778,
+              "recall": 0.5,
+              "f1": 0.6086956521739131,
+              "precision_wilson": {
+                "successes": 7,
+                "n": 9,
+                "confidence": 0.95,
+                "low": 0.45258896910698887,
+                "high": 0.9367748928821533
+              },
+              "recall_wilson": {
+                "successes": 7,
+                "n": 14,
+                "confidence": 0.95,
+                "low": 0.26799202452413634,
+                "high": 0.7320079754758637
+              }
+            },
+            "human": {
+              "support": 2,
+              "predicted": 0,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0,
+              "precision_wilson": {
+                "successes": 0,
+                "n": 0,
+                "confidence": 0.95,
+                "low": null,
+                "high": null
+              },
+              "recall_wilson": {
+                "successes": 0,
+                "n": 2,
+                "confidence": 0.95,
+                "low": 0,
+                "high": 0.6576197724933469
+              }
+            },
+            "clarify": {
+              "support": 87,
+              "predicted": 92,
+              "precision": 0.782608695652174,
+              "recall": 0.8275862068965517,
+              "f1": 0.8044692737430168,
+              "precision_wilson": {
+                "successes": 72,
+                "n": 92,
+                "confidence": 0.95,
+                "low": 0.6879299890322917,
+                "high": 0.854632703980183
+              },
+              "recall_wilson": {
+                "successes": 72,
+                "n": 87,
+                "confidence": 0.95,
+                "low": 0.7348297312608015,
+                "high": 0.89263707453443
+              }
+            }
+          },
+          "macro_f1_fixed_four": 0.49218012036812137,
+          "macro_f1_present_gold": 0.49218012036812137,
+          "confusion_matrix_rows_gold_cols_prediction": [
+            [
+              15,
+              0,
+              0,
+              11
+            ],
+            [
+              0,
+              7,
+              0,
+              7
+            ],
+            [
+              0,
+              0,
+              0,
+              2
+            ],
+            [
+              13,
+              2,
+              0,
+              72
+            ]
+          ],
+          "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+        },
+        "model": {
+          "n": 129,
+          "prediction_failures": 0,
+          "prediction_label_order": [
+            "order_status",
+            "return_request",
+            "human",
+            "clarify"
+          ],
+          "label_order": [
+            "order_status",
+            "return_request",
+            "human",
+            "clarify"
+          ],
+          "accuracy": 0.6589147286821705,
+          "cohen_kappa": 0.47869213813372513,
+          "kappa_kind": "human versus router/model; not two human annotators",
+          "per_class": {
+            "order_status": {
+              "support": 26,
+              "predicted": 53,
+              "precision": 0.4528301886792453,
+              "recall": 0.9230769230769231,
+              "f1": 0.6075949367088608,
+              "precision_wilson": {
+                "successes": 24,
+                "n": 53,
+                "confidence": 0.95,
+                "low": 0.3265757915292224,
+                "high": 0.5854602451289419
+              },
+              "recall_wilson": {
+                "successes": 24,
+                "n": 26,
+                "confidence": 0.95,
+                "low": 0.7585844622837095,
+                "high": 0.9786449115277238
+              }
+            },
+            "return_request": {
+              "support": 14,
+              "predicted": 19,
+              "precision": 0.6842105263157895,
+              "recall": 0.9285714285714286,
+              "f1": 0.7878787878787878,
+              "precision_wilson": {
+                "successes": 13,
+                "n": 19,
+                "confidence": 0.95,
+                "low": 0.46010407675327475,
+                "high": 0.8463562091220773
+              },
+              "recall_wilson": {
+                "successes": 13,
+                "n": 14,
+                "confidence": 0.95,
+                "low": 0.6853129557584889,
+                "high": 0.9872777847521093
+              }
+            },
+            "human": {
+              "support": 2,
+              "predicted": 10,
+              "precision": 0.2,
+              "recall": 1.0,
+              "f1": 0.3333333333333333,
+              "precision_wilson": {
+                "successes": 2,
+                "n": 10,
+                "confidence": 0.95,
+                "low": 0.05668215145437519,
+                "high": 0.5098375284633583
+              },
+              "recall_wilson": {
+                "successes": 2,
+                "n": 2,
+                "confidence": 0.95,
+                "low": 0.34238022750665303,
+                "high": 1
+              }
+            },
+            "clarify": {
+              "support": 87,
+              "predicted": 47,
+              "precision": 0.9787234042553191,
+              "recall": 0.5287356321839081,
+              "f1": 0.6865671641791045,
+              "precision_wilson": {
+                "successes": 46,
+                "n": 47,
+                "confidence": 0.95,
+                "low": 0.8888701895837066,
+                "high": 0.996234231961403
+              },
+              "recall_wilson": {
+                "successes": 46,
+                "n": 87,
+                "confidence": 0.95,
+                "low": 0.4248635939682499,
+                "high": 0.6301773539085249
+              }
+            }
+          },
+          "macro_f1_fixed_four": 0.6038435555250216,
+          "macro_f1_present_gold": 0.6038435555250216,
+          "confusion_matrix_rows_gold_cols_prediction": [
+            [
+              24,
+              0,
+              2,
+              0
+            ],
+            [
+              0,
+              13,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              2,
+              0
+            ],
+            [
+              29,
+              6,
+              6,
+              46
+            ]
+          ],
+          "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+        },
+        "hybrid": {
+          "n": 129,
+          "prediction_failures": 0,
+          "prediction_label_order": [
+            "order_status",
+            "return_request",
+            "human",
+            "clarify"
+          ],
+          "label_order": [
+            "order_status",
+            "return_request",
+            "human",
+            "clarify"
+          ],
+          "accuracy": 0.6356589147286822,
+          "cohen_kappa": 0.4393897364771151,
+          "kappa_kind": "human versus router/model; not two human annotators",
+          "per_class": {
+            "order_status": {
+              "support": 26,
+              "predicted": 52,
+              "precision": 0.4230769230769231,
+              "recall": 0.8461538461538461,
+              "f1": 0.5641025641025641,
+              "precision_wilson": {
+                "successes": 22,
+                "n": 52,
+                "confidence": 0.95,
+                "low": 0.2986805208350091,
+                "high": 0.5580567462609698
+              },
+              "recall_wilson": {
+                "successes": 22,
+                "n": 26,
+                "confidence": 0.95,
+                "low": 0.6646880067178652,
+                "high": 0.9384996627642165
+              }
+            },
+            "return_request": {
+              "support": 14,
+              "predicted": 20,
+              "precision": 0.65,
+              "recall": 0.9285714285714286,
+              "f1": 0.7647058823529411,
+              "precision_wilson": {
+                "successes": 13,
+                "n": 20,
+                "confidence": 0.95,
+                "low": 0.43285427668523624,
+                "high": 0.818808175898918
+              },
+              "recall_wilson": {
+                "successes": 13,
+                "n": 14,
+                "confidence": 0.95,
+                "low": 0.6853129557584889,
+                "high": 0.9872777847521093
+              }
+            },
+            "human": {
+              "support": 2,
+              "predicted": 9,
+              "precision": 0.2222222222222222,
+              "recall": 1.0,
+              "f1": 0.36363636363636365,
+              "precision_wilson": {
+                "successes": 2,
+                "n": 9,
+                "confidence": 0.95,
+                "low": 0.06322510711784671,
+                "high": 0.5474110308930111
+              },
+              "recall_wilson": {
+                "successes": 2,
+                "n": 2,
+                "confidence": 0.95,
+                "low": 0.34238022750665303,
+                "high": 1
+              }
+            },
+            "clarify": {
+              "support": 87,
+              "predicted": 48,
+              "precision": 0.9375,
+              "recall": 0.5172413793103449,
+              "f1": 0.6666666666666666,
+              "precision_wilson": {
+                "successes": 45,
+                "n": 48,
+                "confidence": 0.95,
+                "low": 0.8316456194505365,
+                "high": 0.9785167670916107
+              },
+              "recall_wilson": {
+                "successes": 45,
+                "n": 87,
+                "confidence": 0.95,
+                "low": 0.4137512133636875,
+                "high": 0.6192733553623774
+              }
+            }
+          },
+          "macro_f1_fixed_four": 0.5897778691896338,
+          "macro_f1_present_gold": 0.5897778691896338,
+          "confusion_matrix_rows_gold_cols_prediction": [
+            [
+              22,
+              0,
+              2,
+              2
+            ],
+            [
+              0,
+              13,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              2,
+              0
+            ],
+            [
+              30,
+              7,
+              5,
+              45
+            ]
+          ],
+          "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+        }
+      },
+      "gold_minimum_30_each": {
+        "order_status": false,
+        "return_request": false,
+        "human": false,
+        "clarify": true
+      }
+    },
+    "synthetic_rewrite": {
+      "rows": 69,
+      "labeled": 69,
+      "abstentions": 0,
+      "versions": {
+        "rule": {
+          "n": 69,
+          "prediction_failures": 0,
+          "prediction_label_order": [
+            "order_status",
+            "return_request",
+            "human",
+            "clarify"
+          ],
+          "label_order": [
+            "order_status",
+            "return_request",
+            "human",
+            "clarify"
+          ],
+          "accuracy": 0.6086956521739131,
+          "cohen_kappa": 0.4294027565084227,
+          "kappa_kind": "human versus router/model; not two human annotators",
+          "per_class": {
+            "order_status": {
+              "support": 0,
+              "predicted": 0,
+              "precision": null,
+              "recall": null,
+              "f1": null,
+              "precision_wilson": {
+                "successes": 0,
+                "n": 0,
+                "confidence": 0.95,
+                "low": null,
+                "high": null
+              },
+              "recall_wilson": {
+                "successes": 0,
+                "n": 0,
+                "confidence": 0.95,
+                "low": null,
+                "high": null
+              }
+            },
+            "return_request": {
+              "support": 26,
+              "predicted": 11,
+              "precision": 1.0,
+              "recall": 0.4230769230769231,
+              "f1": 0.5945945945945946,
+              "precision_wilson": {
+                "successes": 11,
+                "n": 11,
+                "confidence": 0.95,
+                "low": 0.7411670330319684,
+                "high": 1
+              },
+              "recall_wilson": {
+                "successes": 11,
+                "n": 26,
+                "confidence": 0.95,
+                "low": 0.2554444331365656,
+                "high": 0.6105138625340828
+              }
+            },
+            "human": {
+              "support": 40,
+              "predicted": 28,
+              "precision": 1.0,
+              "recall": 0.7,
+              "f1": 0.8235294117647058,
+              "precision_wilson": {
+                "successes": 28,
+                "n": 28,
+                "confidence": 0.95,
+                "low": 0.8793566952341543,
+                "high": 0.9999999999999998
+              },
+              "recall_wilson": {
+                "successes": 28,
+                "n": 40,
+                "confidence": 0.95,
+                "low": 0.5456998118185507,
+                "high": 0.8192515477025347
+              }
+            },
+            "clarify": {
+              "support": 3,
+              "predicted": 30,
+              "precision": 0.1,
+              "recall": 1.0,
+              "f1": 0.18181818181818182,
+              "precision_wilson": {
+                "successes": 3,
+                "n": 30,
+                "confidence": 0.95,
+                "low": 0.03459988874733419,
+                "high": 0.25621082579184085
+              },
+              "recall_wilson": {
+                "successes": 3,
+                "n": 3,
+                "confidence": 0.95,
+                "low": 0.4385029682449546,
+                "high": 1
+              }
+            }
+          },
+          "macro_f1_fixed_four": 0.39998554704437056,
+          "macro_f1_present_gold": 0.5333140627258274,
+          "confusion_matrix_rows_gold_cols_prediction": [
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              11,
+              0,
+              15
+            ],
+            [
+              0,
+              0,
+              28,
+              12
+            ],
+            [
+              0,
+              0,
+              0,
+              3
+            ]
+          ],
+          "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+        },
+        "model": {
+          "n": 69,
+          "prediction_failures": 0,
+          "prediction_label_order": [
+            "order_status",
+            "return_request",
+            "human",
+            "clarify"
+          ],
+          "label_order": [
+            "order_status",
+            "return_request",
+            "human",
+            "clarify"
+          ],
+          "accuracy": 0.9420289855072463,
+          "cohen_kappa": 0.8864197530864196,
+          "kappa_kind": "human versus router/model; not two human annotators",
+          "per_class": {
+            "order_status": {
+              "support": 0,
+              "predicted": 0,
+              "precision": null,
+              "recall": null,
+              "f1": null,
+              "precision_wilson": {
+                "successes": 0,
+                "n": 0,
+                "confidence": 0.95,
+                "low": null,
+                "high": null
+              },
+              "recall_wilson": {
+                "successes": 0,
+                "n": 0,
+                "confidence": 0.95,
+                "low": null,
+                "high": null
+              }
+            },
+            "return_request": {
+              "support": 26,
+              "predicted": 28,
+              "precision": 0.8928571428571429,
+              "recall": 0.9615384615384616,
+              "f1": 0.9259259259259259,
+              "precision_wilson": {
+                "successes": 25,
+                "n": 28,
+                "confidence": 0.95,
+                "low": 0.7280414845132785,
+                "high": 0.9628816331707
+              },
+              "recall_wilson": {
+                "successes": 25,
+                "n": 26,
+                "confidence": 0.95,
+                "low": 0.8110722109696524,
+                "high": 0.9931780150064564
+              }
+            },
+            "human": {
+              "support": 40,
+              "predicted": 40,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "precision_wilson": {
+                "successes": 40,
+                "n": 40,
+                "confidence": 0.95,
+                "low": 0.9123783988027135,
+                "high": 1
+              },
+              "recall_wilson": {
+                "successes": 40,
+                "n": 40,
+                "confidence": 0.95,
+                "low": 0.9123783988027135,
+                "high": 1
+              }
+            },
+            "clarify": {
+              "support": 3,
+              "predicted": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "precision_wilson": {
+                "successes": 0,
+                "n": 1,
+                "confidence": 0.95,
+                "low": 0,
+                "high": 0.7934506856227626
+              },
+              "recall_wilson": {
+                "successes": 0,
+                "n": 3,
+                "confidence": 0.95,
+                "low": 5.551115123125783e-17,
+                "high": 0.5614970317550454
+              }
+            }
+          },
+          "macro_f1_fixed_four": 0.4814814814814815,
+          "macro_f1_present_gold": 0.6419753086419754,
+          "confusion_matrix_rows_gold_cols_prediction": [
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              25,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              40,
+              0
+            ],
+            [
+              0,
+              3,
+              0,
+              0
+            ]
+          ],
+          "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+        },
+        "hybrid": {
+          "n": 69,
+          "prediction_failures": 0,
+          "prediction_label_order": [
+            "order_status",
+            "return_request",
+            "human",
+            "clarify"
+          ],
+          "label_order": [
+            "order_status",
+            "return_request",
+            "human",
+            "clarify"
+          ],
+          "accuracy": 0.9420289855072463,
+          "cohen_kappa": 0.8864197530864196,
+          "kappa_kind": "human versus router/model; not two human annotators",
+          "per_class": {
+            "order_status": {
+              "support": 0,
+              "predicted": 0,
+              "precision": null,
+              "recall": null,
+              "f1": null,
+              "precision_wilson": {
+                "successes": 0,
+                "n": 0,
+                "confidence": 0.95,
+                "low": null,
+                "high": null
+              },
+              "recall_wilson": {
+                "successes": 0,
+                "n": 0,
+                "confidence": 0.95,
+                "low": null,
+                "high": null
+              }
+            },
+            "return_request": {
+              "support": 26,
+              "predicted": 28,
+              "precision": 0.8928571428571429,
+              "recall": 0.9615384615384616,
+              "f1": 0.9259259259259259,
+              "precision_wilson": {
+                "successes": 25,
+                "n": 28,
+                "confidence": 0.95,
+                "low": 0.7280414845132785,
+                "high": 0.9628816331707
+              },
+              "recall_wilson": {
+                "successes": 25,
+                "n": 26,
+                "confidence": 0.95,
+                "low": 0.8110722109696524,
+                "high": 0.9931780150064564
+              }
+            },
+            "human": {
+              "support": 40,
+              "predicted": 40,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0,
+              "precision_wilson": {
+                "successes": 40,
+                "n": 40,
+                "confidence": 0.95,
+                "low": 0.9123783988027135,
+                "high": 1
+              },
+              "recall_wilson": {
+                "successes": 40,
+                "n": 40,
+                "confidence": 0.95,
+                "low": 0.9123783988027135,
+                "high": 1
+              }
+            },
+            "clarify": {
+              "support": 3,
+              "predicted": 1,
+              "precision": 0.0,
+              "recall": 0.0,
+              "f1": 0.0,
+              "precision_wilson": {
+                "successes": 0,
+                "n": 1,
+                "confidence": 0.95,
+                "low": 0,
+                "high": 0.7934506856227626
+              },
+              "recall_wilson": {
+                "successes": 0,
+                "n": 3,
+                "confidence": 0.95,
+                "low": 5.551115123125783e-17,
+                "high": 0.5614970317550454
+              }
+            }
+          },
+          "macro_f1_fixed_four": 0.4814814814814815,
+          "macro_f1_present_gold": 0.6419753086419754,
+          "confusion_matrix_rows_gold_cols_prediction": [
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              25,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              40,
+              0
+            ],
+            [
+              0,
+              3,
+              0,
+              0
+            ]
+          ],
+          "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+        }
+      },
+      "gold_minimum_30_each": {
+        "order_status": false,
+        "return_request": false,
+        "human": true,
+        "clarify": false
+      }
+    }
+  },
+  "interpretation": "ECD and generated paraphrases reported separately; no natural-population combined claim",
+  "wilson": "nominal 95% binomial Wilson with numerator/denominator; no weighted pseudo-count intervals"
+}
