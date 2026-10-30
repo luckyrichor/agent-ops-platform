@@ -1,0 +1,29 @@
+{
+  "pytest": {
+    "passed": 251,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 92.552
+  },
+  "targeted_metrics_tests": 5,
+  "ruff": "passed",
+  "strict_mypy_source_files": 36,
+  "blind_table_source_columns_unchanged": true,
+  "human_rows": 100,
+  "labeled": 97,
+  "abstentions": 3,
+  "abstention_ids": [
+    "ecd-1018",
+    "ecd-0191",
+    "ecd-0556"
+  ],
+  "root_labels_modified": false,
+  "routing_rules_prompts_thresholds_modified": false,
+  "additional_model_calls": 0,
+  "subtype_status": "proposal awaiting owner confirmation; root metrics unchanged",
+  "freeze_tag_created": false,
+  "final_test_selected": 0,
+  "frontend": "not rerun; no frontend changes",
+  "capacity": "not verified"
+}

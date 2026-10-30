@@ -1,0 +1,1196 @@
+{
+  "stage": "development gold only; no final-test metrics",
+  "human_file_sha256": "2bc0d3fcc0ce3b24e78024330b6f0d4086183895d1a1b76db10a7bdd5d74432d",
+  "candidate_prediction_source_commit": "0bb74bd",
+  "rule_prompt_threshold_changed_for_this_analysis": false,
+  "additional_model_calls": 0,
+  "groups": {
+    "p2_synthetic": {
+      "total_rows": 40,
+      "labeled_rows": 40,
+      "abstentions": 0,
+      "abstention_ids": [],
+      "coverage": 1.0,
+      "gold_counts": {
+        "order_status": 11,
+        "clarify": 10,
+        "human": 11,
+        "return_request": 8
+      },
+      "majority_baseline": {
+        "tied_classes": [
+          "order_status",
+          "human"
+        ],
+        "selected_class_fixed_order": "order_status",
+        "accuracy": 0.275,
+        "description": "descriptive development majority, not a fitted final-test classifier",
+        "metrics": {
+          "n": 40,
+          "label_order": [
+            "order_status",
+            "return_request",
+            "human",
+            "clarify"
+          ],
+          "accuracy": 0.275,
+          "cohen_kappa": 0.0,
+          "kappa_kind": "human versus router/model; not two human annotators",
+          "per_class": {
+            "order_status": {
+              "support": 11,
+              "predicted": 40,
+              "precision": 0.275,
+              "recall": 1.0,
+              "f1": 0.43137254901960786
+            },
+            "return_request": {
+              "support": 8,
+              "predicted": 0,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "human": {
+              "support": 11,
+              "predicted": 0,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "clarify": {
+              "support": 10,
+              "predicted": 0,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            }
+          },
+          "macro_f1_fixed_four": 0.10784313725490197,
+          "macro_f1_present_gold": 0.10784313725490197,
+          "confusion_matrix_rows_gold_cols_prediction": [
+            [
+              11,
+              0,
+              0,
+              0
+            ],
+            [
+              8,
+              0,
+              0,
+              0
+            ],
+            [
+              11,
+              0,
+              0,
+              0
+            ],
+            [
+              10,
+              0,
+              0,
+              0
+            ]
+          ],
+          "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+        }
+      },
+      "versions": {
+        "rule": {
+          "n": 40,
+          "label_order": [
+            "order_status",
+            "return_request",
+            "human",
+            "clarify"
+          ],
+          "accuracy": 0.875,
+          "cohen_kappa": 0.8320738874895046,
+          "kappa_kind": "human versus router/model; not two human annotators",
+          "per_class": {
+            "order_status": {
+              "support": 11,
+              "predicted": 8,
+              "precision": 1.0,
+              "recall": 0.7272727272727273,
+              "f1": 0.8421052631578947
+            },
+            "return_request": {
+              "support": 8,
+              "predicted": 6,
+              "precision": 1.0,
+              "recall": 0.75,
+              "f1": 0.8571428571428571
+            },
+            "human": {
+              "support": 11,
+              "predicted": 13,
+              "precision": 0.8461538461538461,
+              "recall": 1.0,
+              "f1": 0.9166666666666666
+            },
+            "clarify": {
+              "support": 10,
+              "predicted": 13,
+              "precision": 0.7692307692307693,
+              "recall": 1.0,
+              "f1": 0.8695652173913043
+            }
+          },
+          "macro_f1_fixed_four": 0.8713700010896807,
+          "macro_f1_present_gold": 0.8713700010896807,
+          "confusion_matrix_rows_gold_cols_prediction": [
+            [
+              8,
+              0,
+              2,
+              1
+            ],
+            [
+              0,
+              6,
+              0,
+              2
+            ],
+            [
+              0,
+              0,
+              11,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              10
+            ]
+          ],
+          "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+        },
+        "model": {
+          "n": 40,
+          "label_order": [
+            "order_status",
+            "return_request",
+            "human",
+            "clarify"
+          ],
+          "accuracy": 1.0,
+          "cohen_kappa": 1.0,
+          "kappa_kind": "human versus router/model; not two human annotators",
+          "per_class": {
+            "order_status": {
+              "support": 11,
+              "predicted": 11,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "return_request": {
+              "support": 8,
+              "predicted": 8,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "human": {
+              "support": 11,
+              "predicted": 11,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "clarify": {
+              "support": 10,
+              "predicted": 10,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1_fixed_four": 1.0,
+          "macro_f1_present_gold": 1.0,
+          "confusion_matrix_rows_gold_cols_prediction": [
+            [
+              11,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              8,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              11,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              10
+            ]
+          ],
+          "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+        },
+        "hybrid": {
+          "n": 40,
+          "label_order": [
+            "order_status",
+            "return_request",
+            "human",
+            "clarify"
+          ],
+          "accuracy": 1.0,
+          "cohen_kappa": 1.0,
+          "kappa_kind": "human versus router/model; not two human annotators",
+          "per_class": {
+            "order_status": {
+              "support": 11,
+              "predicted": 11,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "return_request": {
+              "support": 8,
+              "predicted": 8,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "human": {
+              "support": 11,
+              "predicted": 11,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "clarify": {
+              "support": 10,
+              "predicted": 10,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            }
+          },
+          "macro_f1_fixed_four": 1.0,
+          "macro_f1_present_gold": 1.0,
+          "confusion_matrix_rows_gold_cols_prediction": [
+            [
+              11,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              8,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              11,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              10
+            ]
+          ],
+          "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+        }
+      }
+    },
+    "ecd_redacted": {
+      "total_rows": 60,
+      "labeled_rows": 57,
+      "abstentions": 3,
+      "abstention_ids": [
+        "ecd-1018",
+        "ecd-0191",
+        "ecd-0556"
+      ],
+      "coverage": 0.95,
+      "gold_counts": {
+        "clarify": 50,
+        "order_status": 6,
+        "return_request": 1
+      },
+      "majority_baseline": {
+        "tied_classes": [
+          "clarify"
+        ],
+        "selected_class_fixed_order": "clarify",
+        "accuracy": 0.8771929824561403,
+        "description": "descriptive development majority, not a fitted final-test classifier",
+        "metrics": {
+          "n": 57,
+          "label_order": [
+            "order_status",
+            "return_request",
+            "human",
+            "clarify"
+          ],
+          "accuracy": 0.8771929824561403,
+          "cohen_kappa": 0.0,
+          "kappa_kind": "human versus router/model; not two human annotators",
+          "per_class": {
+            "order_status": {
+              "support": 6,
+              "predicted": 0,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "return_request": {
+              "support": 1,
+              "predicted": 0,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "human": {
+              "support": 0,
+              "predicted": 0,
+              "precision": null,
+              "recall": null,
+              "f1": null
+            },
+            "clarify": {
+              "support": 50,
+              "predicted": 57,
+              "precision": 0.8771929824561403,
+              "recall": 1.0,
+              "f1": 0.9345794392523364
+            }
+          },
+          "macro_f1_fixed_four": 0.2336448598130841,
+          "macro_f1_present_gold": 0.3115264797507788,
+          "confusion_matrix_rows_gold_cols_prediction": [
+            [
+              0,
+              0,
+              0,
+              6
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              50
+            ]
+          ],
+          "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+        }
+      },
+      "versions": {
+        "rule": {
+          "n": 57,
+          "label_order": [
+            "order_status",
+            "return_request",
+            "human",
+            "clarify"
+          ],
+          "accuracy": 0.8947368421052632,
+          "cohen_kappa": 0.569811320754717,
+          "kappa_kind": "human versus router/model; not two human annotators",
+          "per_class": {
+            "order_status": {
+              "support": 6,
+              "predicted": 9,
+              "precision": 0.5555555555555556,
+              "recall": 0.8333333333333334,
+              "f1": 0.6666666666666666
+            },
+            "return_request": {
+              "support": 1,
+              "predicted": 0,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "human": {
+              "support": 0,
+              "predicted": 0,
+              "precision": null,
+              "recall": null,
+              "f1": null
+            },
+            "clarify": {
+              "support": 50,
+              "predicted": 48,
+              "precision": 0.9583333333333334,
+              "recall": 0.92,
+              "f1": 0.9387755102040817
+            }
+          },
+          "macro_f1_fixed_four": 0.4013605442176871,
+          "macro_f1_present_gold": 0.5351473922902494,
+          "confusion_matrix_rows_gold_cols_prediction": [
+            [
+              5,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              1
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              4,
+              0,
+              0,
+              46
+            ]
+          ],
+          "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+        },
+        "model": {
+          "n": 57,
+          "label_order": [
+            "order_status",
+            "return_request",
+            "human",
+            "clarify"
+          ],
+          "accuracy": 0.8596491228070176,
+          "cohen_kappa": 0.5738317757009346,
+          "kappa_kind": "human versus router/model; not two human annotators",
+          "per_class": {
+            "order_status": {
+              "support": 6,
+              "predicted": 13,
+              "precision": 0.46153846153846156,
+              "recall": 1.0,
+              "f1": 0.631578947368421
+            },
+            "return_request": {
+              "support": 1,
+              "predicted": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "human": {
+              "support": 0,
+              "predicted": 1,
+              "precision": 0.0,
+              "recall": null,
+              "f1": 0.0
+            },
+            "clarify": {
+              "support": 50,
+              "predicted": 42,
+              "precision": 1.0,
+              "recall": 0.84,
+              "f1": 0.9130434782608695
+            }
+          },
+          "macro_f1_fixed_four": 0.6361556064073226,
+          "macro_f1_present_gold": 0.8482074752097635,
+          "confusion_matrix_rows_gold_cols_prediction": [
+            [
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              7,
+              0,
+              1,
+              42
+            ]
+          ],
+          "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+        },
+        "hybrid": {
+          "n": 57,
+          "label_order": [
+            "order_status",
+            "return_request",
+            "human",
+            "clarify"
+          ],
+          "accuracy": 0.8596491228070176,
+          "cohen_kappa": 0.5738317757009346,
+          "kappa_kind": "human versus router/model; not two human annotators",
+          "per_class": {
+            "order_status": {
+              "support": 6,
+              "predicted": 13,
+              "precision": 0.46153846153846156,
+              "recall": 1.0,
+              "f1": 0.631578947368421
+            },
+            "return_request": {
+              "support": 1,
+              "predicted": 1,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "human": {
+              "support": 0,
+              "predicted": 1,
+              "precision": 0.0,
+              "recall": null,
+              "f1": 0.0
+            },
+            "clarify": {
+              "support": 50,
+              "predicted": 42,
+              "precision": 1.0,
+              "recall": 0.84,
+              "f1": 0.9130434782608695
+            }
+          },
+          "macro_f1_fixed_four": 0.6361556064073226,
+          "macro_f1_present_gold": 0.8482074752097635,
+          "confusion_matrix_rows_gold_cols_prediction": [
+            [
+              6,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              1,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              0,
+              0
+            ],
+            [
+              7,
+              0,
+              1,
+              42
+            ]
+          ],
+          "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+        }
+      }
+    },
+    "combined": {
+      "total_rows": 100,
+      "labeled_rows": 97,
+      "abstentions": 3,
+      "abstention_ids": [
+        "ecd-1018",
+        "ecd-0191",
+        "ecd-0556"
+      ],
+      "coverage": 0.97,
+      "gold_counts": {
+        "order_status": 17,
+        "clarify": 60,
+        "human": 11,
+        "return_request": 9
+      },
+      "majority_baseline": {
+        "tied_classes": [
+          "clarify"
+        ],
+        "selected_class_fixed_order": "clarify",
+        "accuracy": 0.6185567010309279,
+        "description": "descriptive development majority, not a fitted final-test classifier",
+        "metrics": {
+          "n": 97,
+          "label_order": [
+            "order_status",
+            "return_request",
+            "human",
+            "clarify"
+          ],
+          "accuracy": 0.6185567010309279,
+          "cohen_kappa": 0.0,
+          "kappa_kind": "human versus router/model; not two human annotators",
+          "per_class": {
+            "order_status": {
+              "support": 17,
+              "predicted": 0,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "return_request": {
+              "support": 9,
+              "predicted": 0,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "human": {
+              "support": 11,
+              "predicted": 0,
+              "precision": null,
+              "recall": 0.0,
+              "f1": 0.0
+            },
+            "clarify": {
+              "support": 60,
+              "predicted": 97,
+              "precision": 0.6185567010309279,
+              "recall": 1.0,
+              "f1": 0.7643312101910829
+            }
+          },
+          "macro_f1_fixed_four": 0.1910828025477707,
+          "macro_f1_present_gold": 0.1910828025477707,
+          "confusion_matrix_rows_gold_cols_prediction": [
+            [
+              0,
+              0,
+              0,
+              17
+            ],
+            [
+              0,
+              0,
+              0,
+              9
+            ],
+            [
+              0,
+              0,
+              0,
+              11
+            ],
+            [
+              0,
+              0,
+              0,
+              60
+            ]
+          ],
+          "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+        }
+      },
+      "versions": {
+        "rule": {
+          "n": 97,
+          "label_order": [
+            "order_status",
+            "return_request",
+            "human",
+            "clarify"
+          ],
+          "accuracy": 0.8865979381443299,
+          "cohen_kappa": 0.7972639179175375,
+          "kappa_kind": "human versus router/model; not two human annotators",
+          "per_class": {
+            "order_status": {
+              "support": 17,
+              "predicted": 17,
+              "precision": 0.7647058823529411,
+              "recall": 0.7647058823529411,
+              "f1": 0.7647058823529411
+            },
+            "return_request": {
+              "support": 9,
+              "predicted": 6,
+              "precision": 1.0,
+              "recall": 0.6666666666666666,
+              "f1": 0.8
+            },
+            "human": {
+              "support": 11,
+              "predicted": 13,
+              "precision": 0.8461538461538461,
+              "recall": 1.0,
+              "f1": 0.9166666666666666
+            },
+            "clarify": {
+              "support": 60,
+              "predicted": 61,
+              "precision": 0.9180327868852459,
+              "recall": 0.9333333333333333,
+              "f1": 0.9256198347107438
+            }
+          },
+          "macro_f1_fixed_four": 0.8517480959325879,
+          "macro_f1_present_gold": 0.8517480959325879,
+          "confusion_matrix_rows_gold_cols_prediction": [
+            [
+              13,
+              0,
+              2,
+              2
+            ],
+            [
+              0,
+              6,
+              0,
+              3
+            ],
+            [
+              0,
+              0,
+              11,
+              0
+            ],
+            [
+              4,
+              0,
+              0,
+              56
+            ]
+          ],
+          "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+        },
+        "model": {
+          "n": 97,
+          "label_order": [
+            "order_status",
+            "return_request",
+            "human",
+            "clarify"
+          ],
+          "accuracy": 0.9175257731958762,
+          "cohen_kappa": 0.8630910374029639,
+          "kappa_kind": "human versus router/model; not two human annotators",
+          "per_class": {
+            "order_status": {
+              "support": 17,
+              "predicted": 24,
+              "precision": 0.7083333333333334,
+              "recall": 1.0,
+              "f1": 0.8292682926829268
+            },
+            "return_request": {
+              "support": 9,
+              "predicted": 9,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "human": {
+              "support": 11,
+              "predicted": 12,
+              "precision": 0.9166666666666666,
+              "recall": 1.0,
+              "f1": 0.9565217391304348
+            },
+            "clarify": {
+              "support": 60,
+              "predicted": 52,
+              "precision": 1.0,
+              "recall": 0.8666666666666667,
+              "f1": 0.9285714285714286
+            }
+          },
+          "macro_f1_fixed_four": 0.9285903650961975,
+          "macro_f1_present_gold": 0.9285903650961975,
+          "confusion_matrix_rows_gold_cols_prediction": [
+            [
+              17,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              9,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              11,
+              0
+            ],
+            [
+              7,
+              0,
+              1,
+              52
+            ]
+          ],
+          "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+        },
+        "hybrid": {
+          "n": 97,
+          "label_order": [
+            "order_status",
+            "return_request",
+            "human",
+            "clarify"
+          ],
+          "accuracy": 0.9175257731958762,
+          "cohen_kappa": 0.8630910374029639,
+          "kappa_kind": "human versus router/model; not two human annotators",
+          "per_class": {
+            "order_status": {
+              "support": 17,
+              "predicted": 24,
+              "precision": 0.7083333333333334,
+              "recall": 1.0,
+              "f1": 0.8292682926829268
+            },
+            "return_request": {
+              "support": 9,
+              "predicted": 9,
+              "precision": 1.0,
+              "recall": 1.0,
+              "f1": 1.0
+            },
+            "human": {
+              "support": 11,
+              "predicted": 12,
+              "precision": 0.9166666666666666,
+              "recall": 1.0,
+              "f1": 0.9565217391304348
+            },
+            "clarify": {
+              "support": 60,
+              "predicted": 52,
+              "precision": 1.0,
+              "recall": 0.8666666666666667,
+              "f1": 0.9285714285714286
+            }
+          },
+          "macro_f1_fixed_four": 0.9285903650961975,
+          "macro_f1_present_gold": 0.9285903650961975,
+          "confusion_matrix_rows_gold_cols_prediction": [
+            [
+              17,
+              0,
+              0,
+              0
+            ],
+            [
+              0,
+              9,
+              0,
+              0
+            ],
+            [
+              0,
+              0,
+              11,
+              0
+            ],
+            [
+              7,
+              0,
+              1,
+              52
+            ]
+          ],
+          "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+        }
+      }
+    }
+  },
+  "disagreements": [
+    {
+      "id": "ecd-0266",
+      "source": "ecd_redacted",
+      "gold": "clarify",
+      "rule": "order_status",
+      "model": "order_status",
+      "hybrid": "order_status",
+      "wrong_versions": [
+        "rule",
+        "model",
+        "hybrid"
+      ],
+      "review_priority": 2,
+      "proposed_cause": "clarify_vs_executable_action_boundary"
+    },
+    {
+      "id": "ecd-0294",
+      "source": "ecd_redacted",
+      "gold": "clarify",
+      "rule": "order_status",
+      "model": "order_status",
+      "hybrid": "order_status",
+      "wrong_versions": [
+        "rule",
+        "model",
+        "hybrid"
+      ],
+      "review_priority": 2,
+      "proposed_cause": "clarify_vs_executable_action_boundary"
+    },
+    {
+      "id": "ecd-1069",
+      "source": "ecd_redacted",
+      "gold": "clarify",
+      "rule": "order_status",
+      "model": "order_status",
+      "hybrid": "order_status",
+      "wrong_versions": [
+        "rule",
+        "model",
+        "hybrid"
+      ],
+      "review_priority": 2,
+      "proposed_cause": "clarify_vs_executable_action_boundary"
+    },
+    {
+      "id": "ecd-0175",
+      "source": "ecd_redacted",
+      "gold": "clarify",
+      "rule": "clarify",
+      "model": "order_status",
+      "hybrid": "order_status",
+      "wrong_versions": [
+        "model",
+        "hybrid"
+      ],
+      "review_priority": 2,
+      "proposed_cause": "clarify_vs_executable_action_boundary"
+    },
+    {
+      "id": "ecd-0316",
+      "source": "ecd_redacted",
+      "gold": "clarify",
+      "rule": "clarify",
+      "model": "order_status",
+      "hybrid": "order_status",
+      "wrong_versions": [
+        "model",
+        "hybrid"
+      ],
+      "review_priority": 2,
+      "proposed_cause": "clarify_vs_executable_action_boundary"
+    },
+    {
+      "id": "ecd-0980",
+      "source": "ecd_redacted",
+      "gold": "clarify",
+      "rule": "clarify",
+      "model": "order_status",
+      "hybrid": "order_status",
+      "wrong_versions": [
+        "model",
+        "hybrid"
+      ],
+      "review_priority": 2,
+      "proposed_cause": "clarify_vs_executable_action_boundary"
+    },
+    {
+      "id": "ecd-1103",
+      "source": "ecd_redacted",
+      "gold": "clarify",
+      "rule": "clarify",
+      "model": "human",
+      "hybrid": "human",
+      "wrong_versions": [
+        "model",
+        "hybrid"
+      ],
+      "review_priority": 2,
+      "proposed_cause": "clarify_vs_executable_action_boundary"
+    },
+    {
+      "id": "ecd-1169",
+      "source": "ecd_redacted",
+      "gold": "clarify",
+      "rule": "clarify",
+      "model": "order_status",
+      "hybrid": "order_status",
+      "wrong_versions": [
+        "model",
+        "hybrid"
+      ],
+      "review_priority": 2,
+      "proposed_cause": "clarify_vs_executable_action_boundary"
+    },
+    {
+      "id": "ecd-0370",
+      "source": "ecd_redacted",
+      "gold": "clarify",
+      "rule": "order_status",
+      "model": "clarify",
+      "hybrid": "clarify",
+      "wrong_versions": [
+        "rule"
+      ],
+      "review_priority": 2,
+      "proposed_cause": "clarify_vs_executable_action_boundary"
+    },
+    {
+      "id": "ecd-0092",
+      "source": "ecd_redacted",
+      "gold": "return_request",
+      "rule": "clarify",
+      "model": "return_request",
+      "hybrid": "return_request",
+      "wrong_versions": [
+        "rule"
+      ],
+      "review_priority": 1,
+      "proposed_cause": "context_or_business_action_interpretation"
+    },
+    {
+      "id": "ecd-1072",
+      "source": "ecd_redacted",
+      "gold": "order_status",
+      "rule": "clarify",
+      "model": "order_status",
+      "hybrid": "order_status",
+      "wrong_versions": [
+        "rule"
+      ],
+      "review_priority": 1,
+      "proposed_cause": "context_or_business_action_interpretation"
+    },
+    {
+      "id": "p2-0127",
+      "source": "p2_synthetic",
+      "gold": "order_status",
+      "rule": "human",
+      "model": "order_status",
+      "hybrid": "order_status",
+      "wrong_versions": [
+        "rule"
+      ],
+      "review_priority": 1,
+      "proposed_cause": "negation_or_quotation"
+    },
+    {
+      "id": "p2-0165",
+      "source": "p2_synthetic",
+      "gold": "order_status",
+      "rule": "clarify",
+      "model": "order_status",
+      "hybrid": "order_status",
+      "wrong_versions": [
+        "rule"
+      ],
+      "review_priority": 1,
+      "proposed_cause": "negation_or_quotation"
+    },
+    {
+      "id": "p2-0296",
+      "source": "p2_synthetic",
+      "gold": "order_status",
+      "rule": "human",
+      "model": "order_status",
+      "hybrid": "order_status",
+      "wrong_versions": [
+        "rule"
+      ],
+      "review_priority": 1,
+      "proposed_cause": "negation_or_quotation"
+    },
+    {
+      "id": "p2-0332",
+      "source": "p2_synthetic",
+      "gold": "return_request",
+      "rule": "clarify",
+      "model": "return_request",
+      "hybrid": "return_request",
+      "wrong_versions": [
+        "rule"
+      ],
+      "review_priority": 1,
+      "proposed_cause": "context_or_business_action_interpretation"
+    },
+    {
+      "id": "p2-0559",
+      "source": "p2_synthetic",
+      "gold": "return_request",
+      "rule": "clarify",
+      "model": "return_request",
+      "hybrid": "return_request",
+      "wrong_versions": [
+        "rule"
+      ],
+      "review_priority": 1,
+      "proposed_cause": "negation_or_quotation"
+    }
+  ],
+  "disagreement_causes": {
+    "clarify_vs_executable_action_boundary": 9,
+    "context_or_business_action_interpretation": 3,
+    "negation_or_quotation": 4
+  },
+  "clarify_subtype_proposal": {
+    "status": "awaiting_owner_confirmation; not applied to reported main-label metrics",
+    "counts": {
+      "social_ack": 14,
+      "insufficient_or_ambiguous": 15,
+      "out_of_scope": 31
+    },
+    "by_source": {
+      "p2_synthetic": {
+        "insufficient_or_ambiguous": 9,
+        "out_of_scope": 1
+      },
+      "ecd_redacted": {
+        "social_ack": 14,
+        "insufficient_or_ambiguous": 6,
+        "out_of_scope": 30
+      }
+    },
+    "rules": {
+      "out_of_scope": "notes mention scope/pre-sales/bargaining/gifts/discounts/product queries/quantity/specifications",
+      "social_ack": "notes mention thanks/chat/closing/acknowledgement or no-new-action order/plan notifications",
+      "insufficient_or_ambiguous": "remaining clarify notes: insufficient request, negative-only, ambiguity or no main intent"
+    },
+    "boundary_ids": [
+      "ecd-0207",
+      "ecd-0313",
+      "ecd-0560",
+      "ecd-0370",
+      "ecd-0152"
+    ],
+    "note": "proposed diagnostic taxonomy only, root gold unchanged; confirmation before use in formal reporting"
+  }
+}

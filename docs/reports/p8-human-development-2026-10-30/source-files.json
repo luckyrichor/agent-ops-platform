@@ -1,0 +1,8 @@
+{
+  "src/agent_ops/routing_metrics.py": "6a9662bd2366782e6221d9ff59274f32f4e152d4a7944363a1d0e00d6e23d374",
+  "scripts/analyze-p8-human-development.py": "3f29aa3693aaa003788e8f7730d6713dec296ef88a41407db86c7a62e9f65760",
+  "tests/test_routing_metrics.py": "3f95c57a7112c1755165e5ce076b97722fbfb4c3784ce29103b56ddf153f67ff",
+  "src/agent_ops/support.py": "7b6d0464ec0b6187db459e29c75c89a83aa593b468d951c076135772cad88d1b",
+  "src/agent_ops/routing_evaluation.py": "7449ecbf4d0a84243e644ea572b1e604da6916f619730d8696daf1699eaefa1b",
+  "src/agent_ops/p8_pilot.py": "289ca4793ac69a9ce47d2f8cbd0874f23f6867bbdade9b338de9653166fe444f"
+}
