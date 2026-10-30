@@ -10,7 +10,7 @@ Agent 应用与可观测评测平台。电商场景的多 Agent 任务拆解、�
 
 三个月求职计划六项目之一（原编号 ③），对应岗位 **05、07、10、11、14**，另含 **08** 作为子方向。总计划见 [workplan-docs](https://github.com/luckyrichor/workplan-docs)，岗位原文以那里的 `岗位要求原文.md` 为唯一依据。
 
-**当前状态：P8唯一一次最终评测完成（198有效/2弃权），冻结b90c201/tag p8-routing-freeze-20261030未改。ECD129有效：规则一致率72.87%/macroF1 .4922，模型65.89%/.6038，混合63.57%/.5898；多数类67.44%，不能声称模型/混合一致率超过基线。合成69模型94.20%但固定四类macroF1 .4815，缺order_status且clarify 0/3命中；不合并成绩。human稀有样本2条、人工覆盖未达到每类约30。198请求/0失败重试限流、84534 token/高峰usage估价0.020364036美元、账单未核验。报告docs/reports/p8-final含完整P/R/F1、Wilson分母、矩阵、kappa。用户表600只.local；一次性台账completed，禁止重跑或改策略追分。冻结前265测试，本次离线19通过；等待负责人验收P8，P9/P10未开始。**
+**当前状态：P8唯一一次最终评测完成（198有效/2弃权），冻结b90c201/tag p8-routing-freeze-20261030未改。ECD129有效：规则一致率72.87%/macroF1 .4922，模型65.89%/.6038，混合63.57%/.5898；多数类67.44%，不能声称模型/混合一致率超过基线。合成69模型94.20%但固定四类macroF1 .4815，缺order_status且clarify 0/3命中；不合并成绩。human稀有样本2条、人工覆盖未达到每类约30。198请求/0失败重试限流、84534 token/高峰usage估价0.020364036美元、账单未核验。报告docs/reports/p8-final含完整P/R/F1、Wilson分母、矩阵、kappa。用户表仅.local、权限600；一次性台账completed，禁止重跑或改策略追分。冻结前265测试，本次离线19通过；等待负责人验收P8，P9/P10未开始。**
 
 ## 分工模式：偏产出
 
@@ -586,4 +586,4 @@ clarify待确认提案60条：信息不足/意图未定15（P2 9/ECD6），超�
 
 最终指标按ECD/合成分报，不报合并分。ECD金标order26/return14/human2/clarify87；合成order0/return26/human40/clarify3。ECD多数类67.44%，模型/混合一致率低于该基线；模型macroF1高于规则，但不能说全面提升。合成模型clarify 0/3，固定四类macroF1与有金标类macro分列。每类P/R附Wilson95%成功数/分母，NA不造0，human2/2召回下界仅.3424，不称可靠。600候选池权重不代表完整ECD或真实总体，同源合成/银标选择偏差保留。
 
-新增scripts/report-p8-final.py仅离线读取completed结果/核对冻结与报告摘要，生成多数类基线、费用元数据和可读报告，不重跑规则或调用模型。本次离线保护/指标19测试通过、报告脚本ruff通过；冻结前完整265/ruff/mypy38保持原证据。最终报告docs/reports/p8-final/README.md、metrics.json与summary.json；不根据最终错例改冻结策略/提示/阈值，不追加样本重评，不进入P9。下一步等待负责人P8验收/后续决定。飞书待同步：2026-10-30 P8最终单次成绩、失败与覆盖限制。
+新增scripts/report-p8-final.py仅离线读取completed结果/核对冻结与报告摘要，生成多数类基线、费用元数据和可读报告，不重跑规则或调用模型。本次离线保护/指标19测试通过、报告脚本ruff通过；冻结前完整265/ruff/mypy38保持原证据。最终报告docs/reports/p8-final/README.md、metrics.json与summary.json；不根据最终错例改冻结策略/提示/阈值，不追加样本重评，不进入P9。下一步等待负责人P8验收/后续决定。飞书已同步：2026-10-30 P8最终单次成绩及限制已追加开发记录 https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf ；完整最终报告 https://kcn0pbn0hwo0.feishu.cn/wiki/RGSSwr9uNid1f3kGAcxcgXYfnLg ，归档我的文档库/WorkPlan/agent-ops-platform，codex profile/--as user。项目父节点和两篇正文含679298b/84534及交叉链接的回查通过。最终评测结果已推送679298b；等待负责人验收，不重跑。
