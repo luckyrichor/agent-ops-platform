@@ -1,0 +1,18 @@
+{
+  "pytest": {
+    "passed": 240,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 90.328
+  },
+  "ruff": "passed; src/tests/pilot script",
+  "strict_mypy_source_files": 33,
+  "targeted_pilot_deepseek_tests": 8,
+  "frontend": "not rerun; no frontend changes",
+  "live_model_requests": 50,
+  "cache_replay_new_requests": 0,
+  "formal_dataset_or_holdout": "not implemented; pending proposal approval",
+  "full_model_calls": "not authorized or executed",
+  "capacity": "not verified"
+}

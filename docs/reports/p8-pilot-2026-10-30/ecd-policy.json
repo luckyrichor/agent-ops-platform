@@ -1,0 +1,15 @@
+{
+  "checked_on": "2026-10-30",
+  "upstream_readme": "https://github.com/cooelf/DeepUtteranceAggregation/blob/master/README.md",
+  "upstream_paper": "https://aclanthology.org/C18-1317.pdf#page=6",
+  "paper_section": "4.1, printed page 3745, footnote 6",
+  "upstream_anonymization_statement": true,
+  "statement_scope": "authors state desensitization, anonymization and partner consent; not independently verified by this project",
+  "explicit_readme_anonymization_clause_found": false,
+  "local_complete_pii_verification": "not_completed",
+  "independent_dataset_zip_license": "not_explicitly_identified",
+  "third_party_processing": "pending_owner_decision; not authorized",
+  "ecd_rows_sent_to_deepseek": 0,
+  "ecd_silver_before_approval": "local rule_proxy only or deferred; never final truth",
+  "redistribution": "not authorized by owner"
+}

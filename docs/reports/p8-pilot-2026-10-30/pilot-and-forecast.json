@@ -1,0 +1,172 @@
+{
+  "pilot": {
+    "requested_items": 50,
+    "attempted_items": 50,
+    "valid_answers": 50,
+    "failed_or_invalid": 0,
+    "failure_rate": 0.0,
+    "network_requests": 50,
+    "retries": 0,
+    "rate_limits": 0,
+    "cache_hits": 0,
+    "elapsed_wall_seconds": 5.720535094849765,
+    "average_observed_seconds": 2.683654952775687,
+    "average_original_elapsed_seconds": 2.683011144641787,
+    "average_prompt_tokens": 306.6,
+    "average_completion_tokens": 14.54,
+    "average_total_tokens": 321.14000000000004,
+    "total_prompt_tokens": 15330,
+    "total_completion_tokens": 727,
+    "returned_models": [
+      "deepseek-flash"
+    ],
+    "requested_model": "deepseek-flash",
+    "temperature": 0,
+    "called_at": [
+      "2026-10-30T00:46:04.615779+00:00",
+      "2026-10-30T00:46:09.697695+00:00"
+    ],
+    "reported_at": "2026-10-30T00:46:09.698889+00:00",
+    "dataset_digest": "590602c170248fa0bab089307876adfea1aa96023555e06943b1a816114144dd",
+    "classifier_prompt_sha256": "5daf8f82370c2f4be5f21fa728cb75be9d46d0129624dc52233ba32be71fa53e",
+    "accuracy": "not measured: no independent human labels",
+    "latency_definition": "includes per-item semaphore queue, retries and HTTP; cache reruns separated",
+    "billing_note": "usage covers returned responses; timeout/lost-response charges may be unknown"
+  },
+  "usage_totals": {
+    "prompt_tokens": 15330,
+    "completion_tokens": 727,
+    "total_tokens": 16057,
+    "prompt_cache_hit_tokens": 2560,
+    "prompt_cache_miss_tokens": 12770
+  },
+  "cache_replay": {
+    "requested_items": 50,
+    "attempted_items": 50,
+    "valid_answers": 50,
+    "failed_or_invalid": 0,
+    "failure_rate": 0.0,
+    "network_requests": 0,
+    "retries": 0,
+    "rate_limits": 0,
+    "cache_hits": 50,
+    "elapsed_wall_seconds": 0.05590409506112337,
+    "average_observed_seconds": 0.0004354623798280954,
+    "average_original_elapsed_seconds": 2.683011144641787,
+    "average_prompt_tokens": 306.6,
+    "average_completion_tokens": 14.54,
+    "average_total_tokens": 321.14000000000004,
+    "total_prompt_tokens": 15330,
+    "total_completion_tokens": 727,
+    "returned_models": [
+      "deepseek-flash"
+    ],
+    "requested_model": "deepseek-flash",
+    "temperature": 0,
+    "called_at": [
+      "2026-10-30T00:46:04.615779+00:00",
+      "2026-10-30T00:46:09.697695+00:00"
+    ],
+    "reported_at": "2026-10-30T00:47:57.028673+00:00",
+    "dataset_digest": "590602c170248fa0bab089307876adfea1aa96023555e06943b1a816114144dd",
+    "classifier_prompt_sha256": "5daf8f82370c2f4be5f21fa728cb75be9d46d0129624dc52233ba32be71fa53e",
+    "accuracy": "not measured: no independent human labels",
+    "latency_definition": "includes per-item semaphore queue, retries and HTTP; cache reruns separated",
+    "billing_note": "usage covers returned responses; timeout/lost-response charges may be unknown"
+  },
+  "pricing_source": "https://api-docs.deepseek.com/quick_start/pricing/",
+  "pricing_checked_on": "2026-10-30",
+  "price_units": "USD / million tokens",
+  "price_rates": {
+    "input_miss_peak": 0.3,
+    "input_hit_peak": 0.006,
+    "output_peak": 1.2,
+    "input_miss_offpeak": 0.15,
+    "input_hit_offpeak": 0.003,
+    "output_offpeak": 0.6
+  },
+  "pilot_estimated_usd_offpeak_observed_token_cache": 0.00235938,
+  "forecast": {
+    "rule_2000": {
+      "provider_requests": 0,
+      "input_tokens": 0,
+      "output_tokens": 0,
+      "total_tokens": 0,
+      "usd_peak_no_provider_cache": 0.0,
+      "usd_offpeak_no_provider_cache": 0.0
+    },
+    "model_2000": {
+      "provider_requests": 2000,
+      "input_tokens": 613200,
+      "output_tokens": 29080,
+      "total_tokens": 642280,
+      "usd_peak_no_provider_cache": 0.218856,
+      "usd_offpeak_no_provider_cache": 0.109428
+    },
+    "hybrid_2000_without_application_cache_upper": {
+      "provider_requests": 2000,
+      "input_tokens": 613200,
+      "output_tokens": 29080,
+      "total_tokens": 642280,
+      "usd_peak_no_provider_cache": 0.218856,
+      "usd_offpeak_no_provider_cache": 0.109428
+    },
+    "all_three_versions_shared_model_hybrid_cache_upper": {
+      "provider_requests": 2000,
+      "input_tokens": 613200,
+      "output_tokens": 29080,
+      "total_tokens": 642280,
+      "usd_peak_no_provider_cache": 0.218856,
+      "usd_offpeak_no_provider_cache": 0.109428
+    },
+    "all_three_versions_without_application_cache_upper": {
+      "provider_requests": 4000,
+      "input_tokens": 1226400,
+      "output_tokens": 58160,
+      "total_tokens": 1284560,
+      "usd_peak_no_provider_cache": 0.437712,
+      "usd_offpeak_no_provider_cache": 0.218856
+    },
+    "shared_cache_3_attempt_ceiling": {
+      "provider_requests": 6000,
+      "input_tokens": 1839600,
+      "output_tokens": 87240,
+      "total_tokens": 1926840,
+      "usd_peak_no_provider_cache": 0.656568,
+      "usd_offpeak_no_provider_cache": 0.328284
+    },
+    "without_shared_cache_3_attempt_ceiling": {
+      "provider_requests": 12000,
+      "input_tokens": 3679200,
+      "output_tokens": 174480,
+      "total_tokens": 3853680,
+      "usd_peak_no_provider_cache": 1.313136,
+      "usd_offpeak_no_provider_cache": 0.656568
+    },
+    "human_final_200_three_versions_shared_cache_upper": {
+      "provider_requests": 200,
+      "input_tokens": 61320,
+      "output_tokens": 2908,
+      "total_tokens": 64228,
+      "usd_peak_no_provider_cache": 0.0218856,
+      "usd_offpeak_no_provider_cache": 0.0109428
+    },
+    "silver_1700_classifier_length_proxy_only": {
+      "provider_requests": 1700,
+      "input_tokens": 521220,
+      "output_tokens": 24718,
+      "total_tokens": 545938,
+      "usd_peak_no_provider_cache": 0.1860276,
+      "usd_offpeak_no_provider_cache": 0.0930138
+    }
+  },
+  "limits": [
+    "No human labels: no route accuracy measured",
+    "50 template-derived P2 synthetic messages do not measure real ECD token lengths",
+    "Forecast is conditional, not approved or executed; maximum hybrid model fraction=1",
+    "Silver prompt has not been called: its estimate reuses classifier lengths as a proxy only",
+    "Observed latency includes queue time; not a full-scale wall-time forecast",
+    "Provider invoice and immutable underlying model version unverified",
+    "Rate/capacity load testing not performed"
+  ]
+}

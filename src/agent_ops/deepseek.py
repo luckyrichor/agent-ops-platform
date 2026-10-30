@@ -6,6 +6,7 @@ import os
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
+from time import perf_counter
 from typing import Any
 
 import httpx
@@ -91,6 +92,7 @@ class DeepSeekEvaluation:
                 return cached
             if not self.allow_network:
                 raise EvaluationUnavailable('MODEL_CALL_NOT_APPROVED')
+            started = perf_counter()
             try:
                 async with asyncio.timeout(self.config.timeout_seconds):
                     async with self.slots:
@@ -102,7 +104,8 @@ class DeepSeekEvaluation:
                           ensure_ascii=False, sort_keys=True).encode()).hexdigest(),
                           'characters': sum(len(m.get('content','')) for m in messages)},
                       'requested_model': self.config.model,
-                      'called_at': datetime.now(UTC).isoformat(), **result}
+                      'called_at': datetime.now(UTC).isoformat(),
+                      'elapsed_seconds': perf_counter()-started, **result}
             # Complete response only; never persist credentials or HTTP headers.
             temporary = path.with_suffix('.tmp')
             fd = os.open(temporary, os.O_WRONLY|os.O_CREAT|os.O_EXCL, 0o600)

@@ -1,0 +1,8 @@
+{
+  "src/agent_ops/deepseek.py": "ca34ff1dda36b6515532f662b3029e2e5d8bc9e66a6d63b8e619d9e1c5527b7d",
+  "src/agent_ops/p8_pilot.py": "289ca4793ac69a9ce47d2f8cbd0874f23f6867bbdade9b338de9653166fe444f",
+  "scripts/run-p8-pilot.py": "b93ac857e3b33540435892b688ff312ad60466de3fd4a87a8eb0c1fdc8eab947",
+  "tests/test_deepseek.py": "0384eed3b42204e35b74492016d7def0a200780a6440a2ba5dbe80a86cf5032b",
+  "tests/test_p8_pilot.py": "af74bf6135c2147a9c1e0c6713d91c37d36b24227d8948f726d3165ea46e20da",
+  "src/agent_ops/planner.py": "e220eb4e82dd1eb82e868a60d2ed7df9602ee748131abcd2bbbf7566ea44b7c4"
+}
