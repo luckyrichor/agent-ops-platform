@@ -502,4 +502,4 @@ ECD补查到作者论文§4.1第3745页脚注6确有脱敏匿名化/合作方同
 
 最终pytest240通过（2既有警告、90.33秒）、ruff、strict mypy33文件、定向8项通过。只有初轮pilot脚本ruff BLE001，终端异常脱敏边界做局部说明后通过；真实调用无失败返工。前端/运行中的导购配置未改，前端检查本轮未重跑，容量/性能未验证，P10/S3未做。运行证据与费用报告见docs/reports/p8-pilot-2026-10-30；后续只等负责人看小样、批准v2/全量和ECD范围，不自行新增调用。
 
-飞书待同步：2026-10-30 P8小样实测、费用、ECD作者声明补充和方案v2；复用既有项目目录。
+飞书已同步：2026-10-30小样实测、费用及v2已追加开发记录 https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf ；新方案v2 https://kcn0pbn0hwo0.feishu.cn/wiki/HoD6wuTmsi0HCqkUnuUczT76noL ，位于我的文档库/WorkPlan/agent-ops-platform，codex profile/--as user；父节点及两篇含9aeb9f1、小样token和开发记录含240的正文回读通过。实现/方案/聚合证据已推送9aeb9f1。v1只追加指向v2的说明，历史正文保留。全量与正式v2阶段仍等待负责人确认。
