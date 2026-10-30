@@ -98,7 +98,7 @@ async def test_development_worker_limit_and_model_hybrid_share_classification(tm
     import runpy
     from types import SimpleNamespace
 
-    from agent_ops.p8_pilot import SILVER_PROMPT
+    from agent_ops.routing_policy import SILVER_PROMPT
     module=runpy.run_path('scripts/run-p8-development.py',run_name='fixture_runner')
     rows=[]
     for source,n in [('p2_synthetic',800),('ecd_redacted',1200)]:

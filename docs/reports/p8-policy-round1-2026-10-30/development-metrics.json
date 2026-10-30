@@ -1,0 +1,1648 @@
+{
+  "purpose": "development diagnostics only; no combined97 accuracy",
+  "round": 1,
+  "max_rounds": 3,
+  "reason": "carrier consultation/designation/change is not existing fulfillment lookup",
+  "groups": {
+    "p2_synthetic": {
+      "n": 40,
+      "versions": {
+        "rule": {
+          "before": {
+            "n": 40,
+            "prediction_failures": 0,
+            "prediction_label_order": [
+              "order_status",
+              "return_request",
+              "human",
+              "clarify"
+            ],
+            "label_order": [
+              "order_status",
+              "return_request",
+              "human",
+              "clarify"
+            ],
+            "accuracy": 0.875,
+            "cohen_kappa": 0.8320738874895046,
+            "kappa_kind": "human versus router/model; not two human annotators",
+            "per_class": {
+              "order_status": {
+                "support": 11,
+                "predicted": 8,
+                "precision": 1.0,
+                "recall": 0.7272727272727273,
+                "f1": 0.8421052631578947,
+                "precision_wilson": {
+                  "successes": 8,
+                  "n": 8,
+                  "confidence": 0.95,
+                  "low": 0.6755924351161198,
+                  "high": 1
+                },
+                "recall_wilson": {
+                  "successes": 8,
+                  "n": 11,
+                  "confidence": 0.95,
+                  "low": 0.43435469882387084,
+                  "high": 0.902539407099751
+                }
+              },
+              "return_request": {
+                "support": 8,
+                "predicted": 6,
+                "precision": 1.0,
+                "recall": 0.75,
+                "f1": 0.8571428571428571,
+                "precision_wilson": {
+                  "successes": 6,
+                  "n": 6,
+                  "confidence": 0.95,
+                  "low": 0.6096657120978346,
+                  "high": 1
+                },
+                "recall_wilson": {
+                  "successes": 6,
+                  "n": 8,
+                  "confidence": 0.95,
+                  "low": 0.40927543031016883,
+                  "high": 0.9285207872478909
+                }
+              },
+              "human": {
+                "support": 11,
+                "predicted": 13,
+                "precision": 0.8461538461538461,
+                "recall": 1.0,
+                "f1": 0.9166666666666666,
+                "precision_wilson": {
+                  "successes": 11,
+                  "n": 13,
+                  "confidence": 0.95,
+                  "low": 0.5776536898051745,
+                  "high": 0.9567418216419186
+                },
+                "recall_wilson": {
+                  "successes": 11,
+                  "n": 11,
+                  "confidence": 0.95,
+                  "low": 0.7411670330319684,
+                  "high": 1
+                }
+              },
+              "clarify": {
+                "support": 10,
+                "predicted": 13,
+                "precision": 0.7692307692307693,
+                "recall": 1.0,
+                "f1": 0.8695652173913043,
+                "precision_wilson": {
+                  "successes": 10,
+                  "n": 13,
+                  "confidence": 0.95,
+                  "low": 0.49743624053272495,
+                  "high": 0.9182047128150143
+                },
+                "recall_wilson": {
+                  "successes": 10,
+                  "n": 10,
+                  "confidence": 0.95,
+                  "low": 0.7224672001371107,
+                  "high": 0.9999999999999999
+                }
+              }
+            },
+            "macro_f1_fixed_four": 0.8713700010896807,
+            "macro_f1_present_gold": 0.8713700010896807,
+            "confusion_matrix_rows_gold_cols_prediction": [
+              [
+                8,
+                0,
+                2,
+                1
+              ],
+              [
+                0,
+                6,
+                0,
+                2
+              ],
+              [
+                0,
+                0,
+                11,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                10
+              ]
+            ],
+            "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+          },
+          "after": {
+            "n": 40,
+            "prediction_failures": 0,
+            "prediction_label_order": [
+              "order_status",
+              "return_request",
+              "human",
+              "clarify"
+            ],
+            "label_order": [
+              "order_status",
+              "return_request",
+              "human",
+              "clarify"
+            ],
+            "accuracy": 0.875,
+            "cohen_kappa": 0.8320738874895046,
+            "kappa_kind": "human versus router/model; not two human annotators",
+            "per_class": {
+              "order_status": {
+                "support": 11,
+                "predicted": 8,
+                "precision": 1.0,
+                "recall": 0.7272727272727273,
+                "f1": 0.8421052631578947,
+                "precision_wilson": {
+                  "successes": 8,
+                  "n": 8,
+                  "confidence": 0.95,
+                  "low": 0.6755924351161198,
+                  "high": 1
+                },
+                "recall_wilson": {
+                  "successes": 8,
+                  "n": 11,
+                  "confidence": 0.95,
+                  "low": 0.43435469882387084,
+                  "high": 0.902539407099751
+                }
+              },
+              "return_request": {
+                "support": 8,
+                "predicted": 6,
+                "precision": 1.0,
+                "recall": 0.75,
+                "f1": 0.8571428571428571,
+                "precision_wilson": {
+                  "successes": 6,
+                  "n": 6,
+                  "confidence": 0.95,
+                  "low": 0.6096657120978346,
+                  "high": 1
+                },
+                "recall_wilson": {
+                  "successes": 6,
+                  "n": 8,
+                  "confidence": 0.95,
+                  "low": 0.40927543031016883,
+                  "high": 0.9285207872478909
+                }
+              },
+              "human": {
+                "support": 11,
+                "predicted": 13,
+                "precision": 0.8461538461538461,
+                "recall": 1.0,
+                "f1": 0.9166666666666666,
+                "precision_wilson": {
+                  "successes": 11,
+                  "n": 13,
+                  "confidence": 0.95,
+                  "low": 0.5776536898051745,
+                  "high": 0.9567418216419186
+                },
+                "recall_wilson": {
+                  "successes": 11,
+                  "n": 11,
+                  "confidence": 0.95,
+                  "low": 0.7411670330319684,
+                  "high": 1
+                }
+              },
+              "clarify": {
+                "support": 10,
+                "predicted": 13,
+                "precision": 0.7692307692307693,
+                "recall": 1.0,
+                "f1": 0.8695652173913043,
+                "precision_wilson": {
+                  "successes": 10,
+                  "n": 13,
+                  "confidence": 0.95,
+                  "low": 0.49743624053272495,
+                  "high": 0.9182047128150143
+                },
+                "recall_wilson": {
+                  "successes": 10,
+                  "n": 10,
+                  "confidence": 0.95,
+                  "low": 0.7224672001371107,
+                  "high": 0.9999999999999999
+                }
+              }
+            },
+            "macro_f1_fixed_four": 0.8713700010896807,
+            "macro_f1_present_gold": 0.8713700010896807,
+            "confusion_matrix_rows_gold_cols_prediction": [
+              [
+                8,
+                0,
+                2,
+                1
+              ],
+              [
+                0,
+                6,
+                0,
+                2
+              ],
+              [
+                0,
+                0,
+                11,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                10
+              ]
+            ],
+            "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+          }
+        },
+        "model": {
+          "before": {
+            "n": 40,
+            "prediction_failures": 0,
+            "prediction_label_order": [
+              "order_status",
+              "return_request",
+              "human",
+              "clarify"
+            ],
+            "label_order": [
+              "order_status",
+              "return_request",
+              "human",
+              "clarify"
+            ],
+            "accuracy": 1.0,
+            "cohen_kappa": 1.0,
+            "kappa_kind": "human versus router/model; not two human annotators",
+            "per_class": {
+              "order_status": {
+                "support": 11,
+                "predicted": 11,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "precision_wilson": {
+                  "successes": 11,
+                  "n": 11,
+                  "confidence": 0.95,
+                  "low": 0.7411670330319684,
+                  "high": 1
+                },
+                "recall_wilson": {
+                  "successes": 11,
+                  "n": 11,
+                  "confidence": 0.95,
+                  "low": 0.7411670330319684,
+                  "high": 1
+                }
+              },
+              "return_request": {
+                "support": 8,
+                "predicted": 8,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "precision_wilson": {
+                  "successes": 8,
+                  "n": 8,
+                  "confidence": 0.95,
+                  "low": 0.6755924351161198,
+                  "high": 1
+                },
+                "recall_wilson": {
+                  "successes": 8,
+                  "n": 8,
+                  "confidence": 0.95,
+                  "low": 0.6755924351161198,
+                  "high": 1
+                }
+              },
+              "human": {
+                "support": 11,
+                "predicted": 11,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "precision_wilson": {
+                  "successes": 11,
+                  "n": 11,
+                  "confidence": 0.95,
+                  "low": 0.7411670330319684,
+                  "high": 1
+                },
+                "recall_wilson": {
+                  "successes": 11,
+                  "n": 11,
+                  "confidence": 0.95,
+                  "low": 0.7411670330319684,
+                  "high": 1
+                }
+              },
+              "clarify": {
+                "support": 10,
+                "predicted": 10,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "precision_wilson": {
+                  "successes": 10,
+                  "n": 10,
+                  "confidence": 0.95,
+                  "low": 0.7224672001371107,
+                  "high": 0.9999999999999999
+                },
+                "recall_wilson": {
+                  "successes": 10,
+                  "n": 10,
+                  "confidence": 0.95,
+                  "low": 0.7224672001371107,
+                  "high": 0.9999999999999999
+                }
+              }
+            },
+            "macro_f1_fixed_four": 1.0,
+            "macro_f1_present_gold": 1.0,
+            "confusion_matrix_rows_gold_cols_prediction": [
+              [
+                11,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                8,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                11,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                10
+              ]
+            ],
+            "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+          },
+          "after": {
+            "n": 40,
+            "prediction_failures": 0,
+            "prediction_label_order": [
+              "order_status",
+              "return_request",
+              "human",
+              "clarify"
+            ],
+            "label_order": [
+              "order_status",
+              "return_request",
+              "human",
+              "clarify"
+            ],
+            "accuracy": 1.0,
+            "cohen_kappa": 1.0,
+            "kappa_kind": "human versus router/model; not two human annotators",
+            "per_class": {
+              "order_status": {
+                "support": 11,
+                "predicted": 11,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "precision_wilson": {
+                  "successes": 11,
+                  "n": 11,
+                  "confidence": 0.95,
+                  "low": 0.7411670330319684,
+                  "high": 1
+                },
+                "recall_wilson": {
+                  "successes": 11,
+                  "n": 11,
+                  "confidence": 0.95,
+                  "low": 0.7411670330319684,
+                  "high": 1
+                }
+              },
+              "return_request": {
+                "support": 8,
+                "predicted": 8,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "precision_wilson": {
+                  "successes": 8,
+                  "n": 8,
+                  "confidence": 0.95,
+                  "low": 0.6755924351161198,
+                  "high": 1
+                },
+                "recall_wilson": {
+                  "successes": 8,
+                  "n": 8,
+                  "confidence": 0.95,
+                  "low": 0.6755924351161198,
+                  "high": 1
+                }
+              },
+              "human": {
+                "support": 11,
+                "predicted": 11,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "precision_wilson": {
+                  "successes": 11,
+                  "n": 11,
+                  "confidence": 0.95,
+                  "low": 0.7411670330319684,
+                  "high": 1
+                },
+                "recall_wilson": {
+                  "successes": 11,
+                  "n": 11,
+                  "confidence": 0.95,
+                  "low": 0.7411670330319684,
+                  "high": 1
+                }
+              },
+              "clarify": {
+                "support": 10,
+                "predicted": 10,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "precision_wilson": {
+                  "successes": 10,
+                  "n": 10,
+                  "confidence": 0.95,
+                  "low": 0.7224672001371107,
+                  "high": 0.9999999999999999
+                },
+                "recall_wilson": {
+                  "successes": 10,
+                  "n": 10,
+                  "confidence": 0.95,
+                  "low": 0.7224672001371107,
+                  "high": 0.9999999999999999
+                }
+              }
+            },
+            "macro_f1_fixed_four": 1.0,
+            "macro_f1_present_gold": 1.0,
+            "confusion_matrix_rows_gold_cols_prediction": [
+              [
+                11,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                8,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                11,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                10
+              ]
+            ],
+            "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+          }
+        },
+        "hybrid": {
+          "before": {
+            "n": 40,
+            "prediction_failures": 0,
+            "prediction_label_order": [
+              "order_status",
+              "return_request",
+              "human",
+              "clarify"
+            ],
+            "label_order": [
+              "order_status",
+              "return_request",
+              "human",
+              "clarify"
+            ],
+            "accuracy": 1.0,
+            "cohen_kappa": 1.0,
+            "kappa_kind": "human versus router/model; not two human annotators",
+            "per_class": {
+              "order_status": {
+                "support": 11,
+                "predicted": 11,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "precision_wilson": {
+                  "successes": 11,
+                  "n": 11,
+                  "confidence": 0.95,
+                  "low": 0.7411670330319684,
+                  "high": 1
+                },
+                "recall_wilson": {
+                  "successes": 11,
+                  "n": 11,
+                  "confidence": 0.95,
+                  "low": 0.7411670330319684,
+                  "high": 1
+                }
+              },
+              "return_request": {
+                "support": 8,
+                "predicted": 8,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "precision_wilson": {
+                  "successes": 8,
+                  "n": 8,
+                  "confidence": 0.95,
+                  "low": 0.6755924351161198,
+                  "high": 1
+                },
+                "recall_wilson": {
+                  "successes": 8,
+                  "n": 8,
+                  "confidence": 0.95,
+                  "low": 0.6755924351161198,
+                  "high": 1
+                }
+              },
+              "human": {
+                "support": 11,
+                "predicted": 11,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "precision_wilson": {
+                  "successes": 11,
+                  "n": 11,
+                  "confidence": 0.95,
+                  "low": 0.7411670330319684,
+                  "high": 1
+                },
+                "recall_wilson": {
+                  "successes": 11,
+                  "n": 11,
+                  "confidence": 0.95,
+                  "low": 0.7411670330319684,
+                  "high": 1
+                }
+              },
+              "clarify": {
+                "support": 10,
+                "predicted": 10,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "precision_wilson": {
+                  "successes": 10,
+                  "n": 10,
+                  "confidence": 0.95,
+                  "low": 0.7224672001371107,
+                  "high": 0.9999999999999999
+                },
+                "recall_wilson": {
+                  "successes": 10,
+                  "n": 10,
+                  "confidence": 0.95,
+                  "low": 0.7224672001371107,
+                  "high": 0.9999999999999999
+                }
+              }
+            },
+            "macro_f1_fixed_four": 1.0,
+            "macro_f1_present_gold": 1.0,
+            "confusion_matrix_rows_gold_cols_prediction": [
+              [
+                11,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                8,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                11,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                10
+              ]
+            ],
+            "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+          },
+          "after": {
+            "n": 40,
+            "prediction_failures": 0,
+            "prediction_label_order": [
+              "order_status",
+              "return_request",
+              "human",
+              "clarify"
+            ],
+            "label_order": [
+              "order_status",
+              "return_request",
+              "human",
+              "clarify"
+            ],
+            "accuracy": 1.0,
+            "cohen_kappa": 1.0,
+            "kappa_kind": "human versus router/model; not two human annotators",
+            "per_class": {
+              "order_status": {
+                "support": 11,
+                "predicted": 11,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "precision_wilson": {
+                  "successes": 11,
+                  "n": 11,
+                  "confidence": 0.95,
+                  "low": 0.7411670330319684,
+                  "high": 1
+                },
+                "recall_wilson": {
+                  "successes": 11,
+                  "n": 11,
+                  "confidence": 0.95,
+                  "low": 0.7411670330319684,
+                  "high": 1
+                }
+              },
+              "return_request": {
+                "support": 8,
+                "predicted": 8,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "precision_wilson": {
+                  "successes": 8,
+                  "n": 8,
+                  "confidence": 0.95,
+                  "low": 0.6755924351161198,
+                  "high": 1
+                },
+                "recall_wilson": {
+                  "successes": 8,
+                  "n": 8,
+                  "confidence": 0.95,
+                  "low": 0.6755924351161198,
+                  "high": 1
+                }
+              },
+              "human": {
+                "support": 11,
+                "predicted": 11,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "precision_wilson": {
+                  "successes": 11,
+                  "n": 11,
+                  "confidence": 0.95,
+                  "low": 0.7411670330319684,
+                  "high": 1
+                },
+                "recall_wilson": {
+                  "successes": 11,
+                  "n": 11,
+                  "confidence": 0.95,
+                  "low": 0.7411670330319684,
+                  "high": 1
+                }
+              },
+              "clarify": {
+                "support": 10,
+                "predicted": 10,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "precision_wilson": {
+                  "successes": 10,
+                  "n": 10,
+                  "confidence": 0.95,
+                  "low": 0.7224672001371107,
+                  "high": 0.9999999999999999
+                },
+                "recall_wilson": {
+                  "successes": 10,
+                  "n": 10,
+                  "confidence": 0.95,
+                  "low": 0.7224672001371107,
+                  "high": 0.9999999999999999
+                }
+              }
+            },
+            "macro_f1_fixed_four": 1.0,
+            "macro_f1_present_gold": 1.0,
+            "confusion_matrix_rows_gold_cols_prediction": [
+              [
+                11,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                8,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                11,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                10
+              ]
+            ],
+            "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+          }
+        }
+      },
+      "majority_baseline_accuracy": 0.275
+    },
+    "ecd_redacted": {
+      "n": 57,
+      "versions": {
+        "rule": {
+          "before": {
+            "n": 57,
+            "prediction_failures": 0,
+            "prediction_label_order": [
+              "order_status",
+              "return_request",
+              "human",
+              "clarify"
+            ],
+            "label_order": [
+              "order_status",
+              "return_request",
+              "human",
+              "clarify"
+            ],
+            "accuracy": 0.8947368421052632,
+            "cohen_kappa": 0.569811320754717,
+            "kappa_kind": "human versus router/model; not two human annotators",
+            "per_class": {
+              "order_status": {
+                "support": 6,
+                "predicted": 9,
+                "precision": 0.5555555555555556,
+                "recall": 0.8333333333333334,
+                "f1": 0.6666666666666666,
+                "precision_wilson": {
+                  "successes": 5,
+                  "n": 9,
+                  "confidence": 0.95,
+                  "low": 0.26665129349549305,
+                  "high": 0.8112214789023355
+                },
+                "recall_wilson": {
+                  "successes": 5,
+                  "n": 6,
+                  "confidence": 0.95,
+                  "low": 0.43649717781352987,
+                  "high": 0.9699466302516935
+                }
+              },
+              "return_request": {
+                "support": 1,
+                "predicted": 0,
+                "precision": null,
+                "recall": 0.0,
+                "f1": 0.0,
+                "precision_wilson": {
+                  "successes": 0,
+                  "n": 0,
+                  "confidence": 0.95,
+                  "low": null,
+                  "high": null
+                },
+                "recall_wilson": {
+                  "successes": 0,
+                  "n": 1,
+                  "confidence": 0.95,
+                  "low": 0,
+                  "high": 0.7934506856227626
+                }
+              },
+              "human": {
+                "support": 0,
+                "predicted": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null,
+                "precision_wilson": {
+                  "successes": 0,
+                  "n": 0,
+                  "confidence": 0.95,
+                  "low": null,
+                  "high": null
+                },
+                "recall_wilson": {
+                  "successes": 0,
+                  "n": 0,
+                  "confidence": 0.95,
+                  "low": null,
+                  "high": null
+                }
+              },
+              "clarify": {
+                "support": 50,
+                "predicted": 48,
+                "precision": 0.9583333333333334,
+                "recall": 0.92,
+                "f1": 0.9387755102040817,
+                "precision_wilson": {
+                  "successes": 46,
+                  "n": 48,
+                  "confidence": 0.95,
+                  "low": 0.8602434412954456,
+                  "high": 0.9884981065106133
+                },
+                "recall_wilson": {
+                  "successes": 46,
+                  "n": 50,
+                  "confidence": 0.95,
+                  "low": 0.8116175308165717,
+                  "high": 0.968450485911407
+                }
+              }
+            },
+            "macro_f1_fixed_four": 0.4013605442176871,
+            "macro_f1_present_gold": 0.5351473922902494,
+            "confusion_matrix_rows_gold_cols_prediction": [
+              [
+                5,
+                0,
+                0,
+                1
+              ],
+              [
+                0,
+                0,
+                0,
+                1
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                4,
+                0,
+                0,
+                46
+              ]
+            ],
+            "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+          },
+          "after": {
+            "n": 57,
+            "prediction_failures": 0,
+            "prediction_label_order": [
+              "order_status",
+              "return_request",
+              "human",
+              "clarify"
+            ],
+            "label_order": [
+              "order_status",
+              "return_request",
+              "human",
+              "clarify"
+            ],
+            "accuracy": 0.9298245614035088,
+            "cohen_kappa": 0.6775106082036776,
+            "kappa_kind": "human versus router/model; not two human annotators",
+            "per_class": {
+              "order_status": {
+                "support": 6,
+                "predicted": 7,
+                "precision": 0.7142857142857143,
+                "recall": 0.8333333333333334,
+                "f1": 0.7692307692307693,
+                "precision_wilson": {
+                  "successes": 5,
+                  "n": 7,
+                  "confidence": 0.95,
+                  "low": 0.35893445183261935,
+                  "high": 0.9177810759959433
+                },
+                "recall_wilson": {
+                  "successes": 5,
+                  "n": 6,
+                  "confidence": 0.95,
+                  "low": 0.43649717781352987,
+                  "high": 0.9699466302516935
+                }
+              },
+              "return_request": {
+                "support": 1,
+                "predicted": 0,
+                "precision": null,
+                "recall": 0.0,
+                "f1": 0.0,
+                "precision_wilson": {
+                  "successes": 0,
+                  "n": 0,
+                  "confidence": 0.95,
+                  "low": null,
+                  "high": null
+                },
+                "recall_wilson": {
+                  "successes": 0,
+                  "n": 1,
+                  "confidence": 0.95,
+                  "low": 0,
+                  "high": 0.7934506856227626
+                }
+              },
+              "human": {
+                "support": 0,
+                "predicted": 0,
+                "precision": null,
+                "recall": null,
+                "f1": null,
+                "precision_wilson": {
+                  "successes": 0,
+                  "n": 0,
+                  "confidence": 0.95,
+                  "low": null,
+                  "high": null
+                },
+                "recall_wilson": {
+                  "successes": 0,
+                  "n": 0,
+                  "confidence": 0.95,
+                  "low": null,
+                  "high": null
+                }
+              },
+              "clarify": {
+                "support": 50,
+                "predicted": 50,
+                "precision": 0.96,
+                "recall": 0.96,
+                "f1": 0.96,
+                "precision_wilson": {
+                  "successes": 48,
+                  "n": 50,
+                  "confidence": 0.95,
+                  "low": 0.8653990931249297,
+                  "high": 0.9889611156723802
+                },
+                "recall_wilson": {
+                  "successes": 48,
+                  "n": 50,
+                  "confidence": 0.95,
+                  "low": 0.8653990931249297,
+                  "high": 0.9889611156723802
+                }
+              }
+            },
+            "macro_f1_fixed_four": 0.4323076923076923,
+            "macro_f1_present_gold": 0.5764102564102563,
+            "confusion_matrix_rows_gold_cols_prediction": [
+              [
+                5,
+                0,
+                0,
+                1
+              ],
+              [
+                0,
+                0,
+                0,
+                1
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                2,
+                0,
+                0,
+                48
+              ]
+            ],
+            "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+          }
+        },
+        "model": {
+          "before": {
+            "n": 57,
+            "prediction_failures": 0,
+            "prediction_label_order": [
+              "order_status",
+              "return_request",
+              "human",
+              "clarify"
+            ],
+            "label_order": [
+              "order_status",
+              "return_request",
+              "human",
+              "clarify"
+            ],
+            "accuracy": 0.8596491228070176,
+            "cohen_kappa": 0.5738317757009346,
+            "kappa_kind": "human versus router/model; not two human annotators",
+            "per_class": {
+              "order_status": {
+                "support": 6,
+                "predicted": 13,
+                "precision": 0.46153846153846156,
+                "recall": 1.0,
+                "f1": 0.631578947368421,
+                "precision_wilson": {
+                  "successes": 6,
+                  "n": 13,
+                  "confidence": 0.95,
+                  "low": 0.23206067809538303,
+                  "high": 0.7085620428549398
+                },
+                "recall_wilson": {
+                  "successes": 6,
+                  "n": 6,
+                  "confidence": 0.95,
+                  "low": 0.6096657120978346,
+                  "high": 1
+                }
+              },
+              "return_request": {
+                "support": 1,
+                "predicted": 1,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "precision_wilson": {
+                  "successes": 1,
+                  "n": 1,
+                  "confidence": 0.95,
+                  "low": 0.20654931437723745,
+                  "high": 1
+                },
+                "recall_wilson": {
+                  "successes": 1,
+                  "n": 1,
+                  "confidence": 0.95,
+                  "low": 0.20654931437723745,
+                  "high": 1
+                }
+              },
+              "human": {
+                "support": 0,
+                "predicted": 1,
+                "precision": 0.0,
+                "recall": null,
+                "f1": 0.0,
+                "precision_wilson": {
+                  "successes": 0,
+                  "n": 1,
+                  "confidence": 0.95,
+                  "low": 0,
+                  "high": 0.7934506856227626
+                },
+                "recall_wilson": {
+                  "successes": 0,
+                  "n": 0,
+                  "confidence": 0.95,
+                  "low": null,
+                  "high": null
+                }
+              },
+              "clarify": {
+                "support": 50,
+                "predicted": 42,
+                "precision": 1.0,
+                "recall": 0.84,
+                "f1": 0.9130434782608695,
+                "precision_wilson": {
+                  "successes": 42,
+                  "n": 42,
+                  "confidence": 0.95,
+                  "low": 0.916201209134296,
+                  "high": 0.9999999999999999
+                },
+                "recall_wilson": {
+                  "successes": 42,
+                  "n": 50,
+                  "confidence": 0.95,
+                  "low": 0.7148578393696501,
+                  "high": 0.916625793219666
+                }
+              }
+            },
+            "macro_f1_fixed_four": 0.6361556064073226,
+            "macro_f1_present_gold": 0.8482074752097635,
+            "confusion_matrix_rows_gold_cols_prediction": [
+              [
+                6,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                7,
+                0,
+                1,
+                42
+              ]
+            ],
+            "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+          },
+          "after": {
+            "n": 57,
+            "prediction_failures": 0,
+            "prediction_label_order": [
+              "order_status",
+              "return_request",
+              "human",
+              "clarify"
+            ],
+            "label_order": [
+              "order_status",
+              "return_request",
+              "human",
+              "clarify"
+            ],
+            "accuracy": 0.9122807017543859,
+            "cohen_kappa": 0.6996838777660693,
+            "kappa_kind": "human versus router/model; not two human annotators",
+            "per_class": {
+              "order_status": {
+                "support": 6,
+                "predicted": 8,
+                "precision": 0.75,
+                "recall": 1.0,
+                "f1": 0.8571428571428571,
+                "precision_wilson": {
+                  "successes": 6,
+                  "n": 8,
+                  "confidence": 0.95,
+                  "low": 0.40927543031016883,
+                  "high": 0.9285207872478909
+                },
+                "recall_wilson": {
+                  "successes": 6,
+                  "n": 6,
+                  "confidence": 0.95,
+                  "low": 0.6096657120978346,
+                  "high": 1
+                }
+              },
+              "return_request": {
+                "support": 1,
+                "predicted": 2,
+                "precision": 0.5,
+                "recall": 1.0,
+                "f1": 0.6666666666666666,
+                "precision_wilson": {
+                  "successes": 1,
+                  "n": 2,
+                  "confidence": 0.95,
+                  "low": 0.09453120573423074,
+                  "high": 0.9054687942657693
+                },
+                "recall_wilson": {
+                  "successes": 1,
+                  "n": 1,
+                  "confidence": 0.95,
+                  "low": 0.20654931437723745,
+                  "high": 1
+                }
+              },
+              "human": {
+                "support": 0,
+                "predicted": 2,
+                "precision": 0.0,
+                "recall": null,
+                "f1": 0.0,
+                "precision_wilson": {
+                  "successes": 0,
+                  "n": 2,
+                  "confidence": 0.95,
+                  "low": 0,
+                  "high": 0.6576197724933469
+                },
+                "recall_wilson": {
+                  "successes": 0,
+                  "n": 0,
+                  "confidence": 0.95,
+                  "low": null,
+                  "high": null
+                }
+              },
+              "clarify": {
+                "support": 50,
+                "predicted": 45,
+                "precision": 1.0,
+                "recall": 0.9,
+                "f1": 0.9473684210526315,
+                "precision_wilson": {
+                  "successes": 45,
+                  "n": 45,
+                  "confidence": 0.95,
+                  "low": 0.9213484012671117,
+                  "high": 1
+                },
+                "recall_wilson": {
+                  "successes": 45,
+                  "n": 50,
+                  "confidence": 0.95,
+                  "low": 0.7863976856252035,
+                  "high": 0.9565242350681096
+                }
+              }
+            },
+            "macro_f1_fixed_four": 0.6177944862155388,
+            "macro_f1_present_gold": 0.8237259816207184,
+            "confusion_matrix_rows_gold_cols_prediction": [
+              [
+                6,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                2,
+                1,
+                2,
+                45
+              ]
+            ],
+            "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+          }
+        },
+        "hybrid": {
+          "before": {
+            "n": 57,
+            "prediction_failures": 0,
+            "prediction_label_order": [
+              "order_status",
+              "return_request",
+              "human",
+              "clarify"
+            ],
+            "label_order": [
+              "order_status",
+              "return_request",
+              "human",
+              "clarify"
+            ],
+            "accuracy": 0.8596491228070176,
+            "cohen_kappa": 0.5738317757009346,
+            "kappa_kind": "human versus router/model; not two human annotators",
+            "per_class": {
+              "order_status": {
+                "support": 6,
+                "predicted": 13,
+                "precision": 0.46153846153846156,
+                "recall": 1.0,
+                "f1": 0.631578947368421,
+                "precision_wilson": {
+                  "successes": 6,
+                  "n": 13,
+                  "confidence": 0.95,
+                  "low": 0.23206067809538303,
+                  "high": 0.7085620428549398
+                },
+                "recall_wilson": {
+                  "successes": 6,
+                  "n": 6,
+                  "confidence": 0.95,
+                  "low": 0.6096657120978346,
+                  "high": 1
+                }
+              },
+              "return_request": {
+                "support": 1,
+                "predicted": 1,
+                "precision": 1.0,
+                "recall": 1.0,
+                "f1": 1.0,
+                "precision_wilson": {
+                  "successes": 1,
+                  "n": 1,
+                  "confidence": 0.95,
+                  "low": 0.20654931437723745,
+                  "high": 1
+                },
+                "recall_wilson": {
+                  "successes": 1,
+                  "n": 1,
+                  "confidence": 0.95,
+                  "low": 0.20654931437723745,
+                  "high": 1
+                }
+              },
+              "human": {
+                "support": 0,
+                "predicted": 1,
+                "precision": 0.0,
+                "recall": null,
+                "f1": 0.0,
+                "precision_wilson": {
+                  "successes": 0,
+                  "n": 1,
+                  "confidence": 0.95,
+                  "low": 0,
+                  "high": 0.7934506856227626
+                },
+                "recall_wilson": {
+                  "successes": 0,
+                  "n": 0,
+                  "confidence": 0.95,
+                  "low": null,
+                  "high": null
+                }
+              },
+              "clarify": {
+                "support": 50,
+                "predicted": 42,
+                "precision": 1.0,
+                "recall": 0.84,
+                "f1": 0.9130434782608695,
+                "precision_wilson": {
+                  "successes": 42,
+                  "n": 42,
+                  "confidence": 0.95,
+                  "low": 0.916201209134296,
+                  "high": 0.9999999999999999
+                },
+                "recall_wilson": {
+                  "successes": 42,
+                  "n": 50,
+                  "confidence": 0.95,
+                  "low": 0.7148578393696501,
+                  "high": 0.916625793219666
+                }
+              }
+            },
+            "macro_f1_fixed_four": 0.6361556064073226,
+            "macro_f1_present_gold": 0.8482074752097635,
+            "confusion_matrix_rows_gold_cols_prediction": [
+              [
+                6,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                7,
+                0,
+                1,
+                42
+              ]
+            ],
+            "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+          },
+          "after": {
+            "n": 57,
+            "prediction_failures": 0,
+            "prediction_label_order": [
+              "order_status",
+              "return_request",
+              "human",
+              "clarify"
+            ],
+            "label_order": [
+              "order_status",
+              "return_request",
+              "human",
+              "clarify"
+            ],
+            "accuracy": 0.8947368421052632,
+            "cohen_kappa": 0.6555891238670695,
+            "kappa_kind": "human versus router/model; not two human annotators",
+            "per_class": {
+              "order_status": {
+                "support": 6,
+                "predicted": 9,
+                "precision": 0.6666666666666666,
+                "recall": 1.0,
+                "f1": 0.8,
+                "precision_wilson": {
+                  "successes": 6,
+                  "n": 9,
+                  "confidence": 0.95,
+                  "low": 0.3542021355803963,
+                  "high": 0.879416181613089
+                },
+                "recall_wilson": {
+                  "successes": 6,
+                  "n": 6,
+                  "confidence": 0.95,
+                  "low": 0.6096657120978346,
+                  "high": 1
+                }
+              },
+              "return_request": {
+                "support": 1,
+                "predicted": 2,
+                "precision": 0.5,
+                "recall": 1.0,
+                "f1": 0.6666666666666666,
+                "precision_wilson": {
+                  "successes": 1,
+                  "n": 2,
+                  "confidence": 0.95,
+                  "low": 0.09453120573423074,
+                  "high": 0.9054687942657693
+                },
+                "recall_wilson": {
+                  "successes": 1,
+                  "n": 1,
+                  "confidence": 0.95,
+                  "low": 0.20654931437723745,
+                  "high": 1
+                }
+              },
+              "human": {
+                "support": 0,
+                "predicted": 2,
+                "precision": 0.0,
+                "recall": null,
+                "f1": 0.0,
+                "precision_wilson": {
+                  "successes": 0,
+                  "n": 2,
+                  "confidence": 0.95,
+                  "low": 0,
+                  "high": 0.6576197724933469
+                },
+                "recall_wilson": {
+                  "successes": 0,
+                  "n": 0,
+                  "confidence": 0.95,
+                  "low": null,
+                  "high": null
+                }
+              },
+              "clarify": {
+                "support": 50,
+                "predicted": 44,
+                "precision": 1.0,
+                "recall": 0.88,
+                "f1": 0.9361702127659575,
+                "precision_wilson": {
+                  "successes": 44,
+                  "n": 44,
+                  "confidence": 0.95,
+                  "low": 0.9197043962415192,
+                  "high": 1
+                },
+                "recall_wilson": {
+                  "successes": 44,
+                  "n": 50,
+                  "confidence": 0.95,
+                  "low": 0.7619518261679701,
+                  "high": 0.9438239984906773
+                }
+              }
+            },
+            "macro_f1_fixed_four": 0.6007092198581561,
+            "macro_f1_present_gold": 0.8009456264775414,
+            "confusion_matrix_rows_gold_cols_prediction": [
+              [
+                6,
+                0,
+                0,
+                0
+              ],
+              [
+                0,
+                1,
+                0,
+                0
+              ],
+              [
+                0,
+                0,
+                0,
+                0
+              ],
+              [
+                3,
+                1,
+                2,
+                44
+              ]
+            ],
+            "undefined_policy": "P/R/F1 undefined shown null; fixed-four macro treats undefined as 0; present-gold macro additionally shown"
+          }
+        }
+      },
+      "majority_baseline_accuracy": 0.8771929824561403
+    }
+  },
+  "abstention_ids": [
+    "ecd-1018",
+    "ecd-0191",
+    "ecd-0556"
+  ],
+  "model": "deepseek-flash",
+  "temperature": 0,
+  "date": "2026-10-30"
+}

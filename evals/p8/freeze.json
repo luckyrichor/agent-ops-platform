@@ -1,0 +1,43 @@
+{
+  "stage": "frozen_before_final_selection",
+  "revision": "carrier-boundary-r1",
+  "development_rounds": 1,
+  "maximum_development_rounds": 3,
+  "model": "deepseek-flash",
+  "endpoint": "https://api.deepseek.com/chat/completions",
+  "temperature": 0,
+  "concurrency": 2,
+  "max_attempts": 3,
+  "timeout_seconds": 30,
+  "hybrid_threshold": 0.9,
+  "seed": 20261030,
+  "ecd_candidate_pool_max": 600,
+  "silver_layer_target": 50,
+  "root_labels": [
+    "order_status",
+    "return_request",
+    "human",
+    "clarify"
+  ],
+  "clarify_diagnostic_counts": {
+    "信息不足": 15,
+    "超范围咨询": 31,
+    "无需处理": 14
+  },
+  "synthetic_fill": "DeepSeek generated colloquial customer messages; independent intent definitions; source=合成改写",
+  "final_gold": "human only; silver used for sampling not scores",
+  "files": {
+    "src/agent_ops/routing_policy.py": "5a7374e667b91246ea54989949fcc989c71bd8be6ffb8298afee0d72de3753d5",
+    "src/agent_ops/routing_evaluation.py": "e9fad762948ee5280c11e23d4324a06bfc647846e0b9b4f6f41b60a57c1df23f",
+    "src/agent_ops/support.py": "7b6d0464ec0b6187db459e29c75c89a83aa593b468d951c076135772cad88d1b",
+    "src/agent_ops/p8_pilot.py": "289ca4793ac69a9ce47d2f8cbd0874f23f6867bbdade9b338de9653166fe444f",
+    "src/agent_ops/deepseek.py": "2c230827eee4d8b78515d9a6978c053d6034baf6551ee2b4ea7fd1e55a7bf2ea",
+    "src/agent_ops/ecd_redaction.py": "3cc782b607593e15c065f0b30b24493bfa99a184f601a26d9347b53f649c50eb",
+    "src/agent_ops/routing_metrics.py": "a83a363257af4b0e8faac3a5ef809fd13f03fd1d858c078a5ced3943addb4bee",
+    "src/agent_ops/p8_release.py": "ecb2bf4cc72c0e8fc16bd4f5c4d513d68941fd19abe2502eb742967f58751bfe",
+    "scripts/prepare-p8-final.py": "4617bbba9ee34be72312ef7e273f8cd86054713330f6949b0d16165d89d9e675",
+    "scripts/evaluate-p8-final.py": "437eb19beee89706f60c7ccf9f159165e911e3715c697de4a45513a21b63a6dd",
+    "pyproject.toml": "e5fa7a92d2704ace5ae158c62abc6af1c4a32ec3b89a8fd6620b449b4e29e519",
+    "uv.lock": "76fe1b92d42473f5edc2f34859bb6f01cf76a7f412f7e928a0beb398d06d9671"
+  }
+}

@@ -3,6 +3,7 @@ import asyncio
 import hashlib
 import json
 import os
+from collections import Counter
 from dataclasses import dataclass, field
 from datetime import UTC, datetime
 from pathlib import Path
@@ -65,6 +66,7 @@ class DeepSeekEvaluation:
         self._owned = client is None
         self._locks: dict[str, asyncio.Lock] = {}
         self.network_requests = self.retries = self.rate_limits = self.cache_hits = 0
+        self.http_statuses: Counter[int] = Counter()
 
     async def aclose(self) -> None:
         if self._owned and self._client is not None:
@@ -77,7 +79,7 @@ class DeepSeekEvaluation:
                 raise EvaluationUnavailable('ECD_THIRD_PARTY_NOT_AUTHORIZED')
             if not outbound_is_redacted(messages):
                 raise EvaluationUnavailable('ECD_REDACTION_REQUIRED')
-        elif source != 'p2_synthetic':
+        elif source not in {'p2_synthetic','synthetic_rewrite'}:
             raise EvaluationUnavailable('ECD_THIRD_PARTY_NOT_AUTHORIZED')
         if not dataset_digest or not messages:
             raise ValueError('EVALUATION_INPUT_REQUIRED')
@@ -131,6 +133,7 @@ class DeepSeekEvaluation:
             try:
                 response = await self._client.post(self.config.endpoint,
                     headers={'Authorization': 'Bearer '+self.config.token}, json=body)
+                self.http_statuses[response.status_code] += 1
                 if response.status_code == 429:
                     self.rate_limits += 1
                 if response.status_code in (408, 429) or response.status_code >= 500:
@@ -139,7 +142,7 @@ class DeepSeekEvaluation:
                     except ValueError:
                         pass
                 elif response.status_code != 200:
-                    raise EvaluationUnavailable('DEEPSEEK_REQUEST_REJECTED')
+                    raise EvaluationUnavailable(f'DEEPSEEK_REQUEST_REJECTED_HTTP_{response.status_code}')
                 else:
                     if len(response.content) > 65536:
                         raise EvaluationUnavailable('DEEPSEEK_INVALID_RESPONSE')

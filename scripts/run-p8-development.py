@@ -78,6 +78,7 @@ async def run(args):
         summary={'samples':2000,'jobs':len(jobs),'network_requests':service.network_requests,
                  'retries':service.retries,'rate_limits':service.rate_limits,'cache_hits':service.cache_hits,
                  'elapsed_wall_seconds':perf_counter()-started,'dataset_digest':digest,
+                 'http_statuses':dict(service.http_statuses) if hasattr(service,'http_statuses') else {},
                  'reported_at':datetime.now(UTC).isoformat(),'requested_model':service.config.model,
                  'temperature':0,'groups':{},'hybrid_model_branch_count':sum(v['hybrid_model_used'] for v in versions),
                  'hybrid_additional_requests':0,'final_test_sampled':False,

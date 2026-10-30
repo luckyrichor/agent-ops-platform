@@ -41,7 +41,7 @@ def test_degenerate_kappa_and_unknown_labels_not_silently_changed():
 
 def test_clarify_proposal_preserves_root_and_prioritizes_explicit_scope():
     assert propose_clarify_subtype('商品规格咨询，末尾致谢')[0]=='out_of_scope'
-    assert propose_clarify_subtype('致谢收尾')[0]=='social_ack'
+    assert propose_clarify_subtype('致谢收尾')[0]=='no_action'
     assert propose_clarify_subtype('否定之后没有明确需求')[0]=='insufficient_or_ambiguous'
 
 

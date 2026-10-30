@@ -6,16 +6,20 @@ from typing import Any, Literal
 from pydantic import BaseModel, ConfigDict, Field
 
 from agent_ops.ecd_redaction import redact_ecd
-from agent_ops.p8_pilot import CLASSIFIER_PROMPT, SILVER_PROMPT
-from agent_ops.support import Route, route_message
-
-HYBRID_THRESHOLD = .9
+from agent_ops.routing_policy import (
+    CLASSIFIER_PROMPT,
+    HYBRID_THRESHOLD,
+    SILVER_PROMPT,
+    carrier_options_request,
+    evaluation_rule,
+)
+from agent_ops.support import Route
 
 
 class DevelopmentSample(BaseModel):
     model_config = ConfigDict(extra='forbid',strict=True)
     id: str
-    source: Literal['p2_synthetic','ecd_redacted']
+    source: Literal['p2_synthetic','ecd_redacted','synthetic_rewrite']
     message: str = Field(min_length=1,max_length=2000)
     context: list[str] = Field(max_length=3)
     group_hash: str
@@ -39,6 +43,8 @@ def request_messages(sample: DevelopmentSample, purpose: str) -> list[dict[str,s
 
 def hybrid_confidence(message: str) -> float:
     """Predeclared candidate heuristic; calibration awaits the 100 human dev labels."""
+    if carrier_options_request(message):
+        return 1
     text=message.lower()
     if any(word in text for word in ['不','别','不要','并','同时','如果','ignore',"don't",'do not']):
         return 0
@@ -53,7 +59,7 @@ def development_versions(sample: DevelopmentSample, model_route: Route | None,
                          threshold: float = HYBRID_THRESHOLD) -> dict[str,Any]:
     if not 0 <= threshold <= 1:
         raise ValueError('INVALID_THRESHOLD')
-    rule=route_message(sample.message)
+    rule=evaluation_rule(sample.message)
     confidence=hybrid_confidence(sample.message)
     needs_model=confidence<threshold
     return {'rule':rule,'model':model_route,'hybrid':model_route if needs_model else rule,

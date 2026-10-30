@@ -1,27 +1,44 @@
 """Offline human-gold development metrics with explicit abstentions and fixed label order."""
 from collections import Counter
+from collections.abc import Sequence
+from math import sqrt
 from typing import Any
 
 LABELS=('order_status','return_request','human','clarify')
 
 
-def classification_metrics(gold: list[str], predicted: list[str]) -> dict[str,Any]:
-    if len(gold)!=len(predicted) or any(x not in LABELS for x in [*gold,*predicted]):
+def wilson_interval(successes: int, total: int) -> dict[str,Any]:
+    if not 0 <= successes <= total:
+        raise ValueError('INVALID_BINOMIAL_COUNTS')
+    if not total:
+        return {'successes':successes,'n':0,'confidence':.95,'low':None,'high':None}
+    z=1.959963984540054
+    p=successes/total;denom=1+z*z/total
+    center=(p+z*z/(2*total))/denom
+    half=z*sqrt(p*(1-p)/total+z*z/(4*total*total))/denom
+    return {'successes':successes,'n':total,'confidence':.95,
+            'low':max(0,center-half),'high':min(1,center+half)}
+
+
+def classification_metrics(gold: Sequence[str], predicted: Sequence[str | None]) -> dict[str,Any]:
+    if len(gold)!=len(predicted) or any(x not in LABELS for x in gold) or any(x is not None and x not in LABELS for x in predicted):
         raise ValueError('INVALID_LABELS_OR_LENGTH')
-    matrix=[[0 for _ in LABELS] for _ in LABELS]
-    for true,pred in zip(gold,predicted,strict=True):matrix[LABELS.index(true)][LABELS.index(pred)]+=1
+    prediction_labels: list[str | None]=[*LABELS]+([None] if None in predicted else [])
+    matrix=[[0 for _ in prediction_labels] for _ in LABELS]
+    for true,pred in zip(gold,predicted,strict=True):matrix[LABELS.index(true)][prediction_labels.index(pred)]+=1
     n=len(gold);support=Counter(gold);prediction=Counter(predicted)
     correct=sum(matrix[i][i] for i in range(4))
-    per_class={}
+    per_class: dict[str,Any]={}
     for i,label in enumerate(LABELS):
         tp=matrix[i][i];fp=prediction[label]-tp;fn=support[label]-tp
         per_class[label]={'support':support[label],'predicted':prediction[label],
           'precision':tp/(tp+fp) if tp+fp else None,'recall':tp/(tp+fn) if tp+fn else None,
-          'f1':2*tp/(2*tp+fp+fn) if 2*tp+fp+fn else None}
+          'f1':2*tp/(2*tp+fp+fn) if 2*tp+fp+fn else None,
+          'precision_wilson':wilson_interval(tp,tp+fp),'recall_wilson':wilson_interval(tp,tp+fn)}
     expected=sum(support[x]*prediction[x] for x in LABELS)/(n*n) if n else None
     accuracy=correct/n if n else None
     kappa=(accuracy-expected)/(1-expected) if expected is not None and expected<1 and accuracy is not None else None
-    return {'n':n,'label_order':list(LABELS),'accuracy':accuracy,'cohen_kappa':kappa,
+    return {'n':n,'prediction_failures':sum(x is None for x in predicted),'prediction_label_order':[x or 'FAILED' for x in prediction_labels],'label_order':list(LABELS),'accuracy':accuracy,'cohen_kappa':kappa,
       'kappa_kind':'human versus router/model; not two human annotators','per_class':per_class,
       'macro_f1_fixed_four':sum(v['f1'] or 0 for v in per_class.values())/4 if n else None,
       'macro_f1_present_gold':sum(per_class[x]['f1'] or 0 for x in LABELS if support[x])/sum(support[x]>0 for x in LABELS) if n else None,
@@ -58,5 +75,5 @@ def propose_clarify_subtype(note: str) -> tuple[str,str]:
     if any(w in note for w in ['超范围','售前','议价','赠品','优惠','咨询','规格','材质','尺寸','购买数量']):
         return 'out_of_scope','annotation_scope_or_product_terms'
     if any(w in note for w in ['致谢','闲聊','收尾','回应','确认','告知已拍','下单告知','明天再买']):
-        return 'social_ack','annotation_social_or_ack_terms'
+        return 'no_action','annotation_social_or_ack_terms'
     return 'insufficient_or_ambiguous','no_executable_request_or_unresolved_main_intent'

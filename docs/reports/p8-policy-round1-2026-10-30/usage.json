@@ -1,0 +1,56 @@
+{
+  "round": 1,
+  "date": "2026-10-30",
+  "model": "deepseek-flash",
+  "temperature": 0,
+  "passes": {
+    "round1": {
+      "records": 3200,
+      "status": {
+        "succeeded": 1477,
+        "failed": 1723
+      },
+      "errors": {
+        "DEEPSEEK_REQUEST_REJECTED": 1709,
+        "DEEPSEEK_RETRIES_EXHAUSTED": 14
+      },
+      "network_requests": 3307,
+      "retries": 108,
+      "rate_limits": 122,
+      "cache_hits": 1,
+      "elapsed_wall_seconds": 247.65551401488483
+    },
+    "round1-resume": {
+      "records": 1819,
+      "status": {
+        "succeeded": 1819
+      },
+      "errors": {}
+    },
+    "round1-recovery": {
+      "records": 3200,
+      "status": {
+        "succeeded": 3200
+      },
+      "errors": {},
+      "network_requests": 1342,
+      "retries": 0,
+      "rate_limits": 0,
+      "cache_hits": 1858,
+      "elapsed_wall_seconds": 498.9026244422421
+    }
+  },
+  "unique_observed_successful_responses": 3196,
+  "observed_usage": {
+    "prompt_tokens": 1241368,
+    "completion_tokens": 51305,
+    "total_tokens": 1292673,
+    "prompt_cache_hit_tokens": 418560,
+    "prompt_cache_miss_tokens": 822808
+  },
+  "peak_usage_estimate_usd": 0.31091976,
+  "cost_basis": "current official peak USD rates per million hit .006 / miss .3 / output 1.2; actual invoice unverified; unknown in-flight usage excluded",
+  "unknown_inflight_upper_bound": 2,
+  "diagnostic_extra_requests": 1,
+  "known_limit": "Interrupted pass lacks completed aggregate. Per-pass saved rows and last checkpoint do not prove full physical request count. Unique fingerprints may not capture in-flight duplicate billings."
+}
