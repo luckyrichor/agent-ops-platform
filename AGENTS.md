@@ -576,4 +576,4 @@ clarify待确认提案60条：信息不足/意图未定15（P2 9/ECD6），超�
 
 下一步只接收负责人标完的200行xlsx，保存.local，核对原表来源/文本和数据摘要；先验证角色与标签完整（允许明确弃权），再用冻结tag和配置执行scripts/evaluate-p8-final.py一次。正式执行需要显式设置AGENT_OPS_DEEPSEEK_ENDPOINT/MODEL/LLM_CONCURRENCY=2，私有key通过--key-file传入路径，值不入命令/日志；max_attempts3/timeout30与清单一致。canonical一次性状态.local/p8-final-evaluations/<datasetsha>.json，已有状态不得擅自重跑。ECD/合成分别报、Wilson附n，不改已固定子类，不用银标作成绩。
 
-飞书待同步：2026-10-30 最终盲表交付、131/69组成、691次/250281 token与未验证项，追加既有开发记录。
+飞书已同步：2026-10-30 最终盲表交付、131/69组成、691次/250281 token与未验证项已追加开发记录 https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf ，codex profile/--as user；项目父节点和正文含d1a3556/250281/131 ECD+69的回查通过。代码冻结b90c201、交付统计d1a3556均已推送；等待用户最终人工标注，未评最终质量。
