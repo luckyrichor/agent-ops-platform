@@ -1,0 +1,42 @@
+{
+  "sources": {
+    "p2_synthetic": 800,
+    "ecd_redacted": 1200
+  },
+  "scan_scope": "all turns in selected 1200 train contexts; occurrence counts, not unique people",
+  "patterns": {
+    "mobile": 0,
+    "email": 0,
+    "address_labeled": 101,
+    "address_region": 2,
+    "order_labeled": 2,
+    "long_number": 269
+  },
+  "ecd_contexts_with_hits": 279,
+  "sampling": {
+    "train_rows_read": 1000000,
+    "length_or_empty_excluded": 13096,
+    "p2_reservoir_groups_excluded": 5513
+  },
+  "remaining_pattern_matches_in_outbound": 0,
+  "role_status": "ECD unknown, not claimed customer first utterances",
+  "train_only": true,
+  "dev_or_test_members_opened": false,
+  "final_test_drawn": false,
+  "prior_p2_note": "P2 previously scanned the full archive programmatically; exclude its sampled text reservoir; do not claim never processed historically",
+  "blind_rows": 100,
+  "blind_source_counts": {
+    "p2_synthetic": 40,
+    "ecd_redacted": 60
+  },
+  "blind_workbook_sha256": "519c1850acb27f3b264acfd9314619cb9f8b88494d38c91e1bd6f497438f016b",
+  "pii_limits": "heuristic patterns; possible false positives and unrecognized PII; no full manual privacy verification",
+  "outbound_pattern_occurrences_replaced": {
+    "mobile": 0,
+    "email": 0,
+    "address_labeled": 59,
+    "address_region": 1,
+    "order_labeled": 1,
+    "long_number": 125
+  }
+}

@@ -114,3 +114,10 @@ UserBehavior 到位后显式传 `--userbehavior-file .local/datasets/raw/UserBeh
 本轮重读[作者README](https://github.com/cooelf/DeepUtteranceAggregation/blob/master/README.md)与[论文§4.1，第3745页脚注6](https://aclanthology.org/C18-1317.pdf#page=6)：README未见明确脱敏条款，**论文明确声明数据已脱敏、匿名化并获合作方同意**。此前本项目只记录了未独立完成全面PII验证，现补全上游声明，不能把“未独立验证”解释为“作者没有声明”。
 
 本地完整语料仍未完成全面PII检测/人工复核；未找到明确涵盖独立ZIP的许可证或第三方模型上传授权，文章CC BY 4.0不能单独证明独立数据包的许可。当前第三方处理为`pending_owner_decision`，负责人尚未允许外发；公开再分发未获批准。ECD原文及复用文本不外发、不入仓库；ECD开发银标先限本地规则代理或暂缓，不能用规则代理作最终真值。作者声明、本项目核验和使用授权分开记录。此次50条DeepSeek小样只用P2结构事实加新合成提问，没有读取/上传ECD文本。
+
+
+## 2026-10-30 ECD个人项目外发获准与本次扫描
+
+负责人已明确确认个人项目可使用ECD并发送DeepSeek，不再等待抽查；第三方处理从pending_owner_decision更新为owner_authorized。作者论文声明已脱敏匿名化/获合作方同意，本项目另外本地模式扫描并替换手机号/邮箱/地址/订单号及长数字标识；全面人工隐私复核未完成，模式复扫0不能当成全面验证。
+
+本次使用1200条ECD训练上文（角色未知），裁剪后1198份不同视图实际发往DeepSeek官方chat/completions接口，模型deepseek-flash，温度0；分类/银标两提示共2396次ECD实际请求，重试0。完整选中上下文手机号0、邮箱0、地址103、带标签订单号2、长数字269次替换；实际外发4段视图中为0/0/60/1/125次（每个选样上下文计一次）。原文/请求/返回仅.local，公开Git不放语料，个人项目批准不改写成数据ZIP可公开再分发。统计与限制见reports/p8-development-2026-10-30，标注说明见p8-development.md。最终200未抽取，P2旧代理权重未因silver更新。

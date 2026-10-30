@@ -1,0 +1,35 @@
+{
+  "pytest": {
+    "passed": 246,
+    "failures": 0,
+    "errors": 0,
+    "skipped": 0,
+    "seconds": 91.04
+  },
+  "ruff": "passed; src/tests/two development scripts",
+  "strict_mypy_source_files": 35,
+  "targeted_transport_pilot_development_tests": 14,
+  "blind_workbook": {
+    "delivered": true,
+    "rows": 100,
+    "sheets": 2,
+    "first_sheet": "instructions",
+    "prediction_columns": false,
+    "hidden_sheets": false,
+    "formula_cells": false
+  },
+  "provider_jobs": 3200,
+  "provider_requests": 3196,
+  "failure_rate": 0,
+  "retries": 0,
+  "rate_limits": 0,
+  "cache_replay_network": 0,
+  "cache_replay_hits": 3200,
+  "human_quality_metrics": "not measured: labels pending",
+  "kappa": "not measured",
+  "freeze_tag": "not created",
+  "final_test_selected": 0,
+  "final_test_provider_calls": 0,
+  "capacity": "not verified",
+  "frontend": "not rerun; unchanged"
+}

@@ -1,0 +1,111 @@
+{
+  "samples": 2000,
+  "jobs": 3200,
+  "network_requests": 3196,
+  "retries": 0,
+  "rate_limits": 0,
+  "cache_hits": 4,
+  "elapsed_wall_seconds": 297.7187804887071,
+  "dataset_digest": "3b9308822fcf6d97bbe1feccb63ee63ed12803fafe0d92aea03daef5810e00ad",
+  "reported_at": "2026-10-30T01:21:28.966296+00:00",
+  "requested_model": "deepseek-flash",
+  "temperature": 0,
+  "groups": {
+    "p2_synthetic-classifier": {
+      "jobs": 800,
+      "valid": 800,
+      "failed_or_invalid": 0,
+      "failure_rate": 0.0,
+      "usage": {
+        "prompt_tokens": 238440,
+        "completion_tokens": 11612,
+        "total_tokens": 250052,
+        "prompt_cache_hit_tokens": 101376,
+        "prompt_cache_miss_tokens": 137064
+      },
+      "average_seconds": 0.7232020352128893,
+      "returned_models": [
+        "deepseek-flash"
+      ],
+      "called_at": [
+        "2026-10-30T01:16:31.824068+00:00",
+        "2026-10-30T01:17:44.164740+00:00"
+      ],
+      "model_label_counts": {
+        "order_status": 250,
+        "return_request": 200,
+        "human": 176,
+        "clarify": 174
+      },
+      "silver_uncertain": null,
+      "unique_cached_responses": 800,
+      "usage_scope": "unique stored responses; cache-only replay adds no billable tokens"
+    },
+    "ecd_redacted-classifier": {
+      "jobs": 1200,
+      "valid": 1200,
+      "failed_or_invalid": 0,
+      "failure_rate": 0.0,
+      "usage": {
+        "prompt_tokens": 350836,
+        "completion_tokens": 16776,
+        "total_tokens": 367612,
+        "prompt_cache_hit_tokens": 18816,
+        "prompt_cache_miss_tokens": 332020
+      },
+      "average_seconds": 0.7584015660876563,
+      "returned_models": [
+        "deepseek-flash"
+      ],
+      "called_at": [
+        "2026-10-30T01:17:44.123391+00:00",
+        "2026-10-30T01:19:37.896024+00:00"
+      ],
+      "model_label_counts": {
+        "order_status": 251,
+        "clarify": 884,
+        "return_request": 34,
+        "human": 31
+      },
+      "silver_uncertain": null,
+      "unique_cached_responses": 1198,
+      "usage_scope": "unique stored responses; cache-only replay adds no billable tokens"
+    },
+    "ecd_redacted-silver": {
+      "jobs": 1200,
+      "valid": 1200,
+      "failed_or_invalid": 0,
+      "failure_rate": 0.0,
+      "usage": {
+        "prompt_tokens": 271768,
+        "completion_tokens": 22996,
+        "total_tokens": 294764,
+        "prompt_cache_hit_tokens": 6528,
+        "prompt_cache_miss_tokens": 265240
+      },
+      "average_seconds": 0.7391836833709385,
+      "returned_models": [
+        "deepseek-flash"
+      ],
+      "called_at": [
+        "2026-10-30T01:19:37.644069+00:00",
+        "2026-10-30T01:21:28.925081+00:00"
+      ],
+      "model_label_counts": {
+        "clarify": 988,
+        "order_status": 180,
+        "return_request": 28,
+        "human": 4
+      },
+      "silver_uncertain": 1076,
+      "unique_cached_responses": 1198,
+      "usage_scope": "unique stored responses; cache-only replay adds no billable tokens"
+    }
+  },
+  "hybrid_model_branch_count": 1552,
+  "hybrid_additional_requests": 0,
+  "final_test_sampled": false,
+  "human_metrics": "not measured; awaiting 100 blind human development labels",
+  "final_metrics": "not measured; freeze and later unseen 200 selection not performed",
+  "token_reconciliation": "deduplicated by response fingerprint; initial logical-job token sums are not billing totals"
+}

@@ -1,0 +1,58 @@
+{
+  "pricing_source": "https://api-docs.deepseek.com/quick_start/pricing/",
+  "currency": "USD",
+  "provider_invoice_verified": false,
+  "basis": "Observed unique-response usage times peak rates; call window falls in weekday peak; not a verified invoice",
+  "rates_per_million": {
+    "input_miss": 0.3,
+    "input_hit": 0.006,
+    "output": 1.2
+  },
+  "totals": {
+    "prompt_tokens": 861044,
+    "completion_tokens": 51384,
+    "total_tokens": 912428,
+    "prompt_cache_hit_tokens": 126720,
+    "prompt_cache_miss_tokens": 734324
+  },
+  "groups": {
+    "p2_synthetic-classifier": {
+      "usage_priced_peak_usd": 0.055661856,
+      "same_tokens_without_provider_cache_usd": 0.0854664
+    },
+    "ecd_redacted-classifier": {
+      "usage_priced_peak_usd": 0.119850096,
+      "same_tokens_without_provider_cache_usd": 0.125382
+    },
+    "ecd_redacted-silver": {
+      "usage_priced_peak_usd": 0.107206368,
+      "same_tokens_without_provider_cache_usd": 0.1091256
+    }
+  },
+  "classifier_shared_three_versions_usd": 0.175511952,
+  "ecd_silver_usd": 0.107206368,
+  "total_usage_priced_usd": 0.28271831999999997,
+  "prior_pilot_classifier_forecast_usd": 0.218856,
+  "classifier_deviation_percent": -19.804825090470445,
+  "silver_classifier_length_proxy_for_1200_usd": 0.1313136,
+  "silver_deviation_vs_proxy_percent": -18.358518843440443,
+  "combined_comparable_proxy_usd": 0.35016959999999997,
+  "combined_deviation_percent": -19.26246024783419,
+  "deviation_explanation": [
+    "P2/ECD prompt lengths differ from 50-item pilot",
+    "Silver prompt was not measured by pilot and is shorter",
+    "Observed provider prefix-cache hits reduce priced cost",
+    "Two duplicate cropped ECD views reuse responses for both prompts"
+  ],
+  "extra_development_prompt_variants": "not run; would change cache key and require new cost accounting",
+  "final_test": {
+    "selected": 0,
+    "provider_calls": 0,
+    "gold_quality_metrics": "not measured"
+  },
+  "replay": {
+    "logical_jobs": 3200,
+    "network_requests": 0,
+    "cache_hits": 3200
+  }
+}

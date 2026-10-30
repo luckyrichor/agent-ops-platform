@@ -11,6 +11,7 @@ from typing import Any
 
 import httpx
 
+from agent_ops.ecd_redaction import outbound_is_redacted
 from agent_ops.planner import LLMConfig
 
 
@@ -46,11 +47,11 @@ class DeepSeekEvaluation:
 
     No network by default. Caller must obtain user approval first. Cache keys cover
     dataset digest, exact messages, model, endpoint and generation settings.
-    ECD is blocked until a separately reviewed data authorization is implemented.
+    ECD requires explicit per-run approval and a clean local pattern rescan.
     """
     def __init__(self, config: DeepSeekConfig, cache: Path, *, allow_network: bool = False,
                  client: httpx.AsyncClient | None = None,
-                 slots: asyncio.Semaphore | None = None) -> None:
+                 slots: asyncio.Semaphore | None = None, allow_ecd: bool = False) -> None:
         root = (Path.cwd()/'.local').resolve()
         if cache.is_symlink() or not cache.resolve().is_relative_to(root):
             raise ValueError('EVALUATION_CACHE_REQUIRES_LOCAL')
@@ -58,6 +59,7 @@ class DeepSeekEvaluation:
         if cache.stat().st_mode & 0o777 != 0o700:
             raise ValueError('EVALUATION_CACHE_REQUIRES_MODE_700')
         self.config, self.cache, self.allow_network = config, cache, allow_network
+        self.allow_ecd = allow_ecd
         self.slots = slots if slots is not None else asyncio.Semaphore(config.concurrency)
         self._client = client
         self._owned = client is None
@@ -70,7 +72,12 @@ class DeepSeekEvaluation:
 
     async def complete(self, *, dataset_digest: str, source: str,
                        messages: list[dict[str, str]]) -> dict[str, Any]:
-        if source != 'p2_synthetic':
+        if source == 'ecd_redacted':
+            if not self.allow_ecd:
+                raise EvaluationUnavailable('ECD_THIRD_PARTY_NOT_AUTHORIZED')
+            if not outbound_is_redacted(messages):
+                raise EvaluationUnavailable('ECD_REDACTION_REQUIRED')
+        elif source != 'p2_synthetic':
             raise EvaluationUnavailable('ECD_THIRD_PARTY_NOT_AUTHORIZED')
         if not dataset_digest or not messages:
             raise ValueError('EVALUATION_INPUT_REQUIRED')

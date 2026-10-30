@@ -1,0 +1,14 @@
+{
+  "src/agent_ops/deepseek.py": "ca9bddf7802eb117bf6e6c81984ed2d4280724dbab8368ac587c959e9c8f0fda",
+  "src/agent_ops/ecd_redaction.py": "3cc782b607593e15c065f0b30b24493bfa99a184f601a26d9347b53f649c50eb",
+  "src/agent_ops/routing_evaluation.py": "7449ecbf4d0a84243e644ea572b1e604da6916f619730d8696daf1699eaefa1b",
+  "src/agent_ops/p8_pilot.py": "289ca4793ac69a9ce47d2f8cbd0874f23f6867bbdade9b338de9653166fe444f",
+  "src/agent_ops/support.py": "7b6d0464ec0b6187db459e29c75c89a83aa593b468d951c076135772cad88d1b",
+  "src/agent_ops/planner.py": "e220eb4e82dd1eb82e868a60d2ed7df9602ee748131abcd2bbbf7566ea44b7c4",
+  "scripts/prepare-p8-development.py": "4d73e6d8a10900bab8c507987c40131a482938b51eb62e927881931b08faff07",
+  "scripts/run-p8-development.py": "f269b7c6c6622c39b9ea00684ca6b25c03e1abb8c5d050a445b03b04f5fbdaee",
+  "tests/test_p8_development.py": "1c965b5f8a596ceff3592d7eab4e751bcde836b166436cd8c566d36275442ef1",
+  "tests/test_deepseek.py": "0384eed3b42204e35b74492016d7def0a200780a6440a2ba5dbe80a86cf5032b",
+  "pyproject.toml": "e5fa7a92d2704ace5ae158c62abc6af1c4a32ec3b89a8fd6620b449b4e29e519",
+  "uv.lock": "76fe1b92d42473f5edc2f34859bb6f01cf76a7f412f7e928a0beb398d06d9671"
+}
