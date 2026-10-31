@@ -677,4 +677,4 @@ P9仅形成待确认方案：隔离bench API/模型桩/测试DB，保护GetAudio
 
 公开JSON仅匿名统计，不含实机配置、地址、进程/容器映射、原始请求；代码与策略未修改。P8最终集未读取或重评。
 
-飞书待同步：2026-10-31 P9只读换页归因与限制。
+飞书已同步：2026-10-31 P9只读换页归因与限制已追加开发记录 https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf ，codex profile/--as user；项目父节点与正文764fe6f/3460/311/33次异常回查通过。真实配置及原始进程数据仅.local，不入飞书。
