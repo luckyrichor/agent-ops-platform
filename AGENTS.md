@@ -600,4 +600,4 @@ ECD去human金标n127/合成n29，保留预测human的错误，宏平均固定�
 
 P9仅形成待确认方案：隔离bench API/模型桩/测试DB，保护GetAudio/GetVideo/agent-memory，资源总预算与看门狗/非高峰/升级闸门；独立负载机优先、万连接内存/FD/端口公式；匹配任务真实DeepSeek延迟拟合和独立留出校准；真实socket慢读、固定种子故障；JSON及三次spread≤10%流程。详细实际主机限额/规格只.local/p9-planning及私有交付附件，公开方案只有提案预算/通用公式，未做任何配置或负载变更。未连接其他设备。新增真实调用为0，实施及拟调用额度必须等用户确认P9方案。下一步只等待确认，不自动开始实现/压测。
 
-飞书待同步：2026-10-30 P8离线统计收尾和P9待确认公开方案（不含实机规格）。
+飞书已同步（2026-10-31）：P8验收后统计 https://kcn0pbn0hwo0.feishu.cn/wiki/Dx2swsc05i4vFWks739cB6Oonxf ，P9待确认方案 https://kcn0pbn0hwo0.feishu.cn/wiki/DLRMwiNHZi4zmZkyVhVcZ7GNnGb ，归档我的文档库/WorkPlan/agent-ops-platform，codex profile/--as user。项目父节点和正文含baf9272、关键统计/预算回查通过；既有开发记录和旧最终报告只追加新进展/新链接，回读通过。完整P8报告含统计补充、P9方案含带采集时间的私有只读附录已作为Markdown发群；实机规格仅私有附件不入公开库/Wiki。分析/方案已推送baf9272，P9继续等用户确认，不实施。
