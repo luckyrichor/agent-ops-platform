@@ -1,0 +1,88 @@
+{
+  "status": "preflight_stopped",
+  "observed_seconds": 600,
+  "interval_seconds": 1,
+  "initial_since_boot_row_excluded": true,
+  "start": "2026-10-31T07:46:24+00:00",
+  "end": "2026-10-31T07:56:23+00:00",
+  "swap_in_seconds": 487,
+  "swap_out_seconds": 22,
+  "swap_in_kib": 31656,
+  "swap_out_kib": 24588,
+  "windows": [
+    {
+      "minute": 1,
+      "si_nonzero_seconds": 29,
+      "so_nonzero_seconds": 3,
+      "si_kib": 4048,
+      "so_kib": 2744
+    },
+    {
+      "minute": 2,
+      "si_nonzero_seconds": 57,
+      "so_nonzero_seconds": 3,
+      "si_kib": 4200,
+      "so_kib": 1412
+    },
+    {
+      "minute": 3,
+      "si_nonzero_seconds": 53,
+      "so_nonzero_seconds": 4,
+      "si_kib": 3108,
+      "so_kib": 5020
+    },
+    {
+      "minute": 4,
+      "si_nonzero_seconds": 55,
+      "so_nonzero_seconds": 1,
+      "si_kib": 2936,
+      "so_kib": 872
+    },
+    {
+      "minute": 5,
+      "si_nonzero_seconds": 50,
+      "so_nonzero_seconds": 1,
+      "si_kib": 3276,
+      "so_kib": 72
+    },
+    {
+      "minute": 6,
+      "si_nonzero_seconds": 53,
+      "so_nonzero_seconds": 2,
+      "si_kib": 2140,
+      "so_kib": 5640
+    },
+    {
+      "minute": 7,
+      "si_nonzero_seconds": 41,
+      "so_nonzero_seconds": 3,
+      "si_kib": 5932,
+      "so_kib": 836
+    },
+    {
+      "minute": 8,
+      "si_nonzero_seconds": 50,
+      "so_nonzero_seconds": 2,
+      "si_kib": 1496,
+      "so_kib": 3376
+    },
+    {
+      "minute": 9,
+      "si_nonzero_seconds": 53,
+      "so_nonzero_seconds": 1,
+      "si_kib": 2220,
+      "so_kib": 36
+    },
+    {
+      "minute": 10,
+      "si_nonzero_seconds": 46,
+      "so_nonzero_seconds": 2,
+      "si_kib": 2300,
+      "so_kib": 4580
+    }
+  ],
+  "raw_sha256": "c12a10e282a62f902ed30307ec45cc46e0d194229a5d11486bc0c6065059b21a",
+  "new_model_calls": 0,
+  "load_runs": 0,
+  "reason": "Persistent swap activity observed across consecutive minute windows; user preflight gate requires stop."
+}
