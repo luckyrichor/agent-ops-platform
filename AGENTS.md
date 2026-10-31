@@ -643,4 +643,4 @@ P9仅形成待确认方案：隔离bench API/模型桩/测试DB，保护GetAudio
 - 原因尚未归因；恢复前需负责人决定是否开展只读排查或改到合适窗口，重新完成前置观测。未擅自扩大到系统修复。
 
 
-飞书待同步：2026-10-31 P9范围批准与前置持续换页停止。
+飞书已同步：2026-10-31 P9范围批准与前置持续换页停止已追加项目开发记录 https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf ，codex profile/--as user；正文含1207a46及487/24,588、项目父节点回查通过。原始观测与实际FD配置仅.local，未上传。
