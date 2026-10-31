@@ -1,6 +1,6 @@
 # AGENTS.md
 
-最后更新：2026-10-30（北京时间）
+最后更新：2026-10-31（北京时间）
 
 本文件为在本仓库工作的编码 agent 提供指引（Claude Code 读 `CLAUDE.md`、Codex 读 `AGENTS.md`，两者都指向这里）。
 
@@ -10,7 +10,7 @@ Agent 应用与可观测评测平台。电商场景的多 Agent 任务拆解、�
 
 三个月求职计划六项目之一（原编号 ③），对应岗位 **05、07、10、11、14**，另含 **08** 作为子方向。总计划见 [workplan-docs](https://github.com/luckyrichor/workplan-docs)，岗位原文以那里的 `岗位要求原文.md` 为唯一依据。
 
-**当前状态：P8唯一一次最终评测完成（198有效/2弃权），冻结b90c201/tag p8-routing-freeze-20261030未改。ECD129有效：规则一致率72.87%/macroF1 .4922，模型65.89%/.6038，混合63.57%/.5898；多数类67.44%，不能声称模型/混合一致率超过基线。合成69模型94.20%但固定四类macroF1 .4815，缺order_status且clarify 0/3命中；不合并成绩。human稀有样本2条、人工覆盖未达到每类约30。198请求/0失败重试限流、84534 token/高峰usage估价0.020364036美元、账单未核验。报告docs/reports/p8-final含完整P/R/F1、Wilson分母、矩阵、kappa。用户表仅.local、权限600；一次性台账completed，禁止重跑或改策略追分。冻结前265测试，本次离线19通过；等待负责人验收P8，P9/P10未开始。**
+**当前状态：P8流程已获负责人验收，验收后统计/分歧归因补充完成（纯离线，模型0调用、最终0重跑、冻结策略未改）。ECD全类/去human两两McNemar经Holm均未显著；去human三类macroF1：规则.6593/模型.6940/混合.6652，配对家族区间均跨0。不能声称混合整体优于规则或模型。最终集已使用，之后不得拿它调参或重跑；任何路由修改需重新冻结+另抽新测试集由负责人盲标，开发探索只标探索性。23项离线测试、ruff/mypy39通过。P9仅待确认方案docs/plans/p9-load-infrastructure-proposal.md；未启动桩/压测、未改配置/开放端口、未新增真实模型调用。**
 
 ## 分工模式：偏产出
 
@@ -587,3 +587,17 @@ clarify待确认提案60条：信息不足/意图未定15（P2 9/ECD6），超�
 最终指标按ECD/合成分报，不报合并分。ECD金标order26/return14/human2/clarify87；合成order0/return26/human40/clarify3。ECD多数类67.44%，模型/混合一致率低于该基线；模型macroF1高于规则，但不能说全面提升。合成模型clarify 0/3，固定四类macroF1与有金标类macro分列。每类P/R附Wilson95%成功数/分母，NA不造0，human2/2召回下界仅.3424，不称可靠。600候选池权重不代表完整ECD或真实总体，同源合成/银标选择偏差保留。
 
 新增scripts/report-p8-final.py仅离线读取completed结果/核对冻结与报告摘要，生成多数类基线、费用元数据和可读报告，不重跑规则或调用模型。本次离线保护/指标19测试通过、报告脚本ruff通过；冻结前完整265/ruff/mypy38保持原证据。最终报告docs/reports/p8-final/README.md、metrics.json与summary.json；不根据最终错例改冻结策略/提示/阈值，不追加样本重评，不进入P9。下一步等待负责人P8验收/后续决定。飞书已同步：2026-10-30 P8最终单次成绩及限制已追加开发记录 https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf ；完整最终报告 https://kcn0pbn0hwo0.feishu.cn/wiki/RGSSwr9uNid1f3kGAcxcgXYfnLg ，归档我的文档库/WorkPlan/agent-ops-platform，codex profile/--as user。项目父节点和两篇正文含679298b/84534及交叉链接的回查通过。最终评测结果已推送679298b；等待负责人验收，不重跑。
+
+## 2026-10-30 P8验收后统计收尾；P9仅方案待确认
+
+负责人验收P8冻结/单次人工金标流程，要求只做分析、不改策略、不重跑。新增routing_posthoc.py（独立离线统计、不在冻结策略路径），scripts/analyze-p8-final.py读取既存198有效预测/标注，验证冻结12文件与completed台账/原始metrics摘要，进行精确McNemar、Holm12比较、20,000次配对金标分层bootstrap、探索性召回/FPR及逐条归因。报告docs/reports/p8-final-followup/README.md、analysis.json、hybrid-disagreements.csv（82条分歧）和clarify-order-attribution.csv（31不同编号），均无ECD原文/人工备注。统计重采样不等于模型/规则重跑，原完成台账保持。
+
+ECD去human金标n127/合成n29，保留预测human的错误，宏平均固定查单/退货/clarify三类；同时给全行仅删human宏项的替代口径，不混淆。CI为本样本类别数条件bootstrap，不代表自然总体。ECD各比较均不显著，合成全69中模型/混合一致率对规则的差异Holm显著，但去human后不显著、macro差家族区间跨0；不以ECD human仅2条支持版本比较。明确当前无证据说明混合整体优于规则或模型，互补仅错误结构观察。
+
+混合ECD97/129走模型，和模型差6条；6次规则覆盖1纠正/4引错/1皆错。合成54/69走模型，和模型差0条。逐条CSV记录已有档值/分支机制，不重新执行路由。指定模型29/规则13个clarify→order错误，按本地特征和原备注辅助归因为：严格无上下文时间1/1、催发货5/3、承运商0/1、改地址0/0、其他23/8。其他内有上下文不充分时间14/5、无需动作5/1、证据不足4/2；不把非空上下文说成没有上下文，不修改金标。语义归因未获新增独立人工复核，限制已写。
+
+最终测试集已经使用：不得再对它调参或重跑；继续优化必须新冻结、新抽样、新人工盲标；现开发集后续任何调试只算探索性。P8本轮新增4个统计测试+既有19个离线保护/指标共23通过，ruff/mypy39通过，未跑新的模型/容量/S3。
+
+P9仅形成待确认方案：隔离bench API/模型桩/测试DB，保护GetAudio/GetVideo/agent-memory，资源总预算与看门狗/非高峰/升级闸门；独立负载机优先、万连接内存/FD/端口公式；匹配任务真实DeepSeek延迟拟合和独立留出校准；真实socket慢读、固定种子故障；JSON及三次spread≤10%流程。详细实际主机限额/规格只.local/p9-planning及私有交付附件，公开方案只有提案预算/通用公式，未做任何配置或负载变更。未连接其他设备。新增真实调用为0，实施及拟调用额度必须等用户确认P9方案。下一步只等待确认，不自动开始实现/压测。
+
+飞书待同步：2026-10-30 P8离线统计收尾和P9待确认公开方案（不含实机规格）。
