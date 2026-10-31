@@ -1,0 +1,62 @@
+{
+  "status": "read_only_diagnosis_complete_p9_still_stopped",
+  "start": "2026-10-31T08:03:44.271781+00:00",
+  "end": "2026-10-31T08:05:44.281914+00:00",
+  "samples": 61,
+  "elapsed_seconds": 120.01013646414503,
+  "sampling_interval_seconds": 2,
+  "page_size_bytes": 4096,
+  "counter_delta": {
+    "pswpin": 865,
+    "pswpout": 0,
+    "pgmajfault": 506,
+    "pgscan_direct": 0,
+    "pgscan_kswapd": 0,
+    "allocstall_normal": 0
+  },
+  "swap_in_kib": 3460,
+  "swap_out_kib": 0,
+  "intervals_with_swap_in": 46,
+  "intervals_with_swap_out": 0,
+  "pressure": {
+    "memory": {
+      "some": {
+        "stall_us_delta": 56470,
+        "start_avg10": 0.0,
+        "end_avg10": 0.0
+      },
+      "full": {
+        "stall_us_delta": 36440,
+        "start_avg10": 0.0,
+        "end_avg10": 0.0
+      }
+    },
+    "io": {
+      "some": {
+        "stall_us_delta": 1718837,
+        "start_avg10": 0.95,
+        "end_avg10": 0.78
+      },
+      "full": {
+        "stall_us_delta": 1200806,
+        "start_avg10": 0.19,
+        "end_avg10": 0.57
+      }
+    },
+    "cpu": {
+      "some": {
+        "stall_us_delta": 20894087,
+        "start_avg10": 16.83,
+        "end_avg10": 16.8
+      },
+      "full": {
+        "stall_us_delta": 0,
+        "start_avg10": 0.0,
+        "end_avg10": 0.0
+      }
+    }
+  },
+  "new_model_calls": 0,
+  "load_runs": 0,
+  "process_snapshot_read_errors": 33
+}
