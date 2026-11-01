@@ -146,8 +146,8 @@ def run_generator(args: argparse.Namespace, port: int, timings: dict[str, int],
     ]
     quoted = " ".join(f"'{item}'" for item in remote)
     subprocess.run(["ssh", "-o", "BatchMode=yes", MAC,
-                    f"caffeinate -dimsu -t {int(timings['hold']) + 600} "
-                    f">/dev/null 2>&1 & ulimit -n 8192; {quoted}"], check=True,
+                    (f"caffeinate -dimsu -t {int(timings['hold']) + 600} "
+                     f">/dev/null 2>&1 & ulimit -n 8192; {quoted}")], check=True,
                    timeout=timings["hold"] + 300)
     subprocess.run(["scp", "-q", f"{MAC}:{remote_json}", str(local_json)], check=True, timeout=120)
     subprocess.run(["ssh", "-o", "BatchMode=yes", MAC, f"rm -f {remote_json}"], check=False)
