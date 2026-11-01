@@ -1,0 +1,76 @@
+{
+  "config_version": "p9-acceptance-v2",
+  "frozen_at": "2026-11-01",
+  "note": "P9 验收口径 v2。v1 于 2026-11-01 重跑仍失败（换入非零 93 秒、换出非零 12 秒、换入 4,416 KiB、换出 1,704 KiB）；负责人在知晓该结果后批准改用 v2。v1 保留为历史，不修改其数值。v2 仍要求换出受限、换入非零不超过四分之一时间、MemAvailable 与 PSI 达标。",
+  "preflight": {
+    "duration_seconds": 600,
+    "sample_interval_seconds": 1,
+    "gates": {
+      "swap_out_nonzero_seconds_percent_max": 5.0,
+      "swap_out_kib_total_max": 4096,
+      "swap_in_nonzero_seconds_percent_max": 25.0,
+      "swap_in_kib_total_max": 8192,
+      "swap_in_nonzero_seconds_per_minute_percent_max": 50.0,
+      "mem_available_min_mib": 2048,
+      "memory_psi_full_avg60_percent_max": 1.0
+    }
+  },
+  "calibration": {
+    "model_stub_overhead_http_ms_max": 5.0,
+    "fit_samples_min": 500,
+    "validation_samples_min": 500,
+    "real_calls_cap_including_retries": 1200,
+    "concurrency_max": 2,
+    "attempts_per_request_max": 3,
+    "budget_usd_max": 2.0,
+    "p50_ratio_ci95": [
+      0.9,
+      1.1
+    ],
+    "p95_ratio_ci95": [
+      0.85,
+      1.15
+    ],
+    "cdf_max_distance": 0.1,
+    "bootstrap_resamples": 2000,
+    "bootstrap_seed": 42
+  },
+  "tiers": {
+    "allowed_connections": [
+      100,
+      500,
+      1000
+    ],
+    "optional_connections": [
+      2000
+    ],
+    "runs_per_tier": 3,
+    "warmup_seconds": 60,
+    "ramp_seconds": 20,
+    "steady_seconds": 180,
+    "drain_seconds": 30,
+    "spread_max_percent": 10.0,
+    "slow_reader_ratios": [
+      0.0,
+      0.1,
+      0.3
+    ],
+    "slow_reader_rate_bytes_per_second": 1024,
+    "watchdog_interval_seconds": 1,
+    "watchdog_background_seconds": 60
+  },
+  "budget": {
+    "cpu_quota_percent": 125,
+    "memory_high_mib": 1536,
+    "memory_max_mib": 2048,
+    "memory_swap_max_mib": 0,
+    "tasks_max": 512,
+    "host_mem_available_floor_mib": 2048,
+    "protected_p95_regression_percent_max": 10.0
+  },
+  "reporting": {
+    "json_schema_version": 1,
+    "no_public_host_details": true
+  },
+  "supersedes": "p9-acceptance-v1"
+}

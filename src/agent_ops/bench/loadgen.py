@@ -22,6 +22,10 @@ from dataclasses import dataclass, field
 from pathlib import Path
 from typing import Any
 
+# macOS 自带 Python 3.9 的 asyncio.TimeoutError 与内建 TimeoutError 不是同一个类，
+# 生成器在 Mac 上运行，必须两者都捕获。
+TIMEOUT_ERRORS = (asyncio.TimeoutError, TimeoutError)
+
 
 def percentile(values: list[float], q: float) -> float:
     if not values:
@@ -168,7 +172,7 @@ async def business_once(args: argparse.Namespace, index: int, slow: bool,
     try:
         try:
             reader, writer = await open_connection(args)
-        except (OSError, TimeoutError) as error:
+        except (OSError, *TIMEOUT_ERRORS) as error:
             result.error = f"connect:{type(error).__name__}"
             return result
         result.connect_ms = (time.monotonic() - started) * 1000
@@ -223,7 +227,7 @@ async def business_once(args: argparse.Namespace, index: int, slow: bool,
                 return result
             result.bytes_read += len(chunk)
             buffer += chunk
-    except TimeoutError:
+    except TIMEOUT_ERRORS:
         result.error = "timeout"
     except (ConnectionError, OSError) as error:
         result.error = f"transport:{type(error).__name__}"
@@ -247,7 +251,7 @@ async def transport_once(args: argparse.Namespace, index: int, slow: bool,
     try:
         try:
             reader, writer = await open_connection(args)
-        except (OSError, TimeoutError) as error:
+        except (OSError, *TIMEOUT_ERRORS) as error:
             result.error = f"connect:{type(error).__name__}"
             return result
         result.connect_ms = (time.monotonic() - started) * 1000
@@ -282,7 +286,7 @@ async def transport_once(args: argparse.Namespace, index: int, slow: bool,
             result.bytes_read += len(chunk)
             buffer += chunk
         result.held_ms = (time.monotonic() - started) * 1000
-    except TimeoutError:
+    except TIMEOUT_ERRORS:
         result.error = "timeout"
     except (ConnectionError, OSError) as error:
         result.error = f"transport:{type(error).__name__}"
@@ -309,13 +313,20 @@ async def run(args: argparse.Namespace) -> dict[str, Any]:
             await asyncio.sleep(args.ramp * number / max(1, args.connections))
         index = number
         while time.monotonic() < stop_at:
-            if args.kind == "transport":
-                await transport_once(args, index, is_slow(index, args.slow_ratio, args.seed), recorder)
-            else:
-                await business_once(args, index, is_slow(index, args.slow_ratio, args.seed), recorder)
+            try:
+                if args.kind == "transport":
+                    await transport_once(args, index, is_slow(index, args.slow_ratio, args.seed),
+                                         recorder)
+                else:
+                    await business_once(args, index, is_slow(index, args.slow_ratio, args.seed),
+                                        recorder)
+            except Exception as error:  # noqa: BLE001 - 单个 worker 失败不能拖垮整轮
+                recorder.errors[f"worker:{type(error).__name__}"] += 1
+                await asyncio.sleep(0.05)
             index += args.connections
 
-    await asyncio.gather(*(worker(i + 1) for i in range(args.connections)))
+    await asyncio.gather(*(worker(i + 1) for i in range(args.connections)),
+                         return_exceptions=True)
     ended = time.monotonic()
 
     def sample(attr: str) -> list[float]:

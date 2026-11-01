@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 """P9 单次运行：桩 + 隔离 bench API + 看门狗 + Mac 生成器，产出证据 JSON。
 
-一次只跑一格（场景 × 连接数 × 轮次）。资源预算、硬闸与判定口径来自 acceptance-v1.json。
+一次只跑一格（场景 × 连接数 × 轮次）。资源预算、硬闸与判定口径来自 acceptance-v2.json。
 """
 
 from __future__ import annotations
@@ -10,6 +10,8 @@ import argparse
 import asyncio
 import json
 import os
+import shlex
+import signal
 import socket
 import subprocess
 import sys
@@ -28,6 +30,11 @@ from agent_ops.bench.watchdog import Watchdog
 SUT_ADDR = os.environ.get("P9_SUT_ADDR", "100.87.80.92")
 MAC = os.environ.get("P9_GENERATOR_HOST", "luomac")
 MAC_PY = os.environ.get("P9_GENERATOR_PYTHON", "python3")
+
+
+def with_nofile(command: list[str], limit: int = 65535) -> list[str]:
+    """通过 shell 提升软限制后 exec，避免 preexec_fn 与线程混用。"""
+    return ["bash", "-c", f"ulimit -n {limit}; exec " + shlex.join(command)]
 
 
 def free_port() -> int:
@@ -56,6 +63,9 @@ def bench_env(stub_port: int, base: dict[str, str]) -> dict[str, str]:
         "AGENT_OPS_AUTH_SECRET": base["AGENT_OPS_AUTH_SECRET"],
         "AGENT_OPS_BENCH_STUB_ENDPOINT": f"http://127.0.0.1:{stub_port}/v1/chat/completions",
         "AGENT_OPS_BENCH_AUTH": "off",
+        "AGENT_OPS_BENCH_PLANNER_CONCURRENCY": os.environ.get(
+            "AGENT_OPS_BENCH_PLANNER_CONCURRENCY", "8"),
+        "AGENT_OPS_BENCH_MAX_ATTEMPTS": "1",
         "AGENT_OPS_PLANNER": "deterministic",
         "AGENT_OPS_TRACE_EXPORTER": "none",
         "OTEL_SDK_DISABLED": "true",
@@ -135,7 +145,9 @@ def run_generator(args: argparse.Namespace, port: int, timings: dict[str, int],
         "--out", remote_json, "--rows",
     ]
     quoted = " ".join(f"'{item}'" for item in remote)
-    subprocess.run(["ssh", "-o", "BatchMode=yes", MAC, quoted], check=True,
+    subprocess.run(["ssh", "-o", "BatchMode=yes", MAC,
+                    f"caffeinate -dimsu -t {int(timings['hold']) + 600} "
+                    f">/dev/null 2>&1 & ulimit -n 8192; {quoted}"], check=True,
                    timeout=timings["hold"] + 300)
     subprocess.run(["scp", "-q", f"{MAC}:{remote_json}", str(local_json)], check=True, timeout=120)
     subprocess.run(["ssh", "-o", "BatchMode=yes", MAC, f"rm -f {remote_json}"], check=False)
@@ -156,6 +168,12 @@ def main() -> int:
     parser.add_argument("--private", type=Path, default=ROOT / ".local" / "p9-runs")
     parser.add_argument("--experiment-id", default="")
     args = parser.parse_args()
+
+    # 被 kill 时也走 finally，避免留下桩或 bench 子进程。
+    def _terminate(*_: object) -> None:
+        raise SystemExit(143)
+
+    signal.signal(signal.SIGTERM, _terminate)
 
     cfg = config.load()
     tiers = cfg.tiers
@@ -179,14 +197,15 @@ def main() -> int:
     stub_log = (private / "stub.log").open("w")
     bench_log = (private / "bench.log").open("w")
     stub = subprocess.Popen(
-        [sys.executable, "-m", "agent_ops.bench.stub", "--latency", str(latency_file),
-         "--port", str(stub_port)],
+        with_nofile([sys.executable, "-m", "agent_ops.bench.stub", "--latency",
+                     str(latency_file), "--port", str(stub_port)]),
         cwd=ROOT, env={**os.environ, "PYTHONPATH": str(ROOT / "src")},
         stdout=stub_log, stderr=subprocess.STDOUT,
     )
     bench = subprocess.Popen(
-        [sys.executable, "-m", "uvicorn", "agent_ops.bench.app:bench_app",
-         "--host", SUT_ADDR, "--port", str(bench_port), "--log-level", "warning"],
+        with_nofile([sys.executable, "-m", "uvicorn", "agent_ops.bench.app:bench_app",
+                     "--host", SUT_ADDR, "--port", str(bench_port),
+                     "--log-level", "warning"]),
         cwd=ROOT, env=bench_env(stub_port, base_env),
         stdout=bench_log, stderr=subprocess.STDOUT,
     )
@@ -235,9 +254,17 @@ def main() -> int:
     achieved = int(generator_doc["achieved_connections"])
     healthy = int(generator_doc["healthy_connections"])
     aborted = watchdog.aborted
-    status = "completed" if achieved >= args.connections and healthy >= args.connections and not aborted else (
-        "aborted" if aborted else "partial"
-    )
+    errors = {str(key): int(value) for key, value in generator_doc["errors"].items()}
+    attempts = int(generator_doc["completed_requests"]) + sum(errors.values())
+    fatal = sum(errors.values())
+    error_rate = fatal / attempts if attempts else 1.0
+    # 运行前固定的完成条件：达到目标、健康首帧、无保护中止、致命错误不超过 1%
+    if aborted:
+        status = "aborted"
+    elif achieved >= args.connections and healthy >= args.connections and error_rate <= 0.01:
+        status = "completed"
+    else:
+        status = "partial"
     commit = subprocess.run(["git", "rev-parse", "HEAD"], cwd=ROOT, capture_output=True,
                             text=True, check=False).stdout.strip()
     dirty = bool(subprocess.run(["git", "status", "--porcelain"], cwd=ROOT,
@@ -253,6 +280,8 @@ def main() -> int:
             "seed": args.seed,
             "timings": timings,
             "profile": "deepseek-stub: empirical CDF from authorized fit samples",
+            "planner_concurrency": int(os.environ.get(
+                "AGENT_OPS_BENCH_PLANNER_CONCURRENCY", "8")),
         },
         "source": {"commit": commit, "dirty": dirty,
                    "generator": "mac" if args.generator == "mac" else "local"},
@@ -268,7 +297,9 @@ def main() -> int:
             "first_event": generator_doc["latency_ms"]["first_event"],
             "full": generator_doc["latency_ms"]["full"],
         },
-        "errors": generator_doc["errors"],
+        "errors": errors,
+        "attempts": attempts,
+        "fatal_error_rate": round(error_rate, 6),
         "throughput": generator_doc["throughput"],
         "resources": {
             "peak_memory_mib": resource_sink.get("peak_process_rss_mib", 0.0),

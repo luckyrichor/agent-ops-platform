@@ -7,8 +7,8 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-CONFIG_PATH = Path(__file__).with_name("acceptance-v1.json")
-EXPECTED_VERSION = "p9-acceptance-v1"
+CONFIG_PATH = Path(__file__).with_name("acceptance-v2.json")
+EXPECTED_VERSION = "p9-acceptance-v2"
 
 
 @dataclass(frozen=True)

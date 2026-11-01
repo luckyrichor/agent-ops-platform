@@ -17,7 +17,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 ROOT = Path(__file__).resolve().parents[1]
-CONFIG_PATH = ROOT / "src" / "agent_ops" / "bench" / "acceptance-v1.json"
+CONFIG_PATH = ROOT / "src" / "agent_ops" / "bench" / "acceptance-v2.json"
 PRIVATE_ROOT = ROOT / ".local" / "p9-preflight"
 PUBLIC_ROOT = ROOT / "docs" / "reports" / "p9-preflight"
 
@@ -137,23 +137,38 @@ def summarize(rows: list[dict[str, float]], interval_seconds: int, mem_min_mib: 
 
 
 def evaluate(summary: dict, gates: dict) -> dict:
+    duration = max(1, summary["duration_seconds"])
+    out_percent = summary["swap_out_nonzero_seconds"] / duration * 100
+    in_percent = summary["swap_in_nonzero_seconds"] / duration * 100
+    minute_percent = summary["max_swap_in_nonzero_seconds_per_minute"] / 60 * 100
     checks = {
-        "swap_out_nonzero_seconds": summary["swap_out_nonzero_seconds"]
-        <= gates["swap_out_nonzero_seconds_max"],
-        "swap_in_nonzero_seconds": summary["swap_in_nonzero_seconds"]
-        <= gates["swap_in_nonzero_seconds_max"],
-        "swap_in_nonzero_seconds_per_minute": summary["max_swap_in_nonzero_seconds_per_minute"]
-        <= gates["swap_in_nonzero_seconds_per_minute_max"],
+        "swap_out_nonzero_seconds_percent": out_percent
+        <= gates["swap_out_nonzero_seconds_percent_max"],
+        "swap_out_kib_total": summary["swap_out_kib"] <= gates["swap_out_kib_total_max"],
+        "swap_in_nonzero_seconds_percent": in_percent
+        <= gates["swap_in_nonzero_seconds_percent_max"],
         "swap_in_kib_total": summary["swap_in_kib"] <= gates["swap_in_kib_total_max"],
+        "swap_in_nonzero_seconds_per_minute_percent": minute_percent
+        <= gates["swap_in_nonzero_seconds_per_minute_percent_max"],
         "mem_available_min_mib": summary["mem_available_min_mib"] >= gates["mem_available_min_mib"],
         "memory_psi_full_avg60_percent": summary["memory_psi_full_avg60_percent_max"]
         <= gates["memory_psi_full_avg60_percent_max"],
+    }
+    summary["percentages"] = {
+        "swap_out_nonzero_seconds": round(out_percent, 3),
+        "swap_in_nonzero_seconds": round(in_percent, 3),
+        "max_minute_swap_in": round(minute_percent, 3),
     }
     return {"checks": checks, "passed": all(checks.values())}
 
 
 def main() -> int:
-    config = json.loads(CONFIG_PATH.read_text(encoding="utf-8"))
+    import argparse
+
+    parser = argparse.ArgumentParser()
+    parser.add_argument("--config", type=Path, default=CONFIG_PATH)
+    args = parser.parse_args()
+    config = json.loads(args.config.read_text(encoding="utf-8"))
     preflight = config["preflight"]
     duration = int(preflight["duration_seconds"])
     gates = preflight["gates"]
@@ -249,6 +264,7 @@ def main() -> int:
         "checks": verdict["checks"],
         "passed": verdict["passed"],
         "minutes": summary["minutes"],
+        "percentages": summary.get("percentages", {}),
         "new_model_calls": 0,
         "load_runs": 0,
         "note": "只读观测；未启动桩/负载、未改服务或系统配置、未调用模型。",
