@@ -494,3 +494,19 @@ P7发布同步完成：实现/验证/运行手册已推送6030b63，开发记录
 ## 2026-10-31 P9只读归因（Codex）
 
 经负责人确认，120秒61样本只读采集显示换入3460 KiB/换出0，扫描/分配停顿无增长、memory PSI低；另项目MySQL重大缺页与Swap下降支持历史页面回读候选，不把所有缺页当swap-in，也不认为已精确定位全部来源。原始进程/cgroup/配置仅.local/p9-diagnosis，公开统计docs/reports/p9-diagnosis。33次进程读取异常保留；无模型调用/压测/停服务/参数修改，P9仍停止，未重做600秒前置、未产基线。
+
+## 2026-11-01 P9 基础设施实现、真实校准通过、前置闸仍阻塞（Codex）
+
+负责人要求停掉占用 Swap 的两个 MySQL 与浏览器预览服务后开始测量，生成器用 Mac，并批准真实 DeepSeek 校准调用。核对发现宿主已于 04:10 重启，两个 MySQL 容器（其中一个已删除）与 `getcc-browser-preview` 单元均不在运行，Swap 占用从约 1.9 GB 降到约 17 MB，无需再执行停止动作。
+
+新增 P9 代码：`bench/` 下的验收配置、统计口径、确定性故障、DeepSeek-compatible 模型桩（经验 CDF 延迟 + 429/5xx/重置/断头/截断）、bench planner、隔离 app、标准库负载程序、看门狗、证据 schema；脚本 `p9-preflight.py`、`p9-calibrate.py`、`p9-run-tier.py`、`p9-report.py`、`p9-bench-db.sh`；32 项离线测试通过，ruff 与 strict mypy 通过。
+
+隔离库 `agent_ops_bench` 由真实迁移建成，只从 `agent_ops_p2_seed42` 复制 `commerce.categories/products/inventory`（200,000/200,000），不复制订单/账号/工单/支付。首次导入为空是因为误用了 `agent_ops` 库（该库无商品），已改为 P2 库后核对 20 万行。
+
+600 秒前置闸重跑仍不通过：换入非零 93 秒、换出非零 12 秒、换入 4,416 KiB、换出 1,704 KiB、单分钟峰值 15 秒，全部超出冻结的 v1 阈值；MemAvailable 最低 5,392.7 MiB、memory PSI full 峰值 0.06% 达标。另做 60 秒只读归因：换入 20 KiB、换出 60 KiB，无单进程 VmSwap 净增超过 20 MB，当前全机 Swap 仅约 17 MB，不支持“某个大服务持续抖动”的解释。按获批规则停止，未放宽阈值、未启动负载。
+
+真实模型校准完成并通过：`deepseek-flash` 编排 prompt 500 拟合 + 500 留出，1000 次调用（0 重试）、355,972 token、账单未核对；真实验证 p50 920.6 ms/p95 1198.6 ms，桩 p50 894.0/p95 1128.2，桩开销中位 2.03 ms；p50 比值 0.971（CI 0.933–1.004）、p95 0.941（0.880–0.970）、CDF 最大差 0.090。
+
+20 连接低档冒烟（非验收数据）：20/20 建立、412 请求全完成、0 错误，首帧 p95 53.1 ms、全链路 p95 1186.2 ms。冒烟后已停止桩与 bench 进程，端口无监听。
+
+三档三次矩阵未执行：100/500/1000 均被前置闸阻塞，等待负责人决定是否另立 v2 闸门（换出≤5%、累计换出≤4 MiB、换入≤25%、累计换入≤8 MiB）并重跑 600 秒，或继续停用其它后台服务。公开证据见 docs/reports/p9-preflight/20261101T122937Z-rerun、docs/reports/p9-calibration/20261101T124404Z、docs/reports/p9-implementation；原始采样、逐条延迟与响应仅 .local。

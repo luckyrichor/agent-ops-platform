@@ -1,0 +1,112 @@
+{
+  "status": "preflight_blocked",
+  "config_version": "p9-acceptance-v1",
+  "window": {
+    "start": "2026-11-01T12:29:37.756246+00:00",
+    "end": "2026-11-01T12:39:37.895699+00:00",
+    "duration_seconds": 600
+  },
+  "swap": {
+    "in_nonzero_seconds": 93,
+    "out_nonzero_seconds": 12,
+    "in_kib": 4416,
+    "out_kib": 1704,
+    "max_in_nonzero_seconds_per_minute": 15
+  },
+  "memory": {
+    "available_min_mib": 5392.7,
+    "psi_full_avg60_percent_max": 0.06
+  },
+  "gates": {
+    "swap_out_nonzero_seconds_max": 0,
+    "swap_in_nonzero_seconds_max": 30,
+    "swap_in_nonzero_seconds_per_minute_max": 10,
+    "swap_in_kib_total_max": 1024,
+    "mem_available_min_mib": 2048,
+    "memory_psi_full_avg60_percent_max": 1.0
+  },
+  "checks": {
+    "swap_out_nonzero_seconds": false,
+    "swap_in_nonzero_seconds": false,
+    "swap_in_nonzero_seconds_per_minute": false,
+    "swap_in_kib_total": false,
+    "mem_available_min_mib": true,
+    "memory_psi_full_avg60_percent": true
+  },
+  "passed": false,
+  "minutes": [
+    {
+      "minute": 1,
+      "swap_in_nonzero_seconds": 4,
+      "swap_out_nonzero_seconds": 1,
+      "swap_in_kib": 24,
+      "swap_out_kib": 40
+    },
+    {
+      "minute": 2,
+      "swap_in_nonzero_seconds": 10,
+      "swap_out_nonzero_seconds": 1,
+      "swap_in_kib": 864,
+      "swap_out_kib": 80
+    },
+    {
+      "minute": 3,
+      "swap_in_nonzero_seconds": 7,
+      "swap_out_nonzero_seconds": 1,
+      "swap_in_kib": 112,
+      "swap_out_kib": 416
+    },
+    {
+      "minute": 4,
+      "swap_in_nonzero_seconds": 15,
+      "swap_out_nonzero_seconds": 1,
+      "swap_in_kib": 524,
+      "swap_out_kib": 104
+    },
+    {
+      "minute": 5,
+      "swap_in_nonzero_seconds": 6,
+      "swap_out_nonzero_seconds": 0,
+      "swap_in_kib": 68,
+      "swap_out_kib": 0
+    },
+    {
+      "minute": 6,
+      "swap_in_nonzero_seconds": 7,
+      "swap_out_nonzero_seconds": 1,
+      "swap_in_kib": 968,
+      "swap_out_kib": 784
+    },
+    {
+      "minute": 7,
+      "swap_in_nonzero_seconds": 13,
+      "swap_out_nonzero_seconds": 2,
+      "swap_in_kib": 312,
+      "swap_out_kib": 96
+    },
+    {
+      "minute": 8,
+      "swap_in_nonzero_seconds": 14,
+      "swap_out_nonzero_seconds": 1,
+      "swap_in_kib": 1092,
+      "swap_out_kib": 16
+    },
+    {
+      "minute": 9,
+      "swap_in_nonzero_seconds": 8,
+      "swap_out_nonzero_seconds": 2,
+      "swap_in_kib": 104,
+      "swap_out_kib": 120
+    },
+    {
+      "minute": 10,
+      "swap_in_nonzero_seconds": 9,
+      "swap_out_nonzero_seconds": 2,
+      "swap_in_kib": 348,
+      "swap_out_kib": 48
+    }
+  ],
+  "new_model_calls": 0,
+  "load_runs": 0,
+  "note": "只读观测；未启动桩/负载、未改服务或系统配置、未调用模型。"
+}
