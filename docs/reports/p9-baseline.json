@@ -1,0 +1,270 @@
+{
+  "groups": {
+    "business-100": {
+      "runs": 3,
+      "verdict": {
+        "passed": false,
+        "unstable_metrics": [
+          "first_event_p95_ms",
+          "first_event_p99_ms"
+        ],
+        "not_applicable": [],
+        "spreads": {
+          "achieved_connections": 0.0,
+          "throughput_per_second": 2.2043,
+          "first_event_p95_ms": 16.2266,
+          "first_event_p99_ms": 35.8792,
+          "full_p95_ms": 1.5897,
+          "peak_memory_mib": 0.3324
+        },
+        "protection_ok": true,
+        "spread_max_percent": 10.0
+      },
+      "first_event_p95_ms": [
+        146.19211474999895,
+        157.23051059999887,
+        171.90176074999997
+      ],
+      "full_p95_ms": [
+        1713.7768959999917,
+        1720.6148662999667,
+        1741.2018130000017
+      ],
+      "throughput_per_second": [
+        111.75555555555556,
+        111.62222222222222,
+        109.31111111111112
+      ],
+      "achieved": [
+        100,
+        100,
+        100
+      ],
+      "errors": [
+        {},
+        {},
+        {}
+      ]
+    },
+    "business-500": {
+      "runs": 3,
+      "verdict": {
+        "passed": true,
+        "unstable_metrics": [],
+        "not_applicable": [],
+        "spreads": {
+          "achieved_connections": 0.0,
+          "throughput_per_second": 0.443,
+          "first_event_p95_ms": 5.6314,
+          "first_event_p99_ms": 1.5581,
+          "full_p95_ms": 0.7766,
+          "peak_memory_mib": 0.0908
+        },
+        "protection_ok": true,
+        "spread_max_percent": 10.0
+      },
+      "first_event_p95_ms": [
+        266.2884897000041,
+        278.9944751000032,
+        263.8067834000081
+      ],
+      "full_p95_ms": [
+        9037.347752300013,
+        9040.868891799992,
+        8970.844774400006
+      ],
+      "throughput_per_second": [
+        97.82222222222222,
+        97.59444444444445,
+        98.02777777777777
+      ],
+      "achieved": [
+        500,
+        500,
+        500
+      ],
+      "errors": [
+        {},
+        {},
+        {}
+      ]
+    },
+    "business-1000": {
+      "runs": 3,
+      "verdict": {
+        "passed": false,
+        "reason": "RUN_NOT_COMPLETED",
+        "runs": 3
+      },
+      "first_event_p95_ms": [
+        1155.4523102999947,
+        1240.5133642500132,
+        1119.3742747000101
+      ],
+      "full_p95_ms": [
+        22238.151997700003,
+        22452.754114250005,
+        23330.940999999995
+      ],
+      "throughput_per_second": [
+        16.544444444444444,
+        14.38888888888889,
+        27.711111111111112
+      ],
+      "achieved": [
+        1000,
+        1000,
+        1000
+      ],
+      "errors": [
+        {
+          "sse_error": 11590
+        },
+        {
+          "sse_error": 11966
+        },
+        {
+          "sse_error": 9513,
+          "timeout": 2
+        }
+      ]
+    },
+    "transport-100": {
+      "runs": 3,
+      "verdict": {
+        "passed": false,
+        "unstable_metrics": [
+          "first_event_p99_ms"
+        ],
+        "not_applicable": [
+          "full_p95_ms"
+        ],
+        "spreads": {
+          "achieved_connections": 0.0,
+          "throughput_per_second": 0.0,
+          "first_event_p95_ms": 9.5986,
+          "first_event_p99_ms": 10.044,
+          "peak_memory_mib": 0.1676
+        },
+        "protection_ok": true,
+        "spread_max_percent": 10.0
+      },
+      "first_event_p95_ms": [
+        113.5994332999999,
+        124.93905175000066,
+        115.877983300001
+      ],
+      "full_p95_ms": [
+        null,
+        null,
+        null
+      ],
+      "throughput_per_second": [
+        0.5555555555555556,
+        0.5555555555555556,
+        0.5555555555555556
+      ],
+      "achieved": [
+        100,
+        100,
+        100
+      ],
+      "errors": [
+        {},
+        {},
+        {}
+      ]
+    },
+    "transport-500": {
+      "runs": 3,
+      "verdict": {
+        "passed": false,
+        "unstable_metrics": [
+          "first_event_p99_ms"
+        ],
+        "not_applicable": [
+          "full_p95_ms"
+        ],
+        "spreads": {
+          "achieved_connections": 0.0,
+          "throughput_per_second": 0.0,
+          "first_event_p95_ms": 8.9074,
+          "first_event_p99_ms": 33.107,
+          "peak_memory_mib": 0.0303
+        },
+        "protection_ok": true,
+        "spread_max_percent": 10.0
+      },
+      "first_event_p95_ms": [
+        125.39945624999949,
+        134.35257260000006,
+        122.98845210000025
+      ],
+      "full_p95_ms": [
+        null,
+        null,
+        null
+      ],
+      "throughput_per_second": [
+        2.7777777777777777,
+        2.7777777777777777,
+        2.7777777777777777
+      ],
+      "achieved": [
+        500,
+        500,
+        500
+      ],
+      "errors": [
+        {},
+        {},
+        {}
+      ]
+    },
+    "transport-1000": {
+      "runs": 3,
+      "verdict": {
+        "passed": true,
+        "unstable_metrics": [],
+        "not_applicable": [
+          "full_p95_ms"
+        ],
+        "spreads": {
+          "achieved_connections": 0.0,
+          "throughput_per_second": 0.0,
+          "first_event_p95_ms": 3.0004,
+          "first_event_p99_ms": 2.832,
+          "peak_memory_mib": 0.1421
+        },
+        "protection_ok": true,
+        "spread_max_percent": 10.0
+      },
+      "first_event_p95_ms": [
+        130.51785799999976,
+        132.40908509999994,
+        134.4925708499986
+      ],
+      "full_p95_ms": [
+        null,
+        null,
+        null
+      ],
+      "throughput_per_second": [
+        5.555555555555555,
+        5.555555555555555,
+        5.555555555555555
+      ],
+      "achieved": [
+        1000,
+        1000,
+        1000
+      ],
+      "errors": [
+        {},
+        {},
+        {}
+      ]
+    }
+  },
+  "passed": false
+}

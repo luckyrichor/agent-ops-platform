@@ -1,0 +1,87 @@
+{
+  "schema_version": 1,
+  "experiment_id": "p9-baseline-20261101c",
+  "run_index": 1,
+  "scenario": {
+    "kind": "business",
+    "connections": 1000,
+    "slow_reader_ratio": 0.0,
+    "seed": 42,
+    "timings": {
+      "warmup": 60,
+      "ramp": 20,
+      "steady": 180,
+      "drain": 30,
+      "hold": 290
+    },
+    "profile": "deepseek-stub: empirical CDF from authorized fit samples",
+    "planner_concurrency": 64
+  },
+  "source": {
+    "commit": "8b2ae097643c62843c665a12b099884d8dbecc18",
+    "dirty": true,
+    "generator": "mac"
+  },
+  "started_at": "2026-11-02T01:33:57.608393+00:00",
+  "ended_at": "2026-11-02T01:40:12.850694+00:00",
+  "status": "partial",
+  "target_connections": 1000,
+  "achieved_connections": 1000,
+  "healthy_connections": 1000,
+  "latency_ms": {
+    "connect": {
+      "count": 14568,
+      "mean": 45.35747347158135,
+      "p50": 41.59556200000147,
+      "p95": 68.93322729999765,
+      "p99": 122.30897086001079,
+      "max": 217.50679199999468
+    },
+    "ttfb": {
+      "count": 14568,
+      "mean": 433.265821633373,
+      "p50": 350.18779199999983,
+      "p95": 963.3105585500118,
+      "p99": 1159.1341736400027,
+      "max": 1287.0449579999956
+    },
+    "first_event": {
+      "count": 14568,
+      "mean": 539.6859701398942,
+      "p50": 467.1639789999915,
+      "p95": 1155.4523102999947,
+      "p99": 1393.6239569700037,
+      "max": 1593.4749170000089
+    },
+    "full": {
+      "count": 14568,
+      "mean": 19951.879538166588,
+      "p50": 21155.638437500016,
+      "p95": 22238.151997700003,
+      "p99": 24639.16118136,
+      "max": 27293.250666
+    }
+  },
+  "errors": {
+    "sse_error": 11590
+  },
+  "attempts": 14568,
+  "fatal_error_rate": 0.795579,
+  "throughput": {
+    "completed": 2978,
+    "steady_seconds": 180.0,
+    "per_second": 16.544444444444444
+  },
+  "resources": {
+    "peak_memory_mib": 185.87,
+    "host_mem_available_min_mib": 4966.7,
+    "watchdog_samples": 374
+  },
+  "protection": {
+    "aborted": false,
+    "reasons": [],
+    "memory_psi_full_avg60_max": 0.22
+  },
+  "completed_requests": 2978,
+  "frames_total": 1290859
+}

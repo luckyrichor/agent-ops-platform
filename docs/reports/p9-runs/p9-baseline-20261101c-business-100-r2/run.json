@@ -1,0 +1,85 @@
+{
+  "schema_version": 1,
+  "experiment_id": "p9-baseline-20261101c",
+  "run_index": 2,
+  "scenario": {
+    "kind": "business",
+    "connections": 100,
+    "slow_reader_ratio": 0.0,
+    "seed": 42,
+    "timings": {
+      "warmup": 60,
+      "ramp": 20,
+      "steady": 180,
+      "drain": 30,
+      "hold": 290
+    },
+    "profile": "deepseek-stub: empirical CDF from authorized fit samples",
+    "planner_concurrency": 64
+  },
+  "source": {
+    "commit": "8b2ae097643c62843c665a12b099884d8dbecc18",
+    "dirty": true,
+    "generator": "mac"
+  },
+  "started_at": "2026-11-02T01:03:51.180352+00:00",
+  "ended_at": "2026-11-02T01:09:49.346939+00:00",
+  "status": "completed",
+  "target_connections": 100,
+  "achieved_connections": 100,
+  "healthy_connections": 100,
+  "latency_ms": {
+    "connect": {
+      "count": 20092,
+      "mean": 41.88123278001197,
+      "p50": 35.20422950001034,
+      "p95": 91.65841075000716,
+      "p99": 152.03812380999452,
+      "max": 617.2441249999565
+    },
+    "ttfb": {
+      "count": 20092,
+      "mean": 88.1009772063507,
+      "p50": 76.00139599999878,
+      "p95": 152.72181044999124,
+      "p99": 265.9121581900026,
+      "max": 1020.5618749999985
+    },
+    "first_event": {
+      "count": 20092,
+      "mean": 90.64330569858694,
+      "p50": 78.15552049999042,
+      "p95": 157.23051059999887,
+      "p99": 270.2724076300285,
+      "max": 1020.5667919999541
+    },
+    "full": {
+      "count": 20092,
+      "mean": 1396.4431767105323,
+      "p50": 1394.3800419999945,
+      "p95": 1720.6148662999667,
+      "p99": 1952.6994139400153,
+      "max": 2474.805415999981
+    }
+  },
+  "errors": {},
+  "attempts": 20092,
+  "fatal_error_rate": 0.0,
+  "throughput": {
+    "completed": 20092,
+    "steady_seconds": 180.0,
+    "per_second": 111.62222222222222
+  },
+  "resources": {
+    "peak_memory_mib": 129.48,
+    "host_mem_available_min_mib": 4447.15,
+    "watchdog_samples": 357
+  },
+  "protection": {
+    "aborted": false,
+    "reasons": [],
+    "memory_psi_full_avg60_max": 0.12
+  },
+  "completed_requests": 20092,
+  "frames_total": 284754
+}

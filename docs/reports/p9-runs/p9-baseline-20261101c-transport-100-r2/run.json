@@ -1,0 +1,80 @@
+{
+  "schema_version": 1,
+  "experiment_id": "p9-baseline-20261101c",
+  "run_index": 2,
+  "scenario": {
+    "kind": "transport",
+    "connections": 100,
+    "slow_reader_ratio": 0.0,
+    "seed": 42,
+    "timings": {
+      "warmup": 60,
+      "ramp": 20,
+      "steady": 180,
+      "drain": 30,
+      "hold": 290
+    },
+    "profile": "deepseek-stub: empirical CDF from authorized fit samples",
+    "planner_concurrency": 64
+  },
+  "source": {
+    "commit": "8b2ae097643c62843c665a12b099884d8dbecc18",
+    "dirty": true,
+    "generator": "mac"
+  },
+  "started_at": "2026-11-02T01:59:29.541793+00:00",
+  "ended_at": "2026-11-02T02:05:44.121115+00:00",
+  "status": "completed",
+  "target_connections": 100,
+  "achieved_connections": 100,
+  "healthy_connections": 100,
+  "latency_ms": {
+    "connect": {
+      "count": 100,
+      "mean": 35.918240819999994,
+      "p50": 32.27543750000006,
+      "p95": 77.10549164999907,
+      "p99": 94.92029908000023,
+      "max": 112.08512500000012
+    },
+    "ttfb": {
+      "count": 100,
+      "mean": 74.04557623000001,
+      "p50": 67.87545850000055,
+      "p95": 124.83761214999979,
+      "p99": 148.3716284200005,
+      "max": 151.48225000000082
+    },
+    "first_event": {
+      "count": 100,
+      "mean": 74.44621413000003,
+      "p50": 67.9315005000003,
+      "p95": 124.93905175000066,
+      "p99": 148.38165967000012,
+      "max": 151.49537499999965
+    },
+    "full": {
+      "count": 0
+    }
+  },
+  "errors": {},
+  "attempts": 100,
+  "fatal_error_rate": 0.0,
+  "throughput": {
+    "completed": 100,
+    "steady_seconds": 180.0,
+    "per_second": 0.5555555555555556
+  },
+  "resources": {
+    "peak_memory_mib": 119.43,
+    "host_mem_available_min_mib": 5024.41,
+    "watchdog_samples": 373
+  },
+  "protection": {
+    "aborted": false,
+    "reasons": [],
+    "memory_psi_full_avg60_max": 0.06
+  },
+  "completed_requests": 100,
+  "frames_total": 144342
+}

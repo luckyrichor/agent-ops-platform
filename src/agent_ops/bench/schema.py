@@ -94,11 +94,13 @@ def aggregate(runs: list[dict[str, Any]], *, spread_max_percent: float) -> dict[
     if any(run["status"] != "completed" for run in runs):
         return {"passed": False, "reason": "RUN_NOT_COMPLETED", "runs": len(runs)}
 
-    def collect(path: tuple[str, ...]) -> list[float]:
+    def collect(path: tuple[str, ...]) -> list[float] | None:
         values: list[float] = []
         for run in runs:
             node: Any = run
             for key in path:
+                if not isinstance(node, dict) or key not in node:
+                    return None
                 node = node[key]
             values.append(float(node))
         return values
@@ -115,7 +117,11 @@ def aggregate(runs: list[dict[str, Any]], *, spread_max_percent: float) -> dict[
     }
     spreads: dict[str, float] = {}
     unstable: list[str] = []
+    skipped: list[str] = []
     for name, values in metrics.items():
+        if values is None:
+            skipped.append(name)
+            continue
         try:
             spread = spread_percent(values)
         except ValueError:
@@ -128,6 +134,7 @@ def aggregate(runs: list[dict[str, Any]], *, spread_max_percent: float) -> dict[
     return {
         "passed": not unstable and protected,
         "unstable_metrics": unstable,
+        "not_applicable": skipped,
         "spreads": spreads,
         "protection_ok": protected,
         "spread_max_percent": spread_max_percent,

@@ -15,9 +15,14 @@ sys.path.insert(0, str(ROOT / "src"))
 from agent_ops.bench import config, schema
 
 
+def _number(value: object) -> str:
+    return "—" if value is None else f"{float(value):.1f}"
+
+
 def main() -> int:
     parser = argparse.ArgumentParser()
     parser.add_argument("--root", type=Path, default=ROOT / "docs" / "reports" / "p9-runs")
+    parser.add_argument("--experiment", default="", help="只汇总目录名以此前缀开头的运行")
     parser.add_argument("--out", type=Path, default=ROOT / "docs" / "reports" / "p9-baseline.md")
     parser.add_argument("--json-out", type=Path, default=ROOT / "docs" / "reports" / "p9-baseline.json")
     args = parser.parse_args()
@@ -26,6 +31,8 @@ def main() -> int:
     spread_max = float(cfg.tiers["spread_max_percent"])
     groups: dict[tuple[str, int], list[dict[str, object]]] = defaultdict(list)
     for path in sorted(args.root.glob("*/run.json")):
+        if args.experiment and not path.parent.name.startswith(args.experiment):
+            continue
         document = json.loads(path.read_text(encoding="utf-8"))
         scenario = document["scenario"]
         groups[(scenario["kind"], int(scenario["connections"]))].append(document)
@@ -40,8 +47,8 @@ def main() -> int:
         summary["groups"][key] = {  # type: ignore[index]
             "runs": len(runs),
             "verdict": verdict,
-            "first_event_p95_ms": [run["latency_ms"]["first_event"]["p95"] for run in runs],
-            "full_p95_ms": [run["latency_ms"]["full"]["p95"] for run in runs],
+            "first_event_p95_ms": [run["latency_ms"]["first_event"].get("p95") for run in runs],
+            "full_p95_ms": [run["latency_ms"]["full"].get("p95") for run in runs],
             "throughput_per_second": [run["throughput"]["per_second"] for run in runs],
             "achieved": [run["achieved_connections"] for run in runs],
             "errors": [run["errors"] for run in runs],
@@ -56,13 +63,13 @@ def main() -> int:
         ])
         for index, run in enumerate(runs, 1):
             lines.append(
-                "| {i} | {achieved} | {completed} | {rate:.2f} | {p95:.1f} | {full:.1f} | {abort} |".format(
+                "| {i} | {achieved} | {completed} | {rate:.2f} | {p95} | {full} | {abort} |".format(
                     i=index,
                     achieved=run["achieved_connections"],
                     completed=run["completed_requests"],
                     rate=run["throughput"]["per_second"],
-                    p95=run["latency_ms"]["first_event"].get("p95", 0),
-                    full=run["latency_ms"]["full"].get("p95", 0),
+                    p95=_number(run["latency_ms"]["first_event"].get("p95")),
+                    full=_number(run["latency_ms"]["full"].get("p95")),
                     abort="是" if run["protection"]["aborted"] else "否",
                 )
             )
