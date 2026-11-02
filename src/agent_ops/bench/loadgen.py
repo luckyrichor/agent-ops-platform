@@ -72,6 +72,7 @@ class ConnResult:
     frames: int = 0
     bytes_read: int = 0
     held_ms: float = 0.0
+    finished_at: float = 0.0
     error: str | None = None
 
     @property
@@ -96,6 +97,7 @@ class Recorder:
         self.started.add(index)
 
     def end(self, result: ConnResult) -> None:
+        result.finished_at = time.monotonic()
         self.open_now -= 1
         self.results.append(result)
         if result.slow:
@@ -329,6 +331,13 @@ async def run(args: argparse.Namespace) -> dict[str, Any]:
                          return_exceptions=True)
     ended = time.monotonic()
 
+    stable_start = started + args.warmup + args.ramp
+    stable_end = stable_start + args.steady
+    steady_completed = sum(
+        1 for row in recorder.results
+        if row.ok and stable_start <= row.finished_at < stable_end
+    )
+
     def sample(attr: str) -> list[float]:
         return [getattr(row, attr) for row in recorder.results
                 if row.status == 200 and getattr(row, attr) > 0]
@@ -358,8 +367,10 @@ async def run(args: argparse.Namespace) -> dict[str, Any]:
         "slow_connections": len(recorder.slow_seen),
         "throughput": {
             "completed": recorder.completed,
+            "steady_completed": steady_completed,
             "steady_seconds": args.steady,
-            "per_second": recorder.completed / max(1e-9, args.steady),
+            "per_second": steady_completed / max(1e-9, args.steady),
+            "whole_run_per_second": recorder.completed / max(1e-9, ended - started),
         },
         "errors": dict(recorder.errors),
         "latency_ms": {
