@@ -44,7 +44,8 @@ async def main() -> None:
         cur.execute("SELECT merchant_no,amount_cents FROM payments.payments WHERE order_id=%s", (order["order_id"],))
         merchant_no, amount = cur.fetchone()
     notify_id = f"s2-notify-{merchant_no}"
-    params = {"out_trade_no": merchant_no, "trade_status": "TRADE_SUCCESS",
+    params = {"app_id": "bench-app", "seller_id": "bench-seller",
+              "out_trade_no": merchant_no, "trade_status": "TRADE_SUCCESS",
               "trade_no": f"s2-trade-{merchant_no}", "total_amount": f"{amount/100:.2f}",
               "notify_id": notify_id, "sign_type": "RSA2"}
     params["sign"] = sign(params)

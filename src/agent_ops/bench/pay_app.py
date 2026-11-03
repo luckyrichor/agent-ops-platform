@@ -4,6 +4,7 @@ from __future__ import annotations
 
 import os
 from pathlib import Path
+from urllib.parse import parse_qs
 
 from cryptography.hazmat.primitives import serialization
 from cryptography.hazmat.primitives.asymmetric import rsa
@@ -25,6 +26,7 @@ _payments = Payments(os.environ["S1_DATABASE_URL"], _config)
 
 @app.post("/bench/notify")
 async def notify(request: Request) -> dict[str, str]:
-    form = await request.form()
-    await _payments.notify({key: str(value) for key, value in form.items()})
+    body = (await request.body()).decode("utf-8")
+    form = {key: values[0] for key, values in parse_qs(body, keep_blank_values=True).items()}
+    await _payments.notify(form)
     return {"status": "ok"}

@@ -638,3 +638,7 @@ A/A 10 轮吞吐 3.38–3.89 次/秒，spread 13.75%，判据阈值取 13.75%。
 ## 2026-11-03 S2 收尾：模板库克隆与受限 slice（Codex）
 
 新增 `scripts/s2-round.sh`：每轮 `CREATE DATABASE ... TEMPLATE s2_template` 得到新库，两个 uvicorn 跑在 systemd user scope（CPUQuota=100%、MemoryMax=512M、MemorySwapMax=0），记录 MemoryPeak/CPUUsageNSec，轮末删库。验证轮（缓存 0）：200 请求全部 200、0 错误、142.2 次/s、p50 837 ms、p95 1,261 ms；两实例 MemoryPeak 约 69 MB、CPUUsage 各约 1.23 秒。模板来自 S1 库，含历史测试数据（1,003,566 工单），只保证轮间一致，不是干净基线。保护服务探针尚未接入；跨进程支付/退款 HTTP 与 S3 前置仍未做。
+
+## 2026-11-03 S2 跨进程支付回调通过（Codex）
+
+本地 RSA 密钥（.local/s2/keys）签名，两个 systemd user scope 实例（CPUQuota=100%、MemoryMax=512M），同一 notify_id 并发 5 次（交替实例）：全部 200，`payments.audit` 仅 1 条 PAYMENT_CAPTURED、`payments` 状态 paid、notifications 1 行。根因修复：表单解析缺 python-multipart 改为手动 parse_qs；通知需带 app_id/seller_id 才能过商户校验。退款跨进程 HTTP 未做；S3 前置未开始。
