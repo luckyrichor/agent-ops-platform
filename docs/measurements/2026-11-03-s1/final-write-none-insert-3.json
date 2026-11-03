@@ -1,0 +1,40 @@
+{
+  "mode": "write",
+  "label": "final-write-none-insert-3",
+  "write_op": "insert",
+  "rows": 20000,
+  "seconds": 0.09452236501965672,
+  "rows_per_second": 211590.13526418677,
+  "environment": {
+    "tickets_total": 1000000,
+    "waiting_human": 50000,
+    "indexes": [
+      {
+        "name": "tickets_customer_created",
+        "bytes": 8192
+      },
+      {
+        "name": "tickets_pkey",
+        "bytes": 40189952
+      }
+    ],
+    "postgres": {
+      "shared_buffers": "512MB",
+      "work_mem": "16MB",
+      "max_connections": "100",
+      "server_version": "16.15"
+    },
+    "script_sha256": "17e55e1b2bbba02c44e4be2cad4588fd757c9087a2fce2d3e3f88313f03cc72d"
+  },
+  "indexes_after": [
+    {
+      "name": "tickets_customer_created",
+      "bytes": 8192
+    },
+    {
+      "name": "tickets_pkey",
+      "bytes": 40189952
+    }
+  ],
+  "started_at": "2026-11-03T06:22:27.151579+00:00"
+}

@@ -9,11 +9,13 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import hashlib
 import json
 import os
 import random
 import statistics
 import time
+import uuid
 from datetime import UTC, datetime
 from pathlib import Path
 
@@ -113,6 +115,48 @@ def summarize(values: list[float]) -> dict[str, float | int | None]:
     }
 
 
+async def fingerprint(connection: psycopg.AsyncConnection) -> dict[str, object]:
+    async with connection.cursor() as cursor:
+        await cursor.execute("SELECT count(*) FROM support.tickets")
+        total = (await cursor.fetchone())[0]
+        await cursor.execute("SELECT count(*) FROM support.tickets WHERE state='waiting_human'")
+        waiting = (await cursor.fetchone())[0]
+        await cursor.execute(
+            "SELECT indexname, pg_relation_size(schemaname||'.'||indexname)"
+            " FROM pg_indexes WHERE schemaname='support' AND tablename='tickets' ORDER BY 1"
+        )
+        indexes = [{"name": row[0], "bytes": int(row[1])} for row in await cursor.fetchall()]
+        settings = {}
+        for name in ("shared_buffers", "work_mem", "max_connections", "server_version"):
+            await cursor.execute(f"SHOW {name}")
+            settings[name] = (await cursor.fetchone())[0]
+    await connection.rollback()
+    script = Path(__file__).read_bytes()
+    return {
+        "tickets_total": int(total),
+        "waiting_human": int(waiting),
+        "indexes": indexes,
+        "postgres": settings,
+        "script_sha256": hashlib.sha256(script).hexdigest(),
+    }
+
+
+def assert_expected(printout: dict[str, object], args: argparse.Namespace) -> None:
+    names = {item["name"] for item in printout["indexes"]}  # type: ignore[index]
+    for required in args.require_index or []:
+        if required not in names:
+            raise SystemExit(f"FINGERPRINT_MISMATCH: missing index {required}")
+    for forbidden in args.forbid_index or []:
+        if forbidden in names:
+            raise SystemExit(f"FINGERPRINT_MISMATCH: forbidden index {forbidden}")
+    if args.expect_waiting and printout["waiting_human"] != args.expect_waiting:
+        raise SystemExit("FINGERPRINT_MISMATCH: waiting_human "
+                         f"{printout['waiting_human']} != {args.expect_waiting}")
+    if args.expect_total and printout["tickets_total"] != args.expect_total:
+        raise SystemExit("FINGERPRINT_MISMATCH: tickets_total "
+                         f"{printout['tickets_total']} != {args.expect_total}")
+
+
 async def reset_queue(connection: psycopg.AsyncConnection) -> int:
     async with connection.cursor() as cursor:
         await cursor.execute(
@@ -158,6 +202,12 @@ async def claim_once(connection: psycopg.AsyncConnection, args: argparse.Namespa
         if args.claim_mode == "skip_locked":
             await cursor.execute(CLAIM_SKIP, (agent,))
             row = await cursor.fetchone()
+            if row is not None:
+                # 先登记再提交，避免补给线程在提交后、登记前清空导致误判。
+                previous = stats.seen.get(str(row[0]))
+                if previous is not None and previous != agent:
+                    stats.duplicates += 1
+                stats.seen[str(row[0])] = agent
             await connection.commit()
             ok = row is not None
             if not ok:
@@ -179,6 +229,11 @@ async def claim_once(connection: psycopg.AsyncConnection, args: argparse.Namespa
             else:
                 await cursor.execute(CLAIM_TWO_STEP, (agent, ticket_id))
             row = await cursor.fetchone()
+            if row is not None:
+                previous = stats.seen.get(str(row[0]))
+                if previous is not None and previous != agent:
+                    stats.duplicates += 1
+                stats.seen[str(row[0])] = agent
             await connection.commit()
             ok = row is not None
             if not ok:
@@ -187,11 +242,6 @@ async def claim_once(connection: psycopg.AsyncConnection, args: argparse.Namespa
     stats.latencies.append(elapsed)
     if ok:
         stats.claims += 1
-        ticket_key = str(row[0])
-        previous = stats.seen.get(ticket_key)
-        if previous is not None and previous != agent:
-            stats.duplicates += 1
-        stats.seen[ticket_key] = agent
     return ok
 
 
@@ -248,6 +298,8 @@ async def run(args: argparse.Namespace) -> dict[str, object]:
     url = database_url(args.database)
     admin = await psycopg.AsyncConnection.connect(url, autocommit=True)
     reset = await reset_queue(admin)
+    env = await fingerprint(admin)
+    assert_expected(env, args)
 
     stats = Stats()
     connections = []
@@ -301,6 +353,7 @@ async def run(args: argparse.Namespace) -> dict[str, object]:
 
     return {
         "label": args.label,
+        "environment": env,
         "group": args.group,
         "claim_mode": args.claim_mode,
         "page_mode": args.page_mode,
@@ -327,12 +380,73 @@ async def run(args: argparse.Namespace) -> dict[str, object]:
     }
 
 
+async def run_write(args: argparse.Namespace) -> dict[str, object]:
+    url = database_url(args.database)
+    admin = await psycopg.AsyncConnection.connect(url, autocommit=True)
+    await reset_queue(admin)
+    env = await fingerprint(admin)
+    assert_expected(env, args)
+    rows = args.write_rows
+    started = time.perf_counter()
+    async with admin.cursor() as cursor:
+        if args.write_op == "insert":
+            ids = [str(uuid.UUID(int=random.getrandbits(128))) for _ in range(rows)]
+            now = datetime.now(UTC)
+            async with cursor.copy(
+                "COPY support.tickets (ticket_id,route,state,revision,reason_code,order_status,"
+                "history,created_at,updated_at,priority,customer_user_id) FROM STDIN"
+            ) as copy:
+                for ticket_id in ids:
+                    copy.write_row((ticket_id, "order_status", "resolved", 1, "ORDER_QUESTION",
+                                    None, '["opened"]', now, now, 1, None))
+            await admin.commit()
+            elapsed = time.perf_counter() - started
+            await cursor.execute("DELETE FROM support.tickets WHERE ticket_id = ANY(%s::uuid[])", (ids,))
+            await admin.commit()
+        else:
+            await cursor.execute(
+                "SELECT ticket_id FROM support.tickets WHERE state='waiting_human' LIMIT %s",
+                (rows,),
+            )
+            ids = [row[0] for row in await cursor.fetchall()]
+            started = time.perf_counter()
+            await cursor.execute(
+                "UPDATE support.tickets SET priority=CASE priority WHEN 0 THEN 1 WHEN 1 THEN 2 ELSE 0 END WHERE ticket_id = ANY(%s::uuid[])",
+                (ids,),
+            )
+            await admin.commit()
+            elapsed = time.perf_counter() - started
+            await cursor.execute(
+                "UPDATE support.tickets SET priority=CASE priority WHEN 0 THEN 2 WHEN 2 THEN 1 ELSE 0 END WHERE ticket_id = ANY(%s::uuid[])",
+                (ids,),
+            )
+            await admin.commit()
+        await cursor.execute("ANALYZE support.tickets")
+        await cursor.execute(
+            "SELECT indexname, pg_relation_size(schemaname||'.'||indexname)"
+            " FROM pg_indexes WHERE schemaname='support' AND tablename='tickets' ORDER BY 1"
+        )
+        indexes = [(row[0], int(row[1])) for row in await cursor.fetchall()]
+    await admin.close()
+    return {
+        "mode": "write",
+        "label": args.label,
+        "write_op": args.write_op,
+        "rows": len(ids),
+        "seconds": elapsed,
+        "rows_per_second": len(ids) / elapsed if elapsed > 0 else 0.0,
+        "environment": env,
+        "indexes_after": [{"name": name, "bytes": size} for name, size in indexes],
+        "started_at": datetime.now(UTC).isoformat(),
+    }
+
+
 def parse_args() -> argparse.Namespace:
     parser = argparse.ArgumentParser()
     parser.add_argument("--database", default="agent_ops_p10_s1")
     parser.add_argument("--group", default="A")
-    parser.add_argument("--claim-mode", choices=("cas", "skip_locked", "two_step"), required=True)
-    parser.add_argument("--page-mode", choices=("offset", "keyset"), required=True)
+    parser.add_argument("--claim-mode", choices=("cas", "skip_locked", "two_step"), default="cas")
+    parser.add_argument("--page-mode", choices=("offset", "keyset"), default="offset")
     parser.add_argument("--agents", type=int, default=50)
     parser.add_argument("--seconds", type=float, default=60)
     parser.add_argument("--think", type=float, default=0.0)
@@ -345,19 +459,30 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--seed", type=int, default=42)
     parser.add_argument("--label", default="run")
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--mode", choices=("run", "write"), default="run")
+    parser.add_argument("--write-op", choices=("insert", "update"), default="insert")
+    parser.add_argument("--write-rows", type=int, default=20000)
+    parser.add_argument("--require-index", action="append", default=[])
+    parser.add_argument("--forbid-index", action="append", default=[])
+    parser.add_argument("--expect-waiting", type=int, default=0)
+    parser.add_argument("--expect-total", type=int, default=0)
     return parser.parse_args()
 
 
 def main() -> int:
     args = parse_args()
-    document = asyncio.run(run(args))
+    document = asyncio.run(run_write(args) if args.mode == "write" else run(args))
     args.out.parent.mkdir(parents=True, exist_ok=True)
     temporary = args.out.with_suffix(".tmp")
     temporary.write_text(json.dumps(document, ensure_ascii=False, indent=2), encoding="utf-8")
     temporary.replace(args.out)
-    print(json.dumps({key: document[key] for key in
-                      ("label", "claims", "throughput_per_second", "duplicates", "conflicts")},
-                     ensure_ascii=False))
+    if document.get("mode") == "write":
+        print(json.dumps({key: document[key] for key in
+                          ("label", "write_op", "rows", "rows_per_second")}, ensure_ascii=False))
+    else:
+        print(json.dumps({key: document[key] for key in
+                          ("label", "claims", "throughput_per_second", "duplicates",
+                           "conflicts")}, ensure_ascii=False))
     return 0
 
 

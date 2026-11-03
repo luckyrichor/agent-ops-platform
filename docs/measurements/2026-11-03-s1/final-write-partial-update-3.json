@@ -1,0 +1,48 @@
+{
+  "mode": "write",
+  "label": "final-write-partial-update-3",
+  "write_op": "update",
+  "rows": 20000,
+  "seconds": 0.4860999929951504,
+  "rows_per_second": 41143.798165410655,
+  "environment": {
+    "tickets_total": 1000000,
+    "waiting_human": 50000,
+    "indexes": [
+      {
+        "name": "s1_queue_partial",
+        "bytes": 6340608
+      },
+      {
+        "name": "tickets_customer_created",
+        "bytes": 8192
+      },
+      {
+        "name": "tickets_pkey",
+        "bytes": 40517632
+      }
+    ],
+    "postgres": {
+      "shared_buffers": "512MB",
+      "work_mem": "16MB",
+      "max_connections": "100",
+      "server_version": "16.15"
+    },
+    "script_sha256": "17e55e1b2bbba02c44e4be2cad4588fd757c9087a2fce2d3e3f88313f03cc72d"
+  },
+  "indexes_after": [
+    {
+      "name": "s1_queue_partial",
+      "bytes": 6545408
+    },
+    {
+      "name": "tickets_customer_created",
+      "bytes": 8192
+    },
+    {
+      "name": "tickets_pkey",
+      "bytes": 40550400
+    }
+  ],
+  "started_at": "2026-11-03T06:22:41.149906+00:00"
+}

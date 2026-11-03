@@ -8,6 +8,7 @@ from __future__ import annotations
 
 import argparse
 import json
+import random
 import statistics
 from pathlib import Path
 
@@ -30,6 +31,20 @@ def spread(values: list[float]) -> float:
 
 def med(values: list[float]) -> float | None:
     return statistics.median(values) if values else None
+
+
+def bootstrap_mean_ci(values: list[float], *, resamples: int = 2000,
+                      seed: int = 42) -> dict[str, float] | None:
+    if len(values) < 2:
+        return None
+    rng = random.Random(seed)
+    means = []
+    for _ in range(resamples):
+        sample = [values[rng.randrange(len(values))] for _ in values]
+        means.append(statistics.mean(sample))
+    means.sort()
+    return {"point": statistics.mean(values), "low": means[int(0.025 * len(means))],
+            "high": means[int(0.975 * len(means)) - 1]}
 
 
 def main() -> int:
@@ -139,7 +154,62 @@ def main() -> int:
         if entry:
             w3[round_index] = entry
 
+    final_ab = {}
+    for round_index in range(1, 6):
+        base = data.get(f"final-ab-{round_index}-a")
+        opt = data.get(f"final-ab-{round_index}-b")
+        if not base or not opt:
+            continue
+        final_ab[round_index] = {
+            "a_throughput": base["throughput_per_second"],
+            "b_throughput": opt["throughput_per_second"],
+            "ratio": opt["throughput_per_second"] / base["throughput_per_second"],
+            "a_claim_p95": base["claim_latency_ms"]["p95"],
+            "b_claim_p95": opt["claim_latency_ms"]["p95"],
+            "a_page2500_p95": p95(base, "2500"),
+            "b_page2500_p95": p95(opt, "2500"),
+            "a_duplicates": base["duplicates"],
+            "b_duplicates": opt["duplicates"],
+        }
+    final_ab_ratios = [item["ratio"] for item in final_ab.values()]
+
+    final_pc = {}
+    for round_index in range(1, 6):
+        partial = data.get(f"final-pc-{round_index}-partial")
+        composite = data.get(f"final-pc-{round_index}-composite")
+        if not partial or not composite:
+            continue
+        final_pc[round_index] = {
+            "partial_throughput": partial["throughput_per_second"],
+            "composite_throughput": composite["throughput_per_second"],
+            "ratio": composite["throughput_per_second"] / partial["throughput_per_second"],
+            "partial_claim_p95": partial["claim_latency_ms"]["p95"],
+            "composite_claim_p95": composite["claim_latency_ms"]["p95"],
+            "partial_page2500_p95": p95(partial, "2500"),
+            "composite_page2500_p95": p95(composite, "2500"),
+        }
+    pc_ratios = [item["ratio"] for item in final_pc.values()]
+
+    write_groups: dict[str, dict[str, float | int]] = {}
+    for config in ("none", "partial", "composite"):
+        for op in ("insert", "update"):
+            runs = prefixed(f"final-write-{config}-{op}-")
+            if runs:
+                sizes = [item["bytes"] for item in runs[-1]["indexes_after"]
+                         if item["name"] in ("s1_queue_partial", "s1_queue_composite")]
+                write_groups[f"{config}-{op}"] = {
+                    "runs": len(runs),
+                    "rows_per_second_median": med([d["rows_per_second"] for d in runs]),
+                    "index_bytes": max(sizes) if sizes else 0,
+                }
+
     summary = {
+        "final_ab": final_ab,
+        "final_ab_ratio": bootstrap_mean_ci(final_ab_ratios),
+        "final_pc": final_pc,
+        "final_pc_ratio": bootstrap_mean_ci(pc_ratios),
+        "final_write": write_groups,
+        "final_dup": group("final-dup-"),
         "aa": {"runs": len(aa_runs), "throughput_spread_percent": round(aa_noise, 3),
                "throughput_median": med(aa_throughput)},
         "threshold_percent": max(10.0, round(aa_noise, 3)),
