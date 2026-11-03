@@ -1,0 +1,113 @@
+{
+  "label": "v3-w3-a-5",
+  "environment": {
+    "tickets_total": 1000000,
+    "waiting_human": 50000,
+    "indexes": [
+      {
+        "name": "tickets_customer_created",
+        "bytes": 8192
+      },
+      {
+        "name": "tickets_pkey",
+        "bytes": 31563776
+      }
+    ],
+    "postgres": {
+      "shared_buffers": "512MB",
+      "work_mem": "16MB",
+      "max_connections": "100",
+      "server_version": "16.15"
+    },
+    "script_sha256": "e02cd972b32e02c6d3f011b37b389af72eabf924944495b2e02d4cc80e6087da",
+    "dead_tuples": 0,
+    "last_vacuum": null,
+    "last_autovacuum": "2026-11-03 07:13:55.328364+00:00"
+  },
+  "group": "A",
+  "claim_mode": "cas",
+  "page_mode": "offset",
+  "think_seconds": 0.0,
+  "pick": "head",
+  "agents": 50,
+  "list_clients": 20,
+  "page_size": 20,
+  "pages": [
+    1,
+    100,
+    1000,
+    2500
+  ],
+  "seconds": 62.94256799601135,
+  "claims": 25,
+  "conflicts": 559,
+  "skip_locked_empty": 0,
+  "duplicates": 0,
+  "throughput_per_second": 0.39718748052326436,
+  "refilled": 23,
+  "reset_before_run": 3341,
+  "vacuum_seconds": 1.82,
+  "claim_latency_ms": {
+    "count": 584,
+    "mean": 5236.420329269269,
+    "p50": 5459.189260494895,
+    "p95": 7792.960873205448,
+    "p99": 8325.419437280798,
+    "min": 308.0737699929159,
+    "max": 10085.14565200312
+  },
+  "page_latency_ms": {
+    "100": {
+      "count": 54,
+      "mean": 5081.688637058337,
+      "p50": 5486.005543003557,
+      "p95": 7576.750570752484,
+      "p99": 8428.028617006494,
+      "min": 1853.2346169813536,
+      "max": 8728.221138007939
+    },
+    "2500": {
+      "count": 66,
+      "mean": 6038.948136513654,
+      "p50": 6302.681439992739,
+      "p95": 8675.045506497554,
+      "p99": 9302.239719255884,
+      "min": 2380.119437002577,
+      "max": 9575.09563700296
+    },
+    "1000": {
+      "count": 38,
+      "mean": 6682.855549501255,
+      "p50": 7000.28936349554,
+      "p95": 8618.190052350108,
+      "p99": 9757.253863486405,
+      "min": 2511.533448996488,
+      "max": 10087.154270993778
+    },
+    "1": {
+      "count": 49,
+      "mean": 5354.088932082736,
+      "p50": 5616.2663949944545,
+      "p95": 7633.664079208393,
+      "p99": 7984.17909193202,
+      "min": 1696.2196249805856,
+      "max": 8164.533282018965
+    }
+  },
+  "indexes": [
+    {
+      "name": "tickets_pkey",
+      "bytes": 31563776
+    },
+    {
+      "name": "tickets_customer_created",
+      "bytes": 8192
+    }
+  ],
+  "postgres": {
+    "shared_buffers": "512MB",
+    "effective_cache_size": "4GB"
+  },
+  "started_at": "2026-11-03T07:53:44.604453+00:00",
+  "seed": 42
+}

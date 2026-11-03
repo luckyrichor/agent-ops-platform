@@ -126,6 +126,11 @@ async def fingerprint(connection: psycopg.AsyncConnection) -> dict[str, object]:
             " FROM pg_indexes WHERE schemaname='support' AND tablename='tickets' ORDER BY 1"
         )
         indexes = [{"name": row[0], "bytes": int(row[1])} for row in await cursor.fetchall()]
+        await cursor.execute(
+            "SELECT n_dead_tup, last_vacuum, last_autovacuum FROM pg_stat_user_tables"
+            " WHERE schemaname='support' AND relname='tickets'"
+        )
+        dead = await cursor.fetchone()
         settings = {}
         for name in ("shared_buffers", "work_mem", "max_connections", "server_version"):
             await cursor.execute(f"SHOW {name}")
@@ -138,6 +143,9 @@ async def fingerprint(connection: psycopg.AsyncConnection) -> dict[str, object]:
         "indexes": indexes,
         "postgres": settings,
         "script_sha256": hashlib.sha256(script).hexdigest(),
+        "dead_tuples": int(dead[0]) if dead else None,
+        "last_vacuum": str(dead[1]) if dead and dead[1] else None,
+        "last_autovacuum": str(dead[2]) if dead and dead[2] else None,
     }
 
 
@@ -202,12 +210,6 @@ async def claim_once(connection: psycopg.AsyncConnection, args: argparse.Namespa
         if args.claim_mode == "skip_locked":
             await cursor.execute(CLAIM_SKIP, (agent,))
             row = await cursor.fetchone()
-            if row is not None:
-                # 先登记再提交，避免补给线程在提交后、登记前清空导致误判。
-                previous = stats.seen.get(str(row[0]))
-                if previous is not None and previous != agent:
-                    stats.duplicates += 1
-                stats.seen[str(row[0])] = agent
             await connection.commit()
             ok = row is not None
             if not ok:
@@ -229,11 +231,6 @@ async def claim_once(connection: psycopg.AsyncConnection, args: argparse.Namespa
             else:
                 await cursor.execute(CLAIM_TWO_STEP, (agent, ticket_id))
             row = await cursor.fetchone()
-            if row is not None:
-                previous = stats.seen.get(str(row[0]))
-                if previous is not None and previous != agent:
-                    stats.duplicates += 1
-                stats.seen[str(row[0])] = agent
             await connection.commit()
             ok = row is not None
             if not ok:
@@ -242,6 +239,11 @@ async def claim_once(connection: psycopg.AsyncConnection, args: argparse.Namespa
     stats.latencies.append(elapsed)
     if ok:
         stats.claims += 1
+        if not args.refill:
+            previous = stats.seen.get(str(row[0]))
+            if previous is not None and previous != agent:
+                stats.duplicates += 1
+            stats.seen[str(row[0])] = agent
     return ok
 
 
@@ -297,6 +299,10 @@ async def list_loop(client: int, args: argparse.Namespace, stats: Stats, deadlin
 async def run(args: argparse.Namespace) -> dict[str, object]:
     url = database_url(args.database)
     admin = await psycopg.AsyncConnection.connect(url, autocommit=True)
+    vacuum_started = time.perf_counter()
+    async with admin.cursor() as cursor:
+        await cursor.execute("VACUUM (FULL, ANALYZE) support.tickets")
+    vacuum_seconds = round(time.perf_counter() - vacuum_started, 2)
     reset = await reset_queue(admin)
     env = await fingerprint(admin)
     assert_expected(env, args)
@@ -371,6 +377,7 @@ async def run(args: argparse.Namespace) -> dict[str, object]:
         "throughput_per_second": stats.claims / elapsed if elapsed > 0 else 0.0,
         "refilled": len(refill_ids),
         "reset_before_run": reset,
+        "vacuum_seconds": vacuum_seconds,
         "claim_latency_ms": summarize(stats.latencies),
         "page_latency_ms": {str(page): summarize(values) for page, values in stats.pages.items()},
         "indexes": [{"name": name, "bytes": size} for name, size in index_rows],
