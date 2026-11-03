@@ -1,0 +1,20 @@
+{
+  "started_at": "2026-11-03T08:15:22.358950+00:00",
+  "duplicate": {
+    "requests": 182,
+    "unique_keys": 140,
+    "duplicate_requests": 42,
+    "distinct_tickets_for_keys": 140,
+    "duplicate_tickets": 0,
+    "errors": {},
+    "elapsed_seconds": 0.7001570699794684,
+    "throughput_per_second": 259.9416728096983,
+    "latency_ms": {
+      "p50": 473.0486845073756,
+      "p95": 631.2923799850978,
+      "max": 686.3887360086665
+    },
+    "tickets_created": 140
+  },
+  "finished_at": "2026-11-03T08:15:23.063131+00:00"
+}

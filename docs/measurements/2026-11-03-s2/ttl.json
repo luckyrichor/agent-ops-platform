@@ -1,0 +1,10 @@
+{
+  "started_at": "2026-11-03T08:15:17.752028+00:00",
+  "ttl": {
+    "first_ticket": "101c16ac-7946-4cf8-9fcc-596d0ec96289",
+    "second_ticket": "584291dc-8ac5-4335-984a-32666fd4e9cc",
+    "reexecuted": true,
+    "expiry_refreshed": true
+  },
+  "finished_at": "2026-11-03T08:15:17.789524+00:00"
+}

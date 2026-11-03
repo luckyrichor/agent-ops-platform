@@ -6,6 +6,7 @@ Payment capture and customer-support workflow are deliberately separate later st
 
 import hashlib
 import json
+import os
 from datetime import UTC, datetime
 from typing import Any
 
@@ -82,24 +83,50 @@ class CommerceBackend:
         if len({line.product_id for line in request.lines}) != len(request.lines):
             raise ValueError("duplicate products; combine quantities before submitting")
         digest = hashlib.sha256(request.model_dump_json().encode()).hexdigest()
+        ttl = int(os.environ.get("AGENT_OPS_IDEMPOTENCY_TTL_SECONDS", "86400"))
+        if not 60 <= ttl <= 7 * 86400:
+            raise ValueError("invalid idempotency ttl")
         async with self.engine.begin() as c:
             won = await c.scalar(
-                text("""INSERT INTO commerce.idempotency_keys(scope,key,request_hash)
-                VALUES ('place_order',:key,:hash) ON CONFLICT DO NOTHING RETURNING key"""),
-                {"key": key, "hash": digest},
+                text("""INSERT INTO commerce.idempotency_keys(scope,key,request_hash,expires_at)
+                VALUES ('place_order',:key,:hash,now()+make_interval(secs=>:ttl))
+                ON CONFLICT DO NOTHING RETURNING key"""),
+                {"key": key, "hash": digest, "ttl": ttl},
             )
             if won is None:
                 row = (
                     await c.execute(
-                        text(
-                            "SELECT request_hash,response_snapshot FROM commerce.idempotency_keys WHERE scope='place_order' AND key=:key"
-                        ),
+                        text("SELECT request_hash,response_snapshot,expires_at,expires_at<=now() AS expired"
+                             " FROM commerce.idempotency_keys WHERE scope='place_order' AND key=:key"),
                         {"key": key},
                     )
                 ).one()
-                if row.request_hash != digest:
-                    raise CommerceConflict("IDEMPOTENCY_CONFLICT")
-                return dict(row.response_snapshot)
+                if row.expired:
+                    refreshed = await c.scalar(
+                        text("""UPDATE commerce.idempotency_keys SET request_hash=:hash,
+                        response_snapshot=NULL,expires_at=now()+make_interval(secs=>:ttl)
+                        WHERE scope='place_order' AND key=:key AND expires_at<=now() RETURNING key"""),
+                        {"key": key, "hash": digest, "ttl": ttl},
+                    )
+                    if refreshed is None:
+                        row = (
+                            await c.execute(
+                                text("SELECT request_hash,response_snapshot FROM commerce.idempotency_keys"
+                                     " WHERE scope='place_order' AND key=:key"),
+                                {"key": key},
+                            )
+                        ).one()
+                        if row.request_hash != digest:
+                            raise CommerceConflict("IDEMPOTENCY_CONFLICT")
+                        if row.response_snapshot is None:
+                            raise CommerceConflict("IDEMPOTENCY_IN_PROGRESS")
+                        return dict(row.response_snapshot)
+                else:
+                    if row.request_hash != digest:
+                        raise CommerceConflict("IDEMPOTENCY_CONFLICT")
+                    if row.response_snapshot is None:
+                        raise CommerceConflict("IDEMPOTENCY_IN_PROGRESS")
+                    return dict(row.response_snapshot)
             if not await c.scalar(
                 text("SELECT 1 FROM commerce.users WHERE id=:id"), {"id": request.user_id}
             ):
@@ -149,9 +176,11 @@ class CommerceBackend:
             }
             await c.execute(
                 text(
-                    "UPDATE commerce.idempotency_keys SET response_snapshot=CAST(:result AS jsonb) WHERE scope='place_order' AND key=:key"
+                    "UPDATE commerce.idempotency_keys SET response_snapshot=CAST(:result AS jsonb)"
+                    " WHERE scope='place_order' AND key=:key AND request_hash=:hash"
+                    " AND response_snapshot IS NULL"
                 ),
-                {"result": json.dumps(result), "key": key},
+                {"result": json.dumps(result), "key": key, "hash": digest},
             )
             return result
 

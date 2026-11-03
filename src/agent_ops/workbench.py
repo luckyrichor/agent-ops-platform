@@ -2,6 +2,7 @@
 
 import hashlib
 import json
+import os
 from datetime import datetime
 from typing import Any
 from uuid import UUID, uuid4
@@ -231,26 +232,53 @@ class WorkbenchService(PostgresSupportService):
         if return_request:
             scope += ":return"
         digest = hashlib.sha256(request.model_dump_json().encode()).hexdigest()
+        ttl = int(os.environ.get("AGENT_OPS_IDEMPOTENCY_TTL_SECONDS", "86400"))
+        if not 60 <= ttl <= 7 * 86400:
+            raise ValueError("invalid idempotency ttl")
         async with self.engine.begin() as c:
             won = (
                 await c.execute(
-                    text("""INSERT INTO support.idempotency_keys(scope,key,request_hash)
-                VALUES (:s,:k,:h) ON CONFLICT DO NOTHING RETURNING key"""),
-                    {"s": scope, "k": key, "h": digest},
+                    text("""INSERT INTO support.idempotency_keys(scope,key,request_hash,expires_at)
+                VALUES (:s,:k,:h,now()+make_interval(secs=>:ttl)) ON CONFLICT DO NOTHING RETURNING key"""),
+                    {"s": scope, "k": key, "h": digest, "ttl": ttl},
                 )
             ).first()
             if won is None:
                 old = (
                     await c.execute(
                         text(
-                            "SELECT request_hash,response_snapshot FROM support.idempotency_keys WHERE scope=:s AND key=:k"
+                            "SELECT request_hash,response_snapshot,expires_at,expires_at<=now() AS expired"
+                            " FROM support.idempotency_keys WHERE scope=:s AND key=:k"
                         ),
                         {"s": scope, "k": key},
                     )
                 ).one()
-                if old.request_hash != digest:
-                    raise SupportConflict("IDEMPOTENCY_CONFLICT")
-                return Ticket.model_validate(old.response_snapshot)
+                if old.expired:
+                    refreshed = await c.scalar(
+                        text("""UPDATE support.idempotency_keys SET request_hash=:h,ticket_id=NULL,
+                        response_snapshot=NULL,created_at=now(),expires_at=now()+make_interval(secs=>:ttl)
+                        WHERE scope=:s AND key=:k AND expires_at<=now() RETURNING key"""),
+                        {"s": scope, "k": key, "h": digest, "ttl": ttl},
+                    )
+                    if refreshed is None:
+                        old = (
+                            await c.execute(
+                                text("SELECT request_hash,response_snapshot FROM support.idempotency_keys"
+                                     " WHERE scope=:s AND key=:k"),
+                                {"s": scope, "k": key},
+                            )
+                        ).one()
+                        if old.request_hash != digest:
+                            raise SupportConflict("IDEMPOTENCY_CONFLICT")
+                        if old.response_snapshot is None:
+                            raise SupportConflict("IDEMPOTENCY_IN_PROGRESS")
+                        return Ticket.model_validate(old.response_snapshot)
+                else:
+                    if old.request_hash != digest:
+                        raise SupportConflict("IDEMPOTENCY_CONFLICT")
+                    if old.response_snapshot is None:
+                        raise SupportConflict("IDEMPOTENCY_IN_PROGRESS")
+                    return Ticket.model_validate(old.response_snapshot)
             order = await self._lookup(c, request.order_id, customer)
             state, reason = "needs_information", "CLARIFY_REQUEST"
             if route == "order_status":
@@ -296,8 +324,9 @@ class WorkbenchService(PostgresSupportService):
             )
             await c.execute(
                 text("""UPDATE support.idempotency_keys SET ticket_id=:id,response_snapshot=CAST(:r AS jsonb)
-                WHERE scope=:s AND key=:k"""),
-                {"id": ticket.ticket_id, "r": ticket.model_dump_json(), "s": scope, "k": key},
+                WHERE scope=:s AND key=:k AND request_hash=:h AND response_snapshot IS NULL"""),
+                {"id": ticket.ticket_id, "r": ticket.model_dump_json(), "s": scope, "k": key,
+                 "h": digest},
             )
             return ticket
 

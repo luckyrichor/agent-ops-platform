@@ -602,3 +602,11 @@ A/A 10 轮吞吐 3.38–3.89 次/秒，spread 13.75%，判据阈值取 13.75%。
 - 复合 vs 部分（v3，5 轮）：比值 1.143–1.337，均值 1.281，CI 1.210–1.330，下界超过 13.75% 噪声；复合吞吐高约 21–33%，体积 41.55 MB vs 2.60 MB（约 16 倍）。部分索引仍作默认候选；写入成本三配置区间重叠，本规模无法区分，持续 bloat/vacuum 未测。
 - 旧批次归档：ab → void-refill-v1；ab2 → superseded-ab2；补充 → superseded-nofingerprint；v2 → superseded-drift；final-ab/final-pc → superseded-final-ab。S1.md 增加批次有效性与数字溯源表（批次、脚本 SHA、指纹、维护版本），并删除“283 倍”式标题与写入成本百分比说法。
 - S2 设计已提交 `docs/optimizations/S2-design.md`：基线为产品当前数据库幂等；无幂等仅演示；门槛为重复工单/入账/退款=0 且重复请求同结果；200 并发、30% 重复、回调 5 次重放、跨进程；本地 RSA 密钥签名，不调沙箱；7 天 TTL 当前不存在（仅 memory SDK 有），待确认是否新增。等待负责人确认后跑基线。
+
+## 2026-11-03 S2 第一阶段：TTL 与重复创建功能基线（Codex，进行中）
+
+按负责人决策实现通用请求幂等键 TTL：migration 0010 给 `support.idempotency_keys` 与 `commerce.idempotency_keys` 增加 `expires_at`（默认 24 小时，`AGENT_OPS_IDEMPOTENCY_TTL_SECONDS` 可配，范围 60 秒–7 天）与过期索引；工单创建与下单在过期后原子刷新记录并重新执行，完成写入加 `request_hash` 守卫，旧请求的延迟完成不会覆盖新结果。支付/退款/通知仍靠业务唯一约束，不设 TTL。
+
+功能基线（S1 专用库，两个独立连接池，182 个并发请求=140 唯一键+42 重复）：重复工单 0、创建 140 张、0 错误、吞吐 259.9 次/秒、p50 473 ms、p95 631 ms。无幂等演示：同样请求产生 182 张工单、42 次重复。TTL 冒烟：过期后同键重新执行并生成新工单、`expires_at` 刷新。
+
+相关测试 `test_workbench/test_commerce_backend/test_payments` 66 项通过；ruff 与 strict mypy 通过。**尚未完成**：两个真实 uvicorn 实例的 HTTP 压测、支付回调本地密钥 5 次重放、退款重放、24h±1s 精确边界、旧完成覆盖守卫的并发验证、缓存候选、S2.md 与最终 JSON/溯源表。
