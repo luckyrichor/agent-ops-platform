@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 """清理 S2 压测产生的工单与幂等记录（仅 s2-http- 前缀）。"""
-import os, psycopg
-from pathlib import Path
+import os
+
+import psycopg
+
 url=os.environ.get("S1_DATABASE_URL","").replace("postgresql+psycopg://","postgresql://")
 if not url:
     raise SystemExit("S1_DATABASE_URL required")
