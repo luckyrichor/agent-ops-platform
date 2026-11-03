@@ -1,0 +1,19 @@
+{
+  "requests": 200,
+  "unique_keys": 154,
+  "duplicate_requests": 46,
+  "concurrency": 200,
+  "ports": 2,
+  "elapsed_seconds": 1.3556043639837299,
+  "throughput_per_second": 147.53567140508292,
+  "latency_ms": {
+    "p50": 673.7961635226384,
+    "p95": 1201.2466290034354,
+    "max": 1283.4058260195889
+  },
+  "statuses": {
+    "200": 200
+  },
+  "errors": {},
+  "started_at": "2026-11-03T08:19:42.713013+00:00"
+}

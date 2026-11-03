@@ -5,7 +5,9 @@ from __future__ import annotations
 
 import argparse
 import asyncio
+import hashlib
 import json
+import os
 import statistics
 import time
 import uuid
@@ -13,6 +15,7 @@ from datetime import UTC, datetime
 from pathlib import Path
 
 import httpx
+import psycopg
 
 
 async def run(args: argparse.Namespace) -> dict[str, object]:
@@ -67,7 +70,30 @@ async def run(args: argparse.Namespace) -> dict[str, object]:
         "statuses": statuses,
         "errors": errors,
         "started_at": started_at.isoformat(),
+        "ended_at": datetime.now(UTC).isoformat(),
+        "environment": fingerprint(started_at),
     }
+
+
+def fingerprint(started_at: datetime) -> dict[str, object]:
+    url = os.environ.get("S1_DATABASE_URL", "").replace("postgresql+psycopg://", "postgresql://")
+    result: dict[str, object] = {
+        "script_sha256": hashlib.sha256(Path(__file__).read_bytes()).hexdigest(),
+        "idempotency_ttl_seconds": os.environ.get("AGENT_OPS_IDEMPOTENCY_TTL_SECONDS", "86400"),
+        "server_cache": os.environ.get("S2_TAG_CACHE", "0"),
+    }
+    if not url:
+        return result
+    with psycopg.connect(url) as connection, connection.cursor() as cursor:
+        cursor.execute("SELECT count(*) FROM support.tickets")
+        result["tickets_total"] = cursor.fetchone()[0]
+        cursor.execute("SELECT count(*) FROM support.idempotency_keys")
+        result["idempotency_rows"] = cursor.fetchone()[0]
+        cursor.execute("SHOW shared_buffers")
+        result["shared_buffers"] = cursor.fetchone()[0]
+        cursor.execute("SELECT indexname FROM pg_indexes WHERE schemaname='support' ORDER BY 1")
+        result["indexes"] = [row[0] for row in cursor.fetchall()]
+    return result
 
 
 def main() -> int:

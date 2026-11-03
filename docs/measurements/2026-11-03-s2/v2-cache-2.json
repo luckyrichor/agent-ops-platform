@@ -1,0 +1,40 @@
+{
+  "requests": 200,
+  "unique_keys": 154,
+  "duplicate_requests": 46,
+  "concurrency": 200,
+  "ports": 2,
+  "elapsed_seconds": 1.2669808079954237,
+  "throughput_per_second": 157.85558765995324,
+  "latency_ms": {
+    "p50": 684.4908514904091,
+    "p95": 1112.8230430185795,
+    "max": 1188.4809019975364
+  },
+  "statuses": {
+    "200": 200
+  },
+  "errors": {},
+  "started_at": "2026-11-03T08:20:58.143109+00:00",
+  "ended_at": "2026-11-03T08:20:59.415672+00:00",
+  "environment": {
+    "script_sha256": "4c052c48bb8592011289cc6f58f907ef84d6786f3b58599324cf67991e56a3dc",
+    "idempotency_ttl_seconds": "86400",
+    "server_cache": "1",
+    "tickets_total": 1002638,
+    "idempotency_rows": 2636,
+    "shared_buffers": "512MB",
+    "indexes": [
+      "idempotency_keys_expiry",
+      "idempotency_keys_pkey",
+      "messages_pkey",
+      "operations_pkey",
+      "push_clock_pkey",
+      "push_events_pkey",
+      "s1_queue_partial",
+      "ticket_events_pkey",
+      "tickets_customer_created",
+      "tickets_pkey"
+    ]
+  }
+}
