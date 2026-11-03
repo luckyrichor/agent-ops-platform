@@ -1,0 +1,240 @@
+{
+  "aa": {
+    "runs": 10,
+    "throughput_spread_percent": 13.753,
+    "throughput_median": 3.725448665295562
+  },
+  "threshold_percent": 13.753,
+  "ab": {
+    "1": {
+      "baseline": 3.7432193555563216,
+      "optimized": 232.07082865725968,
+      "throughput_ratio": 61.9976567263633,
+      "claim_p95_ms": {
+        "baseline": 8269.114413997158,
+        "optimized": 100.32678441057213
+      },
+      "page_p95_ms": {
+        "1": {
+          "baseline": 7722.566711498075,
+          "optimized": 63.522534022922585
+        },
+        "100": {
+          "baseline": 7234.0544759936165,
+          "optimized": 60.292163980193436
+        },
+        "1000": {
+          "baseline": 10302.792562305694,
+          "optimized": 31.94958179956307
+        },
+        "2500": {
+          "baseline": 8567.4430807092,
+          "optimized": 59.969227004330605
+        }
+      },
+      "duplicates": {
+        "baseline": 0,
+        "optimized": 0
+      }
+    },
+    "2": {
+      "baseline": 3.8465857139841626,
+      "optimized": 229.9271010764295,
+      "throughput_ratio": 59.77433448071506,
+      "claim_p95_ms": {
+        "baseline": 7875.00374336378,
+        "optimized": 101.46271141711627
+      },
+      "page_p95_ms": {
+        "1": {
+          "baseline": 7846.638675691792,
+          "optimized": 61.784691800130524
+        },
+        "100": {
+          "baseline": 8786.041767790448,
+          "optimized": 57.95576678938224
+        },
+        "1000": {
+          "baseline": 10289.343565219315,
+          "optimized": 37.20762024750002
+        },
+        "2500": {
+          "baseline": 10202.709057583706,
+          "optimized": 59.36931183241539
+        }
+      },
+      "duplicates": {
+        "baseline": 0,
+        "optimized": 0
+      }
+    },
+    "3": {
+      "baseline": 3.9652143198741467,
+      "optimized": 245.87518826473547,
+      "throughput_ratio": 62.00804507145515,
+      "claim_p95_ms": {
+        "baseline": 8941.597079727217,
+        "optimized": 83.67742060218013
+      },
+      "page_p95_ms": {
+        "1": {
+          "baseline": 8461.458708498685,
+          "optimized": 48.994741091155454
+        },
+        "100": {
+          "baseline": 9817.968701355858,
+          "optimized": 49.60509740631095
+        },
+        "1000": {
+          "baseline": 9343.3326149825,
+          "optimized": 31.22613469604405
+        },
+        "2500": {
+          "baseline": 10500.585447007325,
+          "optimized": 50.7027263927739
+        }
+      },
+      "duplicates": {
+        "baseline": 0,
+        "optimized": 0
+      }
+    },
+    "4": {
+      "baseline": 3.7335676761302166,
+      "optimized": 247.63439163468442,
+      "throughput_ratio": 66.32647727745317,
+      "claim_p95_ms": {
+        "baseline": 8634.690951587976,
+        "optimized": 89.5622749376343
+      },
+      "page_p95_ms": {
+        "1": {
+          "baseline": 7227.986209109074,
+          "optimized": 53.29759181186092
+        },
+        "100": {
+          "baseline": 9612.360023206566,
+          "optimized": 50.60516560042741
+        },
+        "1000": {
+          "baseline": 9590.530575677985,
+          "optimized": 33.11734969902318
+        },
+        "2500": {
+          "baseline": 8784.31305210106,
+          "optimized": 52.79128700203728
+        }
+      },
+      "duplicates": {
+        "baseline": 0,
+        "optimized": 0
+      }
+    },
+    "5": {
+      "baseline": 3.7262197782088915,
+      "optimized": 250.30876613516236,
+      "throughput_ratio": 67.17498726161558,
+      "claim_p95_ms": {
+        "baseline": 8346.43831649737,
+        "optimized": 88.31190050404992
+      },
+      "page_p95_ms": {
+        "1": {
+          "baseline": 8086.637605694705,
+          "optimized": 54.583967044891345
+        },
+        "100": {
+          "baseline": 8331.28734701313,
+          "optimized": 54.58513435296481
+        },
+        "1000": {
+          "baseline": 10413.513328996487,
+          "optimized": 34.633963188389366
+        },
+        "2500": {
+          "baseline": 9584.57735980628,
+          "optimized": 53.05824290262539
+        }
+      },
+      "duplicates": {
+        "baseline": 0,
+        "optimized": 0
+      }
+    }
+  },
+  "throughput_ratio_median": 62.00804507145515,
+  "deep_page_ratio_median": 0.005818975283656255,
+  "groups": {
+    "baseline_A": {
+      "runs": 5,
+      "throughput_median": 3.7432193555563216,
+      "claim_p95_median": 8346.43831649737,
+      "page2500_p95_median": 9584.57735980628,
+      "duplicates_total": 0
+    },
+    "optimized_B": {
+      "runs": 5,
+      "throughput_median": 245.87518826473547,
+      "claim_p95_median": 89.5622749376343,
+      "page2500_p95_median": 53.05824290262539,
+      "duplicates_total": 0
+    },
+    "only_keyset": {
+      "runs": 3,
+      "throughput_median": 409.3948971282992,
+      "claim_p95_median": 50.61148259555919,
+      "page2500_p95_median": 28.53359401342459,
+      "duplicates_total": 0
+    },
+    "only_index": {
+      "runs": 3,
+      "throughput_median": 231.14974557683922,
+      "claim_p95_median": 92.20689924841281,
+      "page2500_p95_median": 572.3255677788985,
+      "duplicates_total": 0
+    },
+    "only_skip_locked": {
+      "runs": 3,
+      "throughput_median": 7.064461827844677,
+      "claim_p95_median": 10089.705411589239,
+      "page2500_p95_median": 9070.542320204546,
+      "duplicates_total": 0
+    },
+    "naive_two_step": {
+      "runs": 3,
+      "throughput_median": 997.4006120698771,
+      "claim_p95_median": 95.88505918800365,
+      "page2500_p95_median": 242.14144648431102,
+      "duplicates_total": 101715
+    },
+    "w1_baseline_A": {
+      "runs": 3,
+      "throughput_median": 3.266256429606974,
+      "claim_p95_median": 6072.367666388163,
+      "page2500_p95_median": 7347.396959410977,
+      "duplicates_total": 0
+    },
+    "w1_optimized_B": {
+      "runs": 3,
+      "throughput_median": 24.375182180502208,
+      "claim_p95_median": 10.604284660075786,
+      "page2500_p95_median": 8.176369157445151,
+      "duplicates_total": 0
+    }
+  },
+  "naive_duplicates_total": 101715,
+  "w1": {
+    "a_claim_p50_median": 4076.435501978267,
+    "b_claim_p50_median": 6.48080202518031,
+    "a_page2500_p95": [
+      6710.844934015768,
+      7347.396959410977,
+      7670.641310402425
+    ],
+    "b_page2500_p95": [
+      8.176369157445151,
+      8.249643148155885,
+      8.138084740494378
+    ]
+  }
+}
