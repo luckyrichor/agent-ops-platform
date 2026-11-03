@@ -1,0 +1,1 @@
+{"action": "stats", "kind": "composite", "exists": true, "bytes": 41697280, "pretty": "40 MB", "present": [{"name": "s1_queue_composite", "size": "40 MB"}], "seconds": 0.02}

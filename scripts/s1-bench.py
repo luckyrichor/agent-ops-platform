@@ -48,9 +48,14 @@ WHERE ticket_id=%s
 RETURNING ticket_id, revision
 """
 
-PICK = """
+PICK_RANDOM = """
 SELECT ticket_id, revision FROM support.tickets WHERE state='waiting_human'
 ORDER BY priority DESC, created_at, ticket_id LIMIT 20 OFFSET 0
+"""
+
+PICK_HEAD = """
+SELECT ticket_id, revision FROM support.tickets WHERE state='waiting_human'
+ORDER BY priority DESC, created_at, ticket_id LIMIT 1
 """
 
 PAGE_OFFSET = """
@@ -140,6 +145,7 @@ class Stats:
         self.claims = 0
         self.conflicts = 0
         self.duplicates = 0
+        self.empty_skips = 0
         self.latencies: list[float] = []
         self.seen: dict[str, int] = {}
         self.pages: dict[int, list[float]] = {}
@@ -154,15 +160,20 @@ async def claim_once(connection: psycopg.AsyncConnection, args: argparse.Namespa
             row = await cursor.fetchone()
             await connection.commit()
             ok = row is not None
+            if not ok:
+                stats.empty_skips += 1
         else:
-            await cursor.execute(PICK)
+            await cursor.execute(PICK_HEAD if args.pick == "head" else PICK_RANDOM)
             candidates = await cursor.fetchall()
             if not candidates:
                 await connection.rollback()
                 return False
-            # 真实工作台：座席从首页 20 条里挑一条，而不是固定抢队首。
-            picked = candidates[random.Random(args.seed * 7919 + agent).randrange(len(candidates))]
-            ticket_id, revision = picked
+            if args.pick == "head":
+                ticket_id, revision = candidates[0]
+            else:
+                picked = candidates[
+                    random.Random(args.seed * 7919 + agent).randrange(len(candidates))]
+                ticket_id, revision = picked
             if args.claim_mode == "cas":
                 await cursor.execute(CLAIM_CAS, (agent, ticket_id, revision))
             else:
@@ -294,6 +305,7 @@ async def run(args: argparse.Namespace) -> dict[str, object]:
         "claim_mode": args.claim_mode,
         "page_mode": args.page_mode,
         "think_seconds": args.think,
+        "pick": args.pick,
         "agents": args.agents,
         "list_clients": args.list_clients,
         "page_size": args.page_size,
@@ -301,6 +313,7 @@ async def run(args: argparse.Namespace) -> dict[str, object]:
         "seconds": elapsed,
         "claims": stats.claims,
         "conflicts": stats.conflicts,
+        "skip_locked_empty": stats.empty_skips,
         "duplicates": stats.duplicates,
         "throughput_per_second": stats.claims / elapsed if elapsed > 0 else 0.0,
         "refilled": len(refill_ids),
@@ -323,6 +336,7 @@ def parse_args() -> argparse.Namespace:
     parser.add_argument("--agents", type=int, default=50)
     parser.add_argument("--seconds", type=float, default=60)
     parser.add_argument("--think", type=float, default=0.0)
+    parser.add_argument("--pick", choices=("head", "random"), default="random")
     parser.add_argument("--list-clients", type=int, default=20)
     parser.add_argument("--pages", default="1,100,1000,2500")
     parser.add_argument("--page-size", type=int, default=20)

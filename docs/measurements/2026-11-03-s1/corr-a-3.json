@@ -1,0 +1,70 @@
+{
+  "label": "corr-a-3",
+  "group": "A",
+  "claim_mode": "cas",
+  "page_mode": "offset",
+  "think_seconds": 0.0,
+  "pick": "random",
+  "agents": 50,
+  "list_clients": 4,
+  "page_size": 20,
+  "pages": [
+    1,
+    100,
+    1000,
+    2500
+  ],
+  "seconds": 12.22144542101887,
+  "claims": 53,
+  "conflicts": 85,
+  "skip_locked_empty": 0,
+  "duplicates": 0,
+  "throughput_per_second": 4.336639257812234,
+  "refilled": 0,
+  "reset_before_run": 24407,
+  "claim_latency_ms": {
+    "count": 138,
+    "mean": 3694.9557211099063,
+    "p50": 3788.648567016935,
+    "p95": 5714.504076117009,
+    "p99": 6237.377173186686,
+    "min": 380.9954629978165,
+    "max": 6445.885747001739
+  },
+  "page_latency_ms": {
+    "100": {
+      "count": 4,
+      "mean": 4093.060007005988,
+      "p50": 4130.320331998519,
+      "p95": 5397.6866469107335,
+      "p99": 5403.609985394287,
+      "min": 2706.50854401174,
+      "max": 5405.090820015175
+    },
+    "2500": {
+      "count": 4,
+      "mean": 4677.284234749095,
+      "p50": 4783.375750499545,
+      "p95": 6087.062631687149,
+      "p99": 6094.78165352717,
+      "min": 3045.674029010115,
+      "max": 6096.711408987176
+    }
+  },
+  "indexes": [
+    {
+      "name": "tickets_pkey",
+      "bytes": 40026112
+    },
+    {
+      "name": "tickets_customer_created",
+      "bytes": 8192
+    }
+  ],
+  "postgres": {
+    "shared_buffers": "512MB",
+    "effective_cache_size": "4GB"
+  },
+  "started_at": "2026-11-03T03:07:44.982069+00:00",
+  "seed": 42
+}
