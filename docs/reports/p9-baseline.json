@@ -266,5 +266,11 @@
       ]
     }
   },
-  "passed": false
+  "passed": false,
+  "measurement": {
+    "throughput_version": "v1-steady-denominator-inflated",
+    "status": "superseded",
+    "superseded_by": "docs/reports/p9-baseline-interpretation.md 追加核对（整轮重算）",
+    "note": "表中吞吐使用旧度量版本，已被修正版取代；旧数字不得再引用，跨版本不可比较。"
+  }
 }

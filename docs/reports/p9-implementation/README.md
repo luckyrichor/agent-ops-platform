@@ -63,7 +63,7 @@ v2 重跑（13:09–13:19 UTC）：换入非零 6 秒（1.0%）、换出非零 2
 
 两套矩阵各 9 次、共 18 次完整运行，原始证据 `docs/reports/p9-runs/`，汇总 `docs/reports/p9-baseline.md`，解读 `docs/reports/p9-baseline-interpretation.md`。
 
-- 通过：business 500（97.6–98.0 req/s、0 错误）、transport 1000（1000/1000 连接、首帧 p95 130–135 ms、0 错误）。
+- 通过：business 500（**修正后** 59.1–59.4 req/s、0 错误；原表 97.6–98.0 为旧度量，已作废）、transport 1000（1000/1000 连接、首帧 p95 130–135 ms、0 错误）。
 - 未通过：business 100（吞吐稳、首帧 p95 spread 16.2%）、business 1000（64 槽 + 20 s 超时饱和，9.5k–12k 错误）、transport 100/500（p99 小样本 spread 10.0%/33.1%）。
 - 峰值 RSS ≤186 MiB，看门狗全程无中止。
 

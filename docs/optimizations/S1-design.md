@@ -1,59 +1,62 @@
-# S1 设计与预期（待负责人确认后执行）
+# S1 设计与预期（修订版，2026-11-02）
 
-2026-11-02，Codex。本文只写假设与实验设计，不写具体提升数字；测完再填 `S1.md`。
+修订依据：负责人 2026-11-02 的四点要求（基线分组、主指标先声明、深翻页定义、座席行为与缓存状态）。本文只写假设与设计，不写具体提升数字；跑完再填 `S1.md`。
 
-## 问题与现状
+## 一、基线与对照分组
 
-人工工作台要在百万工单里翻出“待人工”的工单，50 个座席同时领取不能重复。
+| 组 | 领取实现 | 分页 | 用途 |
+| --- | --- | --- | --- |
+| **A 基线** | 产品默认 CAS：单条 `UPDATE ... WHERE revision=:rev`（`workbench.py:325`） | OFFSET | **所有提升相对这一组比较** |
+| **B 优化** | 部分索引 + keyset + `SKIP LOCKED` + 版本号 | keyset | 与 A 同轮配对 |
+| **N 演示** | 朴素两步：先 `SELECT ... LIMIT 1` 再 `UPDATE` | OFFSET | **只用于演示重复领取**，不参与提升倍数计算，不写成“吞吐提升 X 倍” |
 
-P4 产品默认的领取已经是单条 CAS `UPDATE ... WHERE revision=:rev`（`workbench.py:325` 起），不会重复领取；列表是 `ORDER BY priority DESC, created_at, ticket_id LIMIT/OFFSET`（`workbench.py:428`），工单表只有主键与状态检查约束。方案要求把“先查后改”的两步领取作为**实验基线开关**，不修改产品默认行为。
+产品默认行为不改；B 与 N 都只存在于实验开关。
 
-## 假设（方向，不写数字）
+## 二、主指标（开跑前声明，事后不换）
 
-1. **部分索引**（只含 `state='waiting_human'`，排序键 `(priority DESC, created_at, ticket_id)`）能让待人工列表的扫描量与索引体积随“待人工比例 5%”而不是全表增长。
-2. **游标分页**（keyset：`(priority, created_at, ticket_id)` 严格递增元组）消除 OFFSET 的线性跳读，翻到第 1 万页的时间不随页号线性增长。
-3. **SKIP LOCKED + 版本号**在 50 座席并发下把领取冲突从“重试/重复”变成“跳过已被锁定的行”，领取吞吐上升、重复领取为 0；代价是不保证严格优先级与公平性。
+1. **主指标**：50 座席并发领取的吞吐（成功领取/秒），A 与 B 同轮配对比较。
+2. **正确性门槛**：重复领取次数 = 0（B 必须为 0；A 作为产品 CAS 也应为 0；N 用于展示非零）。
+3. **第二主指标**：深翻页查询耗时（对应游标分页机制），A 与 B 同轮配对。
+4. 辅助指标：列表 p50/p95/p99、跳锁次数、索引体积、DB CPU/连接等待、WAL 体积。
 
-失效条件：查询谓词与部分索引不一致时优化失效；SKIP LOCKED 可能让低优先级工单长期饥饿；keyset 需要稳定的排序键，`priority` 变更会导致翻页跳项。任何一条出现，都在报告里写明，不当作通过。
+判据：主指标与第二主指标分别要求提升同时超过 10% 与 A/A 噪声的较大者，否则写“无显著收益”。
 
-## 基线定义
+## 三、深翻页的集合、页大小与页数
 
-- 数据：100 万工单，5% `waiting_human`（约 5 万），其余 resolved/claimed 等；`priority`、`created_at` 按 ECD 意图分布合成，固定种子。
-- 列表：OFFSET 分页 + 仅主键。
-- 领取：两步 `SELECT ... LIMIT 1` 然后 `UPDATE ... WHERE ticket_id=:id`（实验开关 `bench_claim=two_step`），此路径**只用于对照**，产品默认仍 CAS。
-- 数据库：独立 `agent_ops_p10_s1`（从 `agent_ops` 迁移 + 只复制 support/commerce 结构，不写生产库），PostgreSQL 16，记录 `shared_buffers`、连接数、CPU/内存配额。
+- 集合：`state='waiting_human'`（5 万行，占 100 万工单的 5%），与工作台真实列表一致。
+- 页大小：20 条/页 → 最多 **2,500 页**。
+- 测试页：1、100、1,000、**2,500（最后一页，存在）**。
+- 说明：方案原文写“第 1 万页”，在 5 万待人工、20 条/页时**不存在**，因此不测不存在的页；报告里写明这一修正。
+- 分页键：`ORDER BY priority DESC, created_at, ticket_id`；keyset 用同一三元组做游标。
 
-## 优化版本
+## 四、座席行为模型与缓存状态
 
-- `CREATE INDEX CONCURRENTLY ... ON support.tickets (priority DESC, created_at, ticket_id) WHERE state='waiting_human'`。
-- 列表改为 keyset：`WHERE state='waiting_human' AND (priority, created_at, ticket_id) < (:p, :c, :t) ORDER BY ... LIMIT :n`。
-- 领取改为 `UPDATE ... WHERE ticket_id = (SELECT ticket_id FROM support.tickets WHERE state='waiting_human' ORDER BY ... FOR UPDATE SKIP LOCKED LIMIT 1) AND revision=:rev RETURNING ...`，记录跳过的行数。
+- 50 个座席，每个领取成功后固定思考 **2 秒**（±200 ms 抖动，种子固定），再领取下一张；租约 10 分钟（产品默认），领取后不释放。
+- 60 秒计时窗口从“全部座席完成首次领取”开始，避免起跑偏斜。
+- 缓存状态：实验前做 3 轮全量预热（列表第 1/100/1000/2500 页各 3 次、领取 warmup 30 秒），使 PostgreSQL `shared_buffers` 与 OS page cache 处于热态；报告记录 `shared_buffers`、`effective_cache_size`、启动后是否 `pg_prewarm`、预热轮次。不引入应用层缓存。
+- 每轮开始前重置：把上一轮 claimed 的工单恢复为 waiting_human、清空租约字段、`ANALYZE`，保证 5 万起点一致。
 
-三项分别独立开关，便于反向验证。
+## 五、数据与数据库
 
-## 实验矩阵
+- 100 万工单：5% waiting_human（5 万），其余 resolved/claimed；`priority` 与 `created_at` 按 ECD 意图分布合成，固定种子；工单正文只用于生成标题/意图，不入报告。
+- 独立库 `agent_ops_p10_s1`：从 migrations 建表，只复制 support/commerce 结构；不写 `agent_ops`、`agent_ops_p2_seed42`。
+- PostgreSQL 16 容器资源上限与 `shared_buffers` 在报告中记录；若 DB 先饱和，结论只写“受资源限制”，不外推。
+
+## 六、矩阵与轮次
 
 | 批次 | 内容 | 次数 |
 | --- | --- | --- |
-| A/A | 基线 vs 基线（同配置） | 5 |
-| 基线 | OFFSET + 两步领取 | 5 |
-| 优化 | 部分索引 + keyset + SKIP LOCKED | 5 |
+| A/A | A 基线 vs A 基线 | 5 |
+| 对照 | A 基线 vs B 优化（同轮交替） | 5 |
 | 消融 | 只开部分索引 / 只开 keyset / 只开 SKIP LOCKED | 各 3 |
+| 演示 | N 两步领取 | 3（只报重复数，不报提升） |
 
-- 同一轮内 A/B 交替执行，成对比较；每轮前清空租约并重建 5 万待人工行，保证起点一致。
-- 并发：50 个座席持续领取 60 秒；列表查询由另一组 20 个客户端并发打 4 个页深（1 / 100 / 5000 / 10000 页，每页 50 条）。
-- 指标：列表 p50/p95/p99、第 1 万页耗时、领取吞吐（成功领取/秒）、重复领取次数、跳锁次数、索引体积（`pg_relation_size` + `pg_indexes_size`）、CPU 与 DB 连接等待。
-- 噪声：A/A 的 p95 与吞吐离散度作为下界；提升必须同时超过 10% 与该噪声的较大者，否则写“无显著收益”。
-
-## 产出
+## 七、产出与反向验证
 
 - `docs/optimizations/S1.md`：现象、假设、改动、前后对比、代价、失效条件、复现命令。
-- `docs/measurements/2026-11-xx-s1/`：每轮原始 JSON（延迟分位、吞吐、重复数、执行计划摘要、索引体积）。
-- 反向验证：逐项关闭索引/keyset/SKIP LOCKED，确认收益来源，不只报总和。
+- `docs/measurements/<date>-s1/`：每轮原始 JSON（分位、吞吐、重复数、跳锁、执行计划摘要、索引体积）。
+- 反向验证：逐项关闭部分索引、keyset、SKIP LOCKED，确认收益来源。
 
-## 风险与需要确认
+## 八、失效条件
 
-- 100 万行 + 50 并发在 7.5 GB / 4 vCPU 上是否够用；若 DB 先饱和，结论只能写“受资源限制”，不外推。
-- 两步领取基线会产生重复领取，报告要如实写出次数；它不代表产品行为。
-- 部分索引的创建时间与 WAL 体积要单独记录。
-- 需要确认：是否同意新建 `agent_ops_p10_s1` 独立库、50 座席 × 60 秒、每档 5 次的时长安排。
+部分索引谓词与查询不一致时失效；SKIP LOCKED 可能让低优先级工单饥饿；keyset 在 `priority` 变更时会跳项；两步领取的重复数不代表产品行为。任一条出现都写进报告，不当作通过。

@@ -10,7 +10,7 @@ Agent 应用与可观测评测平台。电商场景的多 Agent 任务拆解、�
 
 三个月求职计划六项目之一（原编号 ③），对应岗位 **05、07、10、11、14**，另含 **08** 作为子方向。总计划见 [workplan-docs](https://github.com/luckyrichor/workplan-docs)，岗位原文以那里的 `岗位要求原文.md` 为唯一依据。
 
-**当前状态：P8 已验收且冻结不变。P9 基础设施与基线已完成：v2 前置闸通过，业务/传输各三档三次共 18 次运行全部留证。通过：business-500（97.6–98.0 req/s、0 错误）、transport-1000（1000/1000 连接、首帧 p95 130–135 ms、0 错误）；未通过：business-100（首帧 p95 spread 16.2%）、business-1000（64 模型槽 + 20 s 超时饱和，9.5k–12k SSE 错误）、transport-100/500（p99 小样本 spread 10.0%/33.1%）。峰值 RSS ≤186 MiB，看门狗无中止。汇总 docs/reports/p9-baseline.md 与 p9-baseline-interpretation.md，原始证据 docs/reports/p9-runs/；逐条延迟与原始采样仅 .local。下一步 P10 只能以两个通过格子作对照；改槽数/超时须另立实验重跑基线。**
+**当前状态：P8 已验收且冻结不变。P9 基础设施与基线已完成：v2 前置闸通过，业务/传输各三档三次共 18 次运行全部留证。通过：business-500（修正后 59.1–59.4 req/s、0 错误；旧表 97.6–98.0 已作废）、transport-1000（1000/1000 连接、首帧 p95 130–135 ms、0 错误）；未通过：business-100（首帧 p95 spread 16.2%）、business-1000（64 模型槽 + 20 s 超时饱和，9.5k–12k SSE 错误）、transport-100/500（p99 小样本 spread 10.0%/33.1%）。峰值 RSS ≤186 MiB，看门狗无中止。汇总 docs/reports/p9-baseline.md 与 p9-baseline-interpretation.md，原始证据 docs/reports/p9-runs/；逐条延迟与原始采样仅 .local。下一步 P10 只能以两个通过格子作对照；改槽数/超时须另立实验重跑基线。**
 
 ## 分工模式：偏产出
 

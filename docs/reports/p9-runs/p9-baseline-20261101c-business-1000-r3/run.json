@@ -84,5 +84,13 @@
     "memory_psi_full_avg60_max": 0.15
   },
   "completed_requests": 4988,
-  "frames_total": 1321598
+  "frames_total": 1321598,
+  "measurement": {
+    "throughput_version": "v1-steady-denominator-inflated",
+    "status": "superseded",
+    "superseded_by": "docs/reports/p9-baseline-interpretation.md 追加核对（整轮重算）",
+    "reported_per_second": 27.711111111111112,
+    "corrected_whole_run_per_second": 16.088,
+    "note": "v1 用稳态 180 秒作分母但分子含整轮完成数，放大 1.62–1.72 倍；旧数字不得再引用，跨度量版本不可比较。"
+  }
 }
