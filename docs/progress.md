@@ -634,3 +634,7 @@ A/A 10 轮吞吐 3.38–3.89 次/秒，spread 13.75%，判据阈值取 13.75%。
 - 缓存机制证据：200 并发里 46 个重复与首次并发到达，两个实例 `hits=0 / misses=100`；服务耗时占总耗时约 99.99%。说明缓存对并发重复无效，需 singleflight（未测），这是“无显著收益”的原因。
 - S2.md 已标注：已跑轮次“保护不完整”（无 cgroup CPU 配额）、“状态可能不完全干净”（append-only 不能物理重置）、缓存命中证据与溯源行。
 - 未完成：跨进程 HTTP 支付回调/退款重放（仍只有服务层测试）；模板库克隆重置；P9 受限 slice 与保护探针尚未用于压测；S3 前置（中文检索、无模型检索基准、访问分布检查）未开始。
+
+## 2026-11-03 S2 收尾：模板库克隆与受限 slice（Codex）
+
+新增 `scripts/s2-round.sh`：每轮 `CREATE DATABASE ... TEMPLATE s2_template` 得到新库，两个 uvicorn 跑在 systemd user scope（CPUQuota=100%、MemoryMax=512M、MemorySwapMax=0），记录 MemoryPeak/CPUUsageNSec，轮末删库。验证轮（缓存 0）：200 请求全部 200、0 错误、142.2 次/s、p50 837 ms、p95 1,261 ms；两实例 MemoryPeak 约 69 MB、CPUUsage 各约 1.23 秒。模板来自 S1 库，含历史测试数据（1,003,566 工单），只保证轮间一致，不是干净基线。保护服务探针尚未接入；跨进程支付/退款 HTTP 与 S3 前置仍未做。
