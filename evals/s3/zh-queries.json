@@ -1,0 +1,42 @@
+{
+  "version": "2026-11-03-stage1",
+  "note": "S3 前置 a 固定中文查询集（30 条）。corpus=bench 库 20 万合成商品（zh_catalog 确定性生成），不是真实商品或真实用户查询。relevant 判定口径：top 结果 title_zh 含主词且 category_id 在 expected_categories 内；带 qualifier 的查询还须 description_zh 含该修饰词。真实中文语义能力不在本验收范围内。",
+  "queries": [
+    {"id": "zh-001", "query": "电水壶", "expected_categories": [32]},
+    {"id": "zh-002", "query": "保温杯", "expected_categories": [74]},
+    {"id": "zh-003", "query": "304不锈钢保温杯", "expected_categories": [74], "qualifier": "304不锈钢"},
+    {"id": "zh-004", "query": "无线鼠标", "expected_categories": [45]},
+    {"id": "zh-005", "query": "静音无线鼠标", "expected_categories": [45], "qualifier": "静音"},
+    {"id": "zh-006", "query": "蓝牙耳机", "expected_categories": [8]},
+    {"id": "zh-007", "query": "儿童积木", "expected_categories": [13]},
+    {"id": "zh-008", "query": "婴儿奶瓶", "expected_categories": [10]},
+    {"id": "zh-009", "query": "玻璃婴儿奶瓶", "expected_categories": [10], "qualifier": "玻璃"},
+    {"id": "zh-010", "query": "猫粮", "expected_categories": [64]},
+    {"id": "zh-011", "query": "跑步鞋", "expected_categories": [35]},
+    {"id": "zh-012", "query": "连衣裙", "expected_categories": [37]},
+    {"id": "zh-013", "query": "男士衬衫", "expected_categories": [39]},
+    {"id": "zh-014", "query": "电脑椅", "expected_categories": [56]},
+    {"id": "zh-015", "query": "乳胶床垫", "expected_categories": [53]},
+    {"id": "zh-016", "query": "笔记本电脑", "expected_categories": [62]},
+    {"id": "zh-017", "query": "电竞主机", "expected_categories": [61]},
+    {"id": "zh-018", "query": "平板电脑", "expected_categories": [70]},
+    {"id": "zh-019", "query": "智能手表", "expected_categories": [31]},
+    {"id": "zh-020", "query": "机械手表", "expected_categories": [67]},
+    {"id": "zh-021", "query": "咖啡机", "expected_categories": [65]},
+    {"id": "zh-022", "query": "破壁机", "expected_categories": [66]},
+    {"id": "zh-023", "query": "微波炉", "expected_categories": [30]},
+    {"id": "zh-024", "query": "电热毯", "expected_categories": [15]},
+    {"id": "zh-025", "query": "瑜伽垫", "expected_categories": [33]},
+    {"id": "zh-026", "query": "行李箱", "expected_categories": [51]},
+    {"id": "zh-027", "query": "中性笔", "expected_categories": [60]},
+    {"id": "zh-028", "query": "圣诞装饰", "expected_categories": [7]},
+    {"id": "zh-029", "query": "工具箱", "expected_categories": [23]},
+    {"id": "zh-030", "query": "手机壳", "expected_categories": [71]}
+  ],
+  "acceptance": {
+    "top_k": 5,
+    "rule": "每条查询前 5 结果逐条判定：title_zh 含主词（segment() 首词）AND category_id ∈ expected_categories（AND description_zh 含 qualifier，如适用）。30 条全部通过即通过；任何一条不通过须修复生成或检索后重跑，不得放宽口径。",
+    "human_review": "机器判定只作初筛；正式验收由负责人抽查 top-5 人工判定相关性（阶段2）。",
+    "not_claimed": "本验收只证明合成语料上子串/词表检索可用，不证明真实中文语义检索或分词能力。"
+  }
+}

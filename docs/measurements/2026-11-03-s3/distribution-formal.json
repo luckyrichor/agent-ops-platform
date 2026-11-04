@@ -1,0 +1,490 @@
+{
+ "collected_at_utc": "2026-11-04T01:01:09Z",
+ "collected_at_beijing": "2026-11-04T09:01:09+08:00",
+ "protocol": {
+  "doc": "docs/optimizations/S3-distribution-protocol.md",
+  "doc_sha256": "011bf80912f9ca188c6bb0ec9b182c253c034b1b463a601850b8f682b6ba706f",
+  "script_sha256": "3c4379df8c91b62a902412a4ddd1375eab62dd218db5c18d536f6a28c5490363",
+  "manifest_sha256": "d24aa5cc6cd0b585191f876c4f4b936d43d0ad6be3b49ece0488367c348cbb6a"
+ },
+ "frozen_fit": {
+  "zipf_exponent": 0.7831831153078841,
+  "support_items_pv": 4068790,
+  "syn_catalog": 200000,
+  "capacity_rule": "各自完整 catalog 的 1%/10%（不同绝对容量，明确限制）"
+ },
+ "no_semantic_mapping": "真实 item id 与合成 rank/1..200000 无语义映射；不计算数值 ID 交集或映射损失类指标",
+ "stages": {
+  "A_frozen_calibration": {
+   "generator": {
+    "exponent": 0.7831831153078841,
+    "w_zipf": 1.0,
+    "support": 200000,
+    "seed": 20261103
+   },
+   "synthetic_calibration": {
+    "window_events": 500000,
+    "warmup_events": 100000,
+    "measured_events": 400000,
+    "generator_seed": 20261103,
+    "1pct": {
+     "capacity": 2000,
+     "hit_rate": 0.194755
+    },
+    "10pct": {
+     "capacity": 20000,
+     "hit_rate": 0.453775
+    }
+   },
+   "gap_pp": {
+    "1pct": 16.2957,
+    "10pct": 8.8335
+   },
+   "calibration_pass_le_5pp": false
+  },
+  "B_mixture_calibration": {
+   "grid": {
+    "exponent": [
+     0.6,
+     0.65,
+     0.7,
+     0.75,
+     0.8,
+     0.85,
+     0.9,
+     0.95,
+     1.0,
+     1.05,
+     1.1
+    ],
+    "w": [
+     0.5,
+     0.75,
+     1.0
+    ],
+    "seed": 20261103,
+    "objective": "两档绝对gap最大值最小；平局按(a,w)字典序",
+    "fine_grid": "a*±0.025(步0.0125)、w*±0.125 截断到 [0.6,1.1]x[0.5,1.0]；预声明一次，仅校准"
+   },
+   "candidates": [
+    {
+     "max_gap_pp": 0.283,
+     "a": 0.9875,
+     "w": 0.75
+    },
+    {
+     "max_gap_pp": 1.5623,
+     "a": 1.0,
+     "w": 0.75
+    },
+    {
+     "max_gap_pp": 1.5623,
+     "a": 1.0,
+     "w": 0.75
+    },
+    {
+     "max_gap_pp": 1.6102,
+     "a": 0.975,
+     "w": 0.75
+    },
+    {
+     "max_gap_pp": 3.125,
+     "a": 1.0125,
+     "w": 0.75
+    },
+    {
+     "max_gap_pp": 4.6968,
+     "a": 1.025,
+     "w": 0.75
+    },
+    {
+     "max_gap_pp": 4.7487,
+     "a": 0.95,
+     "w": 0.75
+    },
+    {
+     "max_gap_pp": 5.413,
+     "a": 1.025,
+     "w": 0.625
+    },
+    {
+     "max_gap_pp": 6.35,
+     "a": 1.0125,
+     "w": 0.625
+    },
+    {
+     "max_gap_pp": 7.3743,
+     "a": 1.0,
+     "w": 0.625
+    },
+    {
+     "max_gap_pp": 7.4817,
+     "a": 0.85,
+     "w": 1.0
+    },
+    {
+     "max_gap_pp": 7.4933,
+     "a": 0.9,
+     "w": 1.0
+    },
+    {
+     "max_gap_pp": 7.736,
+     "a": 1.05,
+     "w": 0.75
+    },
+    {
+     "max_gap_pp": 8.0042,
+     "a": 0.975,
+     "w": 0.875
+    },
+    {
+     "max_gap_pp": 8.301,
+     "a": 0.9875,
+     "w": 0.625
+    },
+    {
+     "max_gap_pp": 9.4105,
+     "a": 0.975,
+     "w": 0.625
+    },
+    {
+     "max_gap_pp": 9.456,
+     "a": 0.9875,
+     "w": 0.875
+    },
+    {
+     "max_gap_pp": 10.067,
+     "a": 1.1,
+     "w": 0.5
+    },
+    {
+     "max_gap_pp": 10.7772,
+     "a": 0.9,
+     "w": 0.75
+    },
+    {
+     "max_gap_pp": 10.81,
+     "a": 1.0,
+     "w": 0.875
+    },
+    {
+     "max_gap_pp": 12.1075,
+     "a": 1.0125,
+     "w": 0.875
+    },
+    {
+     "max_gap_pp": 12.7745,
+     "a": 1.05,
+     "w": 0.5
+    },
+    {
+     "max_gap_pp": 13.452,
+     "a": 1.025,
+     "w": 0.875
+    },
+    {
+     "max_gap_pp": 13.4911,
+     "a": 1.1,
+     "w": 0.75
+    },
+    {
+     "max_gap_pp": 14.2862,
+     "a": 0.8,
+     "w": 1.0
+    },
+    {
+     "max_gap_pp": 14.3853,
+     "a": 0.95,
+     "w": 1.0
+    },
+    {
+     "max_gap_pp": 15.8312,
+     "a": 1.0,
+     "w": 0.5
+    },
+    {
+     "max_gap_pp": 16.3249,
+     "a": 0.85,
+     "w": 0.75
+    },
+    {
+     "max_gap_pp": 19.136,
+     "a": 0.95,
+     "w": 0.5
+    },
+    {
+     "max_gap_pp": 19.8927,
+     "a": 0.75,
+     "w": 1.0
+    },
+    {
+     "max_gap_pp": 20.8943,
+     "a": 1.0,
+     "w": 1.0
+    },
+    {
+     "max_gap_pp": 21.0755,
+     "a": 0.8,
+     "w": 0.75
+    },
+    {
+     "max_gap_pp": 22.5752,
+     "a": 0.9,
+     "w": 0.5
+    },
+    {
+     "max_gap_pp": 24.3495,
+     "a": 0.7,
+     "w": 1.0
+    },
+    {
+     "max_gap_pp": 25.0107,
+     "a": 0.75,
+     "w": 0.75
+    },
+    {
+     "max_gap_pp": 25.9842,
+     "a": 0.85,
+     "w": 0.5
+    },
+    {
+     "max_gap_pp": 26.7185,
+     "a": 1.05,
+     "w": 1.0
+    },
+    {
+     "max_gap_pp": 27.7514,
+     "a": 0.65,
+     "w": 1.0
+    },
+    {
+     "max_gap_pp": 28.1032,
+     "a": 0.7,
+     "w": 0.75
+    },
+    {
+     "max_gap_pp": 29.1725,
+     "a": 0.8,
+     "w": 0.5
+    },
+    {
+     "max_gap_pp": 30.1877,
+     "a": 0.6,
+     "w": 1.0
+    },
+    {
+     "max_gap_pp": 31.1565,
+     "a": 0.65,
+     "w": 0.75
+    },
+    {
+     "max_gap_pp": 32.1617,
+     "a": 0.75,
+     "w": 0.5
+    },
+    {
+     "max_gap_pp": 33.9553,
+     "a": 1.1,
+     "w": 1.0
+    },
+    {
+     "max_gap_pp": 34.278,
+     "a": 0.6,
+     "w": 0.75
+    },
+    {
+     "max_gap_pp": 34.7867,
+     "a": 0.7,
+     "w": 0.5
+    },
+    {
+     "max_gap_pp": 37.0192,
+     "a": 0.65,
+     "w": 0.5
+    },
+    {
+     "max_gap_pp": 38.86,
+     "a": 0.6,
+     "w": 0.5
+    }
+   ],
+   "selected": {
+    "exponent": 0.9875,
+    "w_zipf": 0.75,
+    "calibration_max_gap_pp": 0.283
+   },
+   "tuning_saw_validation": false
+  },
+  "C_validation": {
+   "seeds": [
+    {
+     "seed": 20261104,
+     "synthetic_validation": {
+      "window_events": 500000,
+      "warmup_events": 100000,
+      "measured_events": 400000,
+      "generator_seed": 20261104,
+      "1pct": {
+       "capacity": 2000,
+       "hit_rate": 0.35842
+      },
+      "10pct": {
+       "capacity": 20000,
+       "hit_rate": 0.544018
+      }
+     },
+     "gap_pp": {
+      "1pct": 0.3037,
+      "10pct": 0.534
+     },
+     "seed_pass_le_5pp": true
+    },
+    {
+     "seed": 20261105,
+     "synthetic_validation": {
+      "window_events": 500000,
+      "warmup_events": 100000,
+      "measured_events": 400000,
+      "generator_seed": 20261105,
+      "1pct": {
+       "capacity": 2000,
+       "hit_rate": 0.356975
+      },
+      "10pct": {
+       "capacity": 20000,
+       "hit_rate": 0.5445
+      }
+     },
+     "gap_pp": {
+      "1pct": 0.4482,
+      "10pct": 0.4858
+     },
+     "seed_pass_le_5pp": true
+    },
+    {
+     "seed": 20261106,
+     "synthetic_validation": {
+      "window_events": 500000,
+      "warmup_events": 100000,
+      "measured_events": 400000,
+      "generator_seed": 20261106,
+      "1pct": {
+       "capacity": 2000,
+       "hit_rate": 0.356853
+      },
+      "10pct": {
+       "capacity": 20000,
+       "hit_rate": 0.544257
+      }
+     },
+     "gap_pp": {
+      "1pct": 0.4604,
+      "10pct": 0.5101
+     },
+     "seed_pass_le_5pp": true
+    }
+   ],
+   "synthetic_mean_hit": {
+    "1pct": 0.357416,
+    "10pct": 0.544258
+   },
+   "real_hit": {
+    "1pct": 0.361457,
+    "10pct": 0.549358
+   },
+   "mean_gap_pp": {
+    "1pct": 0.4041,
+    "10pct": 0.51
+   },
+   "verdict": "pass_formal_per_protocol",
+   "next_step_options_if_fail": [
+    "接受失败：正式 S3 实验不用该生成器宣称分布一致性，S3-design 标注前置未过",
+    "修订协议（需 Codex 批准并重新冻结，例如引入时序/会话局部性），不得看本轮验证结果调参",
+    "改用 rank 分布对比等非 LRU 口径（需 Codex 批准）"
+   ]
+  }
+ },
+ "sampling": {
+  "raw_lines_read": 1115511,
+  "malformed_lines": 0,
+  "non_pv_lines": 115511,
+  "pv_lines": 1000000,
+  "first_line_kept": true,
+  "event_time_range_utc": [
+   "2017-09-11T08:16:39Z",
+   "2018-08-28T10:27:12Z"
+  ],
+  "sampling": "文件顺序前 1000000 条 pv（确定性，无随机抽样，无 header 首行为数据）",
+  "private_sample_file": ".local/s3/distribution-formal-pv1m.json",
+  "private_sample_sha256": "11428dcfe7e0e6bf824bc2a4f963696effb1f75e01e0d1d500f4246fc4570770"
+ },
+ "real": {
+  "calibration_window": {
+   "window_events": 500000,
+   "warmup_events": 100000,
+   "measured_events": 400000,
+   "1pct": {
+    "capacity": 40687,
+    "hit_rate": 0.357712
+   },
+   "10pct": {
+    "capacity": 406879,
+    "hit_rate": 0.54211
+   }
+  },
+  "validation_window": {
+   "window_events": 500000,
+   "warmup_events": 100000,
+   "measured_events": 400000,
+   "1pct": {
+    "capacity": 40687,
+    "hit_rate": 0.361457
+   },
+   "10pct": {
+    "capacity": 406879,
+    "hit_rate": 0.549358
+   }
+  }
+ },
+ "freeze_file": {
+  "path": ".local/s3/distribution-freeze-v1.json",
+  "sha256": "a4a09a1e1ea1b5e6107b31c381181223de3e7b7fbb2b3ff19be54ec00ef45575",
+  "payload": {
+   "selected": {
+    "exponent": 0.9875,
+    "w_zipf": 0.75,
+    "support": 200000
+   },
+   "protocol_doc_sha256": "011bf80912f9ca188c6bb0ec9b182c253c034b1b463a601850b8f682b6ba706f",
+   "protocol_script_sha256": "3c4379df8c91b62a902412a4ddd1375eab62dd218db5c18d536f6a28c5490363",
+   "frozen_fit_manifest_sha256": "d24aa5cc6cd0b585191f876c4f4b936d43d0ad6be3b49ece0488367c348cbb6a",
+   "validation_seeds": [
+    20261104,
+    20261105,
+    20261106
+   ],
+   "pass_rule": "3 seeds × 两档 |gap| 全部 ≤5pp",
+   "frozen_at_utc": "2026-11-04T01:01:48Z"
+  }
+ },
+ "diagnostic_real_support": {
+  "support": 4068790,
+  "note": "仅诊断参考，不替代 support=200000 主闸",
+  "synthetic_calibration_support_real": {
+   "1pct": {
+    "capacity": 40687,
+    "hit_rate": 0.422945
+   },
+   "10pct": {
+    "capacity": 406879,
+    "hit_rate": 0.505075
+   }
+  },
+  "gap_pp_vs_real_calibration": {
+   "1pct": 6.5233,
+   "10pct": 3.7035
+  }
+ },
+ "elapsed_seconds": 43.3,
+ "resource_note": "1 CPU / 1GiB scope；预算 900s 仅计算；PG 未单独限 CPU 的事实不在本脚本范围"
+}

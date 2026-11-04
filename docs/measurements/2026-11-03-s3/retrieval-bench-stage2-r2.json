@@ -1,0 +1,2472 @@
+{
+ "fingerprint": {
+  "products": 200000,
+  "script_sha256": "c16659b77588e53dc0b9c3c0bedfa73328770f7a22075fe790b18ada83755443",
+  "queries_file_sha256": "e544d564af3d67e7b5728061f0f2e0e2931faca20b7ec8c685e83d44b0e70a34",
+  "queries_version": "2026-11-03-stage1",
+  "source_file_sha256": {
+   "src/agent_ops/catalog_search.py": "7651971ef2e73d849ca050affab7aa0e88f0e3e8fed2aaf049f6a8b239f89d25",
+   "src/agent_ops/zh_catalog.py": "46cae27dc04dd8a795eff63f4e6b36ff78cb9eb36453e54699458f011c873bc6",
+   "src/agent_ops/bench/stats.py": "5f4ecbe61571bc04ed90871da9a79118cc1e8475d316674e5ed7b05611f43ad2"
+  },
+  "label_rule": "expected_categories 主词命中 title_zh（AND 类目、active、available、默认价格带；qualifier 命中 description_zh）；独立于实现排序/分词；合成标签，非人工标注",
+  "corpus_content_sha256": "eddfd229606b7742e3f82dc5c49e787c82f4fc848da63a29bf5249ab35cbc1af",
+  "corpus_columns": [
+   "id",
+   "sku",
+   "category_id",
+   "title_zh",
+   "description_zh",
+   "price_cents",
+   "freight_cents",
+   "status",
+   "attrs",
+   "stock",
+   "reserved",
+   "inventory_version"
+  ]
+ },
+ "requests": 300,
+ "concurrency": 2,
+ "seed": 0,
+ "warmup_requests": 60,
+ "pg_session_guard": "options=-c max_parallel_workers_per_gather=0 -c statement_timeout=5000 (仅本测量连接池；PG 侧未单独限 CPU)",
+ "window": {
+  "start_utc": "2026-11-04T01:06:23Z",
+  "end_utc": "2026-11-04T01:06:40Z",
+  "duration_seconds": 17.021,
+  "samples": 300
+ },
+ "qps": 17.63,
+ "per_request": [
+  {
+   "index": 0,
+   "query_id": "zh-001",
+   "success": true,
+   "latency_ms": 37.498
+  },
+  {
+   "index": 2,
+   "query_id": "zh-003",
+   "success": true,
+   "latency_ms": 263.221
+  },
+  {
+   "index": 1,
+   "query_id": "zh-002",
+   "success": true,
+   "latency_ms": 311.872
+  },
+  {
+   "index": 4,
+   "query_id": "zh-005",
+   "success": true,
+   "latency_ms": 118.778
+  },
+  {
+   "index": 3,
+   "query_id": "zh-004",
+   "success": true,
+   "latency_ms": 202.634
+  },
+  {
+   "index": 5,
+   "query_id": "zh-006",
+   "success": true,
+   "latency_ms": 7.439
+  },
+  {
+   "index": 6,
+   "query_id": "zh-007",
+   "success": true,
+   "latency_ms": 201.487
+  },
+  {
+   "index": 7,
+   "query_id": "zh-008",
+   "success": true,
+   "latency_ms": 175.482
+  },
+  {
+   "index": 8,
+   "query_id": "zh-009",
+   "success": true,
+   "latency_ms": 93.065
+  },
+  {
+   "index": 10,
+   "query_id": "zh-011",
+   "success": true,
+   "latency_ms": 92.586
+  },
+  {
+   "index": 12,
+   "query_id": "zh-013",
+   "success": true,
+   "latency_ms": 90.583
+  },
+  {
+   "index": 14,
+   "query_id": "zh-015",
+   "success": true,
+   "latency_ms": 3.548
+  },
+  {
+   "index": 16,
+   "query_id": "zh-017",
+   "success": true,
+   "latency_ms": 3.108
+  },
+  {
+   "index": 18,
+   "query_id": "zh-019",
+   "success": true,
+   "latency_ms": 103.483
+  },
+  {
+   "index": 20,
+   "query_id": "zh-021",
+   "success": true,
+   "latency_ms": 4.217
+  },
+  {
+   "index": 22,
+   "query_id": "zh-023",
+   "success": true,
+   "latency_ms": 7.769
+  },
+  {
+   "index": 9,
+   "query_id": "zh-010",
+   "success": true,
+   "latency_ms": 601.713
+  },
+  {
+   "index": 11,
+   "query_id": "zh-012",
+   "success": true,
+   "latency_ms": 5.413
+  },
+  {
+   "index": 24,
+   "query_id": "zh-025",
+   "success": true,
+   "latency_ms": 380.958
+  },
+  {
+   "index": 13,
+   "query_id": "zh-014",
+   "success": true,
+   "latency_ms": 106.545
+  },
+  {
+   "index": 15,
+   "query_id": "zh-016",
+   "success": true,
+   "latency_ms": 6.428
+  },
+  {
+   "index": 17,
+   "query_id": "zh-018",
+   "success": true,
+   "latency_ms": 7.141
+  },
+  {
+   "index": 26,
+   "query_id": "zh-027",
+   "success": true,
+   "latency_ms": 112.638
+  },
+  {
+   "index": 28,
+   "query_id": "zh-029",
+   "success": true,
+   "latency_ms": 26.176
+  },
+  {
+   "index": 19,
+   "query_id": "zh-020",
+   "success": true,
+   "latency_ms": 185.7
+  },
+  {
+   "index": 21,
+   "query_id": "zh-022",
+   "success": true,
+   "latency_ms": 3.113
+  },
+  {
+   "index": 30,
+   "query_id": "zh-001",
+   "success": true,
+   "latency_ms": 80.843
+  },
+  {
+   "index": 23,
+   "query_id": "zh-024",
+   "success": true,
+   "latency_ms": 29.704
+  },
+  {
+   "index": 25,
+   "query_id": "zh-026",
+   "success": true,
+   "latency_ms": 85.873
+  },
+  {
+   "index": 27,
+   "query_id": "zh-028",
+   "success": true,
+   "latency_ms": 6.837
+  },
+  {
+   "index": 32,
+   "query_id": "zh-003",
+   "success": true,
+   "latency_ms": 196.207
+  },
+  {
+   "index": 29,
+   "query_id": "zh-030",
+   "success": true,
+   "latency_ms": 178.306
+  },
+  {
+   "index": 34,
+   "query_id": "zh-005",
+   "success": true,
+   "latency_ms": 128.768
+  },
+  {
+   "index": 31,
+   "query_id": "zh-002",
+   "success": true,
+   "latency_ms": 199.26
+  },
+  {
+   "index": 36,
+   "query_id": "zh-007",
+   "success": true,
+   "latency_ms": 177.789
+  },
+  {
+   "index": 38,
+   "query_id": "zh-009",
+   "success": true,
+   "latency_ms": 84.096
+  },
+  {
+   "index": 40,
+   "query_id": "zh-011",
+   "success": true,
+   "latency_ms": 33.245
+  },
+  {
+   "index": 33,
+   "query_id": "zh-004",
+   "success": true,
+   "latency_ms": 130.411
+  },
+  {
+   "index": 35,
+   "query_id": "zh-006",
+   "success": true,
+   "latency_ms": 6.306
+  },
+  {
+   "index": 42,
+   "query_id": "zh-013",
+   "success": true,
+   "latency_ms": 79.485
+  },
+  {
+   "index": 44,
+   "query_id": "zh-015",
+   "success": true,
+   "latency_ms": 3.454
+  },
+  {
+   "index": 46,
+   "query_id": "zh-017",
+   "success": true,
+   "latency_ms": 3.141
+  },
+  {
+   "index": 37,
+   "query_id": "zh-008",
+   "success": true,
+   "latency_ms": 154.163
+  },
+  {
+   "index": 48,
+   "query_id": "zh-019",
+   "success": true,
+   "latency_ms": 95.169
+  },
+  {
+   "index": 50,
+   "query_id": "zh-021",
+   "success": true,
+   "latency_ms": 4.334
+  },
+  {
+   "index": 52,
+   "query_id": "zh-023",
+   "success": true,
+   "latency_ms": 8.514
+  },
+  {
+   "index": 39,
+   "query_id": "zh-010",
+   "success": true,
+   "latency_ms": 427.093
+  },
+  {
+   "index": 54,
+   "query_id": "zh-025",
+   "success": true,
+   "latency_ms": 464.448
+  },
+  {
+   "index": 41,
+   "query_id": "zh-012",
+   "success": true,
+   "latency_ms": 74.001
+  },
+  {
+   "index": 43,
+   "query_id": "zh-014",
+   "success": true,
+   "latency_ms": 103.605
+  },
+  {
+   "index": 45,
+   "query_id": "zh-016",
+   "success": true,
+   "latency_ms": 7.644
+  },
+  {
+   "index": 56,
+   "query_id": "zh-027",
+   "success": true,
+   "latency_ms": 118.534
+  },
+  {
+   "index": 47,
+   "query_id": "zh-018",
+   "success": true,
+   "latency_ms": 3.673
+  },
+  {
+   "index": 58,
+   "query_id": "zh-029",
+   "success": true,
+   "latency_ms": 88.132
+  },
+  {
+   "index": 60,
+   "query_id": "zh-001",
+   "success": true,
+   "latency_ms": 98.048
+  },
+  {
+   "index": 49,
+   "query_id": "zh-020",
+   "success": true,
+   "latency_ms": 205.701
+  },
+  {
+   "index": 51,
+   "query_id": "zh-022",
+   "success": true,
+   "latency_ms": 3.701
+  },
+  {
+   "index": 53,
+   "query_id": "zh-024",
+   "success": true,
+   "latency_ms": 89.793
+  },
+  {
+   "index": 62,
+   "query_id": "zh-003",
+   "success": true,
+   "latency_ms": 225.263
+  },
+  {
+   "index": 55,
+   "query_id": "zh-026",
+   "success": true,
+   "latency_ms": 112.043
+  },
+  {
+   "index": 57,
+   "query_id": "zh-028",
+   "success": true,
+   "latency_ms": 69.312
+  },
+  {
+   "index": 64,
+   "query_id": "zh-005",
+   "success": true,
+   "latency_ms": 181.624
+  },
+  {
+   "index": 59,
+   "query_id": "zh-030",
+   "success": true,
+   "latency_ms": 122.48
+  },
+  {
+   "index": 66,
+   "query_id": "zh-007",
+   "success": true,
+   "latency_ms": 206.119
+  },
+  {
+   "index": 68,
+   "query_id": "zh-009",
+   "success": true,
+   "latency_ms": 98.096
+  },
+  {
+   "index": 61,
+   "query_id": "zh-002",
+   "success": true,
+   "latency_ms": 381.857
+  },
+  {
+   "index": 70,
+   "query_id": "zh-011",
+   "success": true,
+   "latency_ms": 97.195
+  },
+  {
+   "index": 72,
+   "query_id": "zh-013",
+   "success": true,
+   "latency_ms": 87.892
+  },
+  {
+   "index": 74,
+   "query_id": "zh-015",
+   "success": true,
+   "latency_ms": 3.749
+  },
+  {
+   "index": 76,
+   "query_id": "zh-017",
+   "success": true,
+   "latency_ms": 3.786
+  },
+  {
+   "index": 63,
+   "query_id": "zh-004",
+   "success": true,
+   "latency_ms": 206.17
+  },
+  {
+   "index": 78,
+   "query_id": "zh-019",
+   "success": true,
+   "latency_ms": 104.944
+  },
+  {
+   "index": 80,
+   "query_id": "zh-021",
+   "success": true,
+   "latency_ms": 5.45
+  },
+  {
+   "index": 65,
+   "query_id": "zh-006",
+   "success": true,
+   "latency_ms": 7.521
+  },
+  {
+   "index": 82,
+   "query_id": "zh-023",
+   "success": true,
+   "latency_ms": 9.052
+  },
+  {
+   "index": 67,
+   "query_id": "zh-008",
+   "success": true,
+   "latency_ms": 118.477
+  },
+  {
+   "index": 84,
+   "query_id": "zh-025",
+   "success": true,
+   "latency_ms": 295.15
+  },
+  {
+   "index": 86,
+   "query_id": "zh-027",
+   "success": true,
+   "latency_ms": 187.379
+  },
+  {
+   "index": 88,
+   "query_id": "zh-029",
+   "success": true,
+   "latency_ms": 90.265
+  },
+  {
+   "index": 69,
+   "query_id": "zh-010",
+   "success": true,
+   "latency_ms": 561.751
+  },
+  {
+   "index": 90,
+   "query_id": "zh-001",
+   "success": true,
+   "latency_ms": 105.028
+  },
+  {
+   "index": 71,
+   "query_id": "zh-012",
+   "success": true,
+   "latency_ms": 5.236
+  },
+  {
+   "index": 73,
+   "query_id": "zh-014",
+   "success": true,
+   "latency_ms": 102.85
+  },
+  {
+   "index": 75,
+   "query_id": "zh-016",
+   "success": true,
+   "latency_ms": 5.509
+  },
+  {
+   "index": 77,
+   "query_id": "zh-018",
+   "success": true,
+   "latency_ms": 4.402
+  },
+  {
+   "index": 92,
+   "query_id": "zh-003",
+   "success": true,
+   "latency_ms": 206.541
+  },
+  {
+   "index": 79,
+   "query_id": "zh-020",
+   "success": true,
+   "latency_ms": 199.194
+  },
+  {
+   "index": 81,
+   "query_id": "zh-022",
+   "success": true,
+   "latency_ms": 3.543
+  },
+  {
+   "index": 94,
+   "query_id": "zh-005",
+   "success": true,
+   "latency_ms": 123.298
+  },
+  {
+   "index": 83,
+   "query_id": "zh-024",
+   "success": true,
+   "latency_ms": 82.315
+  },
+  {
+   "index": 85,
+   "query_id": "zh-026",
+   "success": true,
+   "latency_ms": 37.903
+  },
+  {
+   "index": 87,
+   "query_id": "zh-028",
+   "success": true,
+   "latency_ms": 6.925
+  },
+  {
+   "index": 96,
+   "query_id": "zh-007",
+   "success": true,
+   "latency_ms": 174.905
+  },
+  {
+   "index": 98,
+   "query_id": "zh-009",
+   "success": true,
+   "latency_ms": 37.515
+  },
+  {
+   "index": 89,
+   "query_id": "zh-030",
+   "success": true,
+   "latency_ms": 156.887
+  },
+  {
+   "index": 100,
+   "query_id": "zh-011",
+   "success": true,
+   "latency_ms": 80.043
+  },
+  {
+   "index": 102,
+   "query_id": "zh-013",
+   "success": true,
+   "latency_ms": 76.695
+  },
+  {
+   "index": 104,
+   "query_id": "zh-015",
+   "success": true,
+   "latency_ms": 3.412
+  },
+  {
+   "index": 106,
+   "query_id": "zh-017",
+   "success": true,
+   "latency_ms": 3.397
+  },
+  {
+   "index": 108,
+   "query_id": "zh-019",
+   "success": true,
+   "latency_ms": 94.275
+  },
+  {
+   "index": 91,
+   "query_id": "zh-002",
+   "success": true,
+   "latency_ms": 203.249
+  },
+  {
+   "index": 110,
+   "query_id": "zh-021",
+   "success": true,
+   "latency_ms": 7.391
+  },
+  {
+   "index": 112,
+   "query_id": "zh-023",
+   "success": true,
+   "latency_ms": 8.548
+  },
+  {
+   "index": 93,
+   "query_id": "zh-004",
+   "success": true,
+   "latency_ms": 126.042
+  },
+  {
+   "index": 95,
+   "query_id": "zh-006",
+   "success": true,
+   "latency_ms": 6.177
+  },
+  {
+   "index": 97,
+   "query_id": "zh-008",
+   "success": true,
+   "latency_ms": 104.9
+  },
+  {
+   "index": 114,
+   "query_id": "zh-025",
+   "success": true,
+   "latency_ms": 225.294
+  },
+  {
+   "index": 116,
+   "query_id": "zh-027",
+   "success": true,
+   "latency_ms": 162.379
+  },
+  {
+   "index": 118,
+   "query_id": "zh-029",
+   "success": true,
+   "latency_ms": 28.099
+  },
+  {
+   "index": 120,
+   "query_id": "zh-001",
+   "success": true,
+   "latency_ms": 88.313
+  },
+  {
+   "index": 99,
+   "query_id": "zh-010",
+   "success": true,
+   "latency_ms": 471.641
+  },
+  {
+   "index": 101,
+   "query_id": "zh-012",
+   "success": true,
+   "latency_ms": 4.895
+  },
+  {
+   "index": 122,
+   "query_id": "zh-003",
+   "success": true,
+   "latency_ms": 294.458
+  },
+  {
+   "index": 103,
+   "query_id": "zh-014",
+   "success": true,
+   "latency_ms": 111.661
+  },
+  {
+   "index": 105,
+   "query_id": "zh-016",
+   "success": true,
+   "latency_ms": 66.355
+  },
+  {
+   "index": 107,
+   "query_id": "zh-018",
+   "success": true,
+   "latency_ms": 3.214
+  },
+  {
+   "index": 124,
+   "query_id": "zh-005",
+   "success": true,
+   "latency_ms": 183.217
+  },
+  {
+   "index": 109,
+   "query_id": "zh-020",
+   "success": true,
+   "latency_ms": 197.828
+  },
+  {
+   "index": 111,
+   "query_id": "zh-022",
+   "success": true,
+   "latency_ms": 5.841
+  },
+  {
+   "index": 113,
+   "query_id": "zh-024",
+   "success": true,
+   "latency_ms": 92.386
+  },
+  {
+   "index": 126,
+   "query_id": "zh-007",
+   "success": true,
+   "latency_ms": 211.717
+  },
+  {
+   "index": 115,
+   "query_id": "zh-026",
+   "success": true,
+   "latency_ms": 101.056
+  },
+  {
+   "index": 117,
+   "query_id": "zh-028",
+   "success": true,
+   "latency_ms": 7.103
+  },
+  {
+   "index": 128,
+   "query_id": "zh-009",
+   "success": true,
+   "latency_ms": 105.287
+  },
+  {
+   "index": 130,
+   "query_id": "zh-011",
+   "success": true,
+   "latency_ms": 93.348
+  },
+  {
+   "index": 119,
+   "query_id": "zh-030",
+   "success": true,
+   "latency_ms": 196.145
+  },
+  {
+   "index": 132,
+   "query_id": "zh-013",
+   "success": true,
+   "latency_ms": 95.226
+  },
+  {
+   "index": 134,
+   "query_id": "zh-015",
+   "success": true,
+   "latency_ms": 3.787
+  },
+  {
+   "index": 136,
+   "query_id": "zh-017",
+   "success": true,
+   "latency_ms": 2.779
+  },
+  {
+   "index": 138,
+   "query_id": "zh-019",
+   "success": true,
+   "latency_ms": 106.457
+  },
+  {
+   "index": 140,
+   "query_id": "zh-021",
+   "success": true,
+   "latency_ms": 4.302
+  },
+  {
+   "index": 142,
+   "query_id": "zh-023",
+   "success": true,
+   "latency_ms": 7.133
+  },
+  {
+   "index": 121,
+   "query_id": "zh-002",
+   "success": true,
+   "latency_ms": 228.215
+  },
+  {
+   "index": 123,
+   "query_id": "zh-004",
+   "success": true,
+   "latency_ms": 272.727
+  },
+  {
+   "index": 125,
+   "query_id": "zh-006",
+   "success": true,
+   "latency_ms": 6.633
+  },
+  {
+   "index": 144,
+   "query_id": "zh-025",
+   "success": true,
+   "latency_ms": 382.352
+  },
+  {
+   "index": 146,
+   "query_id": "zh-027",
+   "success": true,
+   "latency_ms": 123.092
+  },
+  {
+   "index": 127,
+   "query_id": "zh-008",
+   "success": true,
+   "latency_ms": 199.27
+  },
+  {
+   "index": 148,
+   "query_id": "zh-029",
+   "success": true,
+   "latency_ms": 76.304
+  },
+  {
+   "index": 150,
+   "query_id": "zh-001",
+   "success": true,
+   "latency_ms": 91.112
+  },
+  {
+   "index": 152,
+   "query_id": "zh-003",
+   "success": true,
+   "latency_ms": 306.015
+  },
+  {
+   "index": 129,
+   "query_id": "zh-010",
+   "success": true,
+   "latency_ms": 493.674
+  },
+  {
+   "index": 131,
+   "query_id": "zh-012",
+   "success": true,
+   "latency_ms": 6.152
+  },
+  {
+   "index": 154,
+   "query_id": "zh-005",
+   "success": true,
+   "latency_ms": 118.097
+  },
+  {
+   "index": 133,
+   "query_id": "zh-014",
+   "success": true,
+   "latency_ms": 101.702
+  },
+  {
+   "index": 135,
+   "query_id": "zh-016",
+   "success": true,
+   "latency_ms": 13.778
+  },
+  {
+   "index": 137,
+   "query_id": "zh-018",
+   "success": true,
+   "latency_ms": 4.46
+  },
+  {
+   "index": 156,
+   "query_id": "zh-007",
+   "success": true,
+   "latency_ms": 270.297
+  },
+  {
+   "index": 139,
+   "query_id": "zh-020",
+   "success": true,
+   "latency_ms": 204.677
+  },
+  {
+   "index": 158,
+   "query_id": "zh-009",
+   "success": true,
+   "latency_ms": 97.333
+  },
+  {
+   "index": 141,
+   "query_id": "zh-022",
+   "success": true,
+   "latency_ms": 65.514
+  },
+  {
+   "index": 143,
+   "query_id": "zh-024",
+   "success": true,
+   "latency_ms": 29.644
+  },
+  {
+   "index": 160,
+   "query_id": "zh-011",
+   "success": true,
+   "latency_ms": 106.987
+  },
+  {
+   "index": 162,
+   "query_id": "zh-013",
+   "success": true,
+   "latency_ms": 29.836
+  },
+  {
+   "index": 164,
+   "query_id": "zh-015",
+   "success": true,
+   "latency_ms": 3.361
+  },
+  {
+   "index": 145,
+   "query_id": "zh-026",
+   "success": true,
+   "latency_ms": 108.628
+  },
+  {
+   "index": 166,
+   "query_id": "zh-017",
+   "success": true,
+   "latency_ms": 2.664
+  },
+  {
+   "index": 147,
+   "query_id": "zh-028",
+   "success": true,
+   "latency_ms": 5.965
+  },
+  {
+   "index": 168,
+   "query_id": "zh-019",
+   "success": true,
+   "latency_ms": 97.682
+  },
+  {
+   "index": 170,
+   "query_id": "zh-021",
+   "success": true,
+   "latency_ms": 4.411
+  },
+  {
+   "index": 172,
+   "query_id": "zh-023",
+   "success": true,
+   "latency_ms": 57.449
+  },
+  {
+   "index": 149,
+   "query_id": "zh-030",
+   "success": true,
+   "latency_ms": 158.982
+  },
+  {
+   "index": 151,
+   "query_id": "zh-002",
+   "success": true,
+   "latency_ms": 206.331
+  },
+  {
+   "index": 174,
+   "query_id": "zh-025",
+   "success": true,
+   "latency_ms": 224.527
+  },
+  {
+   "index": 176,
+   "query_id": "zh-027",
+   "success": true,
+   "latency_ms": 102.407
+  },
+  {
+   "index": 153,
+   "query_id": "zh-004",
+   "success": true,
+   "latency_ms": 134.661
+  },
+  {
+   "index": 155,
+   "query_id": "zh-006",
+   "success": true,
+   "latency_ms": 56.203
+  },
+  {
+   "index": 178,
+   "query_id": "zh-029",
+   "success": true,
+   "latency_ms": 75.342
+  },
+  {
+   "index": 180,
+   "query_id": "zh-001",
+   "success": true,
+   "latency_ms": 33.901
+  },
+  {
+   "index": 157,
+   "query_id": "zh-008",
+   "success": true,
+   "latency_ms": 104.659
+  },
+  {
+   "index": 182,
+   "query_id": "zh-003",
+   "success": true,
+   "latency_ms": 185.392
+  },
+  {
+   "index": 184,
+   "query_id": "zh-005",
+   "success": true,
+   "latency_ms": 109.567
+  },
+  {
+   "index": 159,
+   "query_id": "zh-010",
+   "success": true,
+   "latency_ms": 414.046
+  },
+  {
+   "index": 161,
+   "query_id": "zh-012",
+   "success": true,
+   "latency_ms": 5.133
+  },
+  {
+   "index": 186,
+   "query_id": "zh-007",
+   "success": true,
+   "latency_ms": 194.479
+  },
+  {
+   "index": 163,
+   "query_id": "zh-014",
+   "success": true,
+   "latency_ms": 99.871
+  },
+  {
+   "index": 188,
+   "query_id": "zh-009",
+   "success": true,
+   "latency_ms": 99.312
+  },
+  {
+   "index": 165,
+   "query_id": "zh-016",
+   "success": true,
+   "latency_ms": 5.571
+  },
+  {
+   "index": 167,
+   "query_id": "zh-018",
+   "success": true,
+   "latency_ms": 68.264
+  },
+  {
+   "index": 190,
+   "query_id": "zh-011",
+   "success": true,
+   "latency_ms": 97.639
+  },
+  {
+   "index": 192,
+   "query_id": "zh-013",
+   "success": true,
+   "latency_ms": 93.442
+  },
+  {
+   "index": 194,
+   "query_id": "zh-015",
+   "success": true,
+   "latency_ms": 3.885
+  },
+  {
+   "index": 196,
+   "query_id": "zh-017",
+   "success": true,
+   "latency_ms": 2.973
+  },
+  {
+   "index": 169,
+   "query_id": "zh-020",
+   "success": true,
+   "latency_ms": 216.529
+  },
+  {
+   "index": 171,
+   "query_id": "zh-022",
+   "success": true,
+   "latency_ms": 4.215
+  },
+  {
+   "index": 198,
+   "query_id": "zh-019",
+   "success": true,
+   "latency_ms": 188.112
+  },
+  {
+   "index": 173,
+   "query_id": "zh-024",
+   "success": true,
+   "latency_ms": 95.228
+  },
+  {
+   "index": 200,
+   "query_id": "zh-021",
+   "success": true,
+   "latency_ms": 5.098
+  },
+  {
+   "index": 202,
+   "query_id": "zh-023",
+   "success": true,
+   "latency_ms": 8.023
+  },
+  {
+   "index": 175,
+   "query_id": "zh-026",
+   "success": true,
+   "latency_ms": 105.91
+  },
+  {
+   "index": 177,
+   "query_id": "zh-028",
+   "success": true,
+   "latency_ms": 6.789
+  },
+  {
+   "index": 179,
+   "query_id": "zh-030",
+   "success": true,
+   "latency_ms": 194.98
+  },
+  {
+   "index": 204,
+   "query_id": "zh-025",
+   "success": true,
+   "latency_ms": 394.427
+  },
+  {
+   "index": 206,
+   "query_id": "zh-027",
+   "success": true,
+   "latency_ms": 117.82
+  },
+  {
+   "index": 181,
+   "query_id": "zh-002",
+   "success": true,
+   "latency_ms": 286.471
+  },
+  {
+   "index": 208,
+   "query_id": "zh-029",
+   "success": true,
+   "latency_ms": 91.526
+  },
+  {
+   "index": 210,
+   "query_id": "zh-001",
+   "success": true,
+   "latency_ms": 98.813
+  },
+  {
+   "index": 183,
+   "query_id": "zh-004",
+   "success": true,
+   "latency_ms": 201.483
+  },
+  {
+   "index": 185,
+   "query_id": "zh-006",
+   "success": true,
+   "latency_ms": 8.572
+  },
+  {
+   "index": 187,
+   "query_id": "zh-008",
+   "success": true,
+   "latency_ms": 184.017
+  },
+  {
+   "index": 212,
+   "query_id": "zh-003",
+   "success": true,
+   "latency_ms": 283.485
+  },
+  {
+   "index": 214,
+   "query_id": "zh-005",
+   "success": true,
+   "latency_ms": 122.475
+  },
+  {
+   "index": 216,
+   "query_id": "zh-007",
+   "success": true,
+   "latency_ms": 275.221
+  },
+  {
+   "index": 189,
+   "query_id": "zh-010",
+   "success": true,
+   "latency_ms": 433.546
+  },
+  {
+   "index": 191,
+   "query_id": "zh-012",
+   "success": true,
+   "latency_ms": 66.322
+  },
+  {
+   "index": 218,
+   "query_id": "zh-009",
+   "success": true,
+   "latency_ms": 94.733
+  },
+  {
+   "index": 220,
+   "query_id": "zh-011",
+   "success": true,
+   "latency_ms": 35.915
+  },
+  {
+   "index": 193,
+   "query_id": "zh-014",
+   "success": true,
+   "latency_ms": 37.568
+  },
+  {
+   "index": 195,
+   "query_id": "zh-016",
+   "success": true,
+   "latency_ms": 59.796
+  },
+  {
+   "index": 197,
+   "query_id": "zh-018",
+   "success": true,
+   "latency_ms": 4.862
+  },
+  {
+   "index": 222,
+   "query_id": "zh-013",
+   "success": true,
+   "latency_ms": 86.247
+  },
+  {
+   "index": 224,
+   "query_id": "zh-015",
+   "success": true,
+   "latency_ms": 4.747
+  },
+  {
+   "index": 226,
+   "query_id": "zh-017",
+   "success": true,
+   "latency_ms": 4.327
+  },
+  {
+   "index": 199,
+   "query_id": "zh-020",
+   "success": true,
+   "latency_ms": 220.419
+  },
+  {
+   "index": 201,
+   "query_id": "zh-022",
+   "success": true,
+   "latency_ms": 3.332
+  },
+  {
+   "index": 228,
+   "query_id": "zh-019",
+   "success": true,
+   "latency_ms": 197.87
+  },
+  {
+   "index": 230,
+   "query_id": "zh-021",
+   "success": true,
+   "latency_ms": 65.139
+  },
+  {
+   "index": 232,
+   "query_id": "zh-023",
+   "success": true,
+   "latency_ms": 8.432
+  },
+  {
+   "index": 203,
+   "query_id": "zh-024",
+   "success": true,
+   "latency_ms": 96.945
+  },
+  {
+   "index": 205,
+   "query_id": "zh-026",
+   "success": true,
+   "latency_ms": 172.696
+  },
+  {
+   "index": 207,
+   "query_id": "zh-028",
+   "success": true,
+   "latency_ms": 9.504
+  },
+  {
+   "index": 234,
+   "query_id": "zh-025",
+   "success": true,
+   "latency_ms": 317.609
+  },
+  {
+   "index": 209,
+   "query_id": "zh-030",
+   "success": true,
+   "latency_ms": 126.466
+  },
+  {
+   "index": 236,
+   "query_id": "zh-027",
+   "success": true,
+   "latency_ms": 103.929
+  },
+  {
+   "index": 238,
+   "query_id": "zh-029",
+   "success": true,
+   "latency_ms": 77.164
+  },
+  {
+   "index": 211,
+   "query_id": "zh-002",
+   "success": true,
+   "latency_ms": 199.034
+  },
+  {
+   "index": 240,
+   "query_id": "zh-001",
+   "success": true,
+   "latency_ms": 34.035
+  },
+  {
+   "index": 213,
+   "query_id": "zh-004",
+   "success": true,
+   "latency_ms": 176.007
+  },
+  {
+   "index": 215,
+   "query_id": "zh-006",
+   "success": true,
+   "latency_ms": 5.909
+  },
+  {
+   "index": 242,
+   "query_id": "zh-003",
+   "success": true,
+   "latency_ms": 189.187
+  },
+  {
+   "index": 217,
+   "query_id": "zh-008",
+   "success": true,
+   "latency_ms": 104.646
+  },
+  {
+   "index": 244,
+   "query_id": "zh-005",
+   "success": true,
+   "latency_ms": 105.132
+  },
+  {
+   "index": 246,
+   "query_id": "zh-007",
+   "success": true,
+   "latency_ms": 174.778
+  },
+  {
+   "index": 248,
+   "query_id": "zh-009",
+   "success": true,
+   "latency_ms": 34.641
+  },
+  {
+   "index": 250,
+   "query_id": "zh-011",
+   "success": true,
+   "latency_ms": 90.726
+  },
+  {
+   "index": 219,
+   "query_id": "zh-010",
+   "success": true,
+   "latency_ms": 389.444
+  },
+  {
+   "index": 252,
+   "query_id": "zh-013",
+   "success": true,
+   "latency_ms": 78.33
+  },
+  {
+   "index": 254,
+   "query_id": "zh-015",
+   "success": true,
+   "latency_ms": 4.302
+  },
+  {
+   "index": 221,
+   "query_id": "zh-012",
+   "success": true,
+   "latency_ms": 7.581
+  },
+  {
+   "index": 256,
+   "query_id": "zh-017",
+   "success": true,
+   "latency_ms": 3.674
+  },
+  {
+   "index": 223,
+   "query_id": "zh-014",
+   "success": true,
+   "latency_ms": 98.88
+  },
+  {
+   "index": 225,
+   "query_id": "zh-016",
+   "success": true,
+   "latency_ms": 5.684
+  },
+  {
+   "index": 227,
+   "query_id": "zh-018",
+   "success": true,
+   "latency_ms": 4.174
+  },
+  {
+   "index": 258,
+   "query_id": "zh-019",
+   "success": true,
+   "latency_ms": 182.244
+  },
+  {
+   "index": 260,
+   "query_id": "zh-021",
+   "success": true,
+   "latency_ms": 5.012
+  },
+  {
+   "index": 262,
+   "query_id": "zh-023",
+   "success": true,
+   "latency_ms": 8.344
+  },
+  {
+   "index": 229,
+   "query_id": "zh-020",
+   "success": true,
+   "latency_ms": 197.539
+  },
+  {
+   "index": 231,
+   "query_id": "zh-022",
+   "success": true,
+   "latency_ms": 3.976
+  },
+  {
+   "index": 233,
+   "query_id": "zh-024",
+   "success": true,
+   "latency_ms": 102.458
+  },
+  {
+   "index": 235,
+   "query_id": "zh-026",
+   "success": true,
+   "latency_ms": 98.672
+  },
+  {
+   "index": 264,
+   "query_id": "zh-025",
+   "success": true,
+   "latency_ms": 319.804
+  },
+  {
+   "index": 237,
+   "query_id": "zh-028",
+   "success": true,
+   "latency_ms": 72.152
+  },
+  {
+   "index": 266,
+   "query_id": "zh-027",
+   "success": true,
+   "latency_ms": 190.697
+  },
+  {
+   "index": 239,
+   "query_id": "zh-030",
+   "success": true,
+   "latency_ms": 131.544
+  },
+  {
+   "index": 268,
+   "query_id": "zh-029",
+   "success": true,
+   "latency_ms": 92.866
+  },
+  {
+   "index": 270,
+   "query_id": "zh-001",
+   "success": true,
+   "latency_ms": 102.493
+  },
+  {
+   "index": 241,
+   "query_id": "zh-002",
+   "success": true,
+   "latency_ms": 304.248
+  },
+  {
+   "index": 272,
+   "query_id": "zh-003",
+   "success": true,
+   "latency_ms": 304.087
+  },
+  {
+   "index": 243,
+   "query_id": "zh-004",
+   "success": true,
+   "latency_ms": 288.749
+  },
+  {
+   "index": 245,
+   "query_id": "zh-006",
+   "success": true,
+   "latency_ms": 7.718
+  },
+  {
+   "index": 274,
+   "query_id": "zh-005",
+   "success": true,
+   "latency_ms": 175.818
+  },
+  {
+   "index": 247,
+   "query_id": "zh-008",
+   "success": true,
+   "latency_ms": 177.215
+  },
+  {
+   "index": 276,
+   "query_id": "zh-007",
+   "success": true,
+   "latency_ms": 197.017
+  },
+  {
+   "index": 278,
+   "query_id": "zh-009",
+   "success": true,
+   "latency_ms": 36.995
+  },
+  {
+   "index": 280,
+   "query_id": "zh-011",
+   "success": true,
+   "latency_ms": 90.811
+  },
+  {
+   "index": 282,
+   "query_id": "zh-013",
+   "success": true,
+   "latency_ms": 89.466
+  },
+  {
+   "index": 284,
+   "query_id": "zh-015",
+   "success": true,
+   "latency_ms": 3.652
+  },
+  {
+   "index": 286,
+   "query_id": "zh-017",
+   "success": true,
+   "latency_ms": 2.639
+  },
+  {
+   "index": 288,
+   "query_id": "zh-019",
+   "success": true,
+   "latency_ms": 112.099
+  },
+  {
+   "index": 290,
+   "query_id": "zh-021",
+   "success": true,
+   "latency_ms": 64.992
+  },
+  {
+   "index": 292,
+   "query_id": "zh-023",
+   "success": true,
+   "latency_ms": 7.701
+  },
+  {
+   "index": 249,
+   "query_id": "zh-010",
+   "success": true,
+   "latency_ms": 507.987
+  },
+  {
+   "index": 251,
+   "query_id": "zh-012",
+   "success": true,
+   "latency_ms": 4.693
+  },
+  {
+   "index": 253,
+   "query_id": "zh-014",
+   "success": true,
+   "latency_ms": 104.558
+  },
+  {
+   "index": 255,
+   "query_id": "zh-016",
+   "success": true,
+   "latency_ms": 5.896
+  },
+  {
+   "index": 257,
+   "query_id": "zh-018",
+   "success": true,
+   "latency_ms": 4.11
+  },
+  {
+   "index": 294,
+   "query_id": "zh-025",
+   "success": true,
+   "latency_ms": 329.168
+  },
+  {
+   "index": 259,
+   "query_id": "zh-020",
+   "success": true,
+   "latency_ms": 273.635
+  },
+  {
+   "index": 261,
+   "query_id": "zh-022",
+   "success": true,
+   "latency_ms": 4.433
+  },
+  {
+   "index": 263,
+   "query_id": "zh-024",
+   "success": true,
+   "latency_ms": 92.108
+  },
+  {
+   "index": 296,
+   "query_id": "zh-027",
+   "success": true,
+   "latency_ms": 182.702
+  },
+  {
+   "index": 265,
+   "query_id": "zh-026",
+   "success": true,
+   "latency_ms": 99.148
+  },
+  {
+   "index": 298,
+   "query_id": "zh-029",
+   "success": true,
+   "latency_ms": 92.47
+  },
+  {
+   "index": 267,
+   "query_id": "zh-028",
+   "success": true,
+   "latency_ms": 6.709
+  },
+  {
+   "index": 269,
+   "query_id": "zh-030",
+   "success": true,
+   "latency_ms": 96.949
+  },
+  {
+   "index": 271,
+   "query_id": "zh-002",
+   "success": true,
+   "latency_ms": 96.627
+  },
+  {
+   "index": 273,
+   "query_id": "zh-004",
+   "success": true,
+   "latency_ms": 78.115
+  },
+  {
+   "index": 275,
+   "query_id": "zh-006",
+   "success": true,
+   "latency_ms": 5.624
+  },
+  {
+   "index": 277,
+   "query_id": "zh-008",
+   "success": true,
+   "latency_ms": 56.945
+  },
+  {
+   "index": 279,
+   "query_id": "zh-010",
+   "success": true,
+   "latency_ms": 185.74
+  },
+  {
+   "index": 281,
+   "query_id": "zh-012",
+   "success": true,
+   "latency_ms": 5.177
+  },
+  {
+   "index": 283,
+   "query_id": "zh-014",
+   "success": true,
+   "latency_ms": 64.168
+  },
+  {
+   "index": 285,
+   "query_id": "zh-016",
+   "success": true,
+   "latency_ms": 4.139
+  },
+  {
+   "index": 287,
+   "query_id": "zh-018",
+   "success": true,
+   "latency_ms": 2.869
+  },
+  {
+   "index": 289,
+   "query_id": "zh-020",
+   "success": true,
+   "latency_ms": 70.566
+  },
+  {
+   "index": 291,
+   "query_id": "zh-022",
+   "success": true,
+   "latency_ms": 3.051
+  },
+  {
+   "index": 293,
+   "query_id": "zh-024",
+   "success": true,
+   "latency_ms": 30.601
+  },
+  {
+   "index": 295,
+   "query_id": "zh-026",
+   "success": true,
+   "latency_ms": 37.106
+  },
+  {
+   "index": 297,
+   "query_id": "zh-028",
+   "success": true,
+   "latency_ms": 6.428
+  },
+  {
+   "index": 299,
+   "query_id": "zh-030",
+   "success": true,
+   "latency_ms": 62.938
+  }
+ ],
+ "latency_ms_nearest_rank": {
+  "p50": 92.9,
+  "p95": 319.8,
+  "p99": 493.7
+ },
+ "errors": {
+  "count": 0,
+  "samples": []
+ },
+ "db": {
+  "sql_events_in_window": 300,
+  "sql_failures_in_window": 0,
+  "sql_events_outside_window_at_window_end": 63,
+  "pool_acquire_ms_raw": [
+   1.048,
+   13.518,
+   0.414,
+   0.339,
+   0.459,
+   0.406,
+   1.018,
+   0.607,
+   0.409,
+   0.449,
+   0.572,
+   0.322,
+   0.455,
+   0.321,
+   0.359,
+   0.351,
+   0.336,
+   0.348,
+   0.409,
+   0.425,
+   0.387,
+   0.611,
+   1.732,
+   0.362,
+   0.328,
+   0.384,
+   0.342,
+   0.306,
+   0.399,
+   0.769,
+   0.342,
+   0.386,
+   0.354,
+   0.397,
+   0.337,
+   0.357,
+   0.391,
+   0.354,
+   0.454,
+   0.401,
+   0.376,
+   0.379,
+   0.379,
+   0.495,
+   0.393,
+   0.354,
+   0.667,
+   0.706,
+   0.309,
+   1.283,
+   0.684,
+   0.348,
+   0.49,
+   0.676,
+   0.315,
+   0.329,
+   0.344,
+   0.369,
+   0.376,
+   0.611,
+   0.378,
+   0.477,
+   0.364,
+   0.561,
+   0.339,
+   0.517,
+   0.364,
+   0.318,
+   0.343,
+   0.426,
+   0.384,
+   0.666,
+   0.59,
+   0.672,
+   0.911,
+   0.794,
+   0.465,
+   0.745,
+   0.447,
+   0.362,
+   0.33,
+   0.381,
+   0.594,
+   1.13,
+   0.521,
+   0.861,
+   0.353,
+   0.421,
+   0.536,
+   0.317,
+   0.337,
+   0.362,
+   0.506,
+   0.391,
+   0.35,
+   0.429,
+   0.419,
+   0.442,
+   0.368,
+   0.532,
+   0.402,
+   0.661,
+   0.446,
+   0.491,
+   0.382,
+   0.379,
+   0.354,
+   0.571,
+   0.412,
+   0.49,
+   0.318,
+   0.319,
+   0.405,
+   0.743,
+   0.4,
+   0.931,
+   0.326,
+   0.349,
+   0.801,
+   1.484,
+   0.366,
+   0.347,
+   2.534,
+   0.401,
+   0.418,
+   0.444,
+   0.864,
+   0.496,
+   0.357,
+   0.346,
+   0.292,
+   0.347,
+   0.371,
+   0.317,
+   0.636,
+   0.364,
+   0.326,
+   0.393,
+   0.477,
+   0.58,
+   0.337,
+   0.404,
+   0.427,
+   1.231,
+   2.259,
+   0.582,
+   7.785,
+   0.332,
+   0.465,
+   0.458,
+   0.361,
+   0.952,
+   0.349,
+   0.859,
+   0.324,
+   0.36,
+   0.398,
+   0.325,
+   0.278,
+   0.31,
+   0.331,
+   0.362,
+   0.461,
+   0.381,
+   0.381,
+   0.347,
+   0.328,
+   0.328,
+   0.349,
+   0.365,
+   0.413,
+   0.333,
+   0.337,
+   0.306,
+   0.379,
+   0.646,
+   0.347,
+   0.511,
+   0.578,
+   0.384,
+   0.422,
+   0.342,
+   0.371,
+   0.374,
+   0.372,
+   0.542,
+   0.389,
+   0.465,
+   0.696,
+   0.382,
+   0.409,
+   0.406,
+   0.442,
+   0.331,
+   0.403,
+   0.394,
+   0.583,
+   0.417,
+   0.518,
+   0.517,
+   0.601,
+   0.404,
+   0.392,
+   0.41,
+   0.435,
+   60.874,
+   0.615,
+   0.794,
+   0.784,
+   0.354,
+   0.625,
+   0.921,
+   0.481,
+   0.512,
+   0.573,
+   0.415,
+   0.344,
+   0.375,
+   0.528,
+   0.406,
+   0.407,
+   0.407,
+   0.5,
+   0.368,
+   0.461,
+   0.364,
+   0.418,
+   0.377,
+   0.345,
+   0.38,
+   0.393,
+   0.358,
+   0.359,
+   0.413,
+   0.392,
+   0.372,
+   0.343,
+   1.199,
+   0.353,
+   0.92,
+   0.323,
+   0.395,
+   0.367,
+   0.429,
+   0.348,
+   0.339,
+   0.616,
+   0.56,
+   0.348,
+   0.446,
+   0.331,
+   0.358,
+   0.491,
+   0.398,
+   0.38,
+   0.444,
+   0.368,
+   0.538,
+   0.351,
+   0.452,
+   0.972,
+   0.442,
+   0.493,
+   0.512,
+   0.488,
+   0.418,
+   0.416,
+   0.334,
+   0.334,
+   0.347,
+   0.365,
+   0.337,
+   0.389,
+   0.421,
+   0.366,
+   0.364,
+   0.429,
+   0.321,
+   62.715,
+   0.423,
+   0.362,
+   0.491,
+   0.417,
+   0.343,
+   0.387,
+   0.401,
+   0.364,
+   0.445,
+   0.389,
+   0.356,
+   0.554,
+   0.404,
+   0.347,
+   0.363,
+   0.312,
+   0.367,
+   0.309,
+   0.389,
+   0.383,
+   0.346
+  ],
+  "sql_exec_ms_raw": [
+   35.068,
+   261.049,
+   296.098,
+   117.334,
+   200.45,
+   5.154,
+   199.276,
+   115.338,
+   91.171,
+   90.884,
+   29.742,
+   2.165,
+   1.926,
+   102.025,
+   3.008,
+   6.496,
+   599.947,
+   3.636,
+   378.93,
+   104.91,
+   3.951,
+   2.124,
+   111.041,
+   24.851,
+   183.97,
+   1.96,
+   79.305,
+   28.391,
+   83.881,
+   5.384,
+   194.367,
+   176.123,
+   127.314,
+   197.131,
+   176.017,
+   82.524,
+   31.715,
+   128.65,
+   4.866,
+   77.891,
+   2.08,
+   1.781,
+   152.383,
+   93.28,
+   2.987,
+   6.652,
+   394.256,
+   425.631,
+   70.589,
+   101.686,
+   5.015,
+   114.928,
+   2.307,
+   86.482,
+   96.568,
+   203.955,
+   2.24,
+   88.139,
+   222.876,
+   110.189,
+   67.607,
+   179.627,
+   120.719,
+   203.489,
+   96.476,
+   380.014,
+   95.779,
+   86.41,
+   2.247,
+   2.367,
+   204.08,
+   102.715,
+   3.455,
+   5.473,
+   6.741,
+   116.218,
+   292.385,
+   185.418,
+   88.918,
+   559.672,
+   2.759,
+   103.542,
+   100.517,
+   3.401,
+   2.606,
+   204.425,
+   197.334,
+   2.035,
+   120.905,
+   80.84,
+   36.158,
+   5.36,
+   173.118,
+   35.937,
+   155.096,
+   78.496,
+   75.062,
+   2.028,
+   1.739,
+   92.353,
+   200.981,
+   5.738,
+   6.966,
+   124.151,
+   4.68,
+   103.134,
+   222.909,
+   159.889,
+   26.557,
+   86.877,
+   469.647,
+   3.481,
+   292.35,
+   108.19,
+   63.704,
+   2.052,
+   180.447,
+   195.825,
+   2.876,
+   90.563,
+   207.776,
+   99.485,
+   5.602,
+   98.56,
+   91.435,
+   194.283,
+   93.343,
+   2.523,
+   1.572,
+   105.057,
+   2.981,
+   5.822,
+   225.306,
+   270.393,
+   5.225,
+   380.58,
+   121.346,
+   196.431,
+   74.797,
+   89.57,
+   303.997,
+   491.201,
+   3.408,
+   116.315,
+   97.288,
+   3.657,
+   2.789,
+   267.41,
+   202.471,
+   34.581,
+   63.651,
+   28.17,
+   104.204,
+   28.371,
+   1.983,
+   106.41,
+   1.55,
+   4.855,
+   96.353,
+   3.078,
+   5.802,
+   157.366,
+   204.334,
+   222.582,
+   100.834,
+   132.673,
+   54.515,
+   74.09,
+   32.409,
+   103.092,
+   183.223,
+   108.122,
+   412.513,
+   3.12,
+   192.049,
+   97.619,
+   97.806,
+   3.745,
+   66.742,
+   96.046,
+   92.019,
+   2.264,
+   1.682,
+   214.319,
+   2.131,
+   186.519,
+   93.843,
+   3.739,
+   6.64,
+   103.791,
+   5.294,
+   193.125,
+   392.368,
+   116.154,
+   284.426,
+   90.153,
+   97.103,
+   198.648,
+   6.423,
+   182.054,
+   280.965,
+   120.077,
+   272.755,
+   431.781,
+   92.108,
+   4.105,
+   33.795,
+   35.684,
+   58.336,
+   3.003,
+   84.286,
+   2.827,
+   2.018,
+   217.623,
+   2.06,
+   195.677,
+   2.911,
+   6.49,
+   94.779,
+   171.065,
+   6.778,
+   315.644,
+   124.489,
+   102.312,
+   75.759,
+   197.021,
+   32.647,
+   174.085,
+   4.632,
+   187.315,
+   102.872,
+   103.686,
+   172.821,
+   33.116,
+   89.294,
+   387.541,
+   76.361,
+   2.884,
+   5.364,
+   1.793,
+   97.288,
+   4.107,
+   2.383,
+   180.325,
+   3.667,
+   6.259,
+   195.834,
+   1.935,
+   101.027,
+   97.181,
+   317.61,
+   70.661,
+   188.668,
+   129.507,
+   91.155,
+   101.007,
+   301.966,
+   301.789,
+   286.74,
+   5.698,
+   173.926,
+   175.161,
+   136.543,
+   35.085,
+   88.986,
+   87.823,
+   2.054,
+   1.522,
+   110.509,
+   63.559,
+   6.357,
+   506.043,
+   3.242,
+   102.829,
+   3.921,
+   2.779,
+   327.345,
+   271.278,
+   2.463,
+   90.044,
+   118.627,
+   97.407,
+   91.009,
+   5.381,
+   95.224,
+   94.71,
+   76.207,
+   4.326,
+   55.314,
+   183.853,
+   3.073,
+   62.682,
+   2.966,
+   1.853,
+   68.745,
+   1.9,
+   29.339,
+   35.606,
+   5.129,
+   61.332
+  ],
+  "pool_acquire_ms_nearest_rank": {
+   "p50": 0.4,
+   "p95": 0.95
+  },
+  "sql_exec_ms_nearest_rank": {
+   "p50": 91.01,
+   "p95": 317.61
+  },
+  "pool_hold_ms_total": 32911.9,
+  "note": "acquire=await engine.connect() 等待；sql_exec=cursor 执行事件计时；hold=checkout→checkin 连接占用（含执行与上层处理，并发放大，非获取等待）；raw 采样可重算任意分位数；outside_window 最终值在标签构建完成后回填 db.sql_events_outside_window_final",
+  "sql_events_outside_window_final": 63
+ }
+}

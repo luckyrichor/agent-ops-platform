@@ -1,0 +1,39 @@
+{
+  "collected_at": "2026-11-03T09:32:36-0500",
+  "note": "只读 GET 探针；customer_memory 无只读入口时 p95=None，不虚构",
+  "targets": {
+    "getaudio": {
+      "samples": 20,
+      "status_codes": {
+        "200": 20
+      },
+      "transport_errors": 0,
+      "latency": {
+        "p50_ms": 1.829,
+        "p95_ms": 5.182
+      },
+      "verdict": "ok"
+    },
+    "getvideo": {
+      "samples": 20,
+      "status_codes": {
+        "200": 20
+      },
+      "transport_errors": 0,
+      "latency": {
+        "p50_ms": 1.978,
+        "p95_ms": 3.229
+      },
+      "verdict": "ok"
+    },
+    "customer_memory": {
+      "samples": 20,
+      "status_codes": {
+        "404": 20
+      },
+      "transport_errors": 0,
+      "latency": null,
+      "verdict": "no_read_only_http_entry"
+    }
+  }
+}

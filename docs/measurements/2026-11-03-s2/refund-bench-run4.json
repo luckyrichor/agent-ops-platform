@@ -1,0 +1,144 @@
+{
+ "round_db": "s2rf1793754873",
+ "replay_mode": "identical payload+revision (fixed)",
+ "phases": {
+  "sequential": {
+   "setup": {
+    "order_id": 1001
+   },
+   "payload": {
+    "order_id": "1001",
+    "ticket_id": "709277ce-8510-49f6-88ba-75eb1e815291",
+    "revision": "2",
+    "account_id": "3"
+   },
+   "outcomes": [
+    {
+     "http_status": 200,
+     "body": {
+      "status": "ok",
+      "refund_no": "R7e9549e850ab40339fb50906e616b4cb",
+      "state": "succeeded"
+     }
+    },
+    {
+     "http_status": 200,
+     "body": {
+      "status": "ok",
+      "refund_no": "R7e9549e850ab40339fb50906e616b4cb",
+      "state": "succeeded"
+     }
+    },
+    {
+     "http_status": 200,
+     "body": {
+      "status": "ok",
+      "refund_no": "R7e9549e850ab40339fb50906e616b4cb",
+      "state": "succeeded"
+     }
+    },
+    {
+     "http_status": 200,
+     "body": {
+      "status": "ok",
+      "refund_no": "R7e9549e850ab40339fb50906e616b4cb",
+      "state": "succeeded"
+     }
+    },
+    {
+     "http_status": 200,
+     "body": {
+      "status": "ok",
+      "refund_no": "R7e9549e850ab40339fb50906e616b4cb",
+      "state": "succeeded"
+     }
+    }
+   ],
+   "gateway_fund_change_y_by_refund_no": {
+    "R7e9549e850ab40339fb50906e616b4cb": 1
+   },
+   "checks": {
+    "all_replays_http_200": true,
+    "all_replays_same_refund_no": true,
+    "ledger_single_refund_row": true,
+    "ledger_single_succeeded": true,
+    "ledger_single_succeeded_audit": true,
+    "order_refunded": true,
+    "gateway_fund_change_y_exactly_once_per_refund_no": true,
+    "gateway_request_counts_recorded": {
+     "R7e9549e850ab40339fb50906e616b4cb": 1
+    }
+   }
+  },
+  "concurrent": {
+   "setup": {
+    "order_id": 1002
+   },
+   "payload": {
+    "order_id": "1002",
+    "ticket_id": "c61ae81c-8210-4cd1-b9cd-cd618ef161e9",
+    "revision": "2",
+    "account_id": "3"
+   },
+   "outcomes": [
+    {
+     "http_status": 200,
+     "body": {
+      "status": "ok",
+      "refund_no": "R9670d3228b864c2a9684fe56b7117397",
+      "state": "succeeded"
+     }
+    },
+    {
+     "http_status": 200,
+     "body": {
+      "status": "ok",
+      "refund_no": "R9670d3228b864c2a9684fe56b7117397",
+      "state": "succeeded"
+     }
+    },
+    {
+     "http_status": 200,
+     "body": {
+      "status": "ok",
+      "refund_no": "R9670d3228b864c2a9684fe56b7117397",
+      "state": "succeeded"
+     }
+    },
+    {
+     "http_status": 200,
+     "body": {
+      "status": "ok",
+      "refund_no": "R9670d3228b864c2a9684fe56b7117397",
+      "state": "succeeded"
+     }
+    },
+    {
+     "http_status": 200,
+     "body": {
+      "status": "ok",
+      "refund_no": "R9670d3228b864c2a9684fe56b7117397",
+      "state": "succeeded"
+     }
+    }
+   ],
+   "gateway_fund_change_y_by_refund_no": {
+    "R7e9549e850ab40339fb50906e616b4cb": 1,
+    "R9670d3228b864c2a9684fe56b7117397": 1
+   },
+   "checks": {
+    "all_replays_http_200": true,
+    "all_replays_same_refund_no": true,
+    "ledger_single_refund_row": true,
+    "ledger_single_succeeded": true,
+    "ledger_single_succeeded_audit": true,
+    "order_refunded": true,
+    "gateway_fund_change_y_exactly_once_per_refund_no": true,
+    "gateway_request_counts_recorded": {
+     "R9670d3228b864c2a9684fe56b7117397": 5
+    }
+   }
+  }
+ },
+ "notes": "重放为完全相同 payload/revision；硬断言含：全部重放 HTTP 200、同一 refund_no、每阶段网关 fund_change=Y 恰 1 次/号；409（若有）为当前协议真实行为，业务码见 outcomes[].body.code。"
+}

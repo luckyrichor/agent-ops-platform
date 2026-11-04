@@ -1,0 +1,74 @@
+{
+  "checked_at_beijing": "2026-11-04T09:23:34.865066+08:00",
+  "reviewer": "Codex",
+  "raw_zip_rows_compared": 1115511,
+  "pv_items_compared": 1000000,
+  "frozen_parameter_sha256": "a4a09a1e1ea1b5e6107b31c381181223de3e7b7fbb2b3ff19be54ec00ef45575",
+  "real_recomputed": {
+    "calibration_window": {
+      "40687": 0.357712,
+      "406879": 0.54211
+    },
+    "validation_window": {
+      "40687": 0.361457,
+      "406879": 0.549358
+    }
+  },
+  "synthetic_recomputed": [
+    {
+      "seed": 20261104,
+      "hit_rate": {
+        "1pct": 0.35842,
+        "10pct": 0.544018
+      },
+      "gap_pp": {
+        "1pct": 0.3037,
+        "10pct": 0.534
+      }
+    },
+    {
+      "seed": 20261105,
+      "hit_rate": {
+        "1pct": 0.356975,
+        "10pct": 0.5445
+      },
+      "gap_pp": {
+        "1pct": 0.4482,
+        "10pct": 0.4858
+      }
+    },
+    {
+      "seed": 20261106,
+      "hit_rate": {
+        "1pct": 0.356853,
+        "10pct": 0.544257
+      },
+      "gap_pp": {
+        "1pct": 0.4604,
+        "10pct": 0.5101
+      }
+    }
+  ],
+  "baseline_rounds": [
+    {
+      "file": "retrieval-bench-stage2-r1.json",
+      "qps": 16.75,
+      "latencies_recomputed": true,
+      "zero_errors": true
+    },
+    {
+      "file": "retrieval-bench-stage2-r2.json",
+      "qps": 17.63,
+      "latencies_recomputed": true,
+      "zero_errors": true
+    },
+    {
+      "file": "retrieval-bench-stage2-r3.json",
+      "qps": 17.13,
+      "latencies_recomputed": true,
+      "zero_errors": true
+    }
+  ],
+  "protected_historical_files_unchanged": 98,
+  "limits": "Same fixed file-order windows, historical full-source MLE and native-catalog percentage capacities; not production query-log equivalence. Original runner precomputed real validation counts without feeding calibration; this independent replay occurs after frozen parameters and changes no parameters."
+}

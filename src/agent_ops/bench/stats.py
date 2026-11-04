@@ -28,6 +28,21 @@ def percentile(values: list[float], q: float) -> float:
     return ordered[lower] + (ordered[upper] - ordered[lower]) * (position - lower)
 
 
+def nearest_rank(values: list[float], q: float) -> float:
+    """Nearest-rank 分位数（probe/检索基准统一口径）；q 取 (0,100]。
+
+    rank = ceil(q/100*N) 截到 [1,N]，返回升序第 rank 个（0 基索引 rank-1）。
+    n=20、q=95 时取第 19 个（index 18），不再出现 int(n*.95) 取到最大值的错位。
+    """
+    if not values:
+        raise ValueError("empty sample")
+    if not 0 < q <= 100:
+        raise ValueError("q must be within (0,100]")
+    ordered = sorted(values)
+    rank = max(1, min(len(ordered), math.ceil(q / 100 * len(ordered))))
+    return ordered[rank - 1]
+
+
 def summarize(values: list[float]) -> dict[str, float | int]:
     if not values:
         raise ValueError("empty sample")

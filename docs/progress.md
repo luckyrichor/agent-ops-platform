@@ -648,3 +648,22 @@ A/A 10 轮吞吐 3.38–3.89 次/秒，spread 13.75%，判据阈值取 13.75%。
 按要求先出设计 `docs/optimizations/S3-design.md`：基线=产品当前数据库索引检索（非人造无索引基线）；假设进程内 LRU、Redis、singleflight、空值缓存、版本号回填逐层单独测；矩阵 1%/10% 容量、5 轮配对、A/A 噪声；正确性门槛为库存路径不缓存、过时读可量化上限、缓存不可用必须回源。
 
 但前置 a（中文检索修复）、b（无模型检索基准）、c（真实/合成访问分布 1%/10% 命中率差距 ≤5pp）**均未执行**，所以本文标注为“待生效稿”，不能据此跑基线或对外引用 S3 数字。退款跨进程 HTTP 与保护服务探针也未补。
+
+## 2026-11-04 S3 阶段2：分布正式复核、无缓存基线、退款 run4（CodeBuddy，待 Codex 验收）
+
+- 分布正式复核按冻结协议（docs/optimizations/S3-distribution-protocol.md）：前 100 万 pv，前/后 50 万校准/验证，各窗口 10 万 warmup、40 万测量；容量=各自完整 catalog 的 1%/10%（真实 40,687/406,879，合成 2,000/20,000，不同绝对容量为明示限制）。阶段 A 冻结旧指数 0.7832 校准不过（16.30/8.83pp）；阶段 B Zipf+uniform 混合仅校准调参选中 a=0.9875/w=0.75（max gap 0.283pp），参数+协议 hash 写入不可覆盖冻结文件 .local/s3/distribution-freeze-v1.json；阶段 C 三 seed 验证 gap 0.30–0.53pp 全部 ≤5pp，verdict=pass_formal_per_protocol（待确认，S3 未开跑）。support=4.07M 诊断 1% 档 6.52pp 仅参考。数值 ID 交集/映射损失指标已按协议删除（无语义映射）；阶段1样本结果标 sample_only_and_superseded。
+- 产品 CatalogSearch 无缓存基线 3 轮（300 请求/并发 2/预热 60/固定序列/1CPU+768M scope/会话级 statement_timeout=5s 与 max_parallel_workers_per_gather=0）：p50/p95/p99 96.1/313.3/590.0、92.9/319.8/493.7、93.5/331.5/493.3ms，QPS 16.75/17.63/17.13，0 错误；逐请求与 acquire/sql_exec 原始采样、语料哈希（含 stock/reserved/version/attrs）与三个核心文件 SHA256 入报告。受限并发基线，非饱和压测；PG 未单独限 CPU。
+- 检索基准脚本：逐请求记录、acquire/sql_exec 原始采样、outside_window 标签后回填、--warmup-per-worker；退款 driver：HTTP200/同 refund_no/fund_change_y 恰 1 硬断言、partial_result 不被外层 except 覆盖；probe 参数校验。
+- 中文人工核对表（30 条 top5 title_zh/description_zh/类目/价格，合成语料）生成：.local/s3/zh-review-table.*，公开副本 docs/measurements/2026-11-03-s3/zh-review-table-synthetic.*；未声称人工标注，人工审阅待 Codex。
+- 退款重放 run4：顺序/并发各 5 次相同 payload 硬断言全过（run2/run3 未覆盖）；轮末无自建 units/克隆库残留。失败留档 .local/s2/refund-bench-failure.json（断言跨阶段累计误伤，已修）。
+- 保护采样：前/后 probe + 基线全程并行主机采样 82 样本（oom_kill 0、MemAvailable 最低 3.42GiB、负载期 audio/video /health 全 200、p50 1.72/1.97ms）；/health≠业务 p95；customer_memory 仍无只读入口（未动该服务）。
+- 测试：tests/test_s3_*（带 DSN）23 passed, 1 skipped；ruff/mypy 0 错误。0011 未 commit；未 commit/push；飞书待同步。
+
+
+## 2026-11-04 Codex独立验收与设计口径修正
+
+100万PV与ZIP的1115511原始行逐条核对；冻结参数后独立复算真实/三seed合成LRU及三轮延迟，结果一致。商品目录同百分比容量闸最大gap0.5340pp；不是搜索查询分布或生产仿真。补充独立300请求0错误（16.09/s，p95 387.5ms，p99 820.0ms），与原三轮一起全部留证，总1200请求0错误，尾延迟波动不隐藏。Precision@10=1、Recall@10宏均值0.0457，口径分开。
+
+Codex补修host采样开始时间/绝对时间/OOM信号及退款原始ledger留存，重新测量确认；独立退款顺序与并发各5次HTTP200，原始退款/成功/审计各1、网关资金变更各1。旧protocol标题/参数来源、runner提前计算真实验证率等勘误保留执行快照并说明；新helper拒绝覆盖，独立验收不重新调参。
+
+S3设计v2纠正SKU容量与CatalogQuery键混用，给出商品详情实体缓存（建议）与搜索结果缓存（需查询分布）的明确选择，等待用户确认，不启动缓存实现/正式实验。当前报告、代码与证据由本轮收尾统一提交；飞书开发记录待同步。

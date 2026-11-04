@@ -1,0 +1,17 @@
+{
+ "selected": {
+  "exponent": 0.9875,
+  "w_zipf": 0.75,
+  "support": 200000
+ },
+ "protocol_doc_sha256": "011bf80912f9ca188c6bb0ec9b182c253c034b1b463a601850b8f682b6ba706f",
+ "protocol_script_sha256": "3c4379df8c91b62a902412a4ddd1375eab62dd218db5c18d536f6a28c5490363",
+ "frozen_fit_manifest_sha256": "d24aa5cc6cd0b585191f876c4f4b936d43d0ad6be3b49ece0488367c348cbb6a",
+ "validation_seeds": [
+  20261104,
+  20261105,
+  20261106
+ ],
+ "pass_rule": "3 seeds × 两档 |gap| 全部 ≤5pp",
+ "frozen_at_utc": "2026-11-04T01:01:48Z"
+}

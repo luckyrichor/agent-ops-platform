@@ -1,0 +1,214 @@
+{
+  "collected_at_beijing": "2026-11-04T09:25:51.451772+08:00",
+  "reviewer": "Codex",
+  "baseline": {
+    "requests": 300,
+    "qps": 16.09,
+    "latency": {
+      "p50": 77.9,
+      "p95": 387.5,
+      "p99": 820.0
+    },
+    "errors": {
+      "count": 0,
+      "samples": []
+    },
+    "quality": {
+      "precision_at_10_mean": 1.0,
+      "recall_at_10_mean": 0.0457,
+      "recall_denominator": "|label|（全部相关且符合过滤的候选数）；分母0单列，不并入均值",
+      "queries_with_zero_labels": [],
+      "per_query": [
+        {
+          "id": "zh-001",
+          "label_size": 1386,
+          "precision@10": 1.0,
+          "recall@10": 0.0072
+        },
+        {
+          "id": "zh-002",
+          "label_size": 14167,
+          "precision@10": 1.0,
+          "recall@10": 0.0007
+        },
+        {
+          "id": "zh-003",
+          "label_size": 9452,
+          "precision@10": 1.0,
+          "recall@10": 0.0011
+        },
+        {
+          "id": "zh-004",
+          "label_size": 9861,
+          "precision@10": 1.0,
+          "recall@10": 0.001
+        },
+        {
+          "id": "zh-005",
+          "label_size": 6559,
+          "precision@10": 1.0,
+          "recall@10": 0.0015
+        },
+        {
+          "id": "zh-006",
+          "label_size": 331,
+          "precision@10": 1.0,
+          "recall@10": 0.0302
+        },
+        {
+          "id": "zh-007",
+          "label_size": 8512,
+          "precision@10": 1.0,
+          "recall@10": 0.0012
+        },
+        {
+          "id": "zh-008",
+          "label_size": 5459,
+          "precision@10": 1.0,
+          "recall@10": 0.0018
+        },
+        {
+          "id": "zh-009",
+          "label_size": 3649,
+          "precision@10": 1.0,
+          "recall@10": 0.0027
+        },
+        {
+          "id": "zh-010",
+          "label_size": 4446,
+          "precision@10": 1.0,
+          "recall@10": 0.0022
+        },
+        {
+          "id": "zh-011",
+          "label_size": 1060,
+          "precision@10": 1.0,
+          "recall@10": 0.0094
+        },
+        {
+          "id": "zh-012",
+          "label_size": 157,
+          "precision@10": 1.0,
+          "recall@10": 0.0637
+        },
+        {
+          "id": "zh-013",
+          "label_size": 583,
+          "precision@10": 1.0,
+          "recall@10": 0.0172
+        },
+        {
+          "id": "zh-014",
+          "label_size": 1886,
+          "precision@10": 1.0,
+          "recall@10": 0.0053
+        },
+        {
+          "id": "zh-015",
+          "label_size": 68,
+          "precision@10": 1.0,
+          "recall@10": 0.1471
+        },
+        {
+          "id": "zh-016",
+          "label_size": 184,
+          "precision@10": 1.0,
+          "recall@10": 0.0543
+        },
+        {
+          "id": "zh-017",
+          "label_size": 19,
+          "precision@10": 1.0,
+          "recall@10": 0.5263
+        },
+        {
+          "id": "zh-018",
+          "label_size": 57,
+          "precision@10": 1.0,
+          "recall@10": 0.1754
+        },
+        {
+          "id": "zh-019",
+          "label_size": 3222,
+          "precision@10": 1.0,
+          "recall@10": 0.0031
+        },
+        {
+          "id": "zh-020",
+          "label_size": 7981,
+          "precision@10": 1.0,
+          "recall@10": 0.0013
+        },
+        {
+          "id": "zh-021",
+          "label_size": 180,
+          "precision@10": 1.0,
+          "recall@10": 0.0556
+        },
+        {
+          "id": "zh-022",
+          "label_size": 68,
+          "precision@10": 1.0,
+          "recall@10": 0.1471
+        },
+        {
+          "id": "zh-023",
+          "label_size": 547,
+          "precision@10": 1.0,
+          "recall@10": 0.0183
+        },
+        {
+          "id": "zh-024",
+          "label_size": 643,
+          "precision@10": 1.0,
+          "recall@10": 0.0156
+        },
+        {
+          "id": "zh-025",
+          "label_size": 17403,
+          "precision@10": 1.0,
+          "recall@10": 0.0006
+        },
+        {
+          "id": "zh-026",
+          "label_size": 2141,
+          "precision@10": 1.0,
+          "recall@10": 0.0047
+        },
+        {
+          "id": "zh-027",
+          "label_size": 5084,
+          "precision@10": 1.0,
+          "recall@10": 0.002
+        },
+        {
+          "id": "zh-028",
+          "label_size": 413,
+          "precision@10": 1.0,
+          "recall@10": 0.0242
+        },
+        {
+          "id": "zh-029",
+          "label_size": 211,
+          "precision@10": 1.0,
+          "recall@10": 0.0474
+        },
+        {
+          "id": "zh-030",
+          "label_size": 6810,
+          "precision@10": 1.0,
+          "recall@10": 0.0015
+        }
+      ]
+    }
+  },
+  "host": {
+    "samples": 36,
+    "during_window_samples": 18,
+    "min_mem_available_mib": 5569,
+    "oom_delta": 0,
+    "health_all_200_during_window": true,
+    "exact_wallclock_coverage": true
+  },
+  "limits": "health endpoint observations, not business p95 or memory-service protection; driver scope does not cap shared PostgreSQL"
+}

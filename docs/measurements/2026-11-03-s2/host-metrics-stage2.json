@@ -1,0 +1,5094 @@
+{
+ "started_at_beijing": "2026-11-04T09:12:10+08:00",
+ "duration_s": 420,
+ "interval_s": 5.0,
+ "samples": [
+  {
+   "t_offset_s": 0.2,
+   "mem_available_mib": 3515,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.08,
+     "avg300": 0.16,
+     "total": 187286822.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.02,
+     "avg300": 0.06,
+     "total": 135906475.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 1.8,
+     "avg60": 3.39,
+     "avg300": 2.18,
+     "total": 1555497987.0
+    },
+    "full": {
+     "avg10": 1.45,
+     "avg60": 2.91,
+     "avg300": 1.78,
+     "total": 1161722573.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414223,
+    "pswpin": 613531,
+    "pswpout": 1155956
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      3.418,
+      1.54,
+      1.934
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      3.608,
+      2.595,
+      2.365
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 5.3,
+   "mem_available_mib": 3423,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.47,
+     "avg60": 0.17,
+     "avg300": 0.18,
+     "total": 187641324.0
+    },
+    "full": {
+     "avg10": 0.14,
+     "avg60": 0.05,
+     "avg300": 0.06,
+     "total": 135982451.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 3.61,
+     "avg60": 3.62,
+     "avg300": 2.24,
+     "total": 1556054404.0
+    },
+    "full": {
+     "avg10": 1.12,
+     "avg60": 2.75,
+     "avg300": 1.76,
+     "total": 1161783277.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414403,
+    "pswpin": 613667,
+    "pswpout": 1156949
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      4.204,
+      1.577,
+      4.481
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      3.539,
+      2.11,
+      4.541
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 10.5,
+   "mem_available_mib": 4939,
+   "psi_memory": {
+    "some": {
+     "avg10": 3.41,
+     "avg60": 0.9,
+     "avg300": 0.34,
+     "total": 187853179.0
+    },
+    "full": {
+     "avg10": 0.94,
+     "avg60": 0.24,
+     "avg300": 0.1,
+     "total": 136095258.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 6.07,
+     "avg60": 4.21,
+     "avg300": 2.4,
+     "total": 1556452177.0
+    },
+    "full": {
+     "avg10": 1.81,
+     "avg60": 2.74,
+     "avg300": 1.78,
+     "total": 1161963541.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414473,
+    "pswpin": 613736,
+    "pswpout": 1157397
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.705,
+      1.527,
+      1.554
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.952,
+      2.135,
+      1.802
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 15.6,
+   "mem_available_mib": 4935,
+   "psi_memory": {
+    "some": {
+     "avg10": 2.98,
+     "avg60": 0.97,
+     "avg300": 0.36,
+     "total": 187958824.0
+    },
+    "full": {
+     "avg10": 1.14,
+     "avg60": 0.32,
+     "avg300": 0.12,
+     "total": 136161325.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 6.95,
+     "avg60": 4.49,
+     "avg300": 2.48,
+     "total": 1556850696.0
+    },
+    "full": {
+     "avg10": 2.44,
+     "avg60": 2.79,
+     "avg300": 1.81,
+     "total": 1162138673.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414522,
+    "pswpin": 613789,
+    "pswpout": 1157397
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      2.223,
+      1.595,
+      1.528
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.85,
+      1.768,
+      3.229
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 20.7,
+   "mem_available_mib": 4929,
+   "psi_memory": {
+    "some": {
+     "avg10": 1.96,
+     "avg60": 0.94,
+     "avg300": 0.37,
+     "total": 188018321.0
+    },
+    "full": {
+     "avg10": 0.62,
+     "avg60": 0.29,
+     "avg300": 0.12,
+     "total": 136177401.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 5.91,
+     "avg60": 4.51,
+     "avg300": 2.53,
+     "total": 1557109798.0
+    },
+    "full": {
+     "avg10": 1.46,
+     "avg60": 2.56,
+     "avg300": 1.77,
+     "total": 1162160281.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414535,
+    "pswpin": 613801,
+    "pswpout": 1157397
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.604,
+      1.817,
+      1.684
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      6.388,
+      2.054,
+      2.101
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 25.9,
+   "mem_available_mib": 4962,
+   "psi_memory": {
+    "some": {
+     "avg10": 2.4,
+     "avg60": 1.08,
+     "avg300": 0.41,
+     "total": 188222045.0
+    },
+    "full": {
+     "avg10": 0.42,
+     "avg60": 0.27,
+     "avg300": 0.12,
+     "total": 136194062.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 5.31,
+     "avg60": 4.48,
+     "avg300": 2.55,
+     "total": 1557380915.0
+    },
+    "full": {
+     "avg10": 0.98,
+     "avg60": 2.39,
+     "avg300": 1.75,
+     "total": 1162161308.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414537,
+    "pswpin": 613806,
+    "pswpout": 1157397
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.981,
+      1.574,
+      7.108
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.266,
+      1.894,
+      2.017
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 31.0,
+   "mem_available_mib": 5139,
+   "psi_memory": {
+    "some": {
+     "avg10": 1.86,
+     "avg60": 1.1,
+     "avg300": 0.43,
+     "total": 188266187.0
+    },
+    "full": {
+     "avg10": 0.23,
+     "avg60": 0.24,
+     "avg300": 0.11,
+     "total": 136210027.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 7.44,
+     "avg60": 4.92,
+     "avg300": 2.68,
+     "total": 1557860896.0
+    },
+    "full": {
+     "avg10": 3.07,
+     "avg60": 2.62,
+     "avg300": 1.81,
+     "total": 1162467792.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414630,
+    "pswpin": 613910,
+    "pswpout": 1157397
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      2.081,
+      1.725,
+      1.456
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.974,
+      1.86,
+      1.989
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 36.1,
+   "mem_available_mib": 5132,
+   "psi_memory": {
+    "some": {
+     "avg10": 1.02,
+     "avg60": 0.99,
+     "avg300": 0.42,
+     "total": 188312634.0
+    },
+    "full": {
+     "avg10": 0.12,
+     "avg60": 0.22,
+     "avg300": 0.11,
+     "total": 136256000.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 16.41,
+     "avg60": 7.05,
+     "avg300": 3.18,
+     "total": 1559545494.0
+    },
+    "full": {
+     "avg10": 13.62,
+     "avg60": 4.88,
+     "avg300": 2.31,
+     "total": 1164061305.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414654,
+    "pswpin": 613951,
+    "pswpout": 1157397
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.861,
+      1.879,
+      1.614
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.394,
+      2.078,
+      2.656
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 41.3,
+   "mem_available_mib": 5094,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.68,
+     "avg60": 0.93,
+     "avg300": 0.41,
+     "total": 188343736.0
+    },
+    "full": {
+     "avg10": 0.08,
+     "avg60": 0.2,
+     "avg300": 0.11,
+     "total": 136286882.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 19.9,
+     "avg60": 8.33,
+     "avg300": 3.51,
+     "total": 1560734558.0
+    },
+    "full": {
+     "avg10": 17.55,
+     "avg60": 6.2,
+     "avg300": 2.63,
+     "total": 1165178190.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414659,
+    "pswpin": 613953,
+    "pswpout": 1157397
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      2.37,
+      2.133,
+      1.826
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      3.227,
+      2.113,
+      2.281
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 46.4,
+   "mem_available_mib": 4903,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.55,
+     "avg60": 0.87,
+     "avg300": 0.41,
+     "total": 188403710.0
+    },
+    "full": {
+     "avg10": 0.22,
+     "avg60": 0.22,
+     "avg300": 0.11,
+     "total": 136344642.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 18.98,
+     "avg60": 9.3,
+     "avg300": 3.82,
+     "total": 1561854636.0
+    },
+    "full": {
+     "avg10": 15.57,
+     "avg60": 6.93,
+     "avg300": 2.86,
+     "total": 1166023050.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414673,
+    "pswpin": 613953,
+    "pswpout": 1157397
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      2.527,
+      3.07,
+      1.766
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.161,
+      2.389,
+      2.219
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 51.5,
+   "mem_available_mib": 4845,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.7,
+     "avg60": 0.88,
+     "avg300": 0.42,
+     "total": 188475114.0
+    },
+    "full": {
+     "avg10": 0.3,
+     "avg60": 0.23,
+     "avg300": 0.12,
+     "total": 136382049.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 15.91,
+     "avg60": 9.32,
+     "avg300": 3.9,
+     "total": 1562212342.0
+    },
+    "full": {
+     "avg10": 11.75,
+     "avg60": 6.74,
+     "avg300": 2.87,
+     "total": 1166156947.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414673,
+    "pswpin": 613953,
+    "pswpout": 1157397
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.964,
+      1.664,
+      1.571
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.914,
+      2.317,
+      2.215
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 56.7,
+   "mem_available_mib": 4860,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.83,
+     "avg60": 0.89,
+     "avg300": 0.43,
+     "total": 188542811.0
+    },
+    "full": {
+     "avg10": 0.16,
+     "avg60": 0.21,
+     "avg300": 0.12,
+     "total": 136423985.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 11.42,
+     "avg60": 9.0,
+     "avg300": 3.94,
+     "total": 1562621385.0
+    },
+    "full": {
+     "avg10": 7.2,
+     "avg60": 6.26,
+     "avg300": 2.85,
+     "total": 1166290252.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414673,
+    "pswpin": 613953,
+    "pswpout": 1157397
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.792,
+      2.784,
+      4.733
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.102,
+      1.829,
+      3.252
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 61.8,
+   "mem_available_mib": 4904,
+   "psi_memory": {
+    "some": {
+     "avg10": 1.58,
+     "avg60": 1.03,
+     "avg300": 0.47,
+     "total": 188821958.0
+    },
+    "full": {
+     "avg10": 0.47,
+     "avg60": 0.26,
+     "avg300": 0.13,
+     "total": 136548067.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 12.81,
+     "avg60": 9.42,
+     "avg300": 4.1,
+     "total": 1563600857.0
+    },
+    "full": {
+     "avg10": 7.02,
+     "avg60": 6.28,
+     "avg300": 2.9,
+     "total": 1166705111.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414673,
+    "pswpin": 613953,
+    "pswpout": 1157397
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      4.3,
+      1.617,
+      1.431
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.075,
+      2.819,
+      2.199
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 67.0,
+   "mem_available_mib": 4929,
+   "psi_memory": {
+    "some": {
+     "avg10": 4.06,
+     "avg60": 1.6,
+     "avg300": 0.6,
+     "total": 189136999.0
+    },
+    "full": {
+     "avg10": 2.18,
+     "avg60": 0.62,
+     "avg300": 0.21,
+     "total": 136778954.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 15.52,
+     "avg60": 10.33,
+     "avg300": 4.4,
+     "total": 1564575250.0
+    },
+    "full": {
+     "avg10": 8.66,
+     "avg60": 6.67,
+     "avg300": 3.05,
+     "total": 1167333371.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414685,
+    "pswpin": 613988,
+    "pswpout": 1157397
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      2.651,
+      2.352,
+      2.19
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      3.191,
+      1.856,
+      1.809
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 72.1,
+   "mem_available_mib": 4927,
+   "psi_memory": {
+    "some": {
+     "avg10": 3.16,
+     "avg60": 1.64,
+     "avg300": 0.63,
+     "total": 189279726.0
+    },
+    "full": {
+     "avg10": 1.95,
+     "avg60": 0.72,
+     "avg300": 0.24,
+     "total": 136894253.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 21.76,
+     "avg60": 12.08,
+     "avg300": 4.9,
+     "total": 1566111191.0
+    },
+    "full": {
+     "avg10": 14.15,
+     "avg60": 7.97,
+     "avg300": 3.4,
+     "total": 1168480624.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414685,
+    "pswpin": 613988,
+    "pswpout": 1157397
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.88,
+      2.172,
+      1.719
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.157,
+      2.124,
+      2.197
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 77.2,
+   "mem_available_mib": 4921,
+   "psi_memory": {
+    "some": {
+     "avg10": 7.13,
+     "avg60": 2.5,
+     "avg300": 0.82,
+     "total": 190027660.0
+    },
+    "full": {
+     "avg10": 4.39,
+     "avg60": 1.29,
+     "avg300": 0.36,
+     "total": 137374312.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 21.63,
+     "avg60": 12.69,
+     "avg300": 5.12,
+     "total": 1567196251.0
+    },
+    "full": {
+     "avg10": 13.97,
+     "avg60": 8.36,
+     "avg300": 3.55,
+     "total": 1169142284.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414685,
+    "pswpin": 613988,
+    "pswpout": 1157397
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      3.854,
+      1.759,
+      1.54
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.759,
+      4.114,
+      1.955
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 82.4,
+   "mem_available_mib": 4890,
+   "psi_memory": {
+    "some": {
+     "avg10": 5.72,
+     "avg60": 2.69,
+     "avg300": 0.9,
+     "total": 190227919.0
+    },
+    "full": {
+     "avg10": 3.43,
+     "avg60": 1.41,
+     "avg300": 0.41,
+     "total": 137497990.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 17.5,
+     "avg60": 12.73,
+     "avg300": 5.29,
+     "total": 1567836347.0
+    },
+    "full": {
+     "avg10": 10.13,
+     "avg60": 8.12,
+     "avg300": 3.6,
+     "total": 1169428409.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414686,
+    "pswpin": 613990,
+    "pswpout": 1157397
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      2.222,
+      1.709,
+      3.536
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      3.045,
+      1.781,
+      1.597
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 87.5,
+   "mem_available_mib": 5046,
+   "psi_memory": {
+    "some": {
+     "avg10": 3.83,
+     "avg60": 2.52,
+     "avg300": 0.89,
+     "total": 190245035.0
+    },
+    "full": {
+     "avg10": 2.3,
+     "avg60": 1.32,
+     "avg300": 0.41,
+     "total": 137513873.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 15.01,
+     "avg60": 12.53,
+     "avg300": 5.35,
+     "total": 1568273368.0
+    },
+    "full": {
+     "avg10": 8.72,
+     "avg60": 7.96,
+     "avg300": 3.62,
+     "total": 1169693482.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414686,
+    "pswpin": 613990,
+    "pswpout": 1157397
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.897,
+      1.741,
+      1.6
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.975,
+      1.574,
+      1.961
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 92.6,
+   "mem_available_mib": 5108,
+   "psi_memory": {
+    "some": {
+     "avg10": 2.25,
+     "avg60": 2.31,
+     "avg300": 0.88,
+     "total": 190286678.0
+    },
+    "full": {
+     "avg10": 1.41,
+     "avg60": 1.22,
+     "avg300": 0.4,
+     "total": 137553194.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 15.21,
+     "avg60": 12.72,
+     "avg300": 5.53,
+     "total": 1569114626.0
+    },
+    "full": {
+     "avg10": 10.44,
+     "avg60": 8.3,
+     "avg300": 3.78,
+     "total": 1170368557.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414692,
+    "pswpin": 613998,
+    "pswpout": 1157397
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.92,
+      1.714,
+      1.871
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.088,
+      2.211,
+      2.05
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 97.8,
+   "mem_available_mib": 5078,
+   "psi_memory": {
+    "some": {
+     "avg10": 1.51,
+     "avg60": 2.16,
+     "avg300": 0.87,
+     "total": 190326980.0
+    },
+    "full": {
+     "avg10": 0.94,
+     "avg60": 1.14,
+     "avg300": 0.4,
+     "total": 137591414.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 16.99,
+     "avg60": 13.25,
+     "avg300": 5.74,
+     "total": 1570171450.0
+    },
+    "full": {
+     "avg10": 12.98,
+     "avg60": 8.95,
+     "avg300": 3.98,
+     "total": 1171331239.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414692,
+    "pswpin": 613998,
+    "pswpout": 1157397
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.872,
+      2.12,
+      1.836
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.34,
+      2.085,
+      1.849
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 102.9,
+   "mem_available_mib": 5051,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.82,
+     "avg60": 1.96,
+     "avg300": 0.85,
+     "total": 190358527.0
+    },
+    "full": {
+     "avg10": 0.51,
+     "avg60": 1.03,
+     "avg300": 0.39,
+     "total": 137620183.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 15.78,
+     "avg60": 13.38,
+     "avg300": 5.93,
+     "total": 1570965790.0
+    },
+    "full": {
+     "avg10": 12.28,
+     "avg60": 9.23,
+     "avg300": 4.15,
+     "total": 1171948177.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414692,
+    "pswpin": 613998,
+    "pswpout": 1157397
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      3.879,
+      1.642,
+      1.565
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.75,
+      1.451,
+      1.966
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 108.0,
+   "mem_available_mib": 5072,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.55,
+     "avg60": 1.83,
+     "avg300": 0.83,
+     "total": 190374344.0
+    },
+    "full": {
+     "avg10": 0.34,
+     "avg60": 0.97,
+     "avg300": 0.38,
+     "total": 137635393.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 14.0,
+     "avg60": 13.16,
+     "avg300": 5.98,
+     "total": 1571367065.0
+    },
+    "full": {
+     "avg10": 10.46,
+     "avg60": 9.06,
+     "avg300": 4.18,
+     "total": 1172217650.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414692,
+    "pswpin": 613998,
+    "pswpout": 1157397
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.715,
+      1.396,
+      1.301
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      3.436,
+      2.281,
+      1.666
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 113.2,
+   "mem_available_mib": 4483,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.48,
+     "avg60": 1.69,
+     "avg300": 0.82,
+     "total": 190434814.0
+    },
+    "full": {
+     "avg10": 0.19,
+     "avg60": 0.87,
+     "avg300": 0.37,
+     "total": 137661631.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 10.95,
+     "avg60": 12.61,
+     "avg300": 6.01,
+     "total": 1571851482.0
+    },
+    "full": {
+     "avg10": 7.47,
+     "avg60": 8.57,
+     "avg300": 4.17,
+     "total": 1172458302.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414701,
+    "pswpin": 613998,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.677,
+      1.536,
+      2.557
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      5.229,
+      1.823,
+      1.653
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 118.3,
+   "mem_available_mib": 4715,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.69,
+     "avg60": 1.62,
+     "avg300": 0.83,
+     "total": 190495558.0
+    },
+    "full": {
+     "avg10": 0.1,
+     "avg60": 0.79,
+     "avg300": 0.37,
+     "total": 137685215.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 10.91,
+     "avg60": 12.43,
+     "avg300": 6.1,
+     "total": 1572532501.0
+    },
+    "full": {
+     "avg10": 6.84,
+     "avg60": 8.3,
+     "avg300": 4.21,
+     "total": 1172900315.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414706,
+    "pswpin": 614012,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.758,
+      2.479,
+      1.951
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.648,
+      1.949,
+      2.085
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 123.4,
+   "mem_available_mib": 4628,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.46,
+     "avg60": 1.51,
+     "avg300": 0.82,
+     "total": 190533473.0
+    },
+    "full": {
+     "avg10": 0.06,
+     "avg60": 0.74,
+     "avg300": 0.36,
+     "total": 137721426.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 15.26,
+     "avg60": 13.17,
+     "avg300": 6.35,
+     "total": 1573584367.0
+    },
+    "full": {
+     "avg10": 11.57,
+     "avg60": 9.12,
+     "avg300": 4.43,
+     "total": 1173803585.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414706,
+    "pswpin": 614012,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.876,
+      1.639,
+      1.661
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.957,
+      2.12,
+      3.558
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 128.6,
+   "mem_available_mib": 5234,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.25,
+     "avg60": 1.37,
+     "avg300": 0.8,
+     "total": 190570049.0
+    },
+    "full": {
+     "avg10": 0.03,
+     "avg60": 0.67,
+     "avg300": 0.35,
+     "total": 137757787.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 19.4,
+     "avg60": 14.21,
+     "avg300": 6.71,
+     "total": 1575046937.0
+    },
+    "full": {
+     "avg10": 16.39,
+     "avg60": 10.32,
+     "avg300": 4.79,
+     "total": 1175163187.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414706,
+    "pswpin": 614012,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.563,
+      1.681,
+      1.454
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.892,
+      1.684,
+      1.634
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 133.7,
+   "mem_available_mib": 5239,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.16,
+     "avg60": 1.28,
+     "avg300": 0.79,
+     "total": 190601034.0
+    },
+    "full": {
+     "avg10": 0.02,
+     "avg60": 0.62,
+     "avg300": 0.35,
+     "total": 137788135.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 21.87,
+     "avg60": 15.03,
+     "avg300": 6.99,
+     "total": 1576293398.0
+    },
+    "full": {
+     "avg10": 19.49,
+     "avg60": 11.33,
+     "avg300": 5.08,
+     "total": 1176318319.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414753,
+    "pswpin": 614206,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      2.227,
+      1.659,
+      1.543
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.031,
+      2.474,
+      2.016
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 138.8,
+   "mem_available_mib": 5247,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.09,
+     "avg60": 1.16,
+     "avg300": 0.77,
+     "total": 190632223.0
+    },
+    "full": {
+     "avg10": 0.01,
+     "avg60": 0.56,
+     "avg300": 0.34,
+     "total": 137819172.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 23.79,
+     "avg60": 16.1,
+     "avg300": 7.38,
+     "total": 1577578818.0
+    },
+    "full": {
+     "avg10": 21.91,
+     "avg60": 12.63,
+     "avg300": 5.48,
+     "total": 1177561694.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414766,
+    "pswpin": 614206,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.632,
+      1.148,
+      1.283
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.921,
+      1.645,
+      1.5
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 144.0,
+   "mem_available_mib": 5237,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.06,
+     "avg60": 1.08,
+     "avg300": 0.76,
+     "total": 190668709.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.53,
+     "avg300": 0.33,
+     "total": 137855139.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 23.98,
+     "avg60": 16.64,
+     "avg300": 7.61,
+     "total": 1579066742.0
+    },
+    "full": {
+     "avg10": 22.38,
+     "avg60": 13.33,
+     "avg300": 5.73,
+     "total": 1178981739.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414766,
+    "pswpin": 614206,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      2.335,
+      1.545,
+      1.678
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.769,
+      1.368,
+      1.408
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 149.1,
+   "mem_available_mib": 5253,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.03,
+     "avg60": 0.98,
+     "avg300": 0.74,
+     "total": 190701450.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.47,
+     "avg300": 0.33,
+     "total": 137887717.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 23.98,
+     "avg60": 17.34,
+     "avg300": 7.95,
+     "total": 1580378121.0
+    },
+    "full": {
+     "avg10": 22.66,
+     "avg60": 14.24,
+     "avg300": 6.08,
+     "total": 1180241651.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414766,
+    "pswpin": 614206,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      2.206,
+      1.805,
+      1.731
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.395,
+      1.981,
+      2.327
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 154.2,
+   "mem_available_mib": 5255,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.01,
+     "avg60": 0.88,
+     "avg300": 0.73,
+     "total": 190729951.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.43,
+     "avg300": 0.32,
+     "total": 137916179.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 24.17,
+     "avg60": 18.01,
+     "avg300": 8.28,
+     "total": 1581563939.0
+    },
+    "full": {
+     "avg10": 22.99,
+     "avg60": 15.11,
+     "avg300": 6.43,
+     "total": 1181381916.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414766,
+    "pswpin": 614206,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.642,
+      1.466,
+      1.917
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.89,
+      1.425,
+      2.401
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 159.4,
+   "mem_available_mib": 5254,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.01,
+     "avg60": 0.83,
+     "avg300": 0.72,
+     "total": 190770205.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.4,
+     "avg300": 0.31,
+     "total": 137955988.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 24.99,
+     "avg60": 18.55,
+     "avg300": 8.53,
+     "total": 1583060735.0
+    },
+    "full": {
+     "avg10": 23.87,
+     "avg60": 15.78,
+     "avg300": 6.69,
+     "total": 1182827971.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414766,
+    "pswpin": 614206,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.78,
+      1.716,
+      1.412
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.135,
+      1.608,
+      1.489
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 164.5,
+   "mem_available_mib": 5252,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.75,
+     "avg300": 0.7,
+     "total": 190809409.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.36,
+     "avg300": 0.31,
+     "total": 137994774.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 25.74,
+     "avg60": 19.32,
+     "avg300": 8.9,
+     "total": 1584491817.0
+    },
+    "full": {
+     "avg10": 24.68,
+     "avg60": 16.72,
+     "avg300": 7.08,
+     "total": 1184174271.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414783,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.68,
+      1.639,
+      1.555
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.141,
+      1.989,
+      1.973
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 169.6,
+   "mem_available_mib": 5267,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.7,
+     "avg300": 0.69,
+     "total": 190837903.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.34,
+     "avg300": 0.3,
+     "total": 138023174.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 26.63,
+     "avg60": 19.91,
+     "avg300": 9.17,
+     "total": 1585673953.0
+    },
+    "full": {
+     "avg10": 25.44,
+     "avg60": 17.38,
+     "avg300": 7.35,
+     "total": 1185324494.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414783,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.945,
+      1.644,
+      1.607
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.964,
+      1.879,
+      1.832
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 174.8,
+   "mem_available_mib": 5257,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.36,
+     "avg60": 0.7,
+     "avg300": 0.69,
+     "total": 190902142.0
+    },
+    "full": {
+     "avg10": 0.18,
+     "avg60": 0.34,
+     "avg300": 0.3,
+     "total": 138085155.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 28.83,
+     "avg60": 20.95,
+     "avg300": 9.61,
+     "total": 1587782347.0
+    },
+    "full": {
+     "avg10": 27.39,
+     "avg60": 18.5,
+     "avg300": 7.79,
+     "total": 1187307149.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414783,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      2.262,
+      1.772,
+      2.151
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.337,
+      1.852,
+      1.915
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 179.9,
+   "mem_available_mib": 5231,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.24,
+     "avg60": 0.65,
+     "avg300": 0.68,
+     "total": 190931231.0
+    },
+    "full": {
+     "avg10": 0.12,
+     "avg60": 0.31,
+     "avg300": 0.3,
+     "total": 138114142.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 31.87,
+     "avg60": 22.13,
+     "avg300": 10.02,
+     "total": 1589344751.0
+    },
+    "full": {
+     "avg10": 30.28,
+     "avg60": 19.7,
+     "avg300": 8.2,
+     "total": 1188812355.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414783,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      2.082,
+      1.56,
+      1.532
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.956,
+      1.974,
+      2.183
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 185.0,
+   "mem_available_mib": 5233,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.13,
+     "avg60": 0.59,
+     "avg300": 0.67,
+     "total": 190968729.0
+    },
+    "full": {
+     "avg10": 0.06,
+     "avg60": 0.28,
+     "avg300": 0.29,
+     "total": 138151598.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 28.85,
+     "avg60": 22.4,
+     "avg300": 10.32,
+     "total": 1590715967.0
+    },
+    "full": {
+     "avg10": 27.71,
+     "avg60": 20.15,
+     "avg300": 8.53,
+     "total": 1190126388.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414783,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      2.069,
+      1.57,
+      1.566
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.101,
+      1.901,
+      1.88
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 190.2,
+   "mem_available_mib": 5243,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.07,
+     "avg60": 0.53,
+     "avg300": 0.65,
+     "total": 191000886.0
+    },
+    "full": {
+     "avg10": 0.03,
+     "avg60": 0.25,
+     "avg300": 0.28,
+     "total": 138183672.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 28.22,
+     "avg60": 22.87,
+     "avg300": 10.67,
+     "total": 1592109681.0
+    },
+    "full": {
+     "avg10": 27.14,
+     "avg60": 20.74,
+     "avg300": 8.89,
+     "total": 1191466659.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414783,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.833,
+      1.826,
+      1.574
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.083,
+      1.879,
+      1.903
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 195.3,
+   "mem_available_mib": 5238,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.04,
+     "avg60": 0.5,
+     "avg300": 0.64,
+     "total": 191028822.0
+    },
+    "full": {
+     "avg10": 0.02,
+     "avg60": 0.24,
+     "avg300": 0.28,
+     "total": 138211465.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 26.29,
+     "avg60": 22.85,
+     "avg300": 10.83,
+     "total": 1593212292.0
+    },
+    "full": {
+     "avg10": 25.23,
+     "avg60": 20.79,
+     "avg300": 9.06,
+     "total": 1192498114.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414783,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.831,
+      1.523,
+      2.162
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.343,
+      2.193,
+      1.935
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 200.4,
+   "mem_available_mib": 5244,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.02,
+     "avg60": 0.45,
+     "avg300": 0.63,
+     "total": 191057585.0
+    },
+    "full": {
+     "avg10": 0.01,
+     "avg60": 0.21,
+     "avg300": 0.27,
+     "total": 138240207.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 25.04,
+     "avg60": 22.9,
+     "avg300": 11.09,
+     "total": 1594458056.0
+    },
+    "full": {
+     "avg10": 23.89,
+     "avg60": 20.91,
+     "avg300": 9.33,
+     "total": 1193694877.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414783,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.954,
+      1.795,
+      1.864
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.584,
+      1.892,
+      1.849
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 205.6,
+   "mem_available_mib": 5236,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.01,
+     "avg60": 0.42,
+     "avg300": 0.62,
+     "total": 191090620.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.2,
+     "avg300": 0.27,
+     "total": 138273154.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 24.4,
+     "avg60": 22.9,
+     "avg300": 11.25,
+     "total": 1595853863.0
+    },
+    "full": {
+     "avg10": 23.3,
+     "avg60": 20.98,
+     "avg300": 9.5,
+     "total": 1195046764.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414783,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      2.391,
+      4.484,
+      1.748
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.976,
+      1.972,
+      1.713
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 210.7,
+   "mem_available_mib": 5239,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.38,
+     "avg300": 0.61,
+     "total": 191123895.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.18,
+     "avg300": 0.26,
+     "total": 138306216.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 24.94,
+     "avg60": 23.14,
+     "avg300": 11.54,
+     "total": 1597203123.0
+    },
+    "full": {
+     "avg10": 24.0,
+     "avg60": 21.33,
+     "avg300": 9.81,
+     "total": 1196348873.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414783,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.914,
+      1.816,
+      1.744
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.147,
+      1.799,
+      2.091
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 215.8,
+   "mem_available_mib": 5236,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.35,
+     "avg300": 0.6,
+     "total": 191153052.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.17,
+     "avg300": 0.26,
+     "total": 138335293.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 25.8,
+     "avg60": 23.42,
+     "avg300": 11.75,
+     "total": 1598391711.0
+    },
+    "full": {
+     "avg10": 24.51,
+     "avg60": 21.6,
+     "avg300": 10.02,
+     "total": 1197467388.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414783,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.844,
+      1.498,
+      1.666
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.385,
+      1.643,
+      1.923
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 221.0,
+   "mem_available_mib": 5242,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.32,
+     "avg300": 0.58,
+     "total": 191180938.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.15,
+     "avg300": 0.25,
+     "total": 138363093.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 23.75,
+     "avg60": 23.22,
+     "avg300": 11.95,
+     "total": 1599513796.0
+    },
+    "full": {
+     "avg10": 22.92,
+     "avg60": 21.54,
+     "avg300": 10.25,
+     "total": 1198549716.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414791,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.772,
+      1.722,
+      1.613
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.359,
+      1.886,
+      2.204
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 226.1,
+   "mem_available_mib": 5239,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.3,
+     "avg300": 0.58,
+     "total": 191208979.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.14,
+     "avg300": 0.25,
+     "total": 138391106.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 22.84,
+     "avg60": 23.08,
+     "avg300": 12.07,
+     "total": 1600662746.0
+    },
+    "full": {
+     "avg10": 21.96,
+     "avg60": 21.44,
+     "avg300": 10.38,
+     "total": 1199664218.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414792,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.599,
+      1.357,
+      1.193
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.004,
+      1.695,
+      1.525
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 231.2,
+   "mem_available_mib": 5246,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.27,
+     "avg300": 0.56,
+     "total": 191240418.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.12,
+     "avg300": 0.24,
+     "total": 138422034.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 23.21,
+     "avg60": 23.11,
+     "avg300": 12.3,
+     "total": 1601898760.0
+    },
+    "full": {
+     "avg10": 22.03,
+     "avg60": 21.5,
+     "avg300": 10.62,
+     "total": 1200818777.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414792,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.702,
+      1.494,
+      2.012
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.272,
+      1.833,
+      1.708
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 236.3,
+   "mem_available_mib": 5235,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.24,
+     "avg300": 0.55,
+     "total": 191272695.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.11,
+     "avg300": 0.24,
+     "total": 138454089.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 24.03,
+     "avg60": 23.29,
+     "avg300": 12.56,
+     "total": 1603209233.0
+    },
+    "full": {
+     "avg10": 22.69,
+     "avg60": 21.67,
+     "avg300": 10.88,
+     "total": 1202055463.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414822,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.62,
+      1.569,
+      1.488
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.967,
+      1.562,
+      1.659
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 241.5,
+   "mem_available_mib": 5212,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.22,
+     "avg300": 0.54,
+     "total": 191301563.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.1,
+     "avg300": 0.23,
+     "total": 138482815.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 22.7,
+     "avg60": 23.07,
+     "avg300": 12.66,
+     "total": 1604434066.0
+    },
+    "full": {
+     "avg10": 21.8,
+     "avg60": 21.57,
+     "avg300": 11.0,
+     "total": 1203231529.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414823,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      2.082,
+      1.489,
+      1.621
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.149,
+      1.994,
+      2.7
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 246.6,
+   "mem_available_mib": 5223,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.2,
+     "avg300": 0.53,
+     "total": 191326413.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.09,
+     "avg300": 0.23,
+     "total": 138507533.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 20.95,
+     "avg60": 22.66,
+     "avg300": 12.79,
+     "total": 1605502473.0
+    },
+    "full": {
+     "avg10": 20.0,
+     "avg60": 21.2,
+     "avg300": 11.14,
+     "total": 1204236758.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414824,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.799,
+      1.576,
+      1.427
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.231,
+      1.99,
+      1.82
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 251.7,
+   "mem_available_mib": 5223,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.19,
+     "avg300": 0.52,
+     "total": 191352981.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.09,
+     "avg300": 0.22,
+     "total": 138533703.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 22.22,
+     "avg60": 22.8,
+     "avg300": 12.95,
+     "total": 1606575215.0
+    },
+    "full": {
+     "avg10": 21.25,
+     "avg60": 21.37,
+     "avg300": 11.31,
+     "total": 1205260324.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414824,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.775,
+      1.834,
+      1.825
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.957,
+      1.83,
+      2.994
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 256.9,
+   "mem_available_mib": 5233,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.17,
+     "avg300": 0.51,
+     "total": 191384843.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.08,
+     "avg300": 0.22,
+     "total": 138564790.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 20.02,
+     "avg60": 22.28,
+     "avg300": 13.04,
+     "total": 1607667914.0
+    },
+    "full": {
+     "avg10": 19.04,
+     "avg60": 20.89,
+     "avg300": 11.42,
+     "total": 1206303327.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414824,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.978,
+      1.535,
+      1.764
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.937,
+      2.062,
+      1.759
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 262.0,
+   "mem_available_mib": 5210,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.16,
+     "avg300": 0.5,
+     "total": 191409933.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.07,
+     "avg300": 0.21,
+     "total": 138589651.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 21.8,
+     "avg60": 22.49,
+     "avg300": 13.21,
+     "total": 1608726713.0
+    },
+    "full": {
+     "avg10": 20.82,
+     "avg60": 21.13,
+     "avg300": 11.6,
+     "total": 1207309603.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414824,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.752,
+      1.464,
+      1.588
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.831,
+      4.724,
+      2.172
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 267.1,
+   "mem_available_mib": 5217,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.14,
+     "avg300": 0.49,
+     "total": 191432621.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.06,
+     "avg300": 0.21,
+     "total": 138612300.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 19.82,
+     "avg60": 22.03,
+     "avg300": 13.31,
+     "total": 1609758347.0
+    },
+    "full": {
+     "avg10": 18.7,
+     "avg60": 20.67,
+     "avg300": 11.69,
+     "total": 1208287342.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414825,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.954,
+      1.83,
+      1.559
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.81,
+      1.612,
+      1.53
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 272.3,
+   "mem_available_mib": 5211,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.13,
+     "avg300": 0.48,
+     "total": 191454117.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.06,
+     "avg300": 0.2,
+     "total": 138633634.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 20.12,
+     "avg60": 21.89,
+     "avg300": 13.46,
+     "total": 1610667426.0
+    },
+    "full": {
+     "avg10": 18.91,
+     "avg60": 20.54,
+     "avg300": 11.85,
+     "total": 1209145336.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414825,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      2.05,
+      2.143,
+      1.618
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.756,
+      2.101,
+      1.792
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 277.4,
+   "mem_available_mib": 5217,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.12,
+     "avg300": 0.47,
+     "total": 191477731.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.05,
+     "avg300": 0.2,
+     "total": 138657026.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 18.58,
+     "avg60": 21.48,
+     "avg300": 13.48,
+     "total": 1611599628.0
+    },
+    "full": {
+     "avg10": 17.44,
+     "avg60": 20.15,
+     "avg300": 11.89,
+     "total": 1210032723.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414825,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      2.24,
+      1.423,
+      1.4
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.962,
+      1.831,
+      1.667
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 282.5,
+   "mem_available_mib": 5242,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.11,
+     "avg300": 0.46,
+     "total": 191500660.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.05,
+     "avg300": 0.2,
+     "total": 138679290.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 18.96,
+     "avg60": 21.28,
+     "avg300": 13.6,
+     "total": 1612484183.0
+    },
+    "full": {
+     "avg10": 17.89,
+     "avg60": 19.98,
+     "avg300": 12.02,
+     "total": 1210870426.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414825,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      2.087,
+      1.645,
+      1.367
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.915,
+      2.17,
+      1.738
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 287.7,
+   "mem_available_mib": 5218,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.1,
+     "avg300": 0.46,
+     "total": 191521596.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.04,
+     "avg300": 0.19,
+     "total": 138700158.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 17.33,
+     "avg60": 20.81,
+     "avg300": 13.61,
+     "total": 1613359721.0
+    },
+    "full": {
+     "avg10": 16.42,
+     "avg60": 19.56,
+     "avg300": 12.04,
+     "total": 1211717201.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414825,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.684,
+      1.907,
+      1.468
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.963,
+      1.759,
+      1.62
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 292.8,
+   "mem_available_mib": 5200,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.09,
+     "avg300": 0.45,
+     "total": 191544980.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.04,
+     "avg300": 0.19,
+     "total": 138723313.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 17.66,
+     "avg60": 20.6,
+     "avg300": 13.71,
+     "total": 1614298244.0
+    },
+    "full": {
+     "avg10": 16.6,
+     "avg60": 19.34,
+     "avg300": 12.15,
+     "total": 1212597440.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414825,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.904,
+      1.743,
+      1.753
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.346,
+      2.073,
+      1.885
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 297.9,
+   "mem_available_mib": 5216,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.18,
+     "avg60": 0.11,
+     "avg300": 0.45,
+     "total": 191580798.0
+    },
+    "full": {
+     "avg10": 0.18,
+     "avg60": 0.07,
+     "avg300": 0.19,
+     "total": 138758980.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 18.09,
+     "avg60": 20.47,
+     "avg300": 13.78,
+     "total": 1615313487.0
+    },
+    "full": {
+     "avg10": 17.19,
+     "avg60": 19.26,
+     "avg300": 12.23,
+     "total": 1213554975.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414825,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.805,
+      1.631,
+      1.874
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.355,
+      1.79,
+      2.636
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 303.1,
+   "mem_available_mib": 5214,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.09,
+     "avg60": 0.1,
+     "avg300": 0.44,
+     "total": 191601948.0
+    },
+    "full": {
+     "avg10": 0.09,
+     "avg60": 0.06,
+     "avg300": 0.19,
+     "total": 138779942.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 16.67,
+     "avg60": 19.97,
+     "avg300": 13.81,
+     "total": 1616208022.0
+    },
+    "full": {
+     "avg10": 15.87,
+     "avg60": 18.81,
+     "avg300": 12.28,
+     "total": 1214407084.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414825,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.777,
+      1.569,
+      1.884
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.916,
+      1.803,
+      1.738
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 308.2,
+   "mem_available_mib": 5220,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.05,
+     "avg60": 0.09,
+     "avg300": 0.43,
+     "total": 191621332.0
+    },
+    "full": {
+     "avg10": 0.05,
+     "avg60": 0.05,
+     "avg300": 0.18,
+     "total": 138799253.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 17.53,
+     "avg60": 19.87,
+     "avg300": 13.92,
+     "total": 1617099508.0
+    },
+    "full": {
+     "avg10": 16.82,
+     "avg60": 18.76,
+     "avg300": 12.4,
+     "total": 1215264940.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414825,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.641,
+      1.499,
+      1.293
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.323,
+      1.79,
+      1.752
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 313.3,
+   "mem_available_mib": 5221,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.03,
+     "avg60": 0.08,
+     "avg300": 0.42,
+     "total": 191640781.0
+    },
+    "full": {
+     "avg10": 0.03,
+     "avg60": 0.05,
+     "avg300": 0.18,
+     "total": 138818652.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 17.48,
+     "avg60": 19.69,
+     "avg300": 13.96,
+     "total": 1617953521.0
+    },
+    "full": {
+     "avg10": 16.86,
+     "avg60": 18.62,
+     "avg300": 12.46,
+     "total": 1216069673.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414825,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      2.029,
+      1.606,
+      1.521
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.092,
+      1.673,
+      1.858
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 318.5,
+   "mem_available_mib": 5261,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.01,
+     "avg60": 0.08,
+     "avg300": 0.41,
+     "total": 191663566.0
+    },
+    "full": {
+     "avg10": 0.01,
+     "avg60": 0.04,
+     "avg300": 0.18,
+     "total": 138841324.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 16.76,
+     "avg60": 19.36,
+     "avg300": 14.01,
+     "total": 1618857872.0
+    },
+    "full": {
+     "avg10": 16.3,
+     "avg60": 18.36,
+     "avg300": 12.53,
+     "total": 1216940160.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414825,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      3.044,
+      1.533,
+      1.926
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.445,
+      1.889,
+      1.773
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 323.6,
+   "mem_available_mib": 5231,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.01,
+     "avg60": 0.07,
+     "avg300": 0.41,
+     "total": 191687984.0
+    },
+    "full": {
+     "avg10": 0.01,
+     "avg60": 0.04,
+     "avg300": 0.17,
+     "total": 138865580.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 18.44,
+     "avg60": 19.5,
+     "avg300": 14.11,
+     "total": 1619909701.0
+    },
+    "full": {
+     "avg10": 17.8,
+     "avg60": 18.51,
+     "avg300": 12.64,
+     "total": 1217956198.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414827,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.853,
+      1.715,
+      1.689
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.149,
+      1.917,
+      2.094
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 328.7,
+   "mem_available_mib": 5263,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.06,
+     "avg300": 0.4,
+     "total": 191709673.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.03,
+     "avg300": 0.17,
+     "total": 138886275.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 16.71,
+     "avg60": 19.02,
+     "avg300": 14.11,
+     "total": 1620798932.0
+    },
+    "full": {
+     "avg10": 15.9,
+     "avg60": 18.02,
+     "avg300": 12.65,
+     "total": 1218804249.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414827,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.645,
+      1.745,
+      1.565
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.626,
+      1.859,
+      1.646
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 333.9,
+   "mem_available_mib": 5261,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.06,
+     "avg300": 0.39,
+     "total": 191728078.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.03,
+     "avg300": 0.17,
+     "total": 138904597.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 16.97,
+     "avg60": 18.95,
+     "avg300": 14.17,
+     "total": 1621628430.0
+    },
+    "full": {
+     "avg10": 16.25,
+     "avg60": 17.98,
+     "avg300": 12.72,
+     "total": 1219595501.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414838,
+    "pswpin": 614232,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.995,
+      1.523,
+      1.615
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.015,
+      1.858,
+      1.782
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 339.0,
+   "mem_available_mib": 5263,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.05,
+     "avg300": 0.38,
+     "total": 191749788.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.03,
+     "avg300": 0.16,
+     "total": 138926213.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 17.85,
+     "avg60": 18.9,
+     "avg300": 14.25,
+     "total": 1622456416.0
+    },
+    "full": {
+     "avg10": 17.13,
+     "avg60": 17.96,
+     "avg300": 12.82,
+     "total": 1220383437.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414840,
+    "pswpin": 614238,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.699,
+      1.578,
+      1.406
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.943,
+      1.639,
+      2.164
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 344.1,
+   "mem_available_mib": 5269,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.05,
+     "avg300": 0.38,
+     "total": 191769199.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.02,
+     "avg300": 0.16,
+     "total": 138945490.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 16.61,
+     "avg60": 18.58,
+     "avg300": 14.25,
+     "total": 1623307216.0
+    },
+    "full": {
+     "avg10": 15.95,
+     "avg60": 17.67,
+     "avg300": 12.83,
+     "total": 1221204715.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414841,
+    "pswpin": 614242,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      2.162,
+      1.557,
+      1.704
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.025,
+      2.253,
+      2.211
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 349.3,
+   "mem_available_mib": 5268,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.04,
+     "avg300": 0.37,
+     "total": 191801286.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.02,
+     "avg300": 0.16,
+     "total": 138977335.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 16.73,
+     "avg60": 18.43,
+     "avg300": 14.3,
+     "total": 1624243574.0
+    },
+    "full": {
+     "avg10": 15.92,
+     "avg60": 17.51,
+     "avg300": 12.89,
+     "total": 1222101227.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414841,
+    "pswpin": 614242,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      2.051,
+      2.1,
+      1.942
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.289,
+      1.827,
+      2.07
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 354.4,
+   "mem_available_mib": 5242,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.04,
+     "avg300": 0.36,
+     "total": 191824450.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.02,
+     "avg300": 0.15,
+     "total": 139000354.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 17.01,
+     "avg60": 18.27,
+     "avg300": 14.35,
+     "total": 1625120798.0
+    },
+    "full": {
+     "avg10": 16.11,
+     "avg60": 17.34,
+     "avg300": 12.95,
+     "total": 1222929216.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414841,
+    "pswpin": 614242,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      4.574,
+      1.628,
+      1.482
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.037,
+      1.682,
+      1.567
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 359.5,
+   "mem_available_mib": 5267,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.03,
+     "avg300": 0.35,
+     "total": 191844315.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.02,
+     "avg300": 0.15,
+     "total": 139020102.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 16.01,
+     "avg60": 18.0,
+     "avg300": 14.35,
+     "total": 1625942456.0
+    },
+    "full": {
+     "avg10": 15.08,
+     "avg60": 17.06,
+     "avg300": 12.95,
+     "total": 1223722514.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414841,
+    "pswpin": 614242,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.71,
+      1.377,
+      1.275
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.164,
+      1.666,
+      1.593
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 364.7,
+   "mem_available_mib": 5337,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.03,
+     "avg300": 0.35,
+     "total": 191866035.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.01,
+     "avg300": 0.14,
+     "total": 139040791.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 16.55,
+     "avg60": 17.93,
+     "avg300": 14.41,
+     "total": 1626752566.0
+    },
+    "full": {
+     "avg10": 15.44,
+     "avg60": 16.96,
+     "avg300": 13.01,
+     "total": 1224474816.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414849,
+    "pswpin": 614244,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.811,
+      1.577,
+      1.65
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.945,
+      1.727,
+      2.072
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 369.8,
+   "mem_available_mib": 5343,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.03,
+     "avg300": 0.34,
+     "total": 191885830.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.01,
+     "avg300": 0.14,
+     "total": 139060502.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 16.04,
+     "avg60": 17.74,
+     "avg300": 14.42,
+     "total": 1627636433.0
+    },
+    "full": {
+     "avg10": 14.97,
+     "avg60": 16.77,
+     "avg300": 13.03,
+     "total": 1225321431.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414849,
+    "pswpin": 614244,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.708,
+      1.782,
+      1.751
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.444,
+      1.768,
+      2.181
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 374.9,
+   "mem_available_mib": 5347,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.02,
+     "avg300": 0.33,
+     "total": 191909703.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.01,
+     "avg300": 0.14,
+     "total": 139084251.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 16.33,
+     "avg60": 17.69,
+     "avg300": 14.47,
+     "total": 1628671738.0
+    },
+    "full": {
+     "avg10": 15.41,
+     "avg60": 16.75,
+     "avg300": 13.1,
+     "total": 1226319624.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414849,
+    "pswpin": 614244,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.821,
+      1.877,
+      1.724
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.466,
+      1.999,
+      1.911
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 380.1,
+   "mem_available_mib": 5352,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.02,
+     "avg300": 0.33,
+     "total": 191930387.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.01,
+     "avg300": 0.13,
+     "total": 139104862.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 17.67,
+     "avg60": 17.84,
+     "avg300": 14.55,
+     "total": 1629564992.0
+    },
+    "full": {
+     "avg10": 16.72,
+     "avg60": 16.9,
+     "avg300": 13.18,
+     "total": 1227174643.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414849,
+    "pswpin": 614244,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.843,
+      1.585,
+      1.662
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.154,
+      1.669,
+      1.713
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 385.2,
+   "mem_available_mib": 5334,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.02,
+     "avg300": 0.32,
+     "total": 191949649.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.01,
+     "avg300": 0.13,
+     "total": 139123982.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 16.05,
+     "avg60": 17.48,
+     "avg300": 14.54,
+     "total": 1630400647.0
+    },
+    "full": {
+     "avg10": 15.38,
+     "avg60": 16.59,
+     "avg300": 13.19,
+     "total": 1227961328.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414850,
+    "pswpin": 614244,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.853,
+      1.592,
+      1.82
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.033,
+      1.936,
+      2.0
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 390.3,
+   "mem_available_mib": 5351,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.01,
+     "avg300": 0.31,
+     "total": 191969628.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.01,
+     "avg300": 0.13,
+     "total": 139143783.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 16.46,
+     "avg60": 17.48,
+     "avg300": 14.6,
+     "total": 1631238835.0
+    },
+    "full": {
+     "avg10": 15.64,
+     "avg60": 16.58,
+     "avg300": 13.26,
+     "total": 1228761716.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414868,
+    "pswpin": 614305,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.71,
+      1.563,
+      1.566
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.93,
+      1.758,
+      1.759
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 395.5,
+   "mem_available_mib": 5337,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.01,
+     "avg300": 0.31,
+     "total": 191990598.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.0,
+     "avg300": 0.13,
+     "total": 139164700.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 18.08,
+     "avg60": 17.72,
+     "avg300": 14.69,
+     "total": 1632155044.0
+    },
+    "full": {
+     "avg10": 17.21,
+     "avg60": 16.81,
+     "avg300": 13.36,
+     "total": 1229642627.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414868,
+    "pswpin": 614305,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      2.481,
+      1.438,
+      1.702
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.073,
+      2.34,
+      1.983
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 400.6,
+   "mem_available_mib": 5335,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.01,
+     "avg300": 0.3,
+     "total": 192014497.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.0,
+     "avg300": 0.12,
+     "total": 139188467.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 16.6,
+     "avg60": 17.43,
+     "avg300": 14.69,
+     "total": 1633207959.0
+    },
+    "full": {
+     "avg10": 15.67,
+     "avg60": 16.51,
+     "avg300": 13.36,
+     "total": 1230656829.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414868,
+    "pswpin": 614305,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.788,
+      1.729,
+      1.596
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.665,
+      1.855,
+      1.807
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 405.7,
+   "mem_available_mib": 5336,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.01,
+     "avg300": 0.3,
+     "total": 192033935.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.0,
+     "avg300": 0.12,
+     "total": 139207844.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 17.23,
+     "avg60": 17.52,
+     "avg300": 14.75,
+     "total": 1634044069.0
+    },
+    "full": {
+     "avg10": 16.27,
+     "avg60": 16.6,
+     "avg300": 13.42,
+     "total": 1231464580.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414885,
+    "pswpin": 614361,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.784,
+      1.363,
+      1.593
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.939,
+      1.649,
+      1.666
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 410.8,
+   "mem_available_mib": 5343,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.01,
+     "avg300": 0.29,
+     "total": 192054595.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.0,
+     "avg300": 0.12,
+     "total": 139228453.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 17.43,
+     "avg60": 17.48,
+     "avg300": 14.8,
+     "total": 1634813415.0
+    },
+    "full": {
+     "avg10": 16.39,
+     "avg60": 16.55,
+     "avg300": 13.48,
+     "total": 1232192368.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414885,
+    "pswpin": 614361,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.769,
+      1.596,
+      1.321
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      1.89,
+      1.483,
+      1.458
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  },
+  {
+   "t_offset_s": 416.0,
+   "mem_available_mib": 5328,
+   "psi_memory": {
+    "some": {
+     "avg10": 0.0,
+     "avg60": 0.01,
+     "avg300": 0.28,
+     "total": 192074607.0
+    },
+    "full": {
+     "avg10": 0.0,
+     "avg60": 0.0,
+     "avg300": 0.12,
+     "total": 139248419.0
+    }
+   },
+   "psi_io": {
+    "some": {
+     "avg10": 16.11,
+     "avg60": 17.22,
+     "avg300": 14.78,
+     "total": 1635643745.0
+    },
+    "full": {
+     "avg10": 15.27,
+     "avg60": 16.32,
+     "avg300": 13.47,
+     "total": 1232998720.0
+    }
+   },
+   "vmstat": {
+    "oom_kill": 0,
+    "pgmajfault": 414885,
+    "pswpin": 614361,
+    "pswpout": 1157536
+   },
+   "protect_probes": {
+    "getaudio": {
+     "latencies_ms": [
+      1.698,
+      1.666,
+      1.352
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    },
+    "getvideo": {
+     "latencies_ms": [
+      2.147,
+      1.883,
+      2.5
+     ],
+     "status_codes": {
+      "200": 3
+     },
+     "transport_errors": 0
+    }
+   }
+  }
+ ],
+ "sample_count": 82,
+ "aborted": null,
+ "note": "只读采样；oom_kill/pswpin/pswpout/pgmajfault 为内核累计计数，解释增量需对照起止；保护探针为 /health 只读，非业务 p95"
+}

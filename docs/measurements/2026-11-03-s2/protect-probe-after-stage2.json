@@ -1,0 +1,43 @@
+{
+  "collected_at": "2026-11-04T01:13:08Z",
+  "note": "只读 GET 探针；分位数 nearest-rank；空闲采样不证明负载期间无退化，阶段2需并行前/中/后采样并记录资源中止条件，否则不写保护通过；customer_memory 无只读入口时 p95=None，不虚构",
+  "targets": {
+    "getaudio": {
+      "samples": 20,
+      "status_codes": {
+        "200": 20
+      },
+      "transport_errors": 0,
+      "latency": {
+        "p50_ms": 1.635,
+        "p95_ms": 1.993,
+        "quantile_method": "nearest-rank (agent_ops.bench.stats.nearest_rank)",
+        "successful_samples": 20
+      },
+      "verdict": "ok"
+    },
+    "getvideo": {
+      "samples": 20,
+      "status_codes": {
+        "200": 20
+      },
+      "transport_errors": 0,
+      "latency": {
+        "p50_ms": 1.795,
+        "p95_ms": 2.122,
+        "quantile_method": "nearest-rank (agent_ops.bench.stats.nearest_rank)",
+        "successful_samples": 20
+      },
+      "verdict": "ok"
+    },
+    "customer_memory": {
+      "samples": 20,
+      "status_codes": {
+        "404": 20
+      },
+      "transport_errors": 0,
+      "latency": null,
+      "verdict": "no_read_only_http_entry"
+    }
+  }
+}

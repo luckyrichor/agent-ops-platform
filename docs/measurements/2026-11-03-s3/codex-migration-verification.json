@@ -1,0 +1,17 @@
+{
+  "upgrade": {
+    "columns": [
+      "description_zh",
+      "title_zh"
+    ],
+    "indexes": [
+      "products_description_zh_trgm",
+      "products_title_zh_trgm"
+    ]
+  },
+  "downgrade_and_real_postgres_missing_column_guard": true,
+  "reupgrade": true,
+  "checked_at_beijing": "2026-11-04T09:36:32.692664+08:00",
+  "migration_sha256": "84a136ade5f8b526b6e322b663b694f92fc51310f554878f6a54bdc5206db417",
+  "isolated_database_removed": true
+}

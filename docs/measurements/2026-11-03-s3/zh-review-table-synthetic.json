@@ -1,0 +1,1448 @@
+{
+ "collected_at_beijing": "2026-11-04T09:03:21+08:00",
+ "queries_file_sha256": "e544d564af3d67e7b5728061f0f2e0e2931faca20b7ec8c685e83d44b0e70a34",
+ "script_sha256": "c0a9e1232cf9c92abdd372e52b26af4275f105906febe0bcbc19c6edfd388ce0",
+ "note": "语料为 zh_catalog 确定性合成商品（bench 库），表内全部为合成内容；本表供人工审阅相关性，未声称已做人工标注",
+ "queries": [
+  {
+   "id": "zh-001",
+   "query": "电水壶",
+   "qualifier": null,
+   "expected_categories": "电水壶",
+   "top5": [
+    {
+     "id": 997,
+     "title_zh": "电水壶 简叶型号997",
+     "description_zh": "简叶出品电水壶，304不锈钢，自动断电，出行适用",
+     "category": "电水壶",
+     "category_id": 32,
+     "price_cents": 2984
+    },
+    {
+     "id": 951,
+     "title_zh": "电水壶 云杉型号951",
+     "description_zh": "云杉出品电水壶，自动断电，304不锈钢，宿舍适用",
+     "category": "电水壶",
+     "category_id": 32,
+     "price_cents": 9189
+    },
+    {
+     "id": 456,
+     "title_zh": "电水壶 初品型号456",
+     "description_zh": "初品出品电水壶，304不锈钢，大容量，礼赠适用",
+     "category": "电水壶",
+     "category_id": 32,
+     "price_cents": 12990
+    },
+    {
+     "id": 594,
+     "title_zh": "电水壶 初品型号594",
+     "description_zh": "初品出品电水壶，304不锈钢，大容量，办公适用",
+     "category": "电水壶",
+     "category_id": 32,
+     "price_cents": 39979
+    },
+    {
+     "id": 314,
+     "title_zh": "电水壶 臻选型号314",
+     "description_zh": "臻选出品电水壶，大容量，304不锈钢，家用适用",
+     "category": "电水壶",
+     "category_id": 32,
+     "price_cents": 75905
+    }
+   ]
+  },
+  {
+   "id": "zh-002",
+   "query": "保温杯",
+   "qualifier": null,
+   "expected_categories": "保温杯",
+   "top5": [
+    {
+     "id": 4,
+     "title_zh": "保温杯 臻选型号4",
+     "description_zh": "臻选出品保温杯，便携，304不锈钢，家用适用",
+     "category": "保温杯",
+     "category_id": 74,
+     "price_cents": 5890
+    },
+    {
+     "id": 21,
+     "title_zh": "保温杯 简叶型号21",
+     "description_zh": "简叶出品保温杯，304不锈钢，便携，出行适用",
+     "category": "保温杯",
+     "category_id": 74,
+     "price_cents": 1600
+    },
+    {
+     "id": 93,
+     "title_zh": "保温杯 悦享型号93",
+     "description_zh": "悦享出品保温杯，便携，304不锈钢，办公适用",
+     "category": "保温杯",
+     "category_id": 74,
+     "price_cents": 3190
+    },
+    {
+     "id": 63,
+     "title_zh": "保温杯 简叶型号63",
+     "description_zh": "简叶出品保温杯，大容量，便携，出行适用",
+     "category": "保温杯",
+     "category_id": 74,
+     "price_cents": 2990
+    },
+    {
+     "id": 37,
+     "title_zh": "保温杯 云杉型号37",
+     "description_zh": "云杉出品保温杯，便携，304不锈钢，礼赠适用",
+     "category": "保温杯",
+     "category_id": 74,
+     "price_cents": 4900
+    }
+   ]
+  },
+  {
+   "id": "zh-003",
+   "query": "304不锈钢保温杯",
+   "qualifier": "304不锈钢",
+   "expected_categories": "保温杯",
+   "top5": [
+    {
+     "id": 3040,
+     "title_zh": "保温杯 云杉型号3040",
+     "description_zh": "云杉出品保温杯，大容量，304不锈钢，礼赠适用",
+     "category": "保温杯",
+     "category_id": 74,
+     "price_cents": 2900
+    },
+    {
+     "id": 73049,
+     "title_zh": "保温杯 匠造型号73049",
+     "description_zh": "匠造出品保温杯，便携，304不锈钢，出行适用",
+     "category": "保温杯",
+     "category_id": 74,
+     "price_cents": 2490
+    },
+    {
+     "id": 43042,
+     "title_zh": "保温杯 简叶型号43042",
+     "description_zh": "简叶出品保温杯，304不锈钢，便携，办公适用",
+     "category": "保温杯",
+     "category_id": 74,
+     "price_cents": 3640
+    },
+    {
+     "id": 60304,
+     "title_zh": "保温杯 初品型号60304",
+     "description_zh": "初品出品保温杯，大容量，304不锈钢，家用适用",
+     "category": "保温杯",
+     "category_id": 74,
+     "price_cents": 3490
+    },
+    {
+     "id": 63048,
+     "title_zh": "保温杯 云杉型号63048",
+     "description_zh": "云杉出品保温杯，304不锈钢，便携，家用适用",
+     "category": "保温杯",
+     "category_id": 74,
+     "price_cents": 4290
+    }
+   ]
+  },
+  {
+   "id": "zh-004",
+   "query": "无线鼠标",
+   "qualifier": null,
+   "expected_categories": "无线鼠标",
+   "top5": [
+    {
+     "id": 70,
+     "title_zh": "无线鼠标 优工型号70",
+     "description_zh": "优工出品无线鼠标，可充电，人体工学，宿舍适用",
+     "category": "无线鼠标",
+     "category_id": 45,
+     "price_cents": 1499
+    },
+    {
+     "id": 14,
+     "title_zh": "无线鼠标 云杉型号14",
+     "description_zh": "云杉出品无线鼠标，可充电，人体工学，办公适用",
+     "category": "无线鼠标",
+     "category_id": 45,
+     "price_cents": 2900
+    },
+    {
+     "id": 61,
+     "title_zh": "无线鼠标 简叶型号61",
+     "description_zh": "简叶出品无线鼠标，静音，人体工学，家用适用",
+     "category": "无线鼠标",
+     "category_id": 45,
+     "price_cents": 3990
+    },
+    {
+     "id": 69,
+     "title_zh": "无线鼠标 臻选型号69",
+     "description_zh": "臻选出品无线鼠标，静音，人体工学，宿舍适用",
+     "category": "无线鼠标",
+     "category_id": 45,
+     "price_cents": 4999
+    },
+    {
+     "id": 97,
+     "title_zh": "无线鼠标 云杉型号97",
+     "description_zh": "云杉出品无线鼠标，可充电，人体工学，礼赠适用",
+     "category": "无线鼠标",
+     "category_id": 45,
+     "price_cents": 8399
+    }
+   ]
+  },
+  {
+   "id": "zh-005",
+   "query": "静音无线鼠标",
+   "qualifier": "静音",
+   "expected_categories": "无线鼠标",
+   "top5": [
+    {
+     "id": 61,
+     "title_zh": "无线鼠标 简叶型号61",
+     "description_zh": "简叶出品无线鼠标，静音，人体工学，家用适用",
+     "category": "无线鼠标",
+     "category_id": 45,
+     "price_cents": 3990
+    },
+    {
+     "id": 69,
+     "title_zh": "无线鼠标 臻选型号69",
+     "description_zh": "臻选出品无线鼠标，静音，人体工学，宿舍适用",
+     "category": "无线鼠标",
+     "category_id": 45,
+     "price_cents": 4999
+    },
+    {
+     "id": 111,
+     "title_zh": "无线鼠标 悦享型号111",
+     "description_zh": "悦享出品无线鼠标，静音，可充电，礼赠适用",
+     "category": "无线鼠标",
+     "category_id": 45,
+     "price_cents": 1590
+    },
+    {
+     "id": 965,
+     "title_zh": "无线鼠标 云杉型号965",
+     "description_zh": "云杉出品无线鼠标，静音，人体工学，出行适用",
+     "category": "无线鼠标",
+     "category_id": 45,
+     "price_cents": 2299
+    },
+    {
+     "id": 639,
+     "title_zh": "无线鼠标 悦享型号639",
+     "description_zh": "悦享出品无线鼠标，静音，可充电，办公适用",
+     "category": "无线鼠标",
+     "category_id": 45,
+     "price_cents": 1800
+    }
+   ]
+  },
+  {
+   "id": "zh-006",
+   "query": "蓝牙耳机",
+   "qualifier": null,
+   "expected_categories": "蓝牙耳机",
+   "top5": [
+    {
+     "id": 890,
+     "title_zh": "蓝牙耳机 匠造型号890",
+     "description_zh": "匠造出品蓝牙耳机，无线，降噪，礼赠适用",
+     "category": "蓝牙耳机",
+     "category_id": 8,
+     "price_cents": 7500
+    },
+    {
+     "id": 3199,
+     "title_zh": "蓝牙耳机 初品型号3199",
+     "description_zh": "初品出品蓝牙耳机，无线，降噪，宿舍适用",
+     "category": "蓝牙耳机",
+     "category_id": 8,
+     "price_cents": 2290
+    },
+    {
+     "id": 4963,
+     "title_zh": "蓝牙耳机 匠造型号4963",
+     "description_zh": "匠造出品蓝牙耳机，降噪，长续航，出行适用",
+     "category": "蓝牙耳机",
+     "category_id": 8,
+     "price_cents": 2990
+    },
+    {
+     "id": 9424,
+     "title_zh": "蓝牙耳机 初品型号9424",
+     "description_zh": "初品出品蓝牙耳机，降噪，长续航，礼赠适用",
+     "category": "蓝牙耳机",
+     "category_id": 8,
+     "price_cents": 3600
+    },
+    {
+     "id": 1953,
+     "title_zh": "蓝牙耳机 悦享型号1953",
+     "description_zh": "悦享出品蓝牙耳机，无线，长续航，宿舍适用",
+     "category": "蓝牙耳机",
+     "category_id": 8,
+     "price_cents": 3564
+    }
+   ]
+  },
+  {
+   "id": "zh-007",
+   "query": "儿童积木",
+   "qualifier": null,
+   "expected_categories": "儿童积木",
+   "top5": [
+    {
+     "id": 49,
+     "title_zh": "儿童积木 云杉型号49",
+     "description_zh": "云杉出品儿童积木，环保塑料，大颗粒，办公适用",
+     "category": "儿童积木",
+     "category_id": 13,
+     "price_cents": 2390
+    },
+    {
+     "id": 86,
+     "title_zh": "儿童积木 简叶型号86",
+     "description_zh": "简叶出品儿童积木，环保塑料，益智，宿舍适用",
+     "category": "儿童积木",
+     "category_id": 13,
+     "price_cents": 3390
+    },
+    {
+     "id": 66,
+     "title_zh": "儿童积木 初品型号66",
+     "description_zh": "初品出品儿童积木，大颗粒，益智，宿舍适用",
+     "category": "儿童积木",
+     "category_id": 13,
+     "price_cents": 5990
+    },
+    {
+     "id": 19,
+     "title_zh": "儿童积木 晨露型号19",
+     "description_zh": "晨露出品儿童积木，益智，环保塑料，家用适用",
+     "category": "儿童积木",
+     "category_id": 13,
+     "price_cents": 7990
+    },
+    {
+     "id": 370,
+     "title_zh": "儿童积木 晨露型号370",
+     "description_zh": "晨露出品儿童积木，环保塑料，大颗粒，宿舍适用",
+     "category": "儿童积木",
+     "category_id": 13,
+     "price_cents": 1880
+    }
+   ]
+  },
+  {
+   "id": "zh-008",
+   "query": "婴儿奶瓶",
+   "qualifier": null,
+   "expected_categories": "婴儿奶瓶",
+   "top5": [
+    {
+     "id": 307,
+     "title_zh": "婴儿奶瓶 臻选型号307",
+     "description_zh": "臻选出品婴儿奶瓶，防胀气，宽口径，办公适用",
+     "category": "婴儿奶瓶",
+     "category_id": 10,
+     "price_cents": 1390
+    },
+    {
+     "id": 733,
+     "title_zh": "婴儿奶瓶 匠造型号733",
+     "description_zh": "匠造出品婴儿奶瓶，防胀气，玻璃，办公适用",
+     "category": "婴儿奶瓶",
+     "category_id": 10,
+     "price_cents": 1990
+    },
+    {
+     "id": 808,
+     "title_zh": "婴儿奶瓶 简叶型号808",
+     "description_zh": "简叶出品婴儿奶瓶，玻璃，防胀气，出行适用",
+     "category": "婴儿奶瓶",
+     "category_id": 10,
+     "price_cents": 2990
+    },
+    {
+     "id": 163,
+     "title_zh": "婴儿奶瓶 初品型号163",
+     "description_zh": "初品出品婴儿奶瓶，玻璃，防胀气，办公适用",
+     "category": "婴儿奶瓶",
+     "category_id": 10,
+     "price_cents": 3690
+    },
+    {
+     "id": 354,
+     "title_zh": "婴儿奶瓶 云杉型号354",
+     "description_zh": "云杉出品婴儿奶瓶，宽口径，防胀气，出行适用",
+     "category": "婴儿奶瓶",
+     "category_id": 10,
+     "price_cents": 3788
+    }
+   ]
+  },
+  {
+   "id": "zh-009",
+   "query": "玻璃婴儿奶瓶",
+   "qualifier": "玻璃",
+   "expected_categories": "婴儿奶瓶",
+   "top5": [
+    {
+     "id": 733,
+     "title_zh": "婴儿奶瓶 匠造型号733",
+     "description_zh": "匠造出品婴儿奶瓶，防胀气，玻璃，办公适用",
+     "category": "婴儿奶瓶",
+     "category_id": 10,
+     "price_cents": 1990
+    },
+    {
+     "id": 808,
+     "title_zh": "婴儿奶瓶 简叶型号808",
+     "description_zh": "简叶出品婴儿奶瓶，玻璃，防胀气，出行适用",
+     "category": "婴儿奶瓶",
+     "category_id": 10,
+     "price_cents": 2990
+    },
+    {
+     "id": 163,
+     "title_zh": "婴儿奶瓶 初品型号163",
+     "description_zh": "初品出品婴儿奶瓶，玻璃，防胀气，办公适用",
+     "category": "婴儿奶瓶",
+     "category_id": 10,
+     "price_cents": 3690
+    },
+    {
+     "id": 589,
+     "title_zh": "婴儿奶瓶 悦享型号589",
+     "description_zh": "悦享出品婴儿奶瓶，玻璃，宽口径，家用适用",
+     "category": "婴儿奶瓶",
+     "category_id": 10,
+     "price_cents": 5649
+    },
+    {
+     "id": 641,
+     "title_zh": "婴儿奶瓶 简叶型号641",
+     "description_zh": "简叶出品婴儿奶瓶，宽口径，玻璃，宿舍适用",
+     "category": "婴儿奶瓶",
+     "category_id": 10,
+     "price_cents": 5400
+    }
+   ]
+  },
+  {
+   "id": "zh-010",
+   "query": "猫粮",
+   "qualifier": null,
+   "expected_categories": "猫粮",
+   "top5": [
+    {
+     "id": 20,
+     "title_zh": "猫粮 臻选型号20",
+     "description_zh": "臻选出品猫粮，深海鱼配方，成猫，礼赠适用",
+     "category": "猫粮",
+     "category_id": 64,
+     "price_cents": 4300
+    },
+    {
+     "id": 333,
+     "title_zh": "猫粮 悦享型号333",
+     "description_zh": "悦享出品猫粮，2kg装，成猫，家用适用",
+     "category": "猫粮",
+     "category_id": 64,
+     "price_cents": 650
+    },
+    {
+     "id": 497,
+     "title_zh": "猫粮 晨露型号497",
+     "description_zh": "晨露出品猫粮，2kg装，成猫，宿舍适用",
+     "category": "猫粮",
+     "category_id": 64,
+     "price_cents": 2120
+    },
+    {
+     "id": 169,
+     "title_zh": "猫粮 匠造型号169",
+     "description_zh": "匠造出品猫粮，成猫，深海鱼配方，出行适用",
+     "category": "猫粮",
+     "category_id": 64,
+     "price_cents": 3990
+    },
+    {
+     "id": 796,
+     "title_zh": "猫粮 优工型号796",
+     "description_zh": "优工出品猫粮，2kg装，深海鱼配方，家用适用",
+     "category": "猫粮",
+     "category_id": 64,
+     "price_cents": 5999
+    }
+   ]
+  },
+  {
+   "id": "zh-011",
+   "query": "跑步鞋",
+   "qualifier": null,
+   "expected_categories": "跑步鞋",
+   "top5": [
+    {
+     "id": 13,
+     "title_zh": "跑步鞋 晨露型号13",
+     "description_zh": "晨露出品跑步鞋，透气网面，轻便，家用适用",
+     "category": "跑步鞋",
+     "category_id": 35,
+     "price_cents": 19970
+    },
+    {
+     "id": 781,
+     "title_zh": "跑步鞋 臻选型号781",
+     "description_zh": "臻选出品跑步鞋，透气网面，轻便，家用适用",
+     "category": "跑步鞋",
+     "category_id": 35,
+     "price_cents": 6990
+    },
+    {
+     "id": 265,
+     "title_zh": "跑步鞋 匠造型号265",
+     "description_zh": "匠造出品跑步鞋，透气网面，轻便，办公适用",
+     "category": "跑步鞋",
+     "category_id": 35,
+     "price_cents": 7182
+    },
+    {
+     "id": 162,
+     "title_zh": "跑步鞋 臻选型号162",
+     "description_zh": "臻选出品跑步鞋，透气网面，缓震，出行适用",
+     "category": "跑步鞋",
+     "category_id": 35,
+     "price_cents": 7490
+    },
+    {
+     "id": 320,
+     "title_zh": "跑步鞋 臻选型号320",
+     "description_zh": "臻选出品跑步鞋，轻便，透气网面，宿舍适用",
+     "category": "跑步鞋",
+     "category_id": 35,
+     "price_cents": 8490
+    }
+   ]
+  },
+  {
+   "id": "zh-012",
+   "query": "连衣裙",
+   "qualifier": null,
+   "expected_categories": "连衣裙",
+   "top5": [
+    {
+     "id": 99990,
+     "title_zh": "连衣裙 悦享型号99990",
+     "description_zh": "悦享出品连衣裙，雪纺，夏季，宿舍适用",
+     "category": "连衣裙",
+     "category_id": 37,
+     "price_cents": 2240
+    },
+    {
+     "id": 5285,
+     "title_zh": "连衣裙 匠造型号5285",
+     "description_zh": "匠造出品连衣裙，雪纺，收腰，礼赠适用",
+     "category": "连衣裙",
+     "category_id": 37,
+     "price_cents": 6500
+    },
+    {
+     "id": 4104,
+     "title_zh": "连衣裙 初品型号4104",
+     "description_zh": "初品出品连衣裙，收腰，雪纺，出行适用",
+     "category": "连衣裙",
+     "category_id": 37,
+     "price_cents": 12990
+    },
+    {
+     "id": 1156,
+     "title_zh": "连衣裙 匠造型号1156",
+     "description_zh": "匠造出品连衣裙，收腰，夏季，宿舍适用",
+     "category": "连衣裙",
+     "category_id": 37,
+     "price_cents": 19890
+    },
+    {
+     "id": 15574,
+     "title_zh": "连衣裙 悦享型号15574",
+     "description_zh": "悦享出品连衣裙，雪纺，收腰，礼赠适用",
+     "category": "连衣裙",
+     "category_id": 37,
+     "price_cents": 2240
+    }
+   ]
+  },
+  {
+   "id": "zh-013",
+   "query": "男士衬衫",
+   "qualifier": null,
+   "expected_categories": "男士衬衫",
+   "top5": [
+    {
+     "id": 40,
+     "title_zh": "男士衬衫 简叶型号40",
+     "description_zh": "简叶出品男士衬衫，商务，免烫，出行适用",
+     "category": "男士衬衫",
+     "category_id": 39,
+     "price_cents": 4350
+    },
+    {
+     "id": 177,
+     "title_zh": "男士衬衫 云杉型号177",
+     "description_zh": "云杉出品男士衬衫，长袖，商务，出行适用",
+     "category": "男士衬衫",
+     "category_id": 39,
+     "price_cents": 2490
+    },
+    {
+     "id": 3666,
+     "title_zh": "男士衬衫 匠造型号3666",
+     "description_zh": "匠造出品男士衬衫，商务，免烫，家用适用",
+     "category": "男士衬衫",
+     "category_id": 39,
+     "price_cents": 2490
+    },
+    {
+     "id": 1865,
+     "title_zh": "男士衬衫 匠造型号1865",
+     "description_zh": "匠造出品男士衬衫，商务，免烫，家用适用",
+     "category": "男士衬衫",
+     "category_id": 39,
+     "price_cents": 2490
+    },
+    {
+     "id": 4518,
+     "title_zh": "男士衬衫 优工型号4518",
+     "description_zh": "优工出品男士衬衫，商务，长袖，出行适用",
+     "category": "男士衬衫",
+     "category_id": 39,
+     "price_cents": 2490
+    }
+   ]
+  },
+  {
+   "id": "zh-014",
+   "query": "电脑椅",
+   "qualifier": null,
+   "expected_categories": "电脑椅",
+   "top5": [
+    {
+     "id": 643,
+     "title_zh": "电脑椅 简叶型号643",
+     "description_zh": "简叶出品电脑椅，腰托，人体工学，出行适用",
+     "category": "电脑椅",
+     "category_id": 56,
+     "price_cents": 7999
+    },
+    {
+     "id": 421,
+     "title_zh": "电脑椅 晨露型号421",
+     "description_zh": "晨露出品电脑椅，人体工学，升降，办公适用",
+     "category": "电脑椅",
+     "category_id": 56,
+     "price_cents": 12299
+    },
+    {
+     "id": 358,
+     "title_zh": "电脑椅 云杉型号358",
+     "description_zh": "云杉出品电脑椅，升降，人体工学，家用适用",
+     "category": "电脑椅",
+     "category_id": 56,
+     "price_cents": 11000
+    },
+    {
+     "id": 390,
+     "title_zh": "电脑椅 晨露型号390",
+     "description_zh": "晨露出品电脑椅，人体工学，升降，家用适用",
+     "category": "电脑椅",
+     "category_id": 56,
+     "price_cents": 15999
+    },
+    {
+     "id": 495,
+     "title_zh": "电脑椅 优工型号495",
+     "description_zh": "优工出品电脑椅，腰托，人体工学，出行适用",
+     "category": "电脑椅",
+     "category_id": 56,
+     "price_cents": 15998
+    }
+   ]
+  },
+  {
+   "id": "zh-015",
+   "query": "乳胶床垫",
+   "qualifier": null,
+   "expected_categories": "乳胶床垫",
+   "top5": [
+    {
+     "id": 2581,
+     "title_zh": "乳胶床垫 优工型号2581",
+     "description_zh": "优工出品乳胶床垫，天然乳胶，护脊，礼赠适用",
+     "category": "乳胶床垫",
+     "category_id": 53,
+     "price_cents": 12990
+    },
+    {
+     "id": 2162,
+     "title_zh": "乳胶床垫 简叶型号2162",
+     "description_zh": "简叶出品乳胶床垫，1.8米，护脊，出行适用",
+     "category": "乳胶床垫",
+     "category_id": 53,
+     "price_cents": 39999
+    },
+    {
+     "id": 12356,
+     "title_zh": "乳胶床垫 优工型号12356",
+     "description_zh": "优工出品乳胶床垫，1.8米，天然乳胶，宿舍适用",
+     "category": "乳胶床垫",
+     "category_id": 53,
+     "price_cents": 4470
+    },
+    {
+     "id": 60404,
+     "title_zh": "乳胶床垫 臻选型号60404",
+     "description_zh": "臻选出品乳胶床垫，天然乳胶，1.8米，礼赠适用",
+     "category": "乳胶床垫",
+     "category_id": 53,
+     "price_cents": 4470
+    },
+    {
+     "id": 68293,
+     "title_zh": "乳胶床垫 臻选型号68293",
+     "description_zh": "臻选出品乳胶床垫，1.8米，天然乳胶，礼赠适用",
+     "category": "乳胶床垫",
+     "category_id": 53,
+     "price_cents": 4470
+    }
+   ]
+  },
+  {
+   "id": "zh-016",
+   "query": "笔记本电脑",
+   "qualifier": null,
+   "expected_categories": "笔记本电脑",
+   "top5": [
+    {
+     "id": 6238,
+     "title_zh": "笔记本电脑 优工型号6238",
+     "description_zh": "优工出品笔记本电脑，16G内存，办公，出行适用",
+     "category": "笔记本电脑",
+     "category_id": 62,
+     "price_cents": 53000
+    },
+    {
+     "id": 8787,
+     "title_zh": "笔记本电脑 臻选型号8787",
+     "description_zh": "臻选出品笔记本电脑，办公，16G内存，办公适用",
+     "category": "笔记本电脑",
+     "category_id": 62,
+     "price_cents": 58000
+    },
+    {
+     "id": 4018,
+     "title_zh": "笔记本电脑 晨露型号4018",
+     "description_zh": "晨露出品笔记本电脑，16G内存，办公，办公适用",
+     "category": "笔记本电脑",
+     "category_id": 62,
+     "price_cents": 59900
+    },
+    {
+     "id": 4141,
+     "title_zh": "笔记本电脑 悦享型号4141",
+     "description_zh": "悦享出品笔记本电脑，16G内存，办公，礼赠适用",
+     "category": "笔记本电脑",
+     "category_id": 62,
+     "price_cents": 61999
+    },
+    {
+     "id": 3342,
+     "title_zh": "笔记本电脑 简叶型号3342",
+     "description_zh": "简叶出品笔记本电脑，16G内存，办公，宿舍适用",
+     "category": "笔记本电脑",
+     "category_id": 62,
+     "price_cents": 89900
+    }
+   ]
+  },
+  {
+   "id": "zh-017",
+   "query": "电竞主机",
+   "qualifier": null,
+   "expected_categories": "电竞主机",
+   "top5": [
+    {
+     "id": 121,
+     "title_zh": "电竞主机 简叶型号121",
+     "description_zh": "简叶出品电竞主机，独显，高配，办公适用",
+     "category": "电竞主机",
+     "category_id": 61,
+     "price_cents": 12999
+    },
+    {
+     "id": 99991,
+     "title_zh": "电竞主机 悦享型号99991",
+     "description_zh": "悦享出品电竞主机，水冷，独显，宿舍适用",
+     "category": "电竞主机",
+     "category_id": 61,
+     "price_cents": 21900
+    },
+    {
+     "id": 55027,
+     "title_zh": "电竞主机 优工型号55027",
+     "description_zh": "优工出品电竞主机，水冷，独显，礼赠适用",
+     "category": "电竞主机",
+     "category_id": 61,
+     "price_cents": 12999
+    },
+    {
+     "id": 69335,
+     "title_zh": "电竞主机 简叶型号69335",
+     "description_zh": "简叶出品电竞主机，水冷，高配，办公适用",
+     "category": "电竞主机",
+     "category_id": 61,
+     "price_cents": 12999
+    },
+    {
+     "id": 13330,
+     "title_zh": "电竞主机 初品型号13330",
+     "description_zh": "初品出品电竞主机，独显，高配，办公适用",
+     "category": "电竞主机",
+     "category_id": 61,
+     "price_cents": 21900
+    }
+   ]
+  },
+  {
+   "id": "zh-018",
+   "query": "平板电脑",
+   "qualifier": null,
+   "expected_categories": "平板电脑",
+   "top5": [
+    {
+     "id": 6890,
+     "title_zh": "平板电脑 初品型号6890",
+     "description_zh": "初品出品平板电脑，11英寸，学习办公，家用适用",
+     "category": "平板电脑",
+     "category_id": 70,
+     "price_cents": 8445
+    },
+    {
+     "id": 7846,
+     "title_zh": "平板电脑 简叶型号7846",
+     "description_zh": "简叶出品平板电脑，学习办公，11英寸，办公适用",
+     "category": "平板电脑",
+     "category_id": 70,
+     "price_cents": 10290
+    },
+    {
+     "id": 6114,
+     "title_zh": "平板电脑 臻选型号6114",
+     "description_zh": "臻选出品平板电脑，大电池，11英寸，家用适用",
+     "category": "平板电脑",
+     "category_id": 70,
+     "price_cents": 9900
+    },
+    {
+     "id": 6271,
+     "title_zh": "平板电脑 初品型号6271",
+     "description_zh": "初品出品平板电脑，大电池，学习办公，出行适用",
+     "category": "平板电脑",
+     "category_id": 70,
+     "price_cents": 15299
+    },
+    {
+     "id": 21904,
+     "title_zh": "平板电脑 晨露型号21904",
+     "description_zh": "晨露出品平板电脑，学习办公，大电池，出行适用",
+     "category": "平板电脑",
+     "category_id": 70,
+     "price_cents": 1490
+    }
+   ]
+  },
+  {
+   "id": "zh-019",
+   "query": "智能手表",
+   "qualifier": null,
+   "expected_categories": "智能手表",
+   "top5": [
+    {
+     "id": 906,
+     "title_zh": "智能手表 匠造型号906",
+     "description_zh": "匠造出品智能手表，防水，心率监测，礼赠适用",
+     "category": "智能手表",
+     "category_id": 31,
+     "price_cents": 1800
+    },
+    {
+     "id": 114,
+     "title_zh": "智能手表 初品型号114",
+     "description_zh": "初品出品智能手表，心率监测，防水，礼赠适用",
+     "category": "智能手表",
+     "category_id": 31,
+     "price_cents": 2040
+    },
+    {
+     "id": 925,
+     "title_zh": "智能手表 臻选型号925",
+     "description_zh": "臻选出品智能手表，防水，长续航，办公适用",
+     "category": "智能手表",
+     "category_id": 31,
+     "price_cents": 1260
+    },
+    {
+     "id": 178,
+     "title_zh": "智能手表 臻选型号178",
+     "description_zh": "臻选出品智能手表，防水，长续航，家用适用",
+     "category": "智能手表",
+     "category_id": 31,
+     "price_cents": 1832
+    },
+    {
+     "id": 712,
+     "title_zh": "智能手表 优工型号712",
+     "description_zh": "优工出品智能手表，长续航，心率监测，办公适用",
+     "category": "智能手表",
+     "category_id": 31,
+     "price_cents": 1990
+    }
+   ]
+  },
+  {
+   "id": "zh-020",
+   "query": "机械手表",
+   "qualifier": null,
+   "expected_categories": "机械手表",
+   "top5": [
+    {
+     "id": 5,
+     "title_zh": "机械手表 初品型号5",
+     "description_zh": "初品出品机械手表，防水，钢带，礼赠适用",
+     "category": "机械手表",
+     "category_id": 67,
+     "price_cents": 19900
+    },
+    {
+     "id": 58,
+     "title_zh": "机械手表 悦享型号58",
+     "description_zh": "悦享出品机械手表，全自动机芯，防水，礼赠适用",
+     "category": "机械手表",
+     "category_id": 67,
+     "price_cents": 27090
+    },
+    {
+     "id": 88,
+     "title_zh": "机械手表 初品型号88",
+     "description_zh": "初品出品机械手表，全自动机芯，钢带，礼赠适用",
+     "category": "机械手表",
+     "category_id": 67,
+     "price_cents": 74999
+    },
+    {
+     "id": 296,
+     "title_zh": "机械手表 初品型号296",
+     "description_zh": "初品出品机械手表，防水，全自动机芯，出行适用",
+     "category": "机械手表",
+     "category_id": 67,
+     "price_cents": 2900
+    },
+    {
+     "id": 151,
+     "title_zh": "机械手表 臻选型号151",
+     "description_zh": "臻选出品机械手表，防水，钢带，家用适用",
+     "category": "机械手表",
+     "category_id": 67,
+     "price_cents": 2900
+    }
+   ]
+  },
+  {
+   "id": "zh-021",
+   "query": "咖啡机",
+   "qualifier": null,
+   "expected_categories": "咖啡机",
+   "top5": [
+    {
+     "id": 504,
+     "title_zh": "咖啡机 简叶型号504",
+     "description_zh": "简叶出品咖啡机，家用，打奶泡，宿舍适用",
+     "category": "咖啡机",
+     "category_id": 65,
+     "price_cents": 179900
+    },
+    {
+     "id": 6600,
+     "title_zh": "咖啡机 初品型号6600",
+     "description_zh": "初品出品咖啡机，意式半自动，打奶泡，家用适用",
+     "category": "咖啡机",
+     "category_id": 65,
+     "price_cents": 1324
+    },
+    {
+     "id": 6400,
+     "title_zh": "咖啡机 晨露型号6400",
+     "description_zh": "晨露出品咖啡机，家用，意式半自动，家用适用",
+     "category": "咖啡机",
+     "category_id": 65,
+     "price_cents": 2340
+    },
+    {
+     "id": 3987,
+     "title_zh": "咖啡机 悦享型号3987",
+     "description_zh": "悦享出品咖啡机，家用，意式半自动，礼赠适用",
+     "category": "咖啡机",
+     "category_id": 65,
+     "price_cents": 6000
+    },
+    {
+     "id": 3147,
+     "title_zh": "咖啡机 晨露型号3147",
+     "description_zh": "晨露出品咖啡机，打奶泡，家用，礼赠适用",
+     "category": "咖啡机",
+     "category_id": 65,
+     "price_cents": 7190
+    }
+   ]
+  },
+  {
+   "id": "zh-022",
+   "query": "破壁机",
+   "qualifier": null,
+   "expected_categories": "破壁机",
+   "top5": [
+    {
+     "id": 2382,
+     "title_zh": "破壁机 匠造型号2382",
+     "description_zh": "匠造出品破壁机，1.75L，加热，宿舍适用",
+     "category": "破壁机",
+     "category_id": 66,
+     "price_cents": 2009
+    },
+    {
+     "id": 3346,
+     "title_zh": "破壁机 初品型号3346",
+     "description_zh": "初品出品破壁机，加热，1.75L，礼赠适用",
+     "category": "破壁机",
+     "category_id": 66,
+     "price_cents": 10290
+    },
+    {
+     "id": 12132,
+     "title_zh": "破壁机 晨露型号12132",
+     "description_zh": "晨露出品破壁机，1.75L，低音，宿舍适用",
+     "category": "破壁机",
+     "category_id": 66,
+     "price_cents": 1742
+    },
+    {
+     "id": 14463,
+     "title_zh": "破壁机 简叶型号14463",
+     "description_zh": "简叶出品破壁机，1.75L，加热，家用适用",
+     "category": "破壁机",
+     "category_id": 66,
+     "price_cents": 1753
+    },
+    {
+     "id": 33092,
+     "title_zh": "破壁机 悦享型号33092",
+     "description_zh": "悦享出品破壁机，1.75L，低音，办公适用",
+     "category": "破壁机",
+     "category_id": 66,
+     "price_cents": 1753
+    }
+   ]
+  },
+  {
+   "id": "zh-023",
+   "query": "微波炉",
+   "qualifier": null,
+   "expected_categories": "微波炉",
+   "top5": [
+    {
+     "id": 730,
+     "title_zh": "微波炉 晨露型号730",
+     "description_zh": "晨露出品微波炉，转盘式，20升，出行适用",
+     "category": "微波炉",
+     "category_id": 30,
+     "price_cents": 49200
+    },
+    {
+     "id": 294,
+     "title_zh": "微波炉 初品型号294",
+     "description_zh": "初品出品微波炉，平板式，20升，家用适用",
+     "category": "微波炉",
+     "category_id": 30,
+     "price_cents": 53300
+    },
+    {
+     "id": 5914,
+     "title_zh": "微波炉 初品型号5914",
+     "description_zh": "初品出品微波炉，20升，平板式，办公适用",
+     "category": "微波炉",
+     "category_id": 30,
+     "price_cents": 11999
+    },
+    {
+     "id": 7316,
+     "title_zh": "微波炉 臻选型号7316",
+     "description_zh": "臻选出品微波炉，转盘式，20升，礼赠适用",
+     "category": "微波炉",
+     "category_id": 30,
+     "price_cents": 12865
+    },
+    {
+     "id": 6422,
+     "title_zh": "微波炉 简叶型号6422",
+     "description_zh": "简叶出品微波炉，平板式，20升，宿舍适用",
+     "category": "微波炉",
+     "category_id": 30,
+     "price_cents": 13900
+    }
+   ]
+  },
+  {
+   "id": "zh-024",
+   "query": "电热毯",
+   "qualifier": null,
+   "expected_categories": "电热毯",
+   "top5": [
+    {
+     "id": 3442,
+     "title_zh": "电热毯 晨露型号3442",
+     "description_zh": "晨露出品电热毯，安全断电，定时，礼赠适用",
+     "category": "电热毯",
+     "category_id": 15,
+     "price_cents": 790
+    },
+    {
+     "id": 8703,
+     "title_zh": "电热毯 优工型号8703",
+     "description_zh": "优工出品电热毯，定时，双控，礼赠适用",
+     "category": "电热毯",
+     "category_id": 15,
+     "price_cents": 699
+    },
+    {
+     "id": 2549,
+     "title_zh": "电热毯 云杉型号2549",
+     "description_zh": "云杉出品电热毯，安全断电，定时，办公适用",
+     "category": "电热毯",
+     "category_id": 15,
+     "price_cents": 3990
+    },
+    {
+     "id": 2507,
+     "title_zh": "电热毯 云杉型号2507",
+     "description_zh": "云杉出品电热毯，安全断电，双控，家用适用",
+     "category": "电热毯",
+     "category_id": 15,
+     "price_cents": 3990
+    },
+    {
+     "id": 6980,
+     "title_zh": "电热毯 初品型号6980",
+     "description_zh": "初品出品电热毯，定时，双控，礼赠适用",
+     "category": "电热毯",
+     "category_id": 15,
+     "price_cents": 8990
+    }
+   ]
+  },
+  {
+   "id": "zh-025",
+   "query": "瑜伽垫",
+   "qualifier": null,
+   "expected_categories": "瑜伽垫",
+   "top5": [
+    {
+     "id": 35,
+     "title_zh": "瑜伽垫 悦享型号35",
+     "description_zh": "悦享出品瑜伽垫，防滑，加厚，礼赠适用",
+     "category": "瑜伽垫",
+     "category_id": 33,
+     "price_cents": 1925
+    },
+    {
+     "id": 22,
+     "title_zh": "瑜伽垫 悦享型号22",
+     "description_zh": "悦享出品瑜伽垫，加厚，环保TPE，办公适用",
+     "category": "瑜伽垫",
+     "category_id": 33,
+     "price_cents": 3990
+    },
+    {
+     "id": 30,
+     "title_zh": "瑜伽垫 简叶型号30",
+     "description_zh": "简叶出品瑜伽垫，加厚，防滑，出行适用",
+     "category": "瑜伽垫",
+     "category_id": 33,
+     "price_cents": 3600
+    },
+    {
+     "id": 50,
+     "title_zh": "瑜伽垫 云杉型号50",
+     "description_zh": "云杉出品瑜伽垫，防滑，加厚，办公适用",
+     "category": "瑜伽垫",
+     "category_id": 33,
+     "price_cents": 4990
+    },
+    {
+     "id": 41,
+     "title_zh": "瑜伽垫 悦享型号41",
+     "description_zh": "悦享出品瑜伽垫，环保TPE，防滑，出行适用",
+     "category": "瑜伽垫",
+     "category_id": 33,
+     "price_cents": 6999
+    }
+   ]
+  },
+  {
+   "id": "zh-026",
+   "query": "行李箱",
+   "qualifier": null,
+   "expected_categories": "行李箱",
+   "top5": [
+    {
+     "id": 27,
+     "title_zh": "行李箱 晨露型号27",
+     "description_zh": "晨露出品行李箱，密码锁，万向轮，办公适用",
+     "category": "行李箱",
+     "category_id": 51,
+     "price_cents": 9490
+    },
+    {
+     "id": 604,
+     "title_zh": "行李箱 初品型号604",
+     "description_zh": "初品出品行李箱，万向轮，20寸，宿舍适用",
+     "category": "行李箱",
+     "category_id": 51,
+     "price_cents": 2745
+    },
+    {
+     "id": 393,
+     "title_zh": "行李箱 初品型号393",
+     "description_zh": "初品出品行李箱，万向轮，20寸，出行适用",
+     "category": "行李箱",
+     "category_id": 51,
+     "price_cents": 3490
+    },
+    {
+     "id": 241,
+     "title_zh": "行李箱 悦享型号241",
+     "description_zh": "悦享出品行李箱，密码锁，20寸，礼赠适用",
+     "category": "行李箱",
+     "category_id": 51,
+     "price_cents": 5490
+    },
+    {
+     "id": 184,
+     "title_zh": "行李箱 优工型号184",
+     "description_zh": "优工出品行李箱，万向轮，20寸，礼赠适用",
+     "category": "行李箱",
+     "category_id": 51,
+     "price_cents": 6990
+    }
+   ]
+  },
+  {
+   "id": "zh-027",
+   "query": "中性笔",
+   "qualifier": null,
+   "expected_categories": "中性笔",
+   "top5": [
+    {
+     "id": 85,
+     "title_zh": "中性笔 云杉型号85",
+     "description_zh": "云杉出品中性笔，12支装，0.5mm，出行适用",
+     "category": "中性笔",
+     "category_id": 60,
+     "price_cents": 8490
+    },
+    {
+     "id": 582,
+     "title_zh": "中性笔 云杉型号582",
+     "description_zh": "云杉出品中性笔，12支装，顺滑书写，礼赠适用",
+     "category": "中性笔",
+     "category_id": 60,
+     "price_cents": 1899
+    },
+    {
+     "id": 506,
+     "title_zh": "中性笔 简叶型号506",
+     "description_zh": "简叶出品中性笔，0.5mm，顺滑书写，家用适用",
+     "category": "中性笔",
+     "category_id": 60,
+     "price_cents": 1987
+    },
+    {
+     "id": 621,
+     "title_zh": "中性笔 优工型号621",
+     "description_zh": "优工出品中性笔，0.5mm，顺滑书写，家用适用",
+     "category": "中性笔",
+     "category_id": 60,
+     "price_cents": 2654
+    },
+    {
+     "id": 540,
+     "title_zh": "中性笔 匠造型号540",
+     "description_zh": "匠造出品中性笔，0.5mm，顺滑书写，家用适用",
+     "category": "中性笔",
+     "category_id": 60,
+     "price_cents": 2222
+    }
+   ]
+  },
+  {
+   "id": "zh-028",
+   "query": "圣诞装饰",
+   "qualifier": null,
+   "expected_categories": "圣诞装饰",
+   "top5": [
+    {
+     "id": 81,
+     "title_zh": "圣诞装饰 简叶型号81",
+     "description_zh": "简叶出品圣诞装饰，LED灯串，挂饰，家用适用",
+     "category": "圣诞装饰",
+     "category_id": 7,
+     "price_cents": 1656
+    },
+    {
+     "id": 685,
+     "title_zh": "圣诞装饰 臻选型号685",
+     "description_zh": "臻选出品圣诞装饰，LED灯串，挂饰，家用适用",
+     "category": "圣诞装饰",
+     "category_id": 7,
+     "price_cents": 2490
+    },
+    {
+     "id": 640,
+     "title_zh": "圣诞装饰 晨露型号640",
+     "description_zh": "晨露出品圣诞装饰，室内，挂饰，宿舍适用",
+     "category": "圣诞装饰",
+     "category_id": 7,
+     "price_cents": 7900
+    },
+    {
+     "id": 3437,
+     "title_zh": "圣诞装饰 优工型号3437",
+     "description_zh": "优工出品圣诞装饰，挂饰，室内，家用适用",
+     "category": "圣诞装饰",
+     "category_id": 7,
+     "price_cents": 1164
+    },
+    {
+     "id": 9304,
+     "title_zh": "圣诞装饰 云杉型号9304",
+     "description_zh": "云杉出品圣诞装饰，LED灯串，挂饰，办公适用",
+     "category": "圣诞装饰",
+     "category_id": 7,
+     "price_cents": 637
+    }
+   ]
+  },
+  {
+   "id": "zh-029",
+   "query": "工具箱",
+   "qualifier": null,
+   "expected_categories": "工具箱",
+   "top5": [
+    {
+     "id": 281,
+     "title_zh": "工具箱 初品型号281",
+     "description_zh": "初品出品工具箱，手提，家用组合，出行适用",
+     "category": "工具箱",
+     "category_id": 23,
+     "price_cents": 3490
+    },
+    {
+     "id": 510,
+     "title_zh": "工具箱 初品型号510",
+     "description_zh": "初品出品工具箱，手提，家用组合，办公适用",
+     "category": "工具箱",
+     "category_id": 23,
+     "price_cents": 4590
+    },
+    {
+     "id": 675,
+     "title_zh": "工具箱 臻选型号675",
+     "description_zh": "臻选出品工具箱，五金套装，家用组合，礼赠适用",
+     "category": "工具箱",
+     "category_id": 23,
+     "price_cents": 11800
+    },
+    {
+     "id": 8308,
+     "title_zh": "工具箱 初品型号8308",
+     "description_zh": "初品出品工具箱，手提，家用组合，办公适用",
+     "category": "工具箱",
+     "category_id": 23,
+     "price_cents": 988
+    },
+    {
+     "id": 7621,
+     "title_zh": "工具箱 晨露型号7621",
+     "description_zh": "晨露出品工具箱，手提，五金套装，办公适用",
+     "category": "工具箱",
+     "category_id": 23,
+     "price_cents": 1580
+    }
+   ]
+  },
+  {
+   "id": "zh-030",
+   "query": "手机壳",
+   "qualifier": null,
+   "expected_categories": "手机壳",
+   "top5": [
+    {
+     "id": 98,
+     "title_zh": "手机壳 悦享型号98",
+     "description_zh": "悦享出品手机壳，防摔，液态硅胶，办公适用",
+     "category": "手机壳",
+     "category_id": 71,
+     "price_cents": 2699
+    },
+    {
+     "id": 71,
+     "title_zh": "手机壳 晨露型号71",
+     "description_zh": "晨露出品手机壳，防摔，液态硅胶，宿舍适用",
+     "category": "手机壳",
+     "category_id": 71,
+     "price_cents": 2499
+    },
+    {
+     "id": 77,
+     "title_zh": "手机壳 初品型号77",
+     "description_zh": "初品出品手机壳，防摔，液态硅胶，办公适用",
+     "category": "手机壳",
+     "category_id": 71,
+     "price_cents": 6600
+    },
+    {
+     "id": 929,
+     "title_zh": "手机壳 匠造型号929",
+     "description_zh": "匠造出品手机壳，透明，防摔，出行适用",
+     "category": "手机壳",
+     "category_id": 71,
+     "price_cents": 1387
+    },
+    {
+     "id": 952,
+     "title_zh": "手机壳 晨露型号952",
+     "description_zh": "晨露出品手机壳，防摔，透明，办公适用",
+     "category": "手机壳",
+     "category_id": 71,
+     "price_cents": 1297
+    }
+   ]
+  }
+ ]
+}

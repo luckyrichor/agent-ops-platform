@@ -1,0 +1,189 @@
+{
+ "round_db": "s2rf1793755552",
+ "replay_mode": "identical payload+revision (fixed)",
+ "phases": {
+  "sequential": {
+   "setup": {
+    "order_id": 1001
+   },
+   "payload": {
+    "order_id": "1001",
+    "ticket_id": "fc7414ce-4dda-4a2f-9faf-ded49114910d",
+    "revision": "2",
+    "account_id": "3"
+   },
+   "outcomes": [
+    {
+     "http_status": 200,
+     "body": {
+      "status": "ok",
+      "refund_no": "Ra71f59fb0a2845b3977f5a7a1048bd90",
+      "state": "succeeded"
+     }
+    },
+    {
+     "http_status": 200,
+     "body": {
+      "status": "ok",
+      "refund_no": "Ra71f59fb0a2845b3977f5a7a1048bd90",
+      "state": "succeeded"
+     }
+    },
+    {
+     "http_status": 200,
+     "body": {
+      "status": "ok",
+      "refund_no": "Ra71f59fb0a2845b3977f5a7a1048bd90",
+      "state": "succeeded"
+     }
+    },
+    {
+     "http_status": 200,
+     "body": {
+      "status": "ok",
+      "refund_no": "Ra71f59fb0a2845b3977f5a7a1048bd90",
+      "state": "succeeded"
+     }
+    },
+    {
+     "http_status": 200,
+     "body": {
+      "status": "ok",
+      "refund_no": "Ra71f59fb0a2845b3977f5a7a1048bd90",
+      "state": "succeeded"
+     }
+    }
+   ],
+   "ledger": {
+    "refund_rows": 1,
+    "refund_succeeded": 1,
+    "distinct_refund_no": 1,
+    "refund_succeeded_audits": 1,
+    "order_status": "refunded",
+    "gateway": {
+     "calls": 1,
+     "refunds": {
+      "Ra71f59fb0a2845b3977f5a7a1048bd90": {
+       "refund_requests": 1,
+       "fund_change_y": 1,
+       "out_trade_no": "Pa7d6ad24210141508af350a296cc96b6"
+      }
+     },
+     "methods": [
+      "alipay.trade.refund"
+     ]
+    }
+   },
+   "gateway_fund_change_y_by_refund_no": {
+    "Ra71f59fb0a2845b3977f5a7a1048bd90": 1
+   },
+   "checks": {
+    "all_replays_http_200": true,
+    "all_replays_same_refund_no": true,
+    "ledger_single_refund_row": true,
+    "ledger_single_succeeded": true,
+    "ledger_single_succeeded_audit": true,
+    "order_refunded": true,
+    "gateway_fund_change_y_exactly_once_per_refund_no": true,
+    "gateway_request_counts_recorded": {
+     "Ra71f59fb0a2845b3977f5a7a1048bd90": 1
+    }
+   }
+  },
+  "concurrent": {
+   "setup": {
+    "order_id": 1002
+   },
+   "payload": {
+    "order_id": "1002",
+    "ticket_id": "ec2b90b1-e36b-4e28-8c26-6a64e4940644",
+    "revision": "2",
+    "account_id": "3"
+   },
+   "outcomes": [
+    {
+     "http_status": 200,
+     "body": {
+      "status": "ok",
+      "refund_no": "R4ba7a4eee7bf48198b8938c50f9423e4",
+      "state": "succeeded"
+     }
+    },
+    {
+     "http_status": 200,
+     "body": {
+      "status": "ok",
+      "refund_no": "R4ba7a4eee7bf48198b8938c50f9423e4",
+      "state": "succeeded"
+     }
+    },
+    {
+     "http_status": 200,
+     "body": {
+      "status": "ok",
+      "refund_no": "R4ba7a4eee7bf48198b8938c50f9423e4",
+      "state": "succeeded"
+     }
+    },
+    {
+     "http_status": 200,
+     "body": {
+      "status": "ok",
+      "refund_no": "R4ba7a4eee7bf48198b8938c50f9423e4",
+      "state": "succeeded"
+     }
+    },
+    {
+     "http_status": 200,
+     "body": {
+      "status": "ok",
+      "refund_no": "R4ba7a4eee7bf48198b8938c50f9423e4",
+      "state": "succeeded"
+     }
+    }
+   ],
+   "ledger": {
+    "refund_rows": 1,
+    "refund_succeeded": 1,
+    "distinct_refund_no": 1,
+    "refund_succeeded_audits": 1,
+    "order_status": "refunded",
+    "gateway": {
+     "calls": 6,
+     "refunds": {
+      "Ra71f59fb0a2845b3977f5a7a1048bd90": {
+       "refund_requests": 1,
+       "fund_change_y": 1,
+       "out_trade_no": "Pa7d6ad24210141508af350a296cc96b6"
+      },
+      "R4ba7a4eee7bf48198b8938c50f9423e4": {
+       "refund_requests": 5,
+       "fund_change_y": 1,
+       "out_trade_no": "P3c6c7341d7424b029f07485de0f54fa2"
+      }
+     },
+     "methods": [
+      "alipay.trade.refund"
+     ]
+    }
+   },
+   "gateway_fund_change_y_by_refund_no": {
+    "Ra71f59fb0a2845b3977f5a7a1048bd90": 1,
+    "R4ba7a4eee7bf48198b8938c50f9423e4": 1
+   },
+   "checks": {
+    "all_replays_http_200": true,
+    "all_replays_same_refund_no": true,
+    "ledger_single_refund_row": true,
+    "ledger_single_succeeded": true,
+    "ledger_single_succeeded_audit": true,
+    "order_refunded": true,
+    "gateway_fund_change_y_exactly_once_per_refund_no": true,
+    "gateway_request_counts_recorded": {
+     "R4ba7a4eee7bf48198b8938c50f9423e4": 5
+    }
+   }
+  }
+ },
+ "notes": "重放为完全相同 payload/revision；硬断言含：全部重放 HTTP 200、同一 refund_no、每阶段网关 fund_change=Y 恰 1 次/号；409（若有）为当前协议真实行为，业务码见 outcomes[].body.code。"
+}
