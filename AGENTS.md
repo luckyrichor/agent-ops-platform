@@ -688,6 +688,6 @@ CodeBuddy实施，Codex审阅返修、独立重放数据并补充一次准确墙
 
 下一步：用户确认缓存对象/字段/容量/一致性门槛后才开始正式S3。若选实体缓存，先测现有CommerceBackend.product基线；不能拿中文检索基线冒充其对照。旧真实请求序列仅.local保存，迁移0011和语料脚本只对合成bench环境操作，未部署现有业务。
 
-飞书待同步：2026-11-04 S3前置独立验收、S2退款补验及S3设计待确认；沿用既有开发记录。
+飞书已同步：2026-11-04 S3前置独立验收、S2退款补验及S3设计待确认已追加既有开发记录（revision 29），来源 agent-ops-platform@e60bcf6；codex profile / --as user。正文回读及项目父节点回查通过。链接：https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf 。正式缓存实现/实验仍待用户确认。
 
 2026-11-04补验：隔离PostgreSQL完整迁移up/down/up、双GIN索引和实际缺列guard通过，临时库已删；pytest的可选SQLite用例仍记skip，不冒充已运行。ruff与mypy（54源文件）通过。
