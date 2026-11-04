@@ -1,0 +1,187 @@
+{
+  "reviewer": "Codex",
+  "at_utc": "2026-11-04T02:26:42.860772+00:00",
+  "checks": [
+    {
+      "raw": "measurement-gate-r2.json",
+      "phase": "product",
+      "round": 1,
+      "requests": 300,
+      "errors": 0,
+      "percentiles_recomputed": true,
+      "sql_events_equal_requests": true
+    },
+    {
+      "raw": "measurement-gate-r2.json",
+      "phase": "product",
+      "round": 2,
+      "requests": 300,
+      "errors": 0,
+      "percentiles_recomputed": true,
+      "sql_events_equal_requests": true
+    },
+    {
+      "raw": "measurement-gate-r2.json",
+      "phase": "product",
+      "round": 3,
+      "requests": 300,
+      "errors": 0,
+      "percentiles_recomputed": true,
+      "sql_events_equal_requests": true
+    },
+    {
+      "raw": "measurement-gate-r2.json",
+      "phase": "catalog",
+      "round": 1,
+      "requests": 90,
+      "errors": 0,
+      "percentiles_recomputed": true,
+      "sql_events_equal_requests": true
+    },
+    {
+      "raw": "measurement-gate-r2.json",
+      "phase": "catalog",
+      "round": 2,
+      "requests": 90,
+      "errors": 0,
+      "percentiles_recomputed": true,
+      "sql_events_equal_requests": true
+    },
+    {
+      "raw": "measurement-gate-r2.json",
+      "phase": "catalog",
+      "round": 3,
+      "requests": 90,
+      "errors": 0,
+      "percentiles_recomputed": true,
+      "sql_events_equal_requests": true
+    },
+    {
+      "raw": "measurement-gate-r2.json",
+      "phase": "shopping",
+      "round": 1,
+      "requests": 90,
+      "errors": 0,
+      "percentiles_recomputed": true,
+      "sql_events_equal_requests": true
+    },
+    {
+      "raw": "measurement-gate-r2.json",
+      "phase": "shopping",
+      "round": 2,
+      "requests": 90,
+      "errors": 0,
+      "percentiles_recomputed": true,
+      "sql_events_equal_requests": true
+    },
+    {
+      "raw": "measurement-gate-r2.json",
+      "phase": "shopping",
+      "round": 3,
+      "requests": 90,
+      "errors": 0,
+      "percentiles_recomputed": true,
+      "sql_events_equal_requests": true
+    },
+    {
+      "raw": "measurement-gate-codex.json",
+      "phase": "product",
+      "round": 1,
+      "requests": 300,
+      "errors": 0,
+      "percentiles_recomputed": true,
+      "sql_events_equal_requests": true
+    },
+    {
+      "raw": "measurement-gate-codex.json",
+      "phase": "product",
+      "round": 2,
+      "requests": 300,
+      "errors": 0,
+      "percentiles_recomputed": true,
+      "sql_events_equal_requests": true
+    },
+    {
+      "raw": "measurement-gate-codex.json",
+      "phase": "product",
+      "round": 3,
+      "requests": 300,
+      "errors": 0,
+      "percentiles_recomputed": true,
+      "sql_events_equal_requests": true
+    },
+    {
+      "raw": "measurement-gate-codex.json",
+      "phase": "catalog",
+      "round": 1,
+      "requests": 90,
+      "errors": 0,
+      "percentiles_recomputed": true,
+      "sql_events_equal_requests": true
+    },
+    {
+      "raw": "measurement-gate-codex.json",
+      "phase": "catalog",
+      "round": 2,
+      "requests": 90,
+      "errors": 0,
+      "percentiles_recomputed": true,
+      "sql_events_equal_requests": true
+    },
+    {
+      "raw": "measurement-gate-codex.json",
+      "phase": "catalog",
+      "round": 3,
+      "requests": 90,
+      "errors": 0,
+      "percentiles_recomputed": true,
+      "sql_events_equal_requests": true
+    },
+    {
+      "raw": "measurement-gate-codex.json",
+      "phase": "shopping",
+      "round": 1,
+      "requests": 90,
+      "errors": 0,
+      "percentiles_recomputed": true,
+      "sql_events_equal_requests": true
+    },
+    {
+      "raw": "measurement-gate-codex.json",
+      "phase": "shopping",
+      "round": 2,
+      "requests": 90,
+      "errors": 0,
+      "percentiles_recomputed": true,
+      "sql_events_equal_requests": true
+    },
+    {
+      "raw": "measurement-gate-codex.json",
+      "phase": "shopping",
+      "round": 3,
+      "requests": 90,
+      "errors": 0,
+      "percentiles_recomputed": true,
+      "sql_events_equal_requests": true
+    }
+  ],
+  "historical_files_unchanged": 326,
+  "script_snapshots_verified": true,
+  "codex_protection": {
+    "exact_window_start": 1793759087.7338192,
+    "exact_window_end": 1793759141.9025846,
+    "samples": 64,
+    "samples_during_window": 52,
+    "live_guard_checks": 33,
+    "health_all_200": true,
+    "oom_delta": 0,
+    "min_mem_available_mib": 4820
+  },
+  "limits": [
+    "r2 pool_acquire is hold, not wait; raw retained",
+    "all ratios allow recorded rounding intervals",
+    "health probes are not business latency; memory service coverage gap retained",
+    "shared PG not capped or isolated",
+    "product not in Shopping.graph; no online LLM/memory measurements"
+  ]
+}

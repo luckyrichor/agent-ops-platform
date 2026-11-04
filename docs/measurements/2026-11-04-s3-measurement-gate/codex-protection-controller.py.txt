@@ -1,0 +1,39 @@
+from pathlib import Path
+import subprocess,time,json,uuid,platform,os
+import httpx
+outdir=Path('.local/s3-measurement-gate');gate=outdir/'measurement-gate-codex.json';host=outdir/'host-metrics-codex.json';stop=Path('.agent-tasks')/('verify-stop-'+uuid.uuid4().hex);unit='s3-gate-codex-'+str(int(time.time()))
+assert not gate.exists() and not host.exists()
+def mem():
+ return next(int(l.split()[1])//1024 for l in Path('/proc/meminfo').read_text().splitlines() if l.startswith('MemAvailable:'))
+def oom():
+ return next(int(l.split()[1]) for l in Path('/proc/vmstat').read_text().splitlines() if l.startswith('oom_kill '))
+initial=oom();assert mem()>2048;checks=[];failure=None;proc=None;sampler=None
+with Path('.agent-tasks/s3-gate-codex-live.log').open('w') as log,httpx.Client(timeout=2,trust_env=False) as client:
+ def probe():
+  statuses={}
+  for name,port in [('getaudio',8800),('getvideo',8900)]:
+   try:statuses[name]=client.get(f'http://127.0.0.1:{port}/health').status_code
+   except httpx.HTTPError:statuses[name]='transport_error'
+  row={'at_unix':time.time(),'mem_available_mib':mem(),'oom_kill':oom(),'health_status':statuses};checks.append(row)
+  return all(s==200 for s in statuses.values()) and row['mem_available_mib']>=2048 and row['oom_kill']==initial
+ try:
+  assert probe(),'preflight guard'
+  sampler=subprocess.Popen(['uv','run','python','scripts/s2-host-sample.py','--duration','240','--interval','1','--probes-per-cycle','1','--stop-file',str(stop),'--out',str(host)],stdout=log,stderr=subprocess.STDOUT)
+  time.sleep(2)
+  proc=subprocess.Popen(['systemd-run','--user','--wait','--pipe','--collect','--unit='+unit,'-p','CPUQuota=100%','-p','MemoryMax=768M','-p','MemorySwapMax=0','--working-directory='+str(Path.cwd()),str(Path.cwd()/'.venv/bin/python'),'scripts/s3-measurement-gate.py','--out',str(gate)],stdout=log,stderr=subprocess.STDOUT)
+  deadline=time.monotonic()+180
+  while proc.poll() is None:
+   if not probe() or sampler.poll() is not None or time.monotonic()>deadline:
+    subprocess.run(['systemctl','--user','stop',unit],check=False,capture_output=True);raise RuntimeError('own unit stopped by guard')
+   time.sleep(2)
+  assert proc.returncode==0,'measurement exit'
+  time.sleep(2);assert probe(),'postflight guard'
+ except BaseException as e:
+  failure=type(e).__name__+': '+str(e);raise
+ finally:
+  if proc is not None and proc.poll() is None:subprocess.run(['systemctl','--user','stop',unit],check=False,capture_output=True)
+  stop.touch()
+  if sampler is not None:sampler.wait(timeout=12)
+  Path('.agent-tasks/s3-gate-codex-protection.json').write_text(json.dumps({'reviewer':'Codex','started_at_unix':checks[0]['at_unix'] if checks else None,'finished_at_unix':time.time(),'failure':failure,'checks':checks,'environment':{'kernel':platform.release(),'cpu_count':os.cpu_count(),'driver_cpu_quota':'100%','driver_memory_max_mib':768,'driver_swap_max':0,'shared_postgres_capped':False}},indent=2)+'\n')
+assert sampler.returncode==0
+print('independent protected run completed',gate)
