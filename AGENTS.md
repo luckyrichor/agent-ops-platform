@@ -727,4 +727,4 @@ CodeBuddy执行systemctl stop/docker stop；Codex亲自核验4个MainPID=0、相
 
 ## 2026-11-08 后续授权停止bench-pg
 
-用户明确要求将bench-pg服务也停止。CodeBuddy执行docker stop，Codex亲自核验Running=false、Exited(0)、55432无监听且原数据卷目录存在；未删容器/卷、未改restart policy、未操作其他服务。镜像pgvector/pgvector:pg16，记忆服务表结构已核实，具体创建脚本/创建者及项目归属仍未完全确认，不将相关性推测写成确认结论。历史条目中“保留运行”是本次关停前状态，现已被此更新取代。仅运行状态变化，无代码改动、不运行应用测试。飞书待同步：2026-11-08 bench-pg后续关停。
+用户明确要求将bench-pg服务也停止。CodeBuddy执行docker stop，Codex亲自核验Running=false、Exited(0)、55432无监听且原数据卷目录存在；未删容器/卷、未改restart policy、未操作其他服务。镜像pgvector/pgvector:pg16，记忆服务表结构已核实，具体创建脚本/创建者及项目归属仍未完全确认，不将相关性推测写成确认结论。历史条目中“保留运行”是本次关停前状态，现已被此更新取代。仅运行状态变化，无代码改动、不运行应用测试。飞书已同步：既有开发记录revision33（来源f7a06ef），codex profile / --as user，正文及我的文档库/WorkPlan/agent-ops-platform父节点回查通过：https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf 。

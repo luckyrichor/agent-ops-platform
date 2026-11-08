@@ -697,4 +697,4 @@ B为建议待确认主线，未代用户选择。设计按页<=100有序ID+快�
 
 ## 2026-11-08 后续停止bench-pg
 
-按用户新增授权停止bench-pg；独立核验容器Exited(0)、55432无监听、原数据卷仍存在。无容器/数据删除、重启策略变更或其他服务操作。具体创建来源未完全确认。飞书待同步：2026-11-08 bench-pg后续关停。
+按用户新增授权停止bench-pg；独立核验容器Exited(0)、55432无监听、原数据卷仍存在。无容器/数据删除、重启策略变更或其他服务操作。具体创建来源未完全确认。飞书已同步：既有开发记录revision33（来源f7a06ef），codex profile / --as user，正文及我的文档库/WorkPlan/agent-ops-platform父节点回查通过：https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf 。
