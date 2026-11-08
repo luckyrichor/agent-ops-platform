@@ -1,6 +1,6 @@
 # AGENTS.md
 
-最后更新：2026-11-04（北京时间，S3短测量独立验收与设计v3待确认）
+最后更新：2026-11-08（北京时间，用户授权关停应用/关联容器并核查指定存储）
 
 本文件为在本仓库工作的编码 agent 提供指引（Claude Code 读 `CLAUDE.md`、Codex 读 `AGENTS.md`，两者都指向这里）。
 
@@ -10,7 +10,9 @@ Agent 应用与可观测评测平台。电商场景的多 Agent 任务拆解、�
 
 三个月求职计划六项目之一（原编号 ③），对应岗位 **05、07、10、11、14**，另含 **08** 作为子方向。总计划见 [workplan-docs](https://github.com/luckyrichor/workplan-docs)，岗位原文以那里的 `岗位要求原文.md` 为唯一依据。
 
-**当前状态（2026-11-04）：P8冻结、P9原基线保留；S2相同请求跨实例退款验证与报告口径已补齐，历史短突发/TTL并发/保护覆盖限制保留。S3前置已独立核验；短测量闸门已完成：商品详情实体路径 p95 2.54–5.75ms（≥2ms，不判A无收益）、中文检索limit=10各有效轮p95约311–392ms、真实导购链路检索span逐请求占比均值约0.94–0.95且 `CommerceBackend.product` 调用0/贡献0。S3设计v3（A/B双候选、B含预注册档位与epoch一致性）待用户确认，正式缓存实验未开跑、L1/Redis未实施；测量报告见docs/optimizations/S3-measurement-gate-2026-11-04.md。**
+**2026-11-08运行状态：用户要求的4个应用服务与8个关联容器均已停止，数据卷/文件未删除；web unit因SIGTERM退出保留failed标记，MainPID=0。bench-pg仅核查来源，仍运行。详见[指定存储可恢复性与关停核查](docs/operations/storage-recoverability-2026-11-08.md)。S3正式方案仍待确认。**
+
+**此前开发状态（2026-11-04）：P8冻结、P9原基线保留；S2相同请求跨实例退款验证与报告口径已补齐，历史短突发/TTL并发/保护覆盖限制保留。S3前置已独立核验；短测量闸门已完成：商品详情实体路径 p95 2.54–5.75ms（≥2ms，不判A无收益）、中文检索limit=10各有效轮p95约311–392ms、真实导购链路检索span逐请求占比均值约0.94–0.95且 `CommerceBackend.product` 调用0/贡献0。S3设计v3（A/B双候选、B含预注册档位与epoch一致性）待用户确认，正式缓存实验未开跑、L1/Redis未实施；测量报告见docs/optimizations/S3-measurement-gate-2026-11-04.md。**
 
 ## 分工模式：偏产出
 
@@ -701,3 +703,8 @@ CodeBuddy起草脚本、测量和报告，Codex审阅修订并独立复跑。报
 B为建议待确认主线，未代用户选择。设计按页<=100有序ID+快照total，全部过滤/分页键，命中后实时价格/库存/状态重检，允许有界陈旧total/排序与短页；正TTL1/10/30秒从快照开始计龄，回填/跨层不续命、返回前检查；全局DB权威epoch覆盖全部影响成员/排序的写、高水位/迟到回填/Redis重启门槛。模拟Zipf3×U3×容量2，容量是查询条目数；TTL代表组合辅助，共24逻辑单元22不同配置。真实查询分布未知，合法100k键池仍未生成/验证。L1/Redis配对+A/A；singleflight、负缓存、写后失效各专项与成本报告。全部正式缓存/矩阵/一致性实现均未开始。
 
 最终独立测试31通过、1可选依赖跳过；Ruff、Mypy strict src（54文件）通过。下一步仅等待用户确认修订设计，不运行正式实验。飞书已同步：2026-11-04 本轮短测量与设计v3已追加既有开发记录（revision 30），代码/证据来源agent-ops-platform@068c088；codex profile / --as user。正文与项目父节点回查通过。目录：我的文档库/WorkPlan/agent-ops-platform。链接：https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf 。仅待用户确认，正式缓存未实施。
+
+
+## 2026-11-08 用户授权服务关停与指定存储可恢复性核查
+
+CodeBuddy执行systemctl stop/docker stop；Codex亲自核验4个MainPID=0、相关端口关闭、8容器Exited及原挂载源存在。未删除容器/卷/文件、未修改restart policy或enable设置；bench-pg保留运行，logrotate timer未动。核查报告：docs/operations/storage-recoverability-2026-11-08.md。没有代码修改，不运行应用测试。只把能重装/重编译、Git可恢复、输入齐全可重建与不可再得的历史数据分开，不把条件候选当已删除。下一步等用户选择清理项；S3无进展。飞书待同步：2026-11-08 关停完成及核查边界，沿用既有开发记录。
