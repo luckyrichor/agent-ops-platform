@@ -707,4 +707,4 @@ B为建议待确认主线，未代用户选择。设计按页<=100有序ID+快�
 
 ## 2026-11-08 用户授权服务关停与指定存储可恢复性核查
 
-CodeBuddy执行systemctl stop/docker stop；Codex亲自核验4个MainPID=0、相关端口关闭、8容器Exited及原挂载源存在。未删除容器/卷/文件、未修改restart policy或enable设置；bench-pg保留运行，logrotate timer未动。核查报告：docs/operations/storage-recoverability-2026-11-08.md。没有代码修改，不运行应用测试。只把能重装/重编译、Git可恢复、输入齐全可重建与不可再得的历史数据分开，不把条件候选当已删除。下一步等用户选择清理项；S3无进展。飞书待同步：2026-11-08 关停完成及核查边界，沿用既有开发记录。
+CodeBuddy执行systemctl stop/docker stop；Codex亲自核验4个MainPID=0、相关端口关闭、8容器Exited及原挂载源存在。未删除容器/卷/文件、未修改restart policy或enable设置；bench-pg保留运行，logrotate timer未动。核查报告：docs/operations/storage-recoverability-2026-11-08.md。没有代码修改，不运行应用测试。只把能重装/重编译、Git可恢复、输入齐全可重建与不可再得的历史数据分开，不把条件候选当已删除。下一步等用户选择清理项；S3无进展。飞书已同步：2026-11-08 关停与核查边界已追加既有开发记录revision31，来源2b72980；codex profile / --as user；正文及父节点回查通过。链接：https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf 。
