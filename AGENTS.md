@@ -10,7 +10,7 @@ Agent 应用与可观测评测平台。电商场景的多 Agent 任务拆解、�
 
 三个月求职计划六项目之一（原编号 ③），对应岗位 **05、07、10、11、14**，另含 **08** 作为子方向。总计划见 [workplan-docs](https://github.com/luckyrichor/workplan-docs)，岗位原文以那里的 `岗位要求原文.md` 为唯一依据。
 
-**2026-11-08运行状态：用户要求的4个应用服务与8个关联容器均已停止，数据卷/文件未删除；web unit因SIGTERM退出保留failed标记，MainPID=0。bench-pg仅核查来源，仍运行。详见[指定存储可恢复性与关停核查](docs/operations/storage-recoverability-2026-11-08.md)。S3正式方案仍待确认。**
+**2026-11-08运行状态：用户要求的4个应用服务与8个关联容器均已停止，数据卷/文件未删除；web unit因SIGTERM退出保留failed标记，MainPID=0。bench-pg仅核查来源，仍运行。清理前核查见[GitHub报告](https://github.com/luckyrichor/agent-ops-platform/blob/a94c186/docs/operations/storage-recoverability-2026-11-08.md)，当前本机清理状态见本文末尾。S3正式方案仍待确认。**
 
 **此前开发状态（2026-11-04）：P8冻结、P9原基线保留；S2相同请求跨实例退款验证与报告口径已补齐，历史短突发/TTL并发/保护覆盖限制保留。S3前置已独立核验；短测量闸门已完成：商品详情实体路径 p95 2.54–5.75ms（≥2ms，不判A无收益）、中文检索limit=10各有效轮p95约311–392ms、真实导购链路检索span逐请求占比均值约0.94–0.95且 `CommerceBackend.product` 调用0/贡献0。S3设计v3（A/B双候选、B含预注册档位与epoch一致性）待用户确认，正式缓存实验未开跑、L1/Redis未实施；测量报告见docs/optimizations/S3-measurement-gate-2026-11-04.md。**
 
@@ -708,3 +708,18 @@ B为建议待确认主线，未代用户选择。设计按页<=100有序ID+快�
 ## 2026-11-08 用户授权服务关停与指定存储可恢复性核查
 
 CodeBuddy执行systemctl stop/docker stop；Codex亲自核验4个MainPID=0、相关端口关闭、8容器Exited及原挂载源存在。未删除容器/卷/文件、未修改restart policy或enable设置；bench-pg保留运行，logrotate timer未动。核查报告：docs/operations/storage-recoverability-2026-11-08.md。没有代码修改，不运行应用测试。只把能重装/重编译、Git可恢复、输入齐全可重建与不可再得的历史数据分开，不把条件候选当已删除。下一步等用户选择清理项；S3无进展。飞书已同步：2026-11-08 关停与核查边界已追加既有开发记录revision31，来源2b72980；codex profile / --as user；正文及父节点回查通过。链接：https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf 。
+
+
+## 2026-11-08 授权清理完成：恢复与当前本机状态
+
+用户明确确认原始数据可重新取得，并授权执行上轮约8.45GiB清理。CodeBuddy实施、Codex亲自核验；最终结果而非执行自报为依据。两个项目删除验收时合计释放约8.44GiB（后续少量审计/交接文件占用另计），没有删除代码、脚本、本地独有实验记录、数据库dump、.git、任何容器或数据卷，服务保持停止；bench-pg仍按用户仅调查要求保留运行。
+
+本地已移除GitHub已有的docs文件，但保留docs/progress.md，使用仅本机的skip-worktree标记防止误提交报告删除。Git index的原blob、HEAD在删除验收时均未变、工作区无删除待提交；随后仅提交交接记录更新。旧相对docs链接在本机可能不存在，请用GitHub已发布版本或从Git对象恢复；不要把本地不存在误判为GitHub报告丢失。
+
+恢复单份报告（在对应项目根目录执行）：先`git update-index --no-skip-worktree -- docs/具体文件`，再`git restore --source=<清理前HEAD> --worktree -- docs/具体文件`。只针对已确认文件，不使用全仓库restore覆盖新工作。完整路径/原blob清单在本机`.agent-tasks/2026-11-08-cleanup-targets.json.gz`，受保护文件SHA256在`2026-11-08-cleanup-protected.json.gz`，独立验收在`2026-11-08-cleanup-codex-verification.json`；两项目执行主结果在agent-ops-platform的`.agent-tasks/2026-11-08-cleanup-result.json`。skip-worktree是本机index标记，不同步到GitHub。
+
+- 清理前HEAD：a94c186f433b5d74371b11522944ac8fa4ac9db8。删除`.local/datasets`全部、`.venv`/前端node_modules/dist、Python与类型检查缓存、558份Git已有docs文件；代码/锁文件/私有配置、本地唯一返回与性能记录/备份未动。独立验收53,032个受保护文件SHA256一致，572个白名单目标均不存在。
+- 删除验收时占用9,458,159,616→1,010,741,248 B（约8.81→0.94GiB），释放8,447,418,368 B；之后新增少量审计/交接文件，最终以du为准。
+- Python与前端环境已删除，目前不能直接运行本机应用。需要运行时再按uv.lock和package-lock重建，并重新获取/生成数据；不要为核验本次清理执行uv run或npm install，以免自动装回依赖。数据库卷保留不代表运行环境已恢复。S3仍未获主线确认、未实施，不因本次清理标作完成。
+
+飞书待同步：2026-11-08 本轮用户授权清理完成与恢复说明，沿用本项目开发记录。
