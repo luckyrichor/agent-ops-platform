@@ -10,7 +10,7 @@ Agent 应用与可观测评测平台。电商场景的多 Agent 任务拆解、�
 
 三个月求职计划六项目之一（原编号 ③），对应岗位 **05、07、10、11、14**，另含 **08** 作为子方向。总计划见 [workplan-docs](https://github.com/luckyrichor/workplan-docs)，岗位原文以那里的 `岗位要求原文.md` 为唯一依据。
 
-**2026-11-08运行状态：用户要求的4个应用服务与8个关联容器均已停止，数据卷/文件未删除；web unit因SIGTERM退出保留failed标记，MainPID=0。bench-pg仅核查来源，仍运行。清理前核查见[GitHub报告](https://github.com/luckyrichor/agent-ops-platform/blob/a94c186/docs/operations/storage-recoverability-2026-11-08.md)，当前本机清理状态见本文末尾。S3正式方案仍待确认。**
+**2026-11-08运行状态：用户要求的4个应用服务与8个关联容器均已停止，数据卷/文件未删除；web unit因SIGTERM退出保留failed标记，MainPID=0。随后用户明确要求停止bench-pg，现也已Exited(0)，55432无监听，容器与卷保留。清理前核查见[GitHub报告](https://github.com/luckyrichor/agent-ops-platform/blob/a94c186/docs/operations/storage-recoverability-2026-11-08.md)，当前本机清理状态见本文末尾。S3正式方案仍待确认。**
 
 **此前开发状态（2026-11-04）：P8冻结、P9原基线保留；S2相同请求跨实例退款验证与报告口径已补齐，历史短突发/TTL并发/保护覆盖限制保留。S3前置已独立核验；短测量闸门已完成：商品详情实体路径 p95 2.54–5.75ms（≥2ms，不判A无收益）、中文检索limit=10各有效轮p95约311–392ms、真实导购链路检索span逐请求占比均值约0.94–0.95且 `CommerceBackend.product` 调用0/贡献0。S3设计v3（A/B双候选、B含预注册档位与epoch一致性）待用户确认，正式缓存实验未开跑、L1/Redis未实施；测量报告见docs/optimizations/S3-measurement-gate-2026-11-04.md。**
 
@@ -723,3 +723,8 @@ CodeBuddy执行systemctl stop/docker stop；Codex亲自核验4个MainPID=0、相
 - Python与前端环境已删除，目前不能直接运行本机应用。需要运行时再按uv.lock和package-lock重建，并重新获取/生成数据；不要为核验本次清理执行uv run或npm install，以免自动装回依赖。数据库卷保留不代表运行环境已恢复。S3仍未获主线确认、未实施，不因本次清理标作完成。
 
 飞书已同步：2026-11-08 清理完成与恢复说明已追加本项目开发记录revision32，来源215c555，codex profile / --as user；正文与我的文档库/WorkPlan/agent-ops-platform父节点回查通过。链接：https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf 。
+
+
+## 2026-11-08 后续授权停止bench-pg
+
+用户明确要求将bench-pg服务也停止。CodeBuddy执行docker stop，Codex亲自核验Running=false、Exited(0)、55432无监听且原数据卷目录存在；未删容器/卷、未改restart policy、未操作其他服务。镜像pgvector/pgvector:pg16，记忆服务表结构已核实，具体创建脚本/创建者及项目归属仍未完全确认，不将相关性推测写成确认结论。历史条目中“保留运行”是本次关停前状态，现已被此更新取代。仅运行状态变化，无代码改动、不运行应用测试。飞书待同步：2026-11-08 bench-pg后续关停。
