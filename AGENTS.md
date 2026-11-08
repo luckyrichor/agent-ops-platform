@@ -722,4 +722,4 @@ CodeBuddy执行systemctl stop/docker stop；Codex亲自核验4个MainPID=0、相
 - 删除验收时占用9,458,159,616→1,010,741,248 B（约8.81→0.94GiB），释放8,447,418,368 B；之后新增少量审计/交接文件，最终以du为准。
 - Python与前端环境已删除，目前不能直接运行本机应用。需要运行时再按uv.lock和package-lock重建，并重新获取/生成数据；不要为核验本次清理执行uv run或npm install，以免自动装回依赖。数据库卷保留不代表运行环境已恢复。S3仍未获主线确认、未实施，不因本次清理标作完成。
 
-飞书待同步：2026-11-08 本轮用户授权清理完成与恢复说明，沿用本项目开发记录。
+飞书已同步：2026-11-08 清理完成与恢复说明已追加本项目开发记录revision32，来源215c555，codex profile / --as user；正文与我的文档库/WorkPlan/agent-ops-platform父节点回查通过。链接：https://kcn0pbn0hwo0.feishu.cn/wiki/Er1cwBohMigLPEkwozDc9rSKnEf 。
